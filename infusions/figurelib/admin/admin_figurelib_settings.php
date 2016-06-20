@@ -4,8 +4,11 @@
 | Copyright (C) PHP-Fusion Inc
 | https://www.php-fusion.co.uk/
 +--------------------------------------------------------+
-| Filename: weblinks_settings.php
-| Author: PHP-Fusion Development Team
+| Filename: settings_figurelib.php based on settings_news.php
+| Author: Starefossen
+| Modification: Catzenjaeger
+| URL: www.aliencollectors.com
+| E-Mail: admin@aliencollectors.com
 +--------------------------------------------------------+
 | This program is released as free software under the
 | Affero GPL license. You can redistribute it and/or
@@ -17,23 +20,36 @@
 +--------------------------------------------------------*/
 if (!defined("IN_FUSION")) { die("Access Denied"); }
 pageAccess("FI");
-include "infusion_db.php";
+require_once THEMES. "templates/admin_header.php";
+
+$locale = fusion_get_locale();
+
+// SETTINGS HOLEN
+$fil_settings = get_settings("figurelib");
 
 if (isset($_POST['savesettings'])) {
-	$inputArray = array(		
+	$error = 0;
+	$inputArray = array(	
 		"figure_per_page" => form_sanitizer($_POST['figure_per_page'], 0, "figure_per_page"),
 		"figure_per_line" => form_sanitizer($_POST['figure_per_line'], 0, "figure_per_line"),
 		"figure_display" => isset($_POST['figure_display']) ? 1 : 0,
 		"figure_submit" => isset($_POST['figure_submit']) ? 1 : 0,
 		"figure_related" => isset($_POST['figure_related']) ? 1 : 0,
 		"figure_social_sharing" => isset($_POST['figure_social_sharing']) ? 1 : 0,	
-	);
+		"figure_thumb_w" => form_sanitizer($_POST['figure_thumb_w'], 300, 'figure_thumb_w'),
+		"figure_thumb_h" => form_sanitizer($_POST['figure_thumb_h'], 150, 'figure_thumb_h'),
+		"figure_photo_w" => form_sanitizer($_POST['figure_photo_w'], 400, 'figure_photo_w'),
+		"figure_photo_h" => form_sanitizer($_POST['figure_photo_h'], 300, 'figure_photo_h'),
+		"figure_photo_max_w" => form_sanitizer($_POST['figure_photo_max_w'], 1800, 'figure_photo_max_w'),
+		"figure_photo_max_h" => form_sanitizer($_POST['figure_photo_max_h'], 1600, 'figure_photo_max_h'),
+		"figure_photo_max_b" => form_sanitizer($_POST['calc_b'], 150, 'calc_b')*form_sanitizer($_POST['calc_c'], 100000, 'calc_c'),
 
+	);
 	if (defender::safe()) {
 		foreach ($inputArray as $settings_name => $settings_value) {
 			$inputSettings = array(
-				"settings_name" => $settings_name,
-				"settings_value" => $settings_value,
+				"settings_name" => $settings_name, 
+				"settings_value" => $settings_value, 
 				"settings_inf" => "figurelib",
 			);
 			dbquery_insert(DB_SETTINGS_INF, $inputSettings, "update", array("primary_key" => "settings_name"));
@@ -45,11 +61,25 @@ if (isset($_POST['savesettings'])) {
 	}
 }
 
+opentable($locale['figure_settings']);
+
 echo openform('settingsform', 'post', FUSION_REQUEST, array('class' => "m-t-20"));
 echo "<div class='well'>".$locale['filt_0006']."</div>"; // ['filt_0006'] = "Configuration page for Figures";
-echo "<div class='row'><div class='col-xs-12 col-sm-12 col-md-6'>\n";
+echo "<div class='row'>\n<div class='col-xs-12 col-sm-8'>\n";
 
 openside("");
+//$locale['admin_figurelib_settings.php_001'] = "Original";
+//$locale['admin_figurelib_settings.php_002'] = "Square";
+$thumb_opts = array(
+'0' => $locale['admin_figurelib_settings.php_001'], 
+'1' => $locale['admin_figurelib_settings.php_002']);
+
+$calc_opts = array(
+'1' => 'Bytes (bytes)', 
+'1000' => 'KB (Kilobytes)', 
+'1000000' => 'MB (Megabytes)');
+$calc_c = calculate_byte($asettings['figure_photo_max_b']);
+$calc_b = $asettings['figure_photo_max_b']/$calc_c;
 
 	// ['figure_334'] = "Figures per page:";
 	// ['figure_361'] = "Only values 1-500 allowed!";
@@ -75,54 +105,98 @@ openside("");
 		'type' => 'number',
 		'width' => '250px'
 	));	
-
-	// ['figure_358'] = "Figure photo max size";
-	echo form_text('figure_photo_max_b', $locale['figure_358'], $fil_settings['figure_photo_max_b'], array(
-		'inline' => 1,
-		'required' => 1,
-		'error_text' => $locale['error_value'],
-		'type' => 'number',
-		'width' => '250px'
-	));
 	
-		// ['figure_359'] = "Figure photo max width:";
-		echo form_text('figure_photo_max_w', $locale['figure_359'], $fil_settings['figure_photo_max_w'], array(
-		'inline' => 1,
-		'required' => 1,
-		'error_text' => $locale['error_value'],
-		'type' => 'number',
-		'width' => '250px'
-	));
-	
-		// ['figure_360'] = "Figure photo max heigh:";
-		echo form_text('figure_photo_max_h', $locale['figure_360'], $fil_settings['figure_photo_max_h'], array(
-		'inline' => 1,
-		'required' => 1,
-		'error_text' => $locale['error_value'],
-		'type' => 'number',
-		'width' => '250px'
-	));
+// $locale['admin_figurelib_settings.php_003'] = "Thumb size:";
+// $locale['admin_figurelib_settings.php_004'] = "Photo size:";
+// $locale['admin_figurelib_settings.php_005'] = "Maximum photo size:";
+// $locale['admin_figurelib_settings.php_006'] = "Width x Height";
+// $locale['admin_figurelib_settings.php_007'] = "Maximum file size (bytes):";		
+echo "
+<div class='row'>
+	<div class='col-xs-12 col-sm-3'>
+		<label for='figure_thumb_w'>".$locale['admin_figurelib_settings.php_003']."</label>
+	</div>
+	<div class='col-xs-12 col-sm-9'>
+	".form_text(
+	'figure_thumb_w', '', $fil_settings['figure_thumb_w'], array(
+		'class' => 'pull-left', 'max_length' => 4, 'number' => 1, 'width' => '150px'
+	))."
+	<i class='entypo icancel pull-left m-r-10 m-l-0 m-t-10'></i>
+	".form_text('figure_thumb_h', '', $fil_settings['figure_thumb_h'], array(
+		'class' => 'pull-left', 'max_length' => 4, 'number' => 1, 'width' => '150px'
+	))."
+	<small class='m-l-10 mid-opacity text-uppercase pull-left m-t-10'>( ".$locale['admin_figurelib_settings.php_006']." )</small>
+	</div>
+</div>";
+echo "
+<div class='row'>
+	<div class='col-xs-12 col-sm-3'>
+		<label for='figure_photo_w'>".$locale['admin_figurelib_settings.php_004']."</label>
+	</div>
+	<div class='col-xs-12 col-sm-9'>
+	".form_text('figure_photo_w', '', $fil_settings['figure_photo_w'], array(
+		'class' => 'pull-left', 'max_length' => 4, 'number' => 1, 'width' => '150px'
+	))."
+	<i class='entypo icancel pull-left m-r-10 m-l-0 m-t-10'></i>
+	".form_text('figure_photo_h', '', $fil_settings['figure_photo_h'], array(
+		'class' => 'pull-left', 'max_length' => 4, 'number' => 1, 'width' => '150px'
+	))."
+	<small class='m-l-10 mid-opacity text-uppercase pull-left m-t-10'>( ".$locale['admin_figurelib_settings.php_006']." )</small>
+	</div>
+</div>";
+echo "
+<div class='row'>
+	<div class='col-xs-12 col-sm-3'>
+		<label for='blog_thumb_w'>".$locale['admin_figurelib_settings.php_005']."</label>
+	</div>
+	<div class='col-xs-12 col-sm-9'>
+	".form_text('figure_photo_max_w', '', $fil_settings['figure_photo_max_w'], array(
+		'class' => 'pull-left', 'max_length' => 4, 'number' => 1, 'width' => '150px'
+	))."
+	<i class='entypo icancel pull-left m-r-10 m-l-0 m-t-10'></i>
+	".form_text('figure_photo_max_h', '', $fil_settings['figure_photo_max_h'], array(
+		'class' => 'pull-left', 'max_length' => 4, 'number' => 1, 'width' => '150px'
+	))."
+	<small class='m-l-10 mid-opacity text-uppercase pull-left m-t-10'>( ".$locale['admin_figurelib_settings.php_006']." )</small>
+	</div>
+</div>";
 
+echo "
+<div class='row'>
+	<div class='col-xs-12 col-sm-3'>
+		<label for='calc_b'>".$locale['admin_figurelib_settings.php_007']."</label>
+	</div>
+	<div class='col-xs-12 col-sm-9'>
+	".form_text('calc_b', '', $calc_b, array(
+		'required' => 1, 'number' => 1, 'error_text' => $locale['error_rate'], 'width' => '100px', 'max_length' => 4,
+		'class' => 'pull-left m-r-10'
+	))."
+	".form_select('calc_c', '', $calc_c, array(
+		'options' => $calc_opts, 'placeholder' => $locale['choose'], 'class' => 'pull-left', 'width' => '180px'
+	))."
+	</div>
+</div>
+";
+	
 closeside();
 	
-	echo "</div>\n<div class='col-xs-12 col-sm-12 col-md-6'>\n";
-
+echo "</div>\n";
+echo "<div class='col-xs-12 col-sm-4'>\n";
 
 openside("");
+
+
 	// ['figure_335'] = "Allow users to submit figures:";
-	
 	// ALS CHECKBOX
 		echo form_checkbox('figure_submit', $locale['figure_335'], $fil_settings['figure_submit']);
 /*	
-	// ALS DROPDOWN 
-	
+	// ALS DROPDOWN 	
 		echo form_select("figure_submit", $locale['figure_335'], $fil_settings['figure_submit'], array(
 			"inline" => TRUE, 
 			"options" => array($locale['disable'], $locale['enable'])
 		));
 */
-	// ['figure_344'] = "Allow Social Sharing:";
-	
+	// ['figure_344'] = "Allow Social Sharing:";	
 	// ALS CHECKBOX
 		 echo form_checkbox('figure_social_sharing', $locale['figure_344'], $fil_settings['figure_social_sharing']);
 /*
@@ -144,10 +218,25 @@ openside("");
 */	
 	// ['figure_339'] = "Gallery Mode on";
 		echo form_checkbox('figure_display', $locale['figure_339'], $fil_settings['figure_display']);
+		
+		
+	// ['admin_figurelib_settings.php_008'] = "Thumb ratio:";	
+		echo form_select('figure_thumb_ratio', $locale['admin_figurelib_settings.php_008'], $fil_settings['figure_thumb_ratio'], array("options" => $thumb_opts));
 
 closeside();
+
 
 echo "</div>\n</div>\n";
 // ['figure_345'] = "Save Settings";
 echo form_button('savesettings', $locale['figure_345'], $locale['figure_345'], array('class' => 'btn-success'));
 echo closeform();
+closetable();
+function calculate_byte($total_bit) {
+	$calc_opts = array(1 => 'Bytes (bytes)', 1000 => 'KB (Kilobytes)', 1000000 => 'MB (Megabytes)');
+	foreach ($calc_opts as $byte => $val) {
+		if ($total_bit/$byte <= 999) {
+			return (int)$byte;
+		}
+	}
+	return 1000000;
+}
