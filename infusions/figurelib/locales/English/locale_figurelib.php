@@ -800,3 +800,15 @@ $locale['figurelib/admin/figurelib.php_068'] = " to go to Figure Categories";
 $locale['figurelib/admin/figurelib.php_069'] = "Figure release on page";
 $locale['figurelib/admin/figurelib.php_070'] = "You must choose a Category.";
 
+// admin_figurelib_settings.php
+$locale['figure_settings'] = "FigureLib Settings";
+$locale['admin_figurelib_settings.php_001'] = "Original";
+$locale['admin_figurelib_settings.php_002'] = "Square";
+$locale['admin_figurelib_settings.php_003'] = "Thumb size:";
+$locale['admin_figurelib_settings.php_004'] = "Photo size:";
+$locale['admin_figurelib_settings.php_005'] = "Maximum photo size:";
+$locale['admin_figurelib_settings.php_006'] = "Width x Height";
+$locale['admin_figurelib_settings.php_007'] = "Maximum file size (bytes):";	
+$locale['admin_figurelib_settings.php_008'] = "Thumb ratio:";
+
+
