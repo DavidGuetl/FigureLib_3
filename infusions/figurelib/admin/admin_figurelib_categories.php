@@ -24,7 +24,7 @@ $locale = fusion_get_locale();
 pageAccess("FI");
 if ((isset($_GET['action']) && $_GET['action'] == "delete") && (isset($_GET['cat_id']) && isnum($_GET['cat_id']))) {
 	
-	$result = dbcount("(figure_cat_id)", DB_FIGURE_ITEMS, "figure_cat='".$_GET['cat_id']."'") || dbcount("(figure_cat_id)", DB_FIGURE_CATS, "figure_cat_parent='".$_GET['cat_id']."'");
+	$result = dbcount("(figure_cat)", DB_FIGURE_ITEMS, "figure_cat='".$_GET['cat_id']."'") || dbcount("(figure_cat_id)", DB_FIGURE_CATS, "figure_cat_parent='".$_GET['cat_id']."'");
 		
 	// ['figcm_0004'] = "Figure Category cannot be deleted"; |
 	// ['figcm_0005'] = "There are Figure or Sub-Categories linked to this category";
