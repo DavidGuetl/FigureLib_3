@@ -166,6 +166,26 @@ $locale['figm_0015'] = "Click here";
 $locale['figm_0016'] = " to go to figure Manufacturers";
 
 
+// Add/Edit Brand Form
+$locale['figbrand_0000'] = "Brand Name:";
+$locale['figbrand_0001'] = "Please enter a Brand name";
+$locale['figbrand_0002'] = "Brand Description:";
+$locale['figbrand_0003'] = "Parent Brand";
+$locale['figbrand_0004'] = "Brand Sorting:";
+$locale['figbrand_0005'] = "Brand ID";
+$locale['figbrand_0006'] = "Brand Name";
+$locale['figbrand_0007'] = "Brand Date";
+$locale['figbrand_0008'] = "Ascending";
+$locale['figbrand_0009'] = "Descending";
+$locale['figbrand_0010'] = "Figure Brand Editor";
+$locale['figbrand_0011'] = "Save Brand";
+$locale['figbrand_0012'] = "No figure Brands defined";
+$locale['figbrand_0013'] = "There are no figure Brands defined";
+$locale['figbrand_0014'] = "You must define at least one Brand before you can add any figures";
+$locale['figbrand_0015'] = "Click here";
+$locale['figbrand_0016'] = " to go to figure Brands";
+
+
 //PANELS
 $locale['mostclick'] = "Most Clicked";
 $locale['mostclick2'] = "Alien Figure Database - Most Clicked";
