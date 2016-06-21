@@ -83,8 +83,6 @@ $locale['lastentries']= "Last Figures";
 		while($data = dbarray($result)){
 
 			 echo "<tr>";
-			 
-			 echo  $data['figure_id'];
 			
 			// WHILE SCHLEIFE FÜR DAS HOLEN DES BILDES AUS ORDNER / ORDNER MUSS IN infusion.db.php deklariert sein!
 				
