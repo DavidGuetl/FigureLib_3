@@ -48,6 +48,7 @@ $locale['lastentries']= "Last Figures";
 			INNER JOIN ".DB_FIGURE_YEARS." tby ON tby.figure_year_id = tb.figure_pubdate
 			".(multilang_table("FI") ? "WHERE figure_language='".LANGUAGE."' AND" : "WHERE")." tb.figure_freigabe='1' 
 			ORDER BY figure_datestamp DESC LIMIT 0,10");
+	
 		
 		// PANEL ÖFFNEN / ANFANG		
  
@@ -82,25 +83,30 @@ $locale['lastentries']= "Last Figures";
 		while($data = dbarray($result)){
 
 			 echo "<tr>";
+			 
+			 echo  $data['figure_id'];
 			
-		// WHILE SCHLEIFE FÜR DAS HOLEN DES BILDES AUS ORDNER / ORDNER MUSS IN infusion.db.php deklariert sein!
-				$result2 = dbquery("SELECT
-					figure_images_image_id,
-					figure_images_image,
-					figure_images_thumb 
-					FROM ".DB_FIGURE_IMAGES." 
-					WHERE figure_images_figure_id='".$data['figure_id']."' LIMIT 0,1");
-		
-		while($data2 = dbarray($result2)){
-
-		// WENN KEIN BILD VORHANDEN DANN ZEIGE PLATZHALTER BILD
-			if ($data2['figure_images_thumb'] == "") {
-				echo "<td class='side-small'><a href='".INFUSIONS."figurelib/figures.php?figure_id=".$data['figure_id']."' class=''>\n<img src='".INFUSIONS."figurelib/images/default.png"."' alt='".trimlink($data['figure_title'],50)."' title='".trimlink($data['figure_title'],100)."' style='border:0px;max-height:40px;max-width:40px' /></td>";
-			} else {  
+			// WHILE SCHLEIFE FÜR DAS HOLEN DES BILDES AUS ORDNER / ORDNER MUSS IN infusion.db.php deklariert sein!
+				
+			$result2 = dbquery("SELECT
+				   figure_images_image_id,
+				   figure_images_image,
+				   figure_images_thumb
+				FROM ".DB_FIGURE_IMAGES."
+				WHERE figure_images_figure_id='".$data['figure_id']."' LIMIT 0,1");
  
-				echo "<td class='side-small'><a href='".INFUSIONS."figurelib/figures.php?figure_id=".$data['figure_id']."' class=''>\n<img src='".($data2['figure_images_thumb'] ? THUMBS_FIGURES.$data2['figure_images_thumb'] : INFUSIONS.$inf_folder."/images/default.png")."' alt='".trimlink($data['figure_title'],100)."' title='".trimlink($data['figure_title'],50)."' style='border:0px;max-height:40px;max-width:40px' /></td>";
+			   // Fragen, ob überhaupt ein Ergebnis kommt
+				if(dbrows($result2)){
+     
+				while($data2 = dbarray($result2)){
+           
+					echo "<td class='side-small'><a href='".INFUSIONS."figurelib/figures.php?figure_id=".$data['figure_id']."' class=''>\n<img src='". THUMBS_FIGURES.$data2['figure_images_thumb'] ."' alt='".trimlink($data['figure_title'],100)."' title='".trimlink($data['figure_title'],50)."' style='border:0px;max-height:40px;max-width:40px' /></td>";
 			}
-		}
+			} else { 
+					echo "<td class='side-small'><a href='".INFUSIONS."figurelib/figures.php?figure_id=".$data['figure_id']."' class=''>\n<img src='".($data2['figure_images_thumb'] ? THUMBS_FIGURES.$data2['figure_images_thumb'] : INFUSIONS.$inf_folder."/images/default.png")."' alt='".trimlink($data['figure_title'],100)."' title='".trimlink($data['figure_title'],50)."' style='border:0px;max-height:40px;max-width:40px' /></td>";
+				
+					}		
+
 			echo "<td class='side-small'>
 			<a href='".INFUSIONS."figurelib/figures.php?figure_id=".$data['figure_id']."'>".trimlink($data['figure_title'], 18)."</a>
 			</td>";
