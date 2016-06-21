@@ -30,6 +30,7 @@ require_once INCLUDES."infusions_include.php";
 // SETTINGS HOLEN
 $fil_settings = get_settings("figurelib");
 
+
 // LANGUAGE
 if (file_exists(INFUSIONS."figurelib/locale/".LOCALESET."locale_figurelib.php")) {
     include INFUSIONS."figurelib/locale/".LOCALESET."locale_figurelib.php";
@@ -41,9 +42,15 @@ if (file_exists(INFUSIONS."figurelib/locale/".LOCALESET."locale_figurelib.php"))
 add_to_title($locale['global_200'].$locale['figure_521']);
 
 opentable("<i class='fa fa-globe fa-lg m-r-10'></i>".$locale['figure_521']);
-// submit it erlaubt??? hole wert aus settings
-if (iMEMBER && $fil_settings['figure_submit']) {
 
+
+// Can Visitor Submit?
+if (iMEMBER && $fil_settings['figure_submit']) {
+	
+	// Check if there exists Cats
+	if (dbcount("(figure_cat_id)", DB_FIGURE_CATS, multilang_table("FI") ? "figure_cat_language='".LANGUAGE."'" : "")) {
+	
+	// Standard Values for Fields
 	$criteriaArray = array(
 			"figure_freigabe" => 0, 
 			"figure_title" => "", 
@@ -70,17 +77,14 @@ if (iMEMBER && $fil_settings['figure_submit']) {
 			"figure_description" => "", 
 			"figure_pubdate" => "", 
 			"figure_agb" => 0,
-			"figure_datestamp" => "",
-			"photo_filename" => "",
-			"photo_thumb1" => "",
-			"photo_thumb2" => "",		
+			"figure_datestamp" => "",	
 	);
 
-	if (dbcount("(figure_cat_id)", DB_FIGURE_CATS, multilang_table("FI") ? "figure_cat_language='".LANGUAGE."'" : "")) {
-		
+		// Form posted
 		if (isset($_POST['submit_figure'])) {
-			$submit_info['figure_description'] = nl2br(parseubb(stripinput($_POST['figure_description'])));
+			//$submit_info['figure_description'] = nl2br(parseubb(stripinput($_POST['figure_description'])));
 			
+			// Check Fields
 			$criteriaArray = array(
 				"figure_datestamp"    => form_sanitizer($_POST['figure_datestamp'],    "", "figure_datestamp"),			
 				"figure_freigabe"     => form_sanitizer($_POST['figure_freigabe'],     0,  "figure_freigabe"),
@@ -110,8 +114,8 @@ if (iMEMBER && $fil_settings['figure_submit']) {
 				"figure_description"  => addslash(nl2br(parseubb(stripinput($_POST['figure_description'])))),
 				"figure_accessories"  => addslash(nl2br(parseubb(stripinput($_POST['figure_accessories'])))),			
 			);
-				
-								
+			
+			//Save					
 			if (defender::safe()) {
 				$inputArray = array(
 					"submit_type" => "f",
@@ -119,9 +123,33 @@ if (iMEMBER && $fil_settings['figure_submit']) {
 					"submit_datestamp" => time(),
 					"submit_criteria" => addslashes(serialize($criteriaArray))
 				);
-				dbquery_insert(DB_SUBMISSIONS, $inputArray, "save");	
-		
+				dbquery_insert(DB_SUBMISSIONS, $inputArray, "save", array(
+									'keep_session' => TRUE));
+
 				
+				//get the last ID for Image Upload
+				$figureID = dblastid();
+
+				// Image Upload
+
+				$upload = form_sanitizer($_FILES['figure_image'], '', 'figure_image');
+				if (!empty($upload)) {
+					$totalFiles = count($upload);
+					for ($i = 0; $i < $totalFiles; $i++) {
+						$currentUpload = $upload[$i];
+						if ($currentUpload['error'] == 0) {
+							$imageArray = array(
+								'figure_images_figure_id' => $figureID,
+								'figure_images_image' => $currentUpload['image_name'],
+								'figure_images_thumb' => $currentUpload['thumb1_name']
+							);
+							dbquery_insert(DB_FIGURE_IMAGES, $imageArray, "save");
+						} else {
+							echo $currentUpload['error'];
+						}
+					}
+				}		
+
 				// ['figs_0018'] = "Thank you for submitting your Figure";
 				addNotice("success", $locale['figs_0018']);
 				redirect(clean_request("submitted=f", array("stype"), TRUE));
@@ -454,23 +482,49 @@ if (iMEMBER && $fil_settings['figure_submit']) {
 			echo "<hr>\n";
 		echo "</div>\n";
 				
+
 		// File Field "Images"
 		echo form_fileinput("figure_image[]", $locale['figure_136'], "", 
 			array(
 				"inline" => true,
 				"template" => "modern",
 				"multiple" => true,
-				"upload_path" => INFUSIONS."figurelib/figures/images/",
-				"thumbnail_folder" => INFUSIONS."figurelib/figures/thumbs/",
+				"upload_path" => INFUSIONS.'figurelib/figures/images/',
+				"thumbnail_folder" => THUMBS_FIGURES,
 				"thumbnail" => true,
-				"required" => false,
-				"error_text" => $locale['figure_1817'],
-				"placeholder" => $locale['figure_1817'],
 				"max_byte" => $asettings['figure_photo_max_b'],
 				"max_count" => 10
 			)
-		);
-		
+		);	
+/*
+		// alternative to file field Images upload
+    $file_input_options = array(
+                'multiple' => TRUE,
+                'template' => 'modern',
+                'type' => 'image',
+                'max_count' => 10,
+                'inline' => TRUE,
+                'upload_path' => IMAGES_FIGURES,
+                'max_width' => $fil_settings['figure_photo_max_w'],
+                'max_height' => $fil_settings['figure_photo_max_h'],
+                'max_byte' => $fil_settings['figure_photo_max_b'],
+                set thumbnail
+                'thumbnail' => 1,
+                'thumbnail_w' => $fil_settings['figure_thumb_w'],
+                'thumbnail_h' => $fil_settings['figure_thumb_h'],
+                'thumbnail_folder' => THUMBS_FIGURES,
+                'delete_original' => 0,
+                 set thumbnail 2 settings
+                'thumbnail2' => 1,
+                'thumbnail2_w' => $fil_settings['figure_photo_w'],
+                'thumbnail2_h' => $fil_settings['figure_photo_h']
+             );
+             
+
+             echo form_fileinput("figure_image[]", $locale['figure_136'], "", $file_input_options);
+             echo "<div class='small col-sm-offset-3 m-b-10'><span class='p-l-15'>".sprintf($locale['figure_0217'], parsebytesize($fil_settings['figure_photo_max_b']))."</span></div>\n";		
+*/
+
 		// Form "Space"
 		echo "<div class='tbl1'>\n";
 			echo "<hr>\n";
