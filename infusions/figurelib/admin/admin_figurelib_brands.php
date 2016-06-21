@@ -24,9 +24,8 @@ $locale = fusion_get_locale();
 pageAccess("FI");
 if ((isset($_GET['action']) && $_GET['action'] == "delete") && (isset($_GET['brand_id']) && isnum($_GET['brand_id']))) {
 	
-	$result = dbcount("(figure_brand_id)", DB_FIGURE_ITEMS, "figure_brand='".$_GET['brand_id']."'") || dbcount("(figure_brand_id)", DB_FIGURE_BRANDS, "figure_brand_parent='".$_GET['brand_id']."'");
+	$result = dbcount("(figure_brand)", DB_FIGURE_ITEMS, "figure_brand='".$_GET['brand_id']."'") || dbcount("(figure_brand_id)", DB_FIGURE_BRANDS, "figure_brand_parent='".$_GET['brand_id']."'");
 	
-	//$result = dbcount("(figure_brand)", DB_FIGURE_ITEMS, "figure_brand='".$_GET['brand_id']."'") || dbcount("(figure_brand_id)", DB_FIGURE_BRANDS, "figure_brand_parent='".$_GET['brand_id']."'");
 	
 	// ['figbm_0004'] = "Figure Brand cannot be deleted"; |
 	// ['figbm_0005'] = "There are Figure or Sub-Brand linked to this Brand";
@@ -153,8 +152,7 @@ if ((isset($_GET['action']) && $_GET['action'] == "delete") && (isset($_GET['bra
 	} else {
 		echo form_hidden('figure_brand_language', '', $data['figure_brand_language']);
 	}
-	
-/*		
+		
 	echo "<div class='row m-0'>\n";	
 	echo "<label class='label-control col-xs-12 col-sm-3 p-l-0'>".$locale['figbrand_0004']."</label>\n"; // ['figbrand_0004'] = "Brand Sorting:";
 		
@@ -181,9 +179,7 @@ if ((isset($_GET['action']) && $_GET['action'] == "delete") && (isset($_GET['bra
 	));
 	echo "</div>\n";
 	echo "</div>\n";
-*/	
-	
-	
+		
 		
 	// ['figbrand_0011'] = "Save Brand";
 	echo form_button('save_brand', $locale['figbrand_0011'], $locale['figbrand_0011'], array('class' => 'btn-primary m-t-10'));
