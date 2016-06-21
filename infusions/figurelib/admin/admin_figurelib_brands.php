@@ -112,9 +112,9 @@ if ((isset($_GET['action']) && $_GET['action'] == "delete") && (isset($_GET['bra
 			redirect(FUSION_SELF.$aidlink);
 		}
 	}
-	// ['figm_0010'] = "Figure Brand Editor";
-	// ['filt_0014'] = "Figures Brand";
-	$fiBrandTab['title'] = array($locale['figm_0010'], $locale['filt_0014']); 
+	// ['figbrand_0010'] = "Figure Brand Editor";
+	// ['figure_010'] = "Figure Brands";
+	$fiBrandTab['title'] = array($locale['figbrand_0010'], $locale['figure_010']); 
 	$fiBrandTab['id'] = array("a", "b");
 	$tab_active = tab_active($fiBrandTab, isset($_GET['brand_view']) ? 1 : 0);
 	echo opentab($fiBrandTab, $tab_active, "fiBrand_Tab", FALSE, "m-t-20");
@@ -122,24 +122,24 @@ if ((isset($_GET['action']) && $_GET['action'] == "delete") && (isset($_GET['bra
 	echo openform('addbrand', 'post', FUSION_REQUEST, array("class" => "m-t-20"));
 	echo form_hidden("figure_brand_id", "", $data['figure_brand_id']);
 	
-	// ['figm_0000'] = "Brand Name:";
-	// ['figm_0001'] = "Please enter a Brand name";
-	echo form_text('figure_brand_name', $locale['figm_0000'], $data['figure_brand_name'], array(
+	// ['figbrand_0000'] = "Brand Name:";
+	// ['figbrand_0001'] = "Please enter a Brand name";
+	echo form_text('figure_brand_name', $locale['figbrand_0000'], $data['figure_brand_name'], array(
 										 'required' => TRUE,
-										 "error_text" => $locale['figm_0001'],
+										 "error_text" => $locale['figbrand_0001'],
 										 "inline" => TRUE,
 									 ));
 	
-	// ['figm_0002'] = "Brand Description:";								 
-	echo form_textarea('figure_brand_description', $locale['figm_0002'], $data['figure_brand_description'], array(
+	// ['figbrand_0002'] = "Brand Description:";								 
+	echo form_textarea('figure_brand_description', $locale['figbrand_0002'], $data['figure_brand_description'], array(
 										"html" => TRUE,
 										"preview" => FALSE,
 										"autosize" => TRUE,
 										"inline" => TRUE,
 										"form_name" => "addbrand"
 									));
-	// ['figm_0003'] = "Parent Brand";
-	echo form_select_tree("figure_brand_parent", $locale['figm_0003'], $data['figure_brand_parent'], array(
+	// ['figbrand_0003'] = "Parent Brand";
+	echo form_select_tree("figure_brand_parent", $locale['figbrand_0003'], $data['figure_brand_parent'], array(
 										"disable_opts" => $brand_hidden,
 										"hide_disabled" => TRUE,
 										"inline" => TRUE,
@@ -156,28 +156,28 @@ if ((isset($_GET['action']) && $_GET['action'] == "delete") && (isset($_GET['bra
 	
 /*		
 	echo "<div class='row m-0'>\n";	
-	echo "<label class='label-control col-xs-12 col-sm-3 p-l-0'>".$locale['figm_0004']."</label>\n"; // ['figm_0004'] = "Brand Sorting:";
+	echo "<label class='label-control col-xs-12 col-sm-3 p-l-0'>".$locale['figbrand_0004']."</label>\n"; // ['figbrand_0004'] = "Brand Sorting:";
 		
 	echo "<div class='col-xs-12 col-sm-3  p-l-0'>\n";
 	
-	// ['figm_0005'] = "Brand ID"; 
-	// ['figm_0006'] = "Brand Name"; 
-	// ['figm_0007'] = "Brand Date";
+	// ['figbrand_0005'] = "Brand ID"; 
+	// ['figbrand_0006'] = "Brand Name"; 
+	// ['figbrand_0007'] = "Brand Date";
 	echo form_select('brand_sort_by', "", $data['brand_sort_by'], array(
 		"inline" => TRUE,
 		"width" => "100%",
-		'options' => array('1' => $locale['figm_0005'], '2' => $locale['figm_0006'], '3' => $locale['figm_0007']),
+		'options' => array('1' => $locale['figbrand_0005'], '2' => $locale['figbrand_0006'], '3' => $locale['figbrand_0007']),
 		'class' => 'pull-left m-r-10'
 	));
 	echo "</div>\n";
 	echo "<div class='col-xs-12 col-sm-2'>\n";
 	
-	// ['figm_0008'] = "Ascending"; 
-	// ['figm_0009'] = "Descending";
+	// ['figbrand_0008'] = "Ascending"; 
+	// ['figbrand_0009'] = "Descending";
 	echo form_select('brand_sort_order', '', $data['brand_sort_order'], array(
 		"inline" => TRUE,
 		"width" => "100%",
-		'options' => array('ASC' => $locale['figm_0008'], 'DESC' => $locale['figm_0009']),
+		'options' => array('ASC' => $locale['figbrand_0008'], 'DESC' => $locale['figbrand_0009']),
 	));
 	echo "</div>\n";
 	echo "</div>\n";
@@ -185,8 +185,8 @@ if ((isset($_GET['action']) && $_GET['action'] == "delete") && (isset($_GET['bra
 	
 	
 		
-	// ['figm_0011'] = "Save Brand";
-	echo form_button('save_brand', $locale['figm_0011'], $locale['figm_0011'], array('class' => 'btn-primary m-t-10'));
+	// ['figbrand_0011'] = "Save Brand";
+	echo form_button('save_brand', $locale['figbrand_0011'], $locale['figbrand_0011'], array('class' => 'btn-primary m-t-10'));
 	echo closeform();
 	echo closetabbody();
 	echo opentabbody($fiBrandTab['title'][1], $fiBrandTab['id'][1], $tab_active);
@@ -194,7 +194,7 @@ if ((isset($_GET['action']) && $_GET['action'] == "delete") && (isset($_GET['bra
 	echo "<table class='table table-responsive table-hover table-striped'>\n";
 	showbrandlist();
 	if ($row_num == 0) {
-		echo "<tr><td align='center' class='tbl1'>".$locale['figm_0012']."</td></tr>\n"; // ['figm_0012'] = "No figure categories defined";
+		echo "<tr><td align='center' class='tbl1'>".$locale['figbrand_0012']."</td></tr>\n"; // ['figbrand_0012'] = "No figure categories defined";
 	}
 	echo "</table>\n";
 	echo closetabbody();
