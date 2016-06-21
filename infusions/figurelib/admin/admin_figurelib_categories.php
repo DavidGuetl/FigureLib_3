@@ -25,9 +25,7 @@ pageAccess("FI");
 if ((isset($_GET['action']) && $_GET['action'] == "delete") && (isset($_GET['cat_id']) && isnum($_GET['cat_id']))) {
 	
 	$result = dbcount("(figure_cat_id)", DB_FIGURE_ITEMS, "figure_cat='".$_GET['cat_id']."'") || dbcount("(figure_cat_id)", DB_FIGURE_CATS, "figure_cat_parent='".$_GET['cat_id']."'");
-	
-	//$result = dbcount("(figure_cat)", DB_FIGURE_ITEMS, "figure_cat='".$_GET['cat_id']."'") || dbcount("(figure_cat_id)", DB_FIGURE_CATS, "figure_cat_parent='".$_GET['cat_id']."'");
-	
+		
 	// ['figcm_0004'] = "Figure Category cannot be deleted"; |
 	// ['figcm_0005'] = "There are Figure or Sub-Categories linked to this category";
 	if (!empty($result)) {
@@ -154,9 +152,8 @@ if ((isset($_GET['action']) && $_GET['action'] == "delete") && (isset($_GET['cat
 		echo form_hidden('figure_cat_language', '', $data['figure_cat_language']);
 	}
 	
-/*	
-	
 	echo "<div class='row m-0'>\n";
+	
 	echo "<label class='label-control col-xs-12 col-sm-3 p-l-0'>".$locale['figc_0004']."</label>\n"; // ['figc_0004'] = "Category Sorting:";
 
 	echo "<div class='col-xs-12 col-sm-3  p-l-0'>\n";
@@ -182,7 +179,6 @@ if ((isset($_GET['action']) && $_GET['action'] == "delete") && (isset($_GET['cat
 	));
 	echo "</div>\n";
 	echo "</div>\n";
-*/	
 
 	
 	
@@ -218,6 +214,7 @@ function showcatlist($parent = 0, $level = 0) {
 			AND figure_cat_id > '1'
 			ORDER BY figure_cat_name
 		");
+	
 	if (dbrows($result) != 0) {
 		while ($data = dbarray($result)) {
 			$description = strip_tags(parse_textarea($data['figure_cat_description']));
