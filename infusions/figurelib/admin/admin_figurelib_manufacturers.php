@@ -22,12 +22,11 @@
 if (!defined("IN_FUSION")) { die("Access Denied"); }
 $locale = fusion_get_locale();
 pageAccess("FI");
+
 if ((isset($_GET['action']) && $_GET['action'] == "delete") && (isset($_GET['man_id']) && isnum($_GET['man_id']))) {
 	
-	$result = dbcount("(figure_manufacturer_id)", DB_FIGURE_ITEMS, "figure_manufacturer='".$_GET['man_id']."'") || dbcount("(figure_manufacturer_id)", DB_FIGURE_MANUFACTURERS, "figure_manufacturer_parent='".$_GET['man_id']."'");
-	
-	//$result = dbcount("(figure_manufacturer)", DB_FIGURE_ITEMS, "figure_manufacturer='".$_GET['man_id']."'") || dbcount("(figure_manufacturer_id)", DB_FIGURE_MANUFACTURERS, "figure_manufacturer_parent='".$_GET['man_id']."'");
-	
+	$result = dbcount("(figure_manufacturer)", DB_FIGURE_ITEMS, "figure_manufacturer='".$_GET['man_id']."'") || dbcount("(figure_manufacturer_id)", DB_FIGURE_MANUFACTURERS, "figure_manufacturer_parent='".$_GET['man_id']."'");
+		
 	// ['figmm_0004'] = "Figure Manufacturer cannot be deleted"; |
 	// ['figmm_0005'] = "There are Figure or Sub-Manufacturer linked to this Manufacturer";
 	if (!empty($result)) {
@@ -154,7 +153,7 @@ if ((isset($_GET['action']) && $_GET['action'] == "delete") && (isset($_GET['man
 		echo form_hidden('figure_manufacturer_language', '', $data['figure_manufacturer_language']);
 	}
 	
-/*		
+	
 	echo "<div class='row m-0'>\n";	
 	echo "<label class='label-control col-xs-12 col-sm-3 p-l-0'>".$locale['figm_0004']."</label>\n"; // ['figm_0004'] = "Manufacturer Sorting:";
 		
@@ -181,8 +180,6 @@ if ((isset($_GET['action']) && $_GET['action'] == "delete") && (isset($_GET['man
 	));
 	echo "</div>\n";
 	echo "</div>\n";
-*/	
-	
 	
 		
 	// ['figm_0011'] = "Save Manufacturer";
