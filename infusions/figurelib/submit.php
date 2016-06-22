@@ -30,6 +30,19 @@ require_once INCLUDES."infusions_include.php";
 // SETTINGS HOLEN
 $fil_settings = get_settings("figurelib");
 
+// TESTAUSGABE VARIABLEN VON SETTINGS
+echo "<b>SETTING CHECK VARAIBLES AVIABLE???? fil settings and  asetting <br></b>";
+echo"<br>";
+echo "FIL SETTINGS - Submit: ".$fil_settings['figure_submit']."<br>";
+echo "FIL SETTINGS - max_w: ".$fil_settings['figure_photo_max_w']."<br>";
+echo "FIL SETTINGS - max_w: ".$fil_settings['figure_photo_max_h']."<br>";
+echo "FIL SETTINGS - max_w: ".$fil_settings['figure_photo_max_b']."<br>";
+echo "FIL SETTINGS - figure_thumb_w Thumb 1: ".$fil_settings['figure_thumb_w']."<br>";
+echo "FIL SETTINGS - figure_thumb_h Thumb 1: ".$fil_settings['figure_thumb_h']."<br>";
+echo "FIL SETTINGS - figure_photo_w Thumb 2: ".$fil_settings['figure_photo_w']."<br>";
+echo "FIL SETTINGS - figure_photo_h Thumb 2: ".$fil_settings['figure_photo_h']."<br>";
+
+
 
 // LANGUAGE
 if (file_exists(INFUSIONS."figurelib/locale/".LOCALESET."locale_figurelib.php")) {
@@ -126,12 +139,10 @@ if (iMEMBER && $fil_settings['figure_submit']) {
 				dbquery_insert(DB_SUBMISSIONS, $inputArray, "save", array(
 									'keep_session' => TRUE));
 
-				
-				//get the last ID for Image Upload
 				$figureID = dblastid();
 
 				// Image Upload
-
+				
 				$upload = form_sanitizer($_FILES['figure_image'], '', 'figure_image');
 				if (!empty($upload)) {
 					$totalFiles = count($upload);
@@ -151,6 +162,7 @@ if (iMEMBER && $fil_settings['figure_submit']) {
 				}		
 
 				// ['figs_0018'] = "Thank you for submitting your Figure";
+
 				addNotice("success", $locale['figs_0018']);
 				redirect(clean_request("submitted=f", array("stype"), TRUE));
 			}
@@ -495,36 +507,11 @@ if (iMEMBER && $fil_settings['figure_submit']) {
 				"max_byte" => $asettings['figure_photo_max_b'],
 				"max_count" => 10
 			)
-		);	
-/*
-		// alternative to file field Images upload
-    $file_input_options = array(
-                'multiple' => TRUE,
-                'template' => 'modern',
-                'type' => 'image',
-                'max_count' => 10,
-                'inline' => TRUE,
-                'upload_path' => IMAGES_FIGURES,
-                'max_width' => $fil_settings['figure_photo_max_w'],
-                'max_height' => $fil_settings['figure_photo_max_h'],
-                'max_byte' => $fil_settings['figure_photo_max_b'],
-                set thumbnail
-                'thumbnail' => 1,
-                'thumbnail_w' => $fil_settings['figure_thumb_w'],
-                'thumbnail_h' => $fil_settings['figure_thumb_h'],
-                'thumbnail_folder' => THUMBS_FIGURES,
-                'delete_original' => 0,
-                 set thumbnail 2 settings
-                'thumbnail2' => 1,
-                'thumbnail2_w' => $fil_settings['figure_photo_w'],
-                'thumbnail2_h' => $fil_settings['figure_photo_h']
-             );
-             
+		);				
 
-             echo form_fileinput("figure_image[]", $locale['figure_136'], "", $file_input_options);
-             echo "<div class='small col-sm-offset-3 m-b-10'><span class='p-l-15'>".sprintf($locale['figure_0217'], parsebytesize($fil_settings['figure_photo_max_b']))."</span></div>\n";		
-*/
 
+
+	
 		// Form "Space"
 		echo "<div class='tbl1'>\n";
 			echo "<hr>\n";
@@ -575,7 +562,13 @@ if (iMEMBER && $fil_settings['figure_submit']) {
 		   echo form_button('submit_figure', $locale['figure_521'], $locale['figure_521'], array('class' => 'btn-primary'));
 
 			echo closeform();
+				
+				// message to admins - dosent work at moment
+				//require_once(INCLUDES."infusions_include.php");
+				//self::send_pm(-103, 1, "Figure Submission", "Figure Submission is done", "y", true);
+				//send_pm(-103, 1, "Figure Submission", "Figure Submission is done", "y", true);
 
+				
 			echo "</div>\n</div>\n";
 		}
 	} else {
