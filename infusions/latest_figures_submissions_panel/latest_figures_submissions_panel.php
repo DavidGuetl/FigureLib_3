@@ -26,7 +26,7 @@ echo "<table>\n";
   echo "<colgroup><col width='50%'><col width='50%'></colgroup>";	
    echo "<td class='small' valign='' align='center' rowspan=''><a href='".INFUSIONS."figurelib/admin.php".$aidlink."&amp;section=figurelib_submissions'><img alt='FigureLib' src='".BASEDIR."administration/images/figurelib.png' border='0'></a></td>\n";
 
-	if ($submits != "") {
+	if ($submits > "0") {
 			
 				echo " <td class='' valign='' align='center'><font color='red'>".$submits."</font> ".$locale['LFS_0003']."</td>\n";
 			
