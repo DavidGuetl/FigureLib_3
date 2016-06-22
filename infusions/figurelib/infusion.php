@@ -41,7 +41,7 @@ $inf_description = $locale['INF_DESC'];
 $inf_version = "1.00";
 $inf_developer = "Catzenjaeger";
 $inf_email = "info@aliencollectors.com";
-$inf_weburl = "http://www.aliencollectors.com";
+$inf_weburl = "http://www.AlienCollectors.com";
 $inf_folder = "figurelib";
 $inf_image = "figurelib.png";
 
