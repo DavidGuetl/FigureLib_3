@@ -1,3 +1,5 @@
-this is the root of PHP Fusion!
+This is the root of PHP Fusion!
 
-The Figurelib infusion you will find in infusions folder
+The "Figurelib" infusion you will find in infusions folder.
+
+Attention: some core files changed for integration of system submittings
