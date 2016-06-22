@@ -250,14 +250,6 @@ PRIMARY KEY (figure_year_id)
 	) ENGINE=MyISAM DEFAULT CHARSET=UTF8 COLLATE=utf8_unicode_ci";
 /////////////////////////////////////////////////////////////////////////////////
 
-//befüllen von Settings
-//$inf_insertdbrow[] = DB_FIGURE_SETTINGS." VALUES ('figure_per_page','10');";
-//$inf_insertdbrow[] = DB_FIGURE_SETTINGS." VALUES ('figure_submit','1');";
-//$inf_insertdbrow[] = DB_FIGURE_SETTINGS." VALUES ('figure_display','0');";
-//$inf_insertdbrow[] = DB_FIGURE_SETTINGS." VALUES ('figure_per_line','4');";
-//$inf_insertdbrow[] = DB_FIGURE_SETTINGS." VALUES ('figure_social_sharing','1');";
-//$inf_insertdbrow[] = DB_FIGURE_SETTINGS." VALUES ('figure_related','1');";
-
 // Settings
 $inf_insertdbrow[] = DB_SETTINGS_INF." (settings_name, settings_value, settings_inf) VALUES('figure_per_page', '10', 'figurelib')";
 $inf_insertdbrow[] = DB_SETTINGS_INF." (settings_name, settings_value, settings_inf) VALUES('figure_per_line', '4', 'figurelib')";
@@ -265,33 +257,28 @@ $inf_insertdbrow[] = DB_SETTINGS_INF." (settings_name, settings_value, settings_
 $inf_insertdbrow[] = DB_SETTINGS_INF." (settings_name, settings_value, settings_inf) VALUES('figure_submit', '1', 'figurelib')";
 $inf_insertdbrow[] = DB_SETTINGS_INF." (settings_name, settings_value, settings_inf) VALUES('figure_related', '1', 'figurelib')";
 $inf_insertdbrow[] = DB_SETTINGS_INF." (settings_name, settings_value, settings_inf) VALUES('figure_social_sharing', '1', 'figurelib')";
-
-$inf_insertdbrow[] = DB_SETTINGS_INF." (settings_name, settings_value, settings_inf) VALUES('figure_photo_max_b', '4500000', 'figurelib')";
-$inf_insertdbrow[] = DB_SETTINGS_INF." (settings_name, settings_value, settings_inf) VALUES('figure_photo_max_w', '3840', 'figurelib')"; //3.840 x 2.160 = 4K Auflösung
-$inf_insertdbrow[] = DB_SETTINGS_INF." (settings_name, settings_value, settings_inf) VALUES('figure_photo_max_h', '2160', 'figurelib')"; //3.840 x 2.160 = 4K Auflösung
-
-
-// Settings
-//$inf_insertdbrow[] = DB_FIGURE_SETTINGS." (settings_name, settings_value, settings_inf) VALUES('figure_per_page', '10', 'figurelib')";
-//$inf_insertdbrow[] = DB_FIGURE_SETTINGS." (settings_name, settings_value, settings_inf) VALUES('figure_per_line', '4', 'figurelib')";
-//$inf_insertdbrow[] = DB_FIGURE_SETTINGS." (settings_name, settings_value, settings_inf) VALUES('figure_display', '0', 'figurelib')";
-//$inf_insertdbrow[] = DB_FIGURE_SETTINGS." (settings_name, settings_value, settings_inf) VALUES('figure_submit', '1', 'figurelib')";
-//$inf_insertdbrow[] = DB_FIGURE_SETTINGS." (settings_name, settings_value, settings_inf) VALUES('figure_related', '1', 'figurelib')";
-//$inf_insertdbrow[] = DB_FIGURE_SETTINGS." (settings_name, settings_value, settings_inf) VALUES('figure_social_sharing', '1', 'figurelib')";
+$inf_insertdbrow[] = DB_SETTINGS_INF." (settings_name, settings_value, settings_inf) VALUES('figure_thumb_ratio', '0', 'figurelib')";
+$inf_insertdbrow[] = DB_SETTINGS_INF." (settings_name, settings_value, settings_inf) VALUES('figure_image_link', '1', 'figurelib')";
+$inf_insertdbrow[] = DB_SETTINGS_INF." (settings_name, settings_value, settings_inf) VALUES('figure_photo_w', '800', 'figurelib')";
+$inf_insertdbrow[] = DB_SETTINGS_INF." (settings_name, settings_value, settings_inf) VALUES('figure_photo_h', '600', 'figurelib')";
+$inf_insertdbrow[] = DB_SETTINGS_INF." (settings_name, settings_value, settings_inf) VALUES('figure_thumb_w', '400', 'figurelib')";
+$inf_insertdbrow[] = DB_SETTINGS_INF." (settings_name, settings_value, settings_inf) VALUES('figure_thumb_h', '300', 'figurelib')";
+$inf_insertdbrow[] = DB_SETTINGS_INF." (settings_name, settings_value, settings_inf) VALUES('figure_photo_max_w', '1800', 'figurelib')";
+$inf_insertdbrow[] = DB_SETTINGS_INF." (settings_name, settings_value, settings_inf) VALUES('figure_photo_max_h', '1600', 'figurelib')";
+$inf_insertdbrow[] = DB_SETTINGS_INF." (settings_name, settings_value, settings_inf) VALUES('figure_photo_max_b', '500000', 'figurelib')";
 
 /////////////////////////////////////////////////////////////////////////////////
 //befüllen von Brand
 $inf_insertdbrow[] = DB_FIGURE_BRANDS." (figure_brand_id, figure_brand_name) VALUES
-(1, '... Please Choose One ...'),
-(2, 'Unknown'),
-(3, 'Alien (1979)'),
-(4, 'Aliens (1986)'),
-(5, 'Alien 3 (1992)'),
-(6, 'Alien: Resurrection (1997)'),
-(7, 'Alien vs. Predator (2004)'),
-(8, 'Aliens vs. Predator: Requiem (2007)'),
-(9, 'Prometheus (2012)'),
-(10, 'Alien: Covenant (2017)')
+(1, 'Unknown'),
+(2, 'Alien (1979)'),
+(3, 'Aliens (1986)'),
+(4, 'Alien 3 (1992)'),
+(5, 'Alien: Resurrection (1997)'),
+(6, 'Alien vs. Predator (2004)'),
+(7, 'Aliens vs. Predator: Requiem (2007)'),
+(8, 'Prometheus (2012)'),
+(9, 'Alien: Covenant (2017)')
 ";
 /////////////////////////////////////////////////////////////////////////////////
 //befüllen von Scales
