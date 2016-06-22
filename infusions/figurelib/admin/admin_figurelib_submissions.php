@@ -19,9 +19,9 @@
 | written permission from the original author(s).
 +--------------------------------------------------------*/
 	//error_reporting(E_ALL);
-	//Formularinhalte prüfen
+	//Formularinhalte prÃ¼fen
 	//print_r ($_POST);
-	//GET-Parameter prüfen
+	//GET-Parameter prÃ¼fen
 	//print_r ($_GET);
 /*--------------------------------------------------------*/
 if (fusion_get_settings("tinymce_enabled")) {
@@ -60,8 +60,8 @@ if (isset($_GET['submit_id']) && isnum($_GET['submit_id'])) {
 			'figure_cat'          => form_sanitizer($_POST['figure_cat'],          '', 'figure_cat'),
 			'figure_editionsize'  => form_sanitizer($_POST['figure_editionsize'],  '', 'figure_editionsize'),
 			'figure_pubdate'      => form_sanitizer($_POST['figure_pubdate'],      '', 'figure_pubdate'),
-			'figure_agb'          => form_sanitizer($_POST['figure_agb'],          0,  'figure_agb'),
-			'figure_submitter'    => form_sanitizer($_POST['figure_submitter'],    0,  'figure_submitter'), 
+			'figure_agb'          => form_sanitizer($_POST['figure_agb'],          '',  'figure_agb'),
+			'figure_submitter'    => form_sanitizer($_POST['figure_submitter'],    '',  'figure_submitter'), 
 			'figure_visibility'   => form_sanitizer($_POST['figure_visibility'],   0,  'figure_visibility'), 
 			'figure_description'  => form_sanitizer($_POST['figure_description'], "",  "figure_description"),
 			'figure_accessories'  => form_sanitizer($_POST['figure_accessories'], "",  "figure_accessories"),
@@ -69,7 +69,7 @@ if (isset($_GET['submit_id']) && isnum($_GET['submit_id'])) {
 			
 			
 /*
-			/////////////// eingefügt BILD
+			/////////////// eingefÃ¼gt BILD
 			if (isset($_FILES['figure_image'])) { // when files is uploaded.
 				$upload = form_sanitizer($_FILES['figure_image'], '', 'figure_image');
 				if (!empty($upload) && !$upload['error']) {
@@ -89,7 +89,7 @@ if (isset($_GET['submit_id']) && isnum($_GET['submit_id'])) {
 				$data['figure_image'] = "";
 
 			}
-			/////////////// eingefügt BILD ende
+			/////////////// eingefÃ¼gt BILD ende
 */			
 			if (defender::safe()) {
 				dbquery_insert(DB_FIGURE_ITEMS, $data, "save");
@@ -118,7 +118,7 @@ if (isset($_GET['submit_id']) && isnum($_GET['submit_id'])) {
 				}	
 					
 				
-				// ALTE SUBMISSION DATEN LÖSCHEN
+				// ALTE SUBMISSION DATEN LÃ–SCHEN
 				$result = dbquery("DELETE FROM ".DB_SUBMISSIONS." WHERE submit_id='".intval($_GET['submit_id'])."'");
 	
 				// ['figs_0003'] = "Figures Submissions has been published";
@@ -180,7 +180,7 @@ if (isset($_GET['submit_id']) && isnum($_GET['submit_id'])) {
 				"figure_editionsize"  => $submit_criteria['figure_editionsize'],
 				"figure_pubdate"      => $submit_criteria['figure_pubdate'],
 				"figure_agb"          => $submit_criteria['figure_agb'],
-				"figure_submitter"    => $userdata['user_id'],
+				"figure_submitter"    => $submit_criteria['figure_submitter'],
 				"figure_visibility"   => 0,
 				"figure_description"  => parse_textarea($submit_criteria['figure_description']),
 				"figure_accessories"  => parse_textarea($submit_criteria['figure_accessories']),
@@ -198,7 +198,7 @@ if (isset($_GET['submit_id']) && isnum($_GET['submit_id'])) {
 			echo "<div class='overflow-hide'>\n";
 			
 			// ['figs_0005'] = "Posted by ";
-			echo $locale['figs_0005'].profile_link($data['user_id'], $data['user_name'], $data['user_status'])."<br/>\n";
+			echo $locale['figs_0005'].profile_link($data['user_id'], $data['user_name'], $data['user_status'])." (User ID/Submitter ID: ".$callback_data['figure_submitter'].")<br/>  \n";
 			
 			// ['figs_0006'] = "The above Figure was submitted by ";
 			echo $locale['figs_0006'].timer($data['submit_datestamp'])." - ".showdate("shortdate", $data['submit_datestamp']);
@@ -247,8 +247,7 @@ if (isset($_GET['submit_id']) && isnum($_GET['submit_id'])) {
 									"width" => "520px",
 									"placeholder" => $locale['figurelib/admin/figurelib.php_008'],
 									"query" => (multilang_table("FI") ? "WHERE figure_cat_language='".LANGUAGE."'" : "")
-								), DB_FIGURE_CATS, "figure_cat_name", "figure_cat_id", "figure_cat_parent
-								");														
+								), DB_FIGURE_CATS, "figure_cat_name", "figure_cat_id", "figure_cat_parent");														
 // Text Field "Variant" /////////////////////////////////////////////////////////////////////////////////////////////////////
 									// ['figurelib/admin/figurelib.php_010'] = "Variant";
 									// ['figurelib/admin/figurelib.php_011'] = "Variant of this figure (e.g. --> black Version)";
@@ -508,6 +507,15 @@ if (isset($_GET['submit_id']) && isnum($_GET['submit_id'])) {
 										echo "<hr>\n";
 									echo "</div>\n";;	
 // File Field "Images" /////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/*
+				if ($figure_image != "") {
+				echo "<td width='80' class='tbl' valign='top'>".$locale['book_588']."</td>\n<td class='tbl' valign='top'>\n";
+				echo "<label><img src='".IMAGES_FIGURES.$figure_image."' alt='' /><br />\n";
+				echo "<input type='checkbox' name='del_image' value='y' /> ".$locale['book_131']."</label>\n";
+				echo "</td>\n</tr>\n<tr>\n";
+			}
+*/
+
 									// ['figurelib/admin/figurelib.php_059'] = "Upload Image:";
 		echo form_fileinput("figure_image[]", $locale['figurelib/admin/figurelib.php_059'], "", array(
 									"inline" => TRUE,
@@ -603,6 +611,30 @@ if (isset($_GET['submit_id']) && isnum($_GET['submit_id'])) {
 		echo "<tbody>\n";
 		while ($data = dbarray($result)) {
 			$submit_criteria = unserialize($data['submit_criteria']);
+			
+			
+// ########################################################################################################	
+/*
+	// FOLDERS
+if (!defined("FIGURES")) {
+	define("FIGURES", INFUSIONS.$inf_folder."/figures/");
+}
+if (!defined("IMAGES_FIGURES")) {
+	define("IMAGES_FIGURES", INFUSIONS.$inf_folder."/figures/images/");
+}
+if (!defined("THUMBS_FIGURES")) {
+	define("THUMBS_FIGURES", INFUSIONS.$inf_folder."/figures/images/thumbs/");
+}
+
+		
+			if (isset($_POST['del_image'])) {
+				if (!empty($data['figure_image']) && file_exists(IMAGES_FIGURES.$data['figure_image'])) { unlink(IMAGES_FIGURES.$data['figure_image']); }
+				$figure_image = "";
+			} else {
+				$figure_image = $data['figure_image'];
+			}
+// ########################################################################################################			
+*/			
 			echo "<tr>\n";
 			echo "<td><a href='".clean_request("submit_id=".$data['submit_id'], array(
 					"section",
