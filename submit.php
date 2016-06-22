@@ -33,7 +33,7 @@ $modules = array(
 	'a' => db_exists(DB_ARTICLES),
 	'd' => db_exists(DB_DOWNLOADS),
 	'l' => db_exists(DB_WEBLINKS),
-    'b' => db_exists(DB_BLOG)
+    'b' => db_exists(DB_BLOG),
 	'f' => db_exists(DB_FIGURE_ITEMS)
 );
 
@@ -56,7 +56,7 @@ if ($sum or isset($_GET['stype']) && !empty($modules[$_GET['stype']])) {
     } elseif ($stype === "d") {
         include INFUSIONS."downloads/download_submit.php";
 	} elseif ($stype === "f") {
-        include INFUSIONS."	figurelib/submit.php";
+        include INFUSIONS."figurelib/submit.php";
     } else {
         redirect("index.php");
     }
