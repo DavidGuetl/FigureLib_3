@@ -132,7 +132,7 @@ $link_type = array(
 	'A' => fusion_get_settings("siteurl")."infusions/articles/articles.php?article_id=%s",
 	'B' => fusion_get_settings("siteurl")."infusions/blog/blog.php?readmore=%s",
 	'C' => fusion_get_settings("siteurl")."viewpage.php?page_id=%s",
-	'F' => fusion_get_settings("siteurl")."infusions/figurelib/figures.php?figure_id=%s",
+	'FI' => fusion_get_settings("siteurl")."infusions/figurelib/figures.php?figure_id=%s",
 	'PH' => fusion_get_settings("siteurl")."infusions/gallery/gallery.php?photo_id=%s",
     'UP' => fusion_get_settings("site_url")."profile.php?lookup=%s"
 );
