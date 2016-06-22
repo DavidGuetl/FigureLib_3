@@ -28,7 +28,7 @@ $modules = array(
 	'a' => db_exists(DB_ARTICLES),
 	'd' => db_exists(DB_DOWNLOADS),
 	'l' => db_exists(DB_WEBLINKS),
-	'b' => db_exists(DB_BLOG));
+	'b' => db_exists(DB_BLOG),
 	'f' => db_exists(DB_FIGURE_ITEMS));
 $sum = array_sum($modules);
 if (!$sum) {
