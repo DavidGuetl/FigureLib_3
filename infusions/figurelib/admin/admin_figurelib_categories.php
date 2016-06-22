@@ -211,7 +211,6 @@ function showcatlist($parent = 0, $level = 0) {
 			FROM ".DB_FIGURE_CATS." 
 			WHERE figure_cat_parent='".$parent."'".(multilang_table("FI") ? " 
 			AND figure_cat_language='".LANGUAGE."'" : "")." 
-			AND figure_cat_id > '1'
 			ORDER BY figure_cat_name
 		");
 	
