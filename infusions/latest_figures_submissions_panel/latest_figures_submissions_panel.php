@@ -17,22 +17,14 @@ $locale['LFS_0001']= "Figures Submissions";
 $locale['LFS_0002']= "No Submissions";
 $locale['LFS_0003']= "Submits";
 
-
-	
-	
-
 $submits = dbcount("(submit_id)", DB_SUBMISSIONS, "submit_type='f'");	
-
-
 
 openside($locale['LFS_0001']);
 
 echo "<table>\n";
   echo "<tr>\n";
   echo "<colgroup><col width='50%'><col width='50%'></colgroup>";	
-   // echo "<td class='small' valign='' align='center' rowspan=''><a href='".INFUSIONS."figurelib/admin/figurelib_submissions.php'><img alt='FigureLib' src='".INFUSIONS.$inf_folder."/images/figurelib.png' border='0'></a></td>\n";
-		
-   echo "<td class='small' valign='' align='center' rowspan=''><a href='".INFUSIONS."figurelib/admin/figurelib_submissions.php'><img alt='FigureLib' src='".BASEDIR."administration/images/figurelib.png' border='0'></a></td>\n";
+   echo "<td class='small' valign='' align='center' rowspan=''><a href='".INFUSIONS."figurelib/admin/admin_figurelib_submissions.php'><img alt='FigureLib' src='".BASEDIR."administration/images/figurelib.png' border='0'></a></td>\n";
 	if ($submits != "") {
 			
 				echo " <td class='' valign='' align='center'><font color='red'>".$submits."</font> ".$locale['LFS_0003']."</td>\n";
@@ -44,10 +36,7 @@ echo "<table>\n";
 			} 
 
   echo "</tr>\n";
-
 echo "</table>\n";
 
 closeside();
- 
-
  
