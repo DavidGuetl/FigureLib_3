@@ -173,8 +173,8 @@ if (iMEMBER && $fil_settings['figure_submit']) {
 		   echo "<div class='well text-center'><p><strong>".$locale['figs_0018']."</strong></p>";
 			
 			// ['figs_0019'] = "Submit another Figure";
-			//echo "<p><a href='submit.php?stype=f'>".$locale['figs_0019']."</a></p>";
-            echo "<p><a href='".INFUSIONS."figurelib/submit.php?stype=f'>".$locale['figs_0019']."</a></p>";
+			echo "<p><a href='submit.php?stype=f'>".$locale['figs_0019']."</a></p>";
+            		//echo "<p><a href='".INFUSIONS."figurelib/submit.php?stype=f'>".$locale['figs_0019']."</a></p>";
 			
 			
 			// ['figs_0020'] = "Return to [SITENAME]";
