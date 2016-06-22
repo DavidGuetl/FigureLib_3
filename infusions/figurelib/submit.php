@@ -1,3 +1,4 @@
+
 <?php
 /*-------------------------------------------------------+
 | PHP-Fusion Content Management System
@@ -20,16 +21,15 @@
 | written permission from the original author(s).
 +--------------------------------------------------------*/
 //if (!defined("IN_FUSION")) { die("Access Denied"); }
-
 require_once "../../maincore.php";
 include "infusion_db.php";
 require_once THEMES . "templates/header.php";
 require_once INCLUDES."html_buttons_include.php";
 require_once INCLUDES."infusions_include.php";
-
 // SETTINGS HOLEN
 $fil_settings = get_settings("figurelib");
 
+/*
 // TESTAUSGABE VARIABLEN VON SETTINGS
 echo "<b>SETTING CHECK VARAIBLES AVIABLE???? fil settings and  asetting <br></b>";
 echo"<br>";
@@ -41,8 +41,7 @@ echo "FIL SETTINGS - figure_thumb_w Thumb 1: ".$fil_settings['figure_thumb_w']."
 echo "FIL SETTINGS - figure_thumb_h Thumb 1: ".$fil_settings['figure_thumb_h']."<br>";
 echo "FIL SETTINGS - figure_photo_w Thumb 2: ".$fil_settings['figure_photo_w']."<br>";
 echo "FIL SETTINGS - figure_photo_h Thumb 2: ".$fil_settings['figure_photo_h']."<br>";
-
-
+*/
 
 // LANGUAGE
 if (file_exists(INFUSIONS."figurelib/locale/".LOCALESET."locale_figurelib.php")) {
@@ -50,13 +49,9 @@ if (file_exists(INFUSIONS."figurelib/locale/".LOCALESET."locale_figurelib.php"))
 } else {
     include INFUSIONS."figurelib/locale/English/locale_figurelib.php";
 }
-
 // ['figure_521'] = "Submit Figure";
 add_to_title($locale['global_200'].$locale['figure_521']);
-
 opentable("<i class='fa fa-globe fa-lg m-r-10'></i>".$locale['figure_521']);
-
-
 // Can Visitor Submit?
 if (iMEMBER && $fil_settings['figure_submit']) {
 	
@@ -92,7 +87,6 @@ if (iMEMBER && $fil_settings['figure_submit']) {
 			"figure_agb" => 0,
 			"figure_datestamp" => "",	
 	);
-
 		// Form posted
 		if (isset($_POST['submit_figure'])) {
 			//$submit_info['figure_description'] = nl2br(parseubb(stripinput($_POST['figure_description'])));
@@ -138,9 +132,7 @@ if (iMEMBER && $fil_settings['figure_submit']) {
 				);
 				dbquery_insert(DB_SUBMISSIONS, $inputArray, "save", array(
 									'keep_session' => TRUE));
-
 				$figureID = dblastid();
-
 				// Image Upload
 				
 				$upload = form_sanitizer($_FILES['figure_image'], '', 'figure_image');
@@ -160,42 +152,35 @@ if (iMEMBER && $fil_settings['figure_submit']) {
 						}
 					}
 				}		
-
 				// ['figs_0018'] = "Thank you for submitting your Figure";
-
 				addNotice("success", $locale['figs_0018']);
 				redirect(clean_request("submitted=f", array("stype"), TRUE));
 			}
 		}
 		if (isset($_GET['submitted']) && $_GET['submitted'] == "f") {
-
            // ['figs_0018'] = "Thank you for submitting your Figure";
 		   echo "<div class='well text-center'><p><strong>".$locale['figs_0018']."</strong></p>";
 			
 			// ['figs_0019'] = "Submit another Figure";
-			echo "<p><a href='submit.php?stype=f'>".$locale['figs_0019']."</a></p>";
-            		//echo "<p><a href='".INFUSIONS."figurelib/submit.php?stype=f'>".$locale['figs_0019']."</a></p>";
+			//echo "<p><a href='submit.php?stype=f'>".$locale['figs_0019']."</a></p>";
+            echo "<p><a href='".INFUSIONS."figurelib/submit.php?stype=f'>".$locale['figs_0019']."</a></p>";
 			
 			
 			// ['figs_0020'] = "Return to [SITENAME]";
-			echo "<p><a href='home.php'>".str_replace("[SITENAME]", fusion_get_settings("sitename"), $locale['figs_0020'])."</a></p>\n";
+			echo "<p><a href='".BASEDIR."home.php'>".str_replace("[SITENAME]", fusion_get_settings("sitename"), $locale['figs_0020'])."</a></p>\n";
 			echo "</div>\n";
-
         } else {
 			echo "<div class='panel panel-default tbl-border'>\n<div class='panel-body'>\n";
 			
 			// ['figure_532'] = "Use the following form to submit a Alien figure. Your submission will be reviewed by an ::
 			echo "<div class='alert alert-info m-b-20 submission-guidelines'>".str_replace("[SITENAME]", fusion_get_settings("sitename"),$locale['figure_532'])."</div>\n";
-
             //echo openform('submit_form', 'post', BASEDIR."submit.php?stype=f");
 			echo openform('submit_form', 'post', INFUSIONS."figurelib/submit.php?stype=f");
 		
 		// Hidden Field "Freigabe"
 		echo form_hidden("figure_freigabe", "", "0");
-
 		// Hidden Field "Submitter"
 		echo form_hidden("figure_submitter", "", $userdata['user_id']);
-
 		// Select Field "Category"
 		echo form_select_tree("figure_cat", $locale['figure_413'], $criteriaArray['figure_cat'], 
 			array(
@@ -210,7 +195,6 @@ if (iMEMBER && $fil_settings['figure_submit']) {
 				"allowclear" => true,
 			),
 		DB_FIGURE_CATS, "figure_cat_name", "figure_cat_id", "figure_cat_parent");
-
 		// Text Field "Title"
 		echo form_text("figure_title", $locale['figure_411'], $criteriaArray['figure_title'],
 			array(
@@ -221,7 +205,6 @@ if (iMEMBER && $fil_settings['figure_submit']) {
 				"error_text" => $locale['figurelib-error-101']
 			)
 		);
-
 		// Text Field "Variant"
 		echo form_text("figure_variant", $locale['figure_441'], $criteriaArray['figure_variant'],
 			array(
@@ -230,7 +213,6 @@ if (iMEMBER && $fil_settings['figure_submit']) {
 				"placeholder" => $locale['figure_1802']
 			)
 		);
-
 		// Select Field "Manufacturer"
 		echo form_select_tree("figure_manufacturer", $locale['figure_417'], $criteriaArray['figure_manufacturer'], 
 			array(
@@ -245,7 +227,6 @@ if (iMEMBER && $fil_settings['figure_submit']) {
 				"allowclear" => true,
 			),
 		DB_FIGURE_MANUFACTURERS, "figure_manufacturer_name", "figure_manufacturer_id", "figure_manufacturer_parent");
-
 		// Text Field "Artists"
 		echo form_text("figure_artists", $locale['figure_452'], $criteriaArray['figure_artists'],
 			array(
@@ -254,7 +235,6 @@ if (iMEMBER && $fil_settings['figure_submit']) {
 				"placeholder" => $locale['figure_1803']
 			)
 		);
-
 		// Text Field "Country"
 		echo form_text("figure_country", $locale['figure_436'], $criteriaArray['figure_country'],
 			array(
@@ -263,7 +243,6 @@ if (iMEMBER && $fil_settings['figure_submit']) {
 				"placeholder" => $locale['figure_1804']
 			)
 		);
-
 		// Select Field "Brand"
 		echo form_select_tree("figure_brand", $locale['figure_438'], $criteriaArray['figure_brand'], 
 			array(
@@ -278,7 +257,6 @@ if (iMEMBER && $fil_settings['figure_submit']) {
 				"allowclear" => true,
 			),
 		DB_FIGURE_BRANDS, "figure_brand_name", "figure_brand_id", "figure_brand_parent");
-
 		// Text Field "Series"
 		echo form_text("figure_series", $locale['figure_439'], $criteriaArray['figure_series'],
 			array(
@@ -287,12 +265,10 @@ if (iMEMBER && $fil_settings['figure_submit']) {
 				"placeholder" => $locale['figure_1805']
 			)
 		);
-
 		// Form "Space"
 		echo "<div class='tbl1'>\n";
 			echo "<hr>\n";
 		echo "</div>\n";
-
 		// Select Field "Scale"
 		echo form_select_tree("figure_scale", $locale['figure_442'], $criteriaArray['figure_scale'], 
 			array(
@@ -307,7 +283,6 @@ if (iMEMBER && $fil_settings['figure_submit']) {
 				"allowclear" => true,
 			),
 		DB_FIGURE_SCALES, "figure_scale_name", "figure_scale_id", "figure_scale_parent");
-
 		// Text Field "Weight"
 		echo form_text("figure_weight", $locale['figure_443'], $criteriaArray['figure_weight'],
 			array(
@@ -316,7 +291,6 @@ if (iMEMBER && $fil_settings['figure_submit']) {
 				"placeholder" => $locale['figure_1806']
 			)
 		);
-
 		// Select Field "Height"
 		echo form_select_tree("figure_height", $locale['figure_444'], $criteriaArray['figure_height'], 
 			array(
@@ -331,7 +305,6 @@ if (iMEMBER && $fil_settings['figure_submit']) {
 				"allowclear" => true,
 			),
 		DB_FIGURE_MEASUREMENTS, "figure_measurements_inch", "figure_measurements_id", "figure_measurements_parent");
-
 		// Select Field "Width"
 		echo form_select_tree("figure_width", $locale['figure_445'], $criteriaArray['figure_width'], 
 			array(
@@ -346,7 +319,6 @@ if (iMEMBER && $fil_settings['figure_submit']) {
 				"allowclear" => true,
 			),
 		DB_FIGURE_MEASUREMENTS, "figure_measurements_inch", "figure_measurements_id", "figure_measurements_parent");
-
 		// Select Field "Depth"
 		echo form_select_tree("figure_depth", $locale['figure_446'], $criteriaArray['figure_depth'], 
 			array(
@@ -366,7 +338,6 @@ if (iMEMBER && $fil_settings['figure_submit']) {
 		echo "<div class='tbl1'>\n";
 			echo "<hr>\n";
 		echo "</div>\n";
-
 		// Select Field "Material"
 		echo form_select_tree("figure_material", $locale['figure_447'], $criteriaArray['figure_material'], 
 			array(
@@ -381,7 +352,6 @@ if (iMEMBER && $fil_settings['figure_submit']) {
 				"allowclear" => true,
 			),
 		DB_FIGURE_MATERIALS, "figure_material_name", "figure_material_id", "figure_material_parent");
-
 		// Select Field "POA"
 		echo form_select_tree("figure_poa", $locale['figure_455'], $criteriaArray['figure_poa'], 
 			array(
@@ -396,7 +366,6 @@ if (iMEMBER && $fil_settings['figure_submit']) {
 				"allowclear" => true,
 			),
 		DB_FIGURE_POAS, "figure_poa_name", "figure_poa_id", "figure_poa_parent");
-
 		// Select Field "Packaging"
 		echo form_select_tree("figure_packaging", $locale['figure_448'], $criteriaArray['figure_packaging'], 
 			array(
@@ -411,12 +380,10 @@ if (iMEMBER && $fil_settings['figure_submit']) {
 				"allowclear" => true,
 			),
 		DB_FIGURE_PACKAGINGS, "figure_packaging_name", "figure_packaging_id", "figure_packaging_parent");
-
 		// Form "Space"
 		echo "<div class='tbl1'>\n";
 			echo "<hr>\n";
 		echo "</div>\n";
-
 		// Select Field "Pub Date"
 		echo form_select_tree("figure_pubdate", $locale['figure_419'], $criteriaArray['figure_pubdate'], 
 			array(
@@ -432,7 +399,6 @@ if (iMEMBER && $fil_settings['figure_submit']) {
 			),
 		DB_FIGURE_YEARS, "figure_year", "figure_year_id", "figure_year_parent");
 		
-
 		// Text Field "Retail Price"
 		echo form_text("figure_retailprice", $locale['figure_449'], $criteriaArray['figure_retailprice'],
 			array(
@@ -444,7 +410,6 @@ if (iMEMBER && $fil_settings['figure_submit']) {
 				"type" => "number"
 			)
 		);
-
 		// Text Field "Used Price"
 		echo form_text("figure_usedprice", $locale['figure_456'], $criteriaArray['figure_usedprice'],
 			array(
@@ -476,7 +441,6 @@ if (iMEMBER && $fil_settings['figure_submit']) {
 				"allowclear" => true,
 			),
 		DB_FIGURE_LIMITATIONS, "figure_limitation_name", "figure_limitation_id", "figure_limitation_parent");
-
 		// Text Field "Editions Size"
 		echo form_text("figure_editionsize", $locale['figure_451'], $criteriaArray['figure_editionsize'],
 			array(
@@ -488,13 +452,11 @@ if (iMEMBER && $fil_settings['figure_submit']) {
 				"type" => "number"
 			)
 		);
-
 		// Form "Space"
 		echo "<div class='tbl1'>\n";
 			echo "<hr>\n";
 		echo "</div>\n";
 				
-
 		// File Field "Images"
 		echo form_fileinput("figure_image[]", $locale['figure_136'], "", 
 			array(
@@ -508,9 +470,6 @@ if (iMEMBER && $fil_settings['figure_submit']) {
 				"max_count" => 10
 			)
 		);				
-
-
-
 	
 		// Form "Space"
 		echo "<div class='tbl1'>\n";
@@ -527,7 +486,6 @@ if (iMEMBER && $fil_settings['figure_submit']) {
 				"form_name" => "submit_form",
 			)
 		);
-
 		// Text Area "Description"
 		echo form_textarea("figure_description", $locale['figure_423'], $criteriaArray['figure_description'],
 			array(
@@ -538,12 +496,10 @@ if (iMEMBER && $fil_settings['figure_submit']) {
 				"form_name" => "submit_form",
 			)
 		);
-
 		// Form "Space"
 		echo "<div class='tbl1'>\n";
 			echo "<hr>\n";
 		echo "</div>\n";
-
 		// Checkbox "Terms"
 		echo form_checkbox("figure_agb", $locale['figure_1810'], $criteriaArray['figure_agb'],
 			array(
@@ -560,14 +516,12 @@ if (iMEMBER && $fil_settings['figure_submit']) {
 		
 		  // ['figure_521'] = "Submit Figure";
 		   echo form_button('submit_figure', $locale['figure_521'], $locale['figure_521'], array('class' => 'btn-primary'));
-
 			echo closeform();
 				
 				// message to admins - dosent work at moment
 				//require_once(INCLUDES."infusions_include.php");
 				//self::send_pm(-103, 1, "Figure Submission", "Figure Submission is done", "y", true);
 				//send_pm(-103, 1, "Figure Submission", "Figure Submission is done", "y", true);
-
 				
 			echo "</div>\n</div>\n";
 		}
