@@ -42,7 +42,7 @@ $submission_types = array(
 	DB_DOWNLOADS => array('link'=>"submit.php?stype=d", 'title'=>$locale['submit_0002']),
 	DB_PHOTOS => array('link'=>"submit.php?stype=p", 'title'=>$locale['submit_0003']),
 	DB_WEBLINKS => array('link'=>"submit.php?stype=l", 'title'=>$locale['submit_0004']),
-	DB_FIGURE_ITEMS => array('link'=>"submit.php?stype=f", 'title'=>$locale['submit_0006']),
+	DB_FIGURE_ITEMS => array('link'=>INFUSIONS."figurelib/submit.php?stype=f", 'title'=>$locale['submit_0006']),
 );
 
 foreach($submission_types as $db => $submit) {
