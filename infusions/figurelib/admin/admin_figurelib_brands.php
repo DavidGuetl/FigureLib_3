@@ -211,7 +211,6 @@ function showbrandlist($parent = 0, $level = 0) {
 			FROM ".DB_FIGURE_BRANDS." 
 			WHERE figure_brand_parent='".$parent."'".(multilang_table("FI") ? " 
 			AND figure_brand_language='".LANGUAGE."'" : "")." 
-			AND figure_brand_id > '1'
 			ORDER BY figure_brand_name
 		");
 	if (dbrows($result) != 0) {
