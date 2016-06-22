@@ -47,9 +47,10 @@ if (!empty($result)) {
 			"figure_accessories" => "", 
 			"figure_description" => "", 
 			"figure_pubdate" => "", 
-			"figure_agb" => 0,
+			"figure_agb" => "",
 			"figure_datestamp" => time(),
 			"figure_visibility" => iGUEST,
+			"figure_submitter" => "",
 	);
 
 	
@@ -86,8 +87,8 @@ if (!empty($result)) {
 			"figure_cat"          => form_sanitizer($_POST['figure_cat'],          "", "figure_cat"),
 			"figure_editionsize"  => form_sanitizer($_POST['figure_editionsize'],  "", "figure_editionsize"),
 			"figure_pubdate"      => form_sanitizer($_POST['figure_pubdate'],      "", "figure_pubdate"),
-			"figure_agb"          => form_sanitizer($_POST['figure_agb'],          0,  "figure_agb"),
-			"figure_submitter"    => form_sanitizer($_POST['figure_submitter'],    0,  "figure_submitter"), 
+			"figure_agb"          => form_sanitizer($_POST['figure_agb'],          "",  "figure_agb"),
+			"figure_submitter"    => form_sanitizer($_POST['figure_submitter'],    "",  "figure_submitter"), 
 			"figure_visibility"   => form_sanitizer($_POST['figure_visibility'],   0,  "figure_visibility"), 
 			"figure_description"  => addslash(nl2br(parseubb(stripinput($_POST['figure_description'])))),
 			"figure_accessories"  => addslash(nl2br(parseubb(stripinput($_POST['figure_accessories']))))
