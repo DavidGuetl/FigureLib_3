@@ -212,7 +212,6 @@ function showmanlist($parent = 0, $level = 0) {
 			FROM ".DB_FIGURE_MANUFACTURERS." 
 			WHERE figure_manufacturer_parent='".$parent."'".(multilang_table("FI") ? " 
 			AND figure_manufacturer_language='".LANGUAGE."'" : "")." 
-			AND figure_manufacturer_id > '1'
 			ORDER BY figure_manufacturer_name
 		");
 	if (dbrows($result) != 0) {
