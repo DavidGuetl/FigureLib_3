@@ -161,6 +161,15 @@ if (!empty($result)) {
 									"width" => "520px",
 									"required" => FALSE
 								));	
+/*	alternative to checkbox .. here a select form							
+								// ['figurelib/admin/figurelib.php_071'] = "HIDE this figure on page & panels.";
+								// ['figurelib/admin/figurelib.php_072'] = "SHOW this figure on page & panels.";
+		echo form_select('figure_freigabe', $locale['figurelib/admin/figurelib.php_069'], $data['figure_freigabe'], array(
+									"inline" => TRUE, 
+									"width" => "520px",
+									"options" => array($locale['figurelib/admin/figurelib.php_071'], $locale['figurelib/admin/figurelib.php_072'])
+								));
+*/								
 // Form "Space" ////////////////////////////////////////////////////////////////////////////////////////////////////////////
 									echo "<div class='tbl1'>\n";
 										echo "<hr>\n";
