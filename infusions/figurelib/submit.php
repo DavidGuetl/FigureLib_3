@@ -85,7 +85,8 @@ if (iMEMBER && $fil_settings['figure_submit']) {
 			"figure_description" => "", 
 			"figure_pubdate" => "", 
 			"figure_agb" => 0,
-			"figure_datestamp" => "",	
+			"figure_datestamp" => "",
+			"figure_submitter" => $userdata['user_id'],		
 	);
 		// Form posted
 		if (isset($_POST['submit_figure'])) {
@@ -117,7 +118,7 @@ if (iMEMBER && $fil_settings['figure_submit']) {
 				"figure_editionsize"  => form_sanitizer($_POST['figure_editionsize'],  "", "figure_editionsize"),
 				"figure_pubdate"      => form_sanitizer($_POST['figure_pubdate'],      "", "figure_pubdate"),
 				"figure_agb"          => form_sanitizer($_POST['figure_agb'],          0,  "figure_agb"),
-				"figure_submitter"    => form_sanitizer($_POST['figure_submitter'],    0,  "figure_submitter"), 
+				"figure_submitter"    => form_sanitizer($_POST['figure_submitter'],    "", "figure_submitter"), 
 				"figure_description"  => addslash(nl2br(parseubb(stripinput($_POST['figure_description'])))),
 				"figure_accessories"  => addslash(nl2br(parseubb(stripinput($_POST['figure_accessories'])))),			
 			);
@@ -147,6 +148,10 @@ if (iMEMBER && $fil_settings['figure_submit']) {
 								'figure_images_thumb' => $currentUpload['thumb1_name']
 							);
 							dbquery_insert(DB_FIGURE_IMAGES, $imageArray, "save");
+							
+							// message to to admin - dosent work atm
+							// send_pm("1", "1", "Hi - Subject", "Your Message", "y", "false");
+							
 						} else {
 							echo $currentUpload['error'];
 						}
@@ -164,8 +169,7 @@ if (iMEMBER && $fil_settings['figure_submit']) {
 			// ['figs_0019'] = "Submit another Figure";
 			//echo "<p><a href='submit.php?stype=f'>".$locale['figs_0019']."</a></p>";
             echo "<p><a href='".INFUSIONS."figurelib/submit.php?stype=f'>".$locale['figs_0019']."</a></p>";
-			
-			
+						
 			// ['figs_0020'] = "Return to [SITENAME]";
 			echo "<p><a href='".BASEDIR."home.php'>".str_replace("[SITENAME]", fusion_get_settings("sitename"), $locale['figs_0020'])."</a></p>\n";
 			echo "</div>\n";
@@ -179,8 +183,13 @@ if (iMEMBER && $fil_settings['figure_submit']) {
 		
 		// Hidden Field "Freigabe"
 		echo form_hidden("figure_freigabe", "", "0");
+		
 		// Hidden Field "Submitter"
 		echo form_hidden("figure_submitter", "", $userdata['user_id']);
+		
+		// Hidden Field "Datestamp"
+		echo form_hidden("figure_datestamp", "", time());
+		
 		// Select Field "Category"
 		echo form_select_tree("figure_cat", $locale['figure_413'], $criteriaArray['figure_cat'], 
 			array(
@@ -515,7 +524,7 @@ if (iMEMBER && $fil_settings['figure_submit']) {
 		echo "</div>\n";
 		
 		  // ['figure_521'] = "Submit Figure";
-		   echo form_button('submit_figure', $locale['figure_521'], $locale['figure_521'], array('class' => 'btn-primary'));
+			echo form_button("submit_figure", $locale['figure_521'], $locale['figure_521'], array("class" => "btn-primary"));
 			echo closeform();
 				
 				// message to admins - dosent work at moment
