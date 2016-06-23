@@ -15,7 +15,8 @@ if (!defined("IN_FUSION")) { die("Access Denied"); }
 // LOCALE
 $locale['LFS_0001']= "Figures Submissions";
 $locale['LFS_0002']= "No Submissions";
-$locale['LFS_0003']= "Submits";
+$locale['LFS_0003']= "Submit";
+$locale['LFS_0004']= "Submits";
 
 $submits = dbcount("(submit_id)", DB_SUBMISSIONS, "submit_type='f'");	
 
@@ -27,14 +28,17 @@ echo "<table>\n";
    echo "<td class='small' valign='' align='center' rowspan=''><a href='".INFUSIONS."figurelib/admin.php".$aidlink."&amp;section=figurelib_submissions'><img alt='FigureLib' src='".BASEDIR."administration/images/figurelib.png' border='0'></a></td>\n";
 
 	if ($submits > "0") {
-			
-				echo " <td class='' valign='' align='center'><font color='red'>".$submits."</font> ".$locale['LFS_0003']."</td>\n";
-			
-			} else {
-			
-				echo "<td>".$locale['LFS_0002']."</td>";
-			
-			} 
+		
+				if ($submits == "1") {
+					echo " <td class='' valign='' align='center'><font color='red'>".$submits."</font> ".$locale['LFS_0003']."</td>\n";
+					} else {
+					echo "<td class='' valign='' align='center'><font color='red'>".$submits."</font> ".$locale['LFS_0004']."</td>\n";	
+					}
+	} else {
+
+			echo "<td>".$locale['LFS_0002']."</td>";		
+	} 
+					
 
   echo "</tr>\n";
 echo "</table>\n";
