@@ -817,8 +817,10 @@ $locale['figurelib/admin/figurelib.php_065'] = "There are no figure categories d
 $locale['figurelib/admin/figurelib.php_066'] = "You must define at least one category before you can add any figure";
 $locale['figurelib/admin/figurelib.php_067'] = "Click here";
 $locale['figurelib/admin/figurelib.php_068'] = " to go to Figure Categories";
-$locale['figurelib/admin/figurelib.php_069'] = "Figure release on page";
+$locale['figurelib/admin/figurelib.php_069'] = "Show figure on page?";
 $locale['figurelib/admin/figurelib.php_070'] = "You must choose a Category.";
+$locale['figurelib/admin/figurelib.php_071'] = "HIDE this figure on page & panels.";
+$locale['figurelib/admin/figurelib.php_072'] = "SHOW this figure on page & panels.";
 
 // admin_figurelib_settings.php
 $locale['figure_settings'] = "FigureLib Settings";
