@@ -32,7 +32,77 @@ if (!function_exists('render_figure_item')) {
 	if ($info['figure_rows']) {
 		foreach($info['item'] as $figure_id => $data) {	
 				
-		echo "<div class='panel panel-default'>\n";
+	
+	// AB HIER ANSISCHT GALLERIE ODER TABELLEN FORM //
+			$fil_settings = get_settings("figurelib"); 
+			if ($fil_settings['figure_display']) {	
+							
+	// GALLERIEANSICHT   
+			
+	echo "<table style='text-align:center;' cellpadding='0' cellspacing='1' width='100%'>\n<tr>\n";
+	if ($i != 0 && ($i % $asettings['figure_per_line'] == 0)) { echo "</tr>\n<tr>\n"; }
+	
+	echo "<td style='text-align:center;' class=''>\n";
+
+	echo "<a href='".$data['figure']['link']."'><img src='".INFUSIONS."figurelib/images/default.png"."' alt='".trimlink($data['figure_title'],50)."' title='".trimlink($data['figure_title'],100)."' style='border:0px;max-height:100px;max-width:100px' />";	
+	echo "<br />\n";						
+	// ['figure_453'] = "[";
+	// ['figure_454'] = "] ";
+	echo "<strong>".$locale['figure_453']."".trimlink($data['figure']['manufacturer'],15)."".$locale['figure_454']."</strong><br />\n";	
+	echo "<strong>".trimlink($data['figure']['name'],15)."</strong></a><br />\n";	
+	
+	//echo "<span class='small'>\n";
+	
+	echo "<span class='small'><strong>".$locale['figure_414'].":</strong> ".showdate("shortdate", $data['figure_datestamp'])."</span><br>\n";
+	
+	echo "<span class='small'><strong>Views: </strong>".$data['figure']['views']."</span><br>\n";
+			echo "<span class='small'><strong>User Count: </strong>Variable  hier einbauen</span><br>\n";
+			
+			$comments = dbcount("(comment_id)", DB_COMMENTS, "comment_type='FI' AND comment_item_id='".$data['figure_id']."'");
+			echo "<span class='small'><strong>Comments: </strong>".$comments."<br/></span>\n";
+			// Bewertung
+				$drating = dbarray(dbquery("
+					 SELECT 
+						SUM(rating_vote) sum_rating, 
+							COUNT(rating_item_id) count_votes 
+							FROM ".DB_RATINGS." 
+							WHERE rating_type='FI' 
+							AND  rating_item_id='".$data['figure_id']."'
+						")); 
+				$rating = ($drating['count_votes'] > 0 ? str_repeat("<img src='".INFUSIONS.$inf_folder."/images/starsmall.png'>",ceil($drating['sum_rating']/$drating['count_votes'])) : "-");
+			echo "<span class='small'><strong>Rating: </strong>".$rating."</span>\n";
+	
+	
+	echo "</td>\n";
+	echo "</tr>\n</table>\n";
+
+
+	
+	/* NO FUNCTIONARY SHOW RIGHT INAGE FROM DB FIGURE_IMAGES
+		
+		$result2 = dbquery("SELECT
+					figure_images_image_id,
+					figure_images_image,
+					figure_images_thumb 
+					FROM ".DB_FIGURE_IMAGES." 
+					WHERE figure_images_figure_id='".$data['figure_id']."' LIMIT 0,1");
+		
+		while($data2 = dbarray($result2)){
+
+		// WENN KEIN BILD VORHANDEN DANN ZEIGE PLATZHALTER BILD
+			if ($data2['figure_images_thumb']) {
+				echo "<a href='".$data['figure']['link']."'><img src='".INFUSIONS."figurelib/images/default.png"."' alt='".trimlink($data['figure_title'],50)."' title='".trimlink($data['figure_title'],100)."' style='border:0px;max-height:100px;max-width:100px' /></a>";
+			} else {  
+ 
+				echo "<a href='".$data['figure']['link']."'>\n<img src='".($data2['figure_images_thumb'] ? THUMBS_FIGURES.$data2['figure_images_thumb'] : INFUSIONS.$inf_folder."/images/default.png")."' alt='".trimlink($data['figure_title'],100)."' title='".trimlink($data['figure_title'],50)."' style='border:0px;max-height:100px;max-width:100px' /></a>";
+			}
+		}			
+
+*/
+	
+		} else {
+			
+					echo "<div class='panel panel-default'>\n";
 			echo "<div class='panel-heading'>\n";
 				echo "<a href='".$data['figure']['link']."'>".$data['figure']['name']."</a>\n";
 		echo "</div>\n";
@@ -43,15 +113,19 @@ if (!function_exists('render_figure_item')) {
 	   
 		echo "<div class='list-group-item m-b-20'>\n";
 		echo "<div class='row'>\n";
+				
 		
-		// ANSICHT
-		// VARIANTE  :::::::::::::::::: POSTED BY
-		// MANUFACTURER  :::::::::::::: POST DATE
-		// BRAND :::::::::::::::::::::: VIEWS (clickcount)
-		// SERIE :::::::::::::::::::::: USER HABEN DIESE FIGUR		
-		// SCALE :::::::::::::::::::::: COMMENTS
-		// YEAR	::::::::::::::::::::::: RATING
-
+	/* TABELLENANSICHT
+		--------------------------------------------------------|
+		| VARIANTE                     POSTED BY                |
+		| MANUFACTURER                 POST DATE                |
+		| BRAND                        VIEWS (clickcount)       |
+		| SERIE                        USER HABEN DIESE FIGUR   |		
+		| SCALE                        COMMENTS                 |
+		| YEAR	                       RATING                   |                 
+		-------------------------------------------------------*/
+		
+		// AB HIER GENERIEREN DER RECHTEN SEITE
 		 echo "<div class='col-xs-12 col-sm-6 col-md-6 col-lg-6'>\n";
 	
 			if ($data['figure']['variant']) {
@@ -71,13 +145,7 @@ if (!function_exists('render_figure_item')) {
 	
 	echo "</div><div class='col-xs-12 col-sm-6 col-md-6 col-lg-6'>\n";
 	
-		// ANSICHT
-		// VARIANTE  :::::::::::::::::: POSTED BY
-		// MANUFACTURER  :::::::::::::: POST DATE
-		// BRAND :::::::::::::::::::::: VIEWS (clickcount)
-		// SERIE :::::::::::::::::::::: USER HABEN DIESE FIGUR		
-		// SCALE :::::::::::::::::::::: COMMENTS
-		// YEAR	::::::::::::::::::::::: RATING
+			// AB HIER GENERIEREN DER LINKEN SEITE
 		
 			echo "<span class='small'><strong>Submitted by: </strong>".profile_link($data['user_id'], $data['user_name'], $data['user_status'])."<br/></span>\n";
 			echo "<span class='small'><strong>Submitted on: </strong>".timer($data['figure_datestamp'])." - ".showdate("shortdate", $data['figure_datestamp'])."<br/></span>\n";
@@ -111,6 +179,7 @@ if (!function_exists('render_figure_item')) {
 		echo "</div>\n</div>\n";
 			echo "</div>\n";
 		closetable();
+	}
 	}
 }
 }
