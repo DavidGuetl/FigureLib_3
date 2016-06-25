@@ -1,50 +1,53 @@
 <?php
-/*-------------------------------------------------------+
-| PHP-Fusion Content Management System
-| Copyright (C) PHP-Fusion Inc
-| http://www.php-fusion.co.uk/
-+--------------------------------------------------------+
-| Filename: templates/figurelib.php based on templates/weblinks.php
-| Author: PHP-Fusion Development Team
-| Modification: Catzenjaeger
-| URL: www.aliencollectors.com
-| E-Mail: admin@aliencollectors.com
-+--------------------------------------------------------+
-| This program is released as free software under the
-| Affero GPL license. You can redistribute it and/or
-| modify it under the terms of this license which you
-| can read by viewing the included agpl.txt or online
-| at www.gnu.org/licenses/agpl.html. Removal of this
-| copyright header is strictly prohibited without
-| written permission from the original author(s).
-+--------------------------------------------------------*/
 if (!defined("IN_FUSION")) { die("Access Denied"); }
 include INFUSIONS."figurelib/infusion_db.php";
 
-// SETTINGS HOLEN
-$fil_settings = get_settings("figurelib");
-
-
-if (!function_exists('render_figure_item')) {
-	function render_figure_item($info) {
-		global $locale, $userdata;
-		opentable($locale['450']);
-				
-		echo render_breadcrumbs();
-		//echo "<!--pre_figure-->";
-	if ($info['figure_rows']) {
-		foreach($info['item'] as $figure_id => $data) {	
-				
-	
-	// AB HIER ANSISCHT GALLERIE ODER TABELLEN FORM //
-			$fil_settings = get_settings("figurelib"); 
-			if ($fil_settings['figure_display']) {	
-							
-	// GALLERIEANSICHT   
+			//////////  CLICKCOUNTER FÜR FIGUR  //////////////////////////////////
+			if (isset($_GET['figure_id']) && isnum($_GET['figure_id'])) {$res = 0;			
+				$data = dbarray(dbquery("SELECT f.figure_clickcount FROM ".DB_FIGURE_ITEMS." AS f LEFT JOIN ".DB_FIGURE_CATS." AS fc ON f.figure_cat=fc.figure_cat_id WHERE f.figure_id='".intval($_GET['figure_id'])."'"));
 			
-	echo "<table style='text-align:center;' cellpadding='0' cellspacing='1' width='100%'>\n<tr>\n";
-	if ($i != 0 && ($i % $asettings['figure_per_line'] == 0)) { echo "</tr>\n<tr>\n"; }
+			if (isset($_GET['figure_id']) && isnum($_GET['figure_id'])) {$res = 1;	
+				dbquery("UPDATE ".DB_FIGURE_ITEMS." SET figure_clickcount=figure_clickcount+1 WHERE figure_id='".intval($_GET['figure_id'])."'");
+			} else {redirect(FUSION_SELF); }
+			}		
+			//////ENDE **** CLICKCOUNTER FÜR FIGUR  //////////////////////////////
+						
+// ******************************************************************************************			
+// FIGURE OVERVIEW PER CATEGORY
+// ******************************************************************************************
 	
+	// GET SETTING FOR SHOW AS GALLERY OR TABLE
+	$fil_settings = get_settings("figurelib"); 
+	if ($fil_settings['figure_display']) {	
+
+// ******************************************************************************************			
+// GALLERY VIEW 
+// ******************************************************************************************	
+	
+			if (!function_exists('render_figure_item')) {
+				function render_figure_item($info) {
+					global $locale;
+					echo render_breadcrumbs();
+					
+					// ['cifg_0009'] = "Filter by:";
+					opentable($locale['cifg_0009']);			
+					
+					if ($info['figure_rows'] != 0) {						
+						$counter = 0;
+						$columns = 2;
+						echo "<div class='row m-0'>\n";
+						if (!empty($info['item'])) {
+							
+							foreach($info['item'] as $figure_id => $data) {
+								if ($counter != 0 && ($counter%$columns == 0)) {
+									echo "</div>\n<div class='row m-0'>\n";
+								}			
+					echo "<div class='col-xs-12 col-sm-6 col-md-6 col-lg-6 p-t-20'>\n";
+					echo "<div class='media'>\n";		
+					echo "<div class='media-body overflow-hide'>\n";
+								
+//*******
+
 	echo "<td style='text-align:center;' class=''>\n";
 
 	echo "<a href='".$data['figure']['link']."'><img src='".INFUSIONS."figurelib/images/default.png"."' alt='".trimlink($data['figure_title'],50)."' title='".trimlink($data['figure_title'],100)."' style='border:0px;max-height:100px;max-width:100px' />";	
@@ -77,33 +80,81 @@ if (!function_exists('render_figure_item')) {
 	echo "</td>\n";
 	echo "</tr>\n</table>\n";
 
-
-
-	
-	/* NO FUNCTIONARY SHOW RIGHT INAGE FROM DB FIGURE_IMAGES
-		
-		$result2 = dbquery("SELECT
-					figure_images_image_id,
-					figure_images_image,
-					figure_images_thumb 
-					FROM ".DB_FIGURE_IMAGES." 
-					WHERE figure_images_figure_id='".$data['figure_id']."' LIMIT 0,1");
-		
-		while($data2 = dbarray($result2)){
-
-		// WENN KEIN BILD VORHANDEN DANN ZEIGE PLATZHALTER BILD
-			if ($data2['figure_images_thumb']) {
-				echo "<a href='".$data['figure']['link']."'><img src='".INFUSIONS."figurelib/images/default.png"."' alt='".trimlink($data['figure_title'],50)."' title='".trimlink($data['figure_title'],100)."' style='border:0px;max-height:100px;max-width:100px' /></a>";
-			} else {  
- 
-				echo "<a href='".$data['figure']['link']."'>\n<img src='".($data2['figure_images_thumb'] ? THUMBS_FIGURES.$data2['figure_images_thumb'] : INFUSIONS.$inf_folder."/images/default.png")."' alt='".trimlink($data['figure_title'],100)."' title='".trimlink($data['figure_title'],50)."' style='border:0px;max-height:100px;max-width:100px' /></a>";
+//*******							
+					echo "</div>\n</div>\n";
+					echo "</div>\n";
+					$counter++;
+				}
 			}
-		}			
-
-	*/
-	
+			echo "</div>\n";
+//*******			
 		} else {
+			// ['figc_0012'] = "No figure categories defined";
 			
+			// SETTINGS HOLEN
+			$fil_settings = get_settings("figurelib");			
+			
+			
+/*			// graue Version der Box
+			echo "<div class='well text-center'><br />\n".$locale['figc_0012']."<br />\n";
+			if (iMEMBER && $fil_settings['figure_submit']) {
+			//['figure_521'] = "Submit Figure";
+					echo "<p><a href='submit.php?stype=f'>".$locale['figure_521']."</a></p>";
+				echo "</div>\n";
+			} else {echo "</div>\n";}
+			
+*/						
+			// blaue Version der Box
+			echo "<div class='alert alert-info m-b-20 submission-guidelines'><br /><center>\n".$locale['figc_0012']."<br>";
+			if (iMEMBER && $fil_settings['figure_submit']) {
+			//['figure_521'] = "Submit Figure";
+					echo "<p><a href='submit.php?stype=f'>".$locale['figure_521']."</a></p>";
+				echo "</div>\n";
+			} else {echo "</div>\n";}
+							
+		}
+		
+		echo $info['page_nav'] ? "<div class='text-right'>".$info['page_nav']."</div>" : '';
+		closetable();
+	}
+}	
+/******************************************************************************************/	
+			
+} else {	
+
+/******************************************************************************************		
+		|-------------------------------------------------------|
+		| VARIANTE                     POSTED BY                |
+		| MANUFACTURER                 POST DATE                |
+		| BRAND                        VIEWS (clickcount)       |
+		| SERIE                        USER HABEN DIESE FIGUR   |		
+		| SCALE                        COMMENTS                 |
+		| YEAR	                       RATING                   |                 
+		--------------------------------------------------------|
+******************************************************************************************/			
+
+			if (!function_exists('render_figure_item')) {
+				function render_figure_item($info) {
+					global $locale;
+					echo render_breadcrumbs();
+					
+					// ['cifg_0009'] = "Filter by:";
+					opentable($locale['cifg_0009']);
+					
+					
+					if ($info['figure_rows'] != 0) {
+						$counter = 0;
+						$columns = 1;
+						echo "<div class='row m-0'>\n";
+						if (!empty($info['item'])) {
+							
+							foreach($info['item'] as $figure_id => $data) {
+								if ($counter != 0 && ($counter%$columns == 0)) {
+									echo "</div>\n<div class='row m-0'>\n";
+								}
+							
+//******								
+								
 		echo "<div class='panel panel-default'>\n";
 			
 			echo "<div class='panel-heading'>\n";
@@ -112,19 +163,8 @@ if (!function_exists('render_figure_item')) {
 	   
 		echo "<div class='list-group-item m-b-20'>\n";
 		echo "<div class='row'>\n";
-				
 		
-	/* TABELLENANSICHT
-		--------------------------------------------------------|
-		| VARIANTE                     POSTED BY                |
-		| MANUFACTURER                 POST DATE                |
-		| BRAND                        VIEWS (clickcount)       |
-		| SERIE                        USER HABEN DIESE FIGUR   |		
-		| SCALE                        COMMENTS                 |
-		| YEAR	                       RATING                   |                 
-		-------------------------------------------------------*/
-		
-		// AB HIER GENERIEREN DER RECHTEN SEITE
+		// RIGHT SITE
 		 echo "<div class='col-xs-12 col-sm-6 col-md-6 col-lg-6'>\n";
 	
 			if ($data['figure']['variant']) {
@@ -144,7 +184,7 @@ if (!function_exists('render_figure_item')) {
 	
 	echo "</div><div class='col-xs-12 col-sm-6 col-md-6 col-lg-6'>\n";
 	
-			// AB HIER GENERIEREN DER LINKEN SEITE
+			// LEFT SIDE
 		
 			echo "<span class='small'><strong>Submitted by: </strong>".profile_link($data['user_id'], $data['user_name'], $data['user_status'])."<br/></span>\n";
 			echo "<span class='small'><strong>Submitted on: </strong>".timer($data['figure_datestamp'])." - ".showdate("shortdate", $data['figure_datestamp'])."<br/></span>\n";
@@ -181,11 +221,23 @@ if (!function_exists('render_figure_item')) {
 		echo "</div>\n";
 		echo "</div>\n";
 		echo "</div>\n";
-
+							
+								
+//******								
+								
+								//echo "</div>\n</div>\n";
+								//echo "</div>\n";
+								$counter++;
 				}
-			}		
-
-} else {
+			}
+			echo "</div>\n";
+			
+//******
+	
+		} else {
+			
+//******
+			
 			// ['figc_0012'] = "No figure categories defined";
 			
 			// SETTINGS HOLEN
@@ -217,12 +269,14 @@ if (!function_exists('render_figure_item')) {
 					
 			
 		}
-
+		echo $info['page_nav'] ? "<div class='text-right'>".$info['page_nav']."</div>" : '';
 		closetable();
 	}
-}
-
-
+}					
+						
+	
+}				
+		
 // ##################################################################################
 
 if (!function_exists('render_figure_cat')) {
@@ -262,4 +316,26 @@ if (!function_exists('render_figure_cat')) {
 		}
 		closetable();
 	}
-}
+}	
+
+
+	/* NO FUNCTIONARY SHOW RIGHT INAGE FROM DB FIGURE_IMAGES
+		
+		$result2 = dbquery("SELECT
+					figure_images_image_id,
+					figure_images_image,
+					figure_images_thumb 
+					FROM ".DB_FIGURE_IMAGES." 
+					WHERE figure_images_figure_id='".$data['figure_id']."' LIMIT 0,1");
+		
+		while($data2 = dbarray($result2)){
+
+		// WENN KEIN BILD VORHANDEN DANN ZEIGE PLATZHALTER BILD
+			if ($data2['figure_images_thumb']) {
+				echo "<a href='".$data['figure']['link']."'><img src='".INFUSIONS."figurelib/images/default.png"."' alt='".trimlink($data['figure_title'],50)."' title='".trimlink($data['figure_title'],100)."' style='border:0px;max-height:100px;max-width:100px' /></a>";
+			} else {  
+ 
+				echo "<a href='".$data['figure']['link']."'>\n<img src='".($data2['figure_images_thumb'] ? THUMBS_FIGURES.$data2['figure_images_thumb'] : INFUSIONS.$inf_folder."/images/default.png")."' alt='".trimlink($data['figure_title'],100)."' title='".trimlink($data['figure_title'],50)."' style='border:0px;max-height:100px;max-width:100px' /></a>";
+			}
+	*/
+		
