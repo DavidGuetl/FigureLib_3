@@ -60,8 +60,8 @@ if (isset($_GET['submit_id']) && isnum($_GET['submit_id'])) {
 			'figure_cat'          => form_sanitizer($_POST['figure_cat'],          '', 'figure_cat'),
 			'figure_editionsize'  => form_sanitizer($_POST['figure_editionsize'],  '', 'figure_editionsize'),
 			'figure_pubdate'      => form_sanitizer($_POST['figure_pubdate'],      '', 'figure_pubdate'),
-			'figure_agb'          => form_sanitizer($_POST['figure_agb'],          '',  'figure_agb'),
-			'figure_submitter'    => form_sanitizer($_POST['figure_submitter'],    '',  'figure_submitter'), 
+			'figure_agb'          => form_sanitizer($_POST['figure_agb'],          '', 'figure_agb'),
+			'figure_submitter'    => form_sanitizer($_POST['figure_submitter'],    '', 'figure_submitter'), 
 			'figure_visibility'   => form_sanitizer($_POST['figure_visibility'],   0,  'figure_visibility'), 
 			'figure_description'  => form_sanitizer($_POST['figure_description'], "",  "figure_description"),
 			'figure_accessories'  => form_sanitizer($_POST['figure_accessories'], "",  "figure_accessories"),
@@ -207,6 +207,7 @@ if (isset($_GET['submit_id']) && isnum($_GET['submit_id'])) {
 			echo "<div class='row'>\n";
 			echo "<div class='col-xs-12 col-sm-8'>\n";
 			echo form_hidden('figure_datestamp', '', $callback_data['figure_datestamp']);
+			echo form_hidden('figure_submitter', '', $callback_data['figure_submitter']);
 			
 // Checkbox "Figure Freigabe" ///////////////////////////////////////////////////////////////////////////////////////////
 									// ['figurelib/admin/figurelib.php_069'] = "Figure release on page";
