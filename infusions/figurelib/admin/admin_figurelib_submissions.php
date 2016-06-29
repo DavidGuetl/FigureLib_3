@@ -65,6 +65,28 @@ if (isset($_GET['submit_id']) && isnum($_GET['submit_id'])) {
 			'figure_visibility'   => form_sanitizer($_POST['figure_visibility'],   0,  'figure_visibility'), 
 			'figure_description'  => form_sanitizer($_POST['figure_description'], "",  "figure_description"),
 			'figure_accessories'  => form_sanitizer($_POST['figure_accessories'], "",  "figure_accessories"),
+			
+			'figure_forum_url'    => form_sanitizer($_POST['figure_forum_url'],    '', 'figure_forum_url'), 
+			'figure_affiliate_1'  => form_sanitizer($_POST['figure_affiliate_1'],  '', 'figure_affiliate_1'),
+			'figure_affiliate_2'  => form_sanitizer($_POST['figure_affiliate_2'],  '', 'figure_affiliate_2'),
+			'figure_affiliate_3'  => form_sanitizer($_POST['figure_affiliate_3'],  '', 'figure_affiliate_3'),
+			'figure_affiliate_4'  => form_sanitizer($_POST['figure_affiliate_4'],  '', 'figure_affiliate_4'),
+			'figure_affiliate_5'  => form_sanitizer($_POST['figure_affiliate_5'],  '', 'figure_affiliate_5'),
+			'figure_affiliate_6'  => form_sanitizer($_POST['figure_affiliate_6'],  '', 'figure_affiliate_6'),
+			'figure_affiliate_7'  => form_sanitizer($_POST['figure_affiliate_7'],  '', 'figure_affiliate_7'),
+			'figure_affiliate_8'  => form_sanitizer($_POST['figure_affiliate_8'],  '', 'figure_affiliate_8'),
+			'figure_affiliate_9'  => form_sanitizer($_POST['figure_affiliate_9'],  '', 'figure_affiliate_9'),
+			'figure_affiliate_10' => form_sanitizer($_POST['figure_affiliate_10'], '', 'figure_affiliate_10'),
+			'figure_eshop'        => form_sanitizer($_POST['figure_eshop'],        '', 'figure_eshop'),
+			'figure_amazon_de'    => form_sanitizer($_POST['figure_amazon_de'],    '', 'figure_amazon_de'),
+			'figure_amazon_uk'    => form_sanitizer($_POST['figure_amazon_uk'],    '', 'figure_amazon_uk'),
+			'figure_amazon_fr'    => form_sanitizer($_POST['figure_amazon_fr'],    '', 'figure_amazon_fr'),
+			'figure_amazon_es'    => form_sanitizer($_POST['figure_amazon_es'],    '', 'figure_amazon_es'),
+			'figure_amazon_it'    => form_sanitizer($_POST['figure_amazon_it'],    '', 'figure_amazon_it'),
+			'figure_amazon_jp'    => form_sanitizer($_POST['figure_amazon_jp'],    '', 'figure_amazon_jp'),
+			'figure_amazon_com'   => form_sanitizer($_POST['figure_amazon_com'],   '', 'figure_amazon_com'),
+			'figure_amazon_ca'    => form_sanitizer($_POST['figure_amazon_ca'],    '', 'figure_amazon_ca'),	
+		
 			);
 			
 			
@@ -184,7 +206,30 @@ if (isset($_GET['submit_id']) && isnum($_GET['submit_id'])) {
 				"figure_visibility"   => 0,
 				"figure_description"  => parse_textarea($submit_criteria['figure_description']),
 				"figure_accessories"  => parse_textarea($submit_criteria['figure_accessories']),
-				"figure_datestamp" 	  => $data['submit_datestamp'],				
+				"figure_datestamp" 	  => $data['submit_datestamp'],	
+
+				"figure_forum_url"    => $submit_criteria['figure_forum_url'],
+				"figure_affiliate_1"  => $submit_criteria['figure_affiliate_1'],
+				"figure_affiliate_2"  => $submit_criteria['figure_affiliate_2'],
+				"figure_affiliate_3"  => $submit_criteria['figure_affiliate_3'],
+				"figure_affiliate_4"  => $submit_criteria['figure_affiliate_4'],
+				"figure_affiliate_5"  => $submit_criteria['figure_affiliate_5'],
+				"figure_affiliate_6"  => $submit_criteria['figure_affiliate_6'],
+				"figure_affiliate_7"  => $submit_criteria['figure_affiliate_7'],
+				"figure_affiliate_8"  => $submit_criteria['figure_affiliate_8'],
+				"figure_affiliate_9"  => $submit_criteria['figure_affiliate_9'],
+				"figure_affiliate_10" => $submit_criteria['figure_affiliate_10'],
+				"figure_eshop"        => $submit_criteria['figure_eshop'],
+				"figure_amazon_de"    => $submit_criteria['figure_amazon_de'],
+				"figure_amazon_uk"    => $submit_criteria['figure_amazon_uk'],
+				"figure_amazon_fr"    => $submit_criteria['figure_amazon_fr'],
+				"figure_amazon_es"    => $submit_criteria['figure_amazon_es'],
+				"figure_amazon_it"    => $submit_criteria['figure_amazon_it'],
+				"figure_amazon_jp"    => $submit_criteria['figure_amazon_jp'],
+				"figure_amazon_com"   => $submit_criteria['figure_amazon_com'],
+				"figure_amazon_ca"    => $submit_criteria['figure_amazon_ca'],
+
+		
 			);
 			
 			echo openform("publish_figure", "post", FUSION_REQUEST);
@@ -562,7 +607,191 @@ if (isset($_GET['submit_id']) && isnum($_GET['submit_id'])) {
 									"inline" => TRUE,
 									"required" => TRUE,
 									"error_text" => $locale['figurelib/admin/figurelib.php_063']
+								));
+								
+												
+// ###################################################################################							
+// ####### AB HIER ZUSÄTZLICHE EINTRÄGE NUR FÜR ADMINS ###############################	
+// ###################################################################################	
+
+	
+echo "<div class='well clearfix'>\n";
+echo "<strong>EXTENDET ADMIN AREA</strong><br>";
+echo "</div>\n";
+
+									
+// Text URL figure_forum_url" /////////////////////////////////////////////////////////////////////////////////////////////////////
+									// $locale['figure_460'] = "Link to Forum";
+	echo form_text("figure_forum_url", $locale['figure_460'], $submit_criteria['figure_forum_url'],	array(
+									"inline" => TRUE,
+									"required" => FALSE,
+									"width" => "520px",
+									"type" => "url",
+									"placeholder" => ""
+								));								
+								
+// Text URL Figure E-Shop Link" /////////////////////////////////////////////////////////////////////////////////////////////////////
+									// ['figure_024'] = "Figure E-Shop Link";
+	echo form_text("figure_eshop", $locale['figure_024'], $submit_criteria['figure_eshop'],	array(
+									"inline" => TRUE,
+									"required" => FALSE,
+									"width" => "520px",
+									"placeholder" => ""
 								));	
+// Form "Space" /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+									echo "<div class='tbl1'>\n";
+										echo "<hr>\n";
+									echo "</div>\n";									
+// Text  Amazon DE Link" /////////////////////////////////////////////////////////////////////////////////////////////////////
+									// ['figure_025'] = "Amazon DE";
+	echo form_text("figure_amazon_de", $locale['figure_025'], $submit_criteria['figure_amazon_de'],	array(
+									"inline" => TRUE,
+									"required" => FALSE,
+									"width" => "520px",
+									"placeholder" => ""
+								));									
+// Text  Amazon UK Link" /////////////////////////////////////////////////////////////////////////////////////////////////////
+									// ['figure_026'] = "Amazon UK";
+	echo form_text("figure_amazon_uk", $locale['figure_026'], $submit_criteria['figure_amazon_uk'],	array(
+									"inline" => TRUE,
+									"required" => FALSE,
+									"width" => "520px",
+									"placeholder" => ""
+								));										
+// Text  Amazon FR Link" /////////////////////////////////////////////////////////////////////////////////////////////////////
+									// ['figure_027'] = "Amazon FR";
+	echo form_text("figure_amazon_fr", $locale['figure_027'], $submit_criteria['figure_amazon_fr'],	array(
+									"inline" => TRUE,
+									"required" => FALSE,
+									"width" => "520px",
+									"placeholder" => ""
+								));	
+// Text  Amazon ES Link" /////////////////////////////////////////////////////////////////////////////////////////////////////
+									// ['figure_028'] = "Amazon ES";
+	echo form_text("figure_amazon_es", $locale['figure_028'], $submit_criteria['figure_amazon_es'],	array(
+									"inline" => TRUE,
+									"required" => FALSE,
+									"width" => "520px",
+									"placeholder" => ""
+								));	
+// Text  Amazon IT Link" /////////////////////////////////////////////////////////////////////////////////////////////////////
+									// ['figure_029'] = "Amazon IT";
+	echo form_text("figure_amazon_it", $locale['figure_029'], $submit_criteria['figure_amazon_it'],	array(
+									"inline" => TRUE,
+									"required" => FALSE,
+									"width" => "520px",
+									"placeholder" => ""
+								));	
+// Text  Amazon JP Link" /////////////////////////////////////////////////////////////////////////////////////////////////////
+									// ['figure_030'] = "Amazon JP";
+	echo form_text("figure_amazon_jp", $locale['figure_030'], $submit_criteria['figure_amazon_jp'],	array(
+									"inline" => TRUE,
+									"required" => FALSE,
+									"width" => "520px",
+									"placeholder" => ""
+								));	
+// Text  Amazon COM Link" /////////////////////////////////////////////////////////////////////////////////////////////////////
+									// ['figure_031'] = "Amazon COM";
+	echo form_text("figure_amazon_com", $locale['figure_031'], $submit_criteria['figure_amazon_com'],	array(
+									"inline" => TRUE,
+									"required" => FALSE,
+									"width" => "520px",
+									"placeholder" => ""
+								));	
+// Text  Amazon CA Link" /////////////////////////////////////////////////////////////////////////////////////////////////////
+									// ['figure_032'] = "Amazon CA";
+	echo form_text("figure_amazon_ca", $locale['figure_032'], $submit_criteria['figure_amazon_ca'],	array(
+									"inline" => TRUE,
+									"required" => FALSE,
+									"width" => "520px",
+									"placeholder" => ""
+								));									
+// Form "Space" /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+									echo "<div class='tbl1'>\n";
+										echo "<hr>\n";
+									echo "</div>\n";									
+// Text Figure Affiliate Link 1" /////////////////////////////////////////////////////////////////////////////////////////////////////
+									// ['figure_023'] = "Figure Affiliate Link";
+	echo form_text("figure_affiliate_1", $locale['figure_023_1'], $submit_criteria['figure_affiliate_1'],	array(
+									"inline" => TRUE,
+									"required" => FALSE,
+									"width" => "520px",
+									"placeholder" => ""
+								));	
+// Text Figure Affiliate Link 2" /////////////////////////////////////////////////////////////////////////////////////////////////////
+									// ['figure_023'] = "Figure Affiliate Link";
+	echo form_text("figure_affiliate_2", $locale['figure_023_2'], $submit_criteria['figure_affiliate_2'],	array(
+									"inline" => TRUE,
+									"required" => FALSE,
+									"width" => "520px",
+									"placeholder" => ""
+								));	
+// Text Figure Affiliate Link 3" /////////////////////////////////////////////////////////////////////////////////////////////////////
+									// ['figure_023'] = "Figure Affiliate Link";
+	echo form_text("figure_affiliate_3", $locale['figure_023_3'], $submit_criteria['figure_affiliate_3'],	array(
+									"inline" => TRUE,
+									"required" => FALSE,
+									"width" => "520px",
+									"placeholder" => ""
+								));	
+// Text Figure Affiliate Link 4" /////////////////////////////////////////////////////////////////////////////////////////////////////
+									// ['figure_023'] = "Figure Affiliate Link";
+	echo form_text("figure_affiliate_4", $locale['figure_023_4'], $submit_criteria['figure_affiliate_4'],	array(
+									"inline" => TRUE,
+									"required" => FALSE,
+									"width" => "520px",
+									"placeholder" => ""
+								));	
+// Text Figure Affiliate Link 5" /////////////////////////////////////////////////////////////////////////////////////////////////////
+									// ['figure_023'] = "Figure Affiliate Link";
+	echo form_text("figure_affiliate_5", $locale['figure_023_5'], $submit_criteria['figure_affiliate_5'],	array(
+									"inline" => TRUE,
+									"required" => FALSE,
+									"width" => "520px",
+									"placeholder" => ""
+								));	
+// Text Figure Affiliate Link 6" /////////////////////////////////////////////////////////////////////////////////////////////////////
+									// ['figure_023'] = "Figure Affiliate Link";
+	echo form_text("figure_affiliate_6", $locale['figure_023_6'], $submit_criteria['figure_affiliate_6'],	array(
+									"inline" => TRUE,
+									"required" => FALSE,
+									"width" => "520px",
+									"placeholder" => ""
+								));
+// Text Figure Affiliate Link 7" /////////////////////////////////////////////////////////////////////////////////////////////////////
+									// ['figure_023'] = "Figure Affiliate Link";
+	echo form_text("figure_affiliate_7", $locale['figure_023_7'], $submit_criteria['figure_affiliate_7'],	array(
+									"inline" => TRUE,
+									"required" => FALSE,
+									"width" => "520px",
+									"placeholder" => ""
+								));									
+// Text Figure Affiliate Link 8" /////////////////////////////////////////////////////////////////////////////////////////////////////
+									// ['figure_023'] = "Figure Affiliate Link";
+	echo form_text("figure_affiliate_8", $locale['figure_023_8'], $submit_criteria['figure_affiliate_8'],	array(
+									"inline" => TRUE,
+									"required" => FALSE,
+									"width" => "520px",
+									"placeholder" => ""
+								));	
+// Text Figure Affiliate Link 9" /////////////////////////////////////////////////////////////////////////////////////////////////////
+									// ['figure_023'] = "Figure Affiliate Link";
+	echo form_text("figure_affiliate_9", $locale['figure_023_9'], $submit_criteria['figure_affiliate_9'],	array(
+									"inline" => TRUE,
+									"required" => FALSE,
+									"width" => "520px",
+									"placeholder" => ""
+								));	
+// Text Figure Affiliate Link 10" /////////////////////////////////////////////////////////////////////////////////////////////////////
+									// ['figure_023'] = "Figure Affiliate Link";
+	echo form_text("figure_affiliate_10", $locale['figure_023_10'], $submit_criteria['figure_affiliate_10'],	array(
+									"inline" => TRUE,
+									"required" => FALSE,
+									"width" => "520px",
+									"placeholder" => ""
+								));									
+
+						
 	
 			echo "</div>\n";
 			echo "<div class='col-xs-12 col-sm-4'>\n";
