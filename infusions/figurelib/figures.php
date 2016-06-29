@@ -15,9 +15,13 @@
 | Copyright (C) PHP-Fusion Inc
 | http://www.php-fusion.co.uk/
 +--------------------------------------------------------+
-| Filename: gallery.php
+| Filename: figures.ph based on gallery.php
 | Author: PHP-Fusion Development Team
 | Co-Author: PHP-Fusion Development Team
+|
+| Modification: Catzenjaeger
+| URL: www.aliencollectors.com
+| E-Mail: admin@aliencollectors.com
 +--------------------------------------------------------+
 | This program is released as free software under the
 | Affero GPL license. You can redistribute it and/or
@@ -32,6 +36,8 @@ include INFUSIONS."figurelib/infusion_db.php";
 require_once THEMES."templates/header.php";
 require_once INCLUDES."infusions_include.php";
 if (!db_exists(DB_FIGURE_ITEMS)) { redirect(BASEDIR."error.php?code=404"); }
+global $aidlink;
+global $settings;
 
 // LANGUAGE
 if (file_exists(INFUSIONS."figurelib/locale/".LOCALESET."locale_figurelib.php")) {
