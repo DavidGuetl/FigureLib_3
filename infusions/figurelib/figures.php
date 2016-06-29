@@ -36,6 +36,8 @@ include INFUSIONS."figurelib/infusion_db.php";
 require_once THEMES."templates/header.php";
 require_once INCLUDES."infusions_include.php";
 if (!db_exists(DB_FIGURE_ITEMS)) { redirect(BASEDIR."error.php?code=404"); }
+
+// GET GLOBAL VARIABLES
 global $aidlink;
 global $settings;
 
@@ -46,12 +48,11 @@ if (file_exists(INFUSIONS."figurelib/locale/".LOCALESET."locale_figurelib.php"))
     include INFUSIONS."figurelib/locale/English/locale_figurelib.php";
 }
 
-//include INFUSIONS."figurelib/templates/template_clickcounter.php"; // COUNTER FOR HOW MANY TIMES A FIGURE CLICKED
 include INFUSIONS."figurelib/templates/template_render_figure.php"; // TEMPLATE FOR FIGURE OVERVIEW PER CATEGORY
 include INFUSIONS."figurelib/templates/template_render_figure_cats.php"; // TEMPLATE FOR CATEGORIES OVERVIEW
 include INFUSIONS."figurelib/templates/template_render_figure_items.php"; // TEMPLATE FOR DETAILS OF A FIGURE
 
-// SETTINGS HOLEN
+// GET SETTINGS
 $fil_settings = get_settings("figurelib");
 
 $figure_cat_index = dbquery_tree(DB_FIGURE_CATS, 'figure_cat_id', 'figure_cat_parent');
@@ -87,7 +88,7 @@ if (isset($_GET['figure_id']) && isnum($_GET['figure_id'])) {
         redirect(FUSION_SELF);
     }
 
-/* ALLE FIGURES FROM A CATEGORY	*/
+/* ALL FIGURES FROM A CATEGORY	*/
 } else if (isset($_GET['cat_id']) && isnum($_GET['cat_id'])) {
 	
 	$info = array();
