@@ -29,6 +29,8 @@
 +--------------------------------------------------------*/
 if (!defined("IN_FUSION")) { die("Access Denied"); }
 include INFUSIONS."figurelib/infusion_db.php";
+global $aidlink;
+global $settings;
 
 
 // ******************************************************************************************			
@@ -42,7 +44,7 @@ if (!function_exists('render_figure_cats')) {
 		
 		// ['cifg_0009'] = "Filter by:";
 		//opentable($locale['cifg_0009']);
-		opentable();
+		echo "<div class='panel panel-default'>\n";
 		
 		if ($info['figure_cat_rows'] != 0) {
 			$counter = 0;
@@ -72,7 +74,7 @@ if (!function_exists('render_figure_cats')) {
 			// ['figc_0012'] = "No figure categories defined";
 			echo "<div style='text-align:center'><br />\n".$locale['figc_0012']."<br /><br />\n</div>\n";
 		}
-		closetable();
+		echo "</aside>\n";
 	}
 }	
 
