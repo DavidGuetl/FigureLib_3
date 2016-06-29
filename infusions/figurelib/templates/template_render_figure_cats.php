@@ -1,10 +1,10 @@
 <?php
 
-	error_reporting(E_ALL);
+	//error_reporting(E_ALL);
 	// Formularinhalte prüfen
-	print_r ($_POST);
+	//print_r ($_POST);
 	// GET-Parameter prüfen
-	print_r ($_GET);
+	//print_r ($_GET);
 	// Sessions prüfen
 	//print_r ($_SESSION);
 
