@@ -29,6 +29,8 @@
 +--------------------------------------------------------*/
 if (!defined("IN_FUSION")) { die("Access Denied"); }
 include INFUSIONS."figurelib/infusion_db.php";
+global $aidlink;
+global $settings;
 
 // ******************************************************************************************			
 // FIGURE OVERVIEW PER CATEGORY
@@ -49,7 +51,8 @@ include INFUSIONS."figurelib/infusion_db.php";
 					
 					// ['cifg_0009'] = "Filter by:";
 					//opentable($locale['cifg_0009']);			
-					openside();	
+					
+					echo "<aside class='list-group-item m-b-20'>\n";
 					
 					if ($info['figure_rows'] != 0) {						
 						$counter = 0;
@@ -278,7 +281,7 @@ include INFUSIONS."figurelib/infusion_db.php";
 			
 		}
 		echo $info['page_nav'] ? "<div class='text-right'>".$info['page_nav']."</div>" : '';
-		closeside();
+		echo "</aside";
 	}
 }					
 						
