@@ -87,23 +87,18 @@ $result = dbquery(
 					
 // TITLE + KATEGORIE					
 
- echo "<aside class='list-group-item m-b-20'>\n";
+echo "<aside class='list-group-item m-b-20'>\n";
 					
-			
-			echo "<div class='panel panel-default'>\n";
-			echo "<div class='panel-heading'>\n";
-			
-					echo "<b>".$data['figure_title']."</b></td>\n";
-				
-			echo "</div>";	
-			echo "</div>";			
-					
-								
+						
 // 9 MINIBILDER A 3 X 3 BILDER  //////////////////////////////////////////////////////////////
 		
 		echo "<div class='panel panel-default'>\n";
 		//echo "<div class='panel-body'>\n";
-		echo "<center><table class='tbl-border' width='100%'>\n";
+		echo "<center><table class='' width='100%'>\n";
+		
+echo "<div class='well clearfix'>\n";
+echo "<strong>".$data['figure_title']."</strong><br>";
+echo "</div>\n";
 					 
 						echo "<tr>\n";				  
 						// COVERBILD
@@ -193,7 +188,11 @@ $result = dbquery(
 		  border: 1px solid #eeeeee;
 		}
 		-->
-		</style>\n";			
+		</style>\n";	
+
+echo "<div class='well clearfix'>\n";
+echo "<strong>AFFILIATES</strong><br>";
+echo "</div>\n";		
 			
 			echo "<table style='cellspacing:10px; cellpadding:10px;' class='table' width='100%'>\n";
 		
@@ -208,16 +207,16 @@ $result = dbquery(
 				 echo "<tr>\n";
 				 echo "<colgroup><col width='25%'><col width='25%'><col width='25%'><col width='25%'></colgroup>\n"; 
 				 echo "<td style='text-align:center; vertical-align:middle;'>	\n";	 
-						if ($data['figure_affiliate_1'] == "") { echo "".$locale['figure_033']."";
+						if ($data['figure_affiliate_1'] == "") { echo "<strike>".$locale['figure_033']."</strike>";
 							} else { echo "<a href='".$data['figure_affiliate_1']."'</a>".trimlink($data['figure_affiliate_1'],15)."</td>\n"; }		 
 				 echo "<td align='center'>\n";	 
-						if ($data['figure_affiliate_2'] == "") { echo "".$locale['figure_033']."";
+						if ($data['figure_affiliate_2'] == "") { echo "<strike>".$locale['figure_033']."</strike>";
 							} else { echo "<a href='".$data['figure_affiliate_2']."'</a>".trimlink($data['figure_affiliate_2'],15)."</td>\n"; }	
 				 echo "<td align='center'>\n";	 
-						if ($data['figure_affiliate_3'] == "") { echo "".$locale['figure_033']."";
+						if ($data['figure_affiliate_3'] == "") { echo "<strike>".$locale['figure_033']."</strike>";
 							} else { echo "<a href='".$data['figure_affiliate_3']."'</a>".trimlink($data['figure_affiliate_3'],15)."</td>\n"; }	
 				 echo "<td align='center'>\n";	 
-						if ($data['figure_affiliate_4'] == "") { echo "".$locale['figure_033']."";
+						if ($data['figure_affiliate_4'] == "") { echo "<strike>".$locale['figure_033']."</strike>";
 							} else { echo "<a href='".$data['figure_affiliate_4']."'</a>".trimlink($data['figure_affiliate_4'],15)."</td>\n"; }	
 				 echo "</tr>\n";
 			 } else { 
@@ -229,16 +228,16 @@ $result = dbquery(
 				 echo "<tr>\n";
 				 echo "<colgroup><col width='25%'><col width='25%'><col width='25%'><col width='25%'></colgroup>\n"; 
 				 echo "<td style='text-align:center; vertical-align:middle;'>	\n";	 
-						if ($data['figure_affiliate_5'] == "") { echo "".$locale['figure_033']."";
+						if ($data['figure_affiliate_5'] == "") { echo "<strike>".$locale['figure_033']."</strike>";
 							} else { echo "<a href='".$data['figure_affiliate_5']."'</a>".trimlink($data['figure_affiliate_5'],15)."</td>\n"; }		 
 				 echo "<td align='center'>\n";	 
-						if ($data['figure_affiliate_6'] == "") { echo "".$locale['figure_033']."";
+						if ($data['figure_affiliate_6'] == "") { echo "<strike>".$locale['figure_033']."</strike>";
 							} else { echo "<a href='".$data['figure_affiliate_6']."'</a>".trimlink($data['figure_affiliate_6'],15)."</td>\n"; }	
 				 echo "<td align='center'>\n";	 
-						if ($data['figure_affiliate_7'] == "") { echo "".$locale['figure_033']."";
+						if ($data['figure_affiliate_7'] == "") { echo "<strike>".$locale['figure_033']."</strike>";
 							} else { echo "<a href='".$data['figure_affiliate_7']."'</a>".trimlink($data['figure_affiliate_7'],15)."</td>\n"; }	
 				 echo "<td align='center'>\n";	 
-						if ($data['figure_affiliate_8'] == "") { echo "".$locale['figure_033']."";
+						if ($data['figure_affiliate_8'] == "") { echo "<strike>".$locale['figure_033']."</strike>";
 							} else { echo "<a href='".$data['figure_affiliate_8']."'</a>".trimlink($data['figure_affiliate_8'],15)."</td>\n"; }	
 				 echo "</tr>\n";
 			 } else { 
@@ -248,16 +247,16 @@ $result = dbquery(
 			 echo "<tr>\n";
 			 echo "<colgroup><col width='25%'><col width='25%'><col width='25%'><col width='25%'></colgroup>\n"; 
 			 echo "<td style='text-align:center; vertical-align:middle;'>	\n";	 
-					if ($data['figure_amazon_com'] == "") { echo "".$locale['figure_031a']."";
+					if ($data['figure_amazon_com'] == "") { echo "<strike>".$locale['figure_031a']."</strike>";
 						} else { echo "<a href='".$data['figure_amazon_com']."'</a>".trimlink($data['figure_amazon_com'],15)."</td>\n"; }		 
 			 echo "<td align='center'>\n";	 
-					if ($data['figure_amazon_ca'] == "") { echo "".$locale['figure_032a']."";
+					if ($data['figure_amazon_ca'] == "") { echo "<strike>".$locale['figure_032a']."</strike>";
 						} else { echo "<a href='".$data['figure_amazon_ca']."'</a>".trimlink($data['figure_amazon_ca'],15)."</td>\n"; }	
 			 echo "<td align='center'>\n";	 
-			 		if ($data['figure_amazon_uk'] == "") { echo "".$locale['figure_026a']."";
+			 		if ($data['figure_amazon_uk'] == "") { echo "<strike>".$locale['figure_026a']."</strike>";
 						} else { echo "<a href='".$data['figure_amazon_uk']."'</a>".trimlink($data['figure_amazon_uk'],15)."</td>\n"; }	
 			 echo "<td align='center'>\n";	 
-			 		if ($data['figure_amazon_de'] == "") { echo "".$locale['figure_025a']."";
+			 		if ($data['figure_amazon_de'] == "") { echo "<strike>".$locale['figure_025a']."</strike>";
 						} else { echo "<a href='".$data['figure_amazon_de']."'</a>".trimlink($data['figure_amazon_de'],15)."</td>\n"; }	
 			 echo "</tr>\n";
 			 	 		 
@@ -265,22 +264,25 @@ $result = dbquery(
 			 echo "<tr>\n";
 			 echo "<colgroup><col width='25%'><col width='25%'><col width='25%'><col width='25%'></colgroup>\n"; 
 			 echo "<td style='text-align:center; vertical-align:middle;'>	\n";
-					if ($data['figure_amazon_jp'] == "") { echo "".$locale['figure_030a']."";
+					if ($data['figure_amazon_jp'] == "") { echo "<strike>".$locale['figure_030a']."</strike>";
 						} else { echo "<a href='".$data['figure_amazon_jp']."'</a>".trimlink($data['figure_amazon_jp'],15)."</td>\n"; }	
 			 echo "<td align='center'>\n";
-					if ($data['figure_amazon_fr'] == "") { echo "".$locale['figure_027a']."";
+					if ($data['figure_amazon_fr'] == "") { echo "<strike>".$locale['figure_027a']."</strike>";
 						} else { echo "<a href='".$data['figure_amazon_fr']."'</a>".trimlink($data['figure_amazon_fr'],15)."</td>\n"; }	
 			 echo "<td align='center'>\n";
-			 		if ($data['figure_amazon_es'] == "") { echo "".$locale['figure_028a']."";
+			 		if ($data['figure_amazon_es'] == "") { echo "<strike>".$locale['figure_028a']."</strike>";
 						} else { echo "<a href='".$data['figure_amazon_es']."'</a>".trimlink($data['figure_amazon_es'],15)."</td>\n"; }	
 			 echo "<td align='center'>\n";
-			 		if ($data['figure_amazon_it'] == "") { echo "".$locale['figure_029a']."";
+			 		if ($data['figure_amazon_it'] == "") { echo "<strike>".$locale['figure_029a']."</strike>";
 						} else { echo "<a href='".$data['figure_amazon_it']."'</a>".trimlink($data['figure_amazon_it'],15)."</td>\n"; }	
 			 echo "</tr>\n";			
 			 echo "</table>\n";			
 			
 // AB HIER DETAILS  ////////////////////////////////////////////////////////////////
 
+echo "<div class='well clearfix'>\n";
+echo "<strong>FIGURE DATA</strong><br>";
+echo "</div>\n";
 
 
 		// LEERZEILE
@@ -497,13 +499,17 @@ $result = dbquery(
 			echo "<td style='word-break:break-all;word-wrap:break-word' class='tbl2'>&nbsp;</td>\n";
 			echo "<td style='word-break:break-all;word-wrap:break-word' class='tbl2'>&nbsp;</td>\n";
 			echo "<tr>";	
-			echo "</table>\n";		
-
+			echo "</table>\n";					
+			
 // RELATED FIGURES  ///////////////////////////////////////////
 	///////////////////////////////////////////////////////////////	
 				// SETTINGS HOLEN
 				$fil_settings = get_settings("figurelib");
 				if ($fil_settings['figure_related']) {
+					
+echo "<div class='well clearfix'>\n";
+echo "<strong>RELATED FIGURES</strong><br>";
+echo "</div>\n";
 
 					$result3 = dbquery("
 						SELECT 
@@ -519,15 +525,16 @@ $result = dbquery(
 						AND figure_id != ".$data['figure_id']." ".(iSUPERADMIN ? "" : "AND ".groupaccess('figure_visibility'))." 
 						ORDER BY RAND() LIMIT 5");
 				
-					echo "<table width='100%' cellspacing='1' cellpadding='0' class='tbl-border'>\n";
-					echo "<tbody><tr>\n";
-					echo "<th class='tbl2' align='' width='50%'>".$locale['figure_411']."</th>\n";
-					echo "<th class='tbl2' align='' width='25%'>".$locale['figure_413']."</th>\n";
-					echo "<th class='tbl2' align='' width='25%'>".$locale['figure_418']."</th>\n";
-					echo "</tr>\n";
+					
 					if (dbrows($result3)) {
 						$i = 0;
 						while ($data3 = dbarray($result3)) {
+							echo "<table width='100%' cellspacing='1' cellpadding='0' class='tbl-border'>\n";
+							echo "<tbody><tr>\n";
+							echo "<th class='tbl2' align='' width='50%'>".$locale['figure_411']."</th>\n";
+							echo "<th class='tbl2' align='' width='25%'>".$locale['figure_413']."</th>\n";
+							echo "<th class='tbl2' align='' width='25%'>".$locale['figure_418']."</th>\n";
+							echo "</tr>\n";
 							$drating = dbarray(dbquery("SELECT SUM(rating_vote) sum_rating, COUNT(rating_item_id) count_votes FROM ".DB_RATINGS." WHERE rating_item_id='".$data3['figure_id']."' AND rating_type='FI'"));
 							$num_votes = $drating['count_votes'];
 							$rating = ($num_votes > 0 ? str_repeat("<img src='".INFUSIONS."figurelib/images/star.png'>",ceil($drating['sum_rating']/$num_votes)) : "-");
@@ -539,15 +546,21 @@ $result = dbquery(
 							echo "<td class='$cell_color' width='25%' align=''>".$rating."</td>\n";
 							echo "</tr>\n";
 						}
-					} else echo "<tr><td class='tbl1' colspan='4' width='33%' align=''>".$locale['figure_426']."</td></tr>";
+					} else echo "<tr><td class='tbl1' colspan='4' width='33%' align=''>".$locale['figure_426']."</td><br><br></tr>";
 					echo "</tbody></table>\n";			
 				}				
 //++++++++++++++++++++++++++++++++++++++
 // RATING UND COMMENTS				
 		if ($data['figure_allow_comments']) { 
+echo "<div class='well clearfix'>\n";
+//echo "<strong>COMMENTS</strong><br>";
+echo "</div>\n";
 			showcomments("FI", DB_FIGURE_ITEMS, "figure_id", $_GET['figure_id'], INFUSIONS."figurelib/figures.php?figure_id=".$_GET['figure_id']);
 		}
 		if ($data['figure_allow_ratings']) { 
+echo "<div class='well clearfix'>\n";
+echo "<strong>RATINGS</strong><br>";
+echo "</div>\n";
 			showratings("FI", $_GET['figure_id'], INFUSIONS."figurelib/figures.php?figure_id=".$_GET['figure_id']);
 		}
 
@@ -556,7 +569,7 @@ $result = dbquery(
 if (iADMIN || iSUPERADMIN) {
 global $aidlink;
 	// ['cifg_0005'] = "Edit";
-			echo "<a class='btn btn-default btn-sm' href='".INFUSIONS."figurelib/admin.php".$aidlink."&amp;section=figurelib_form&amp;action=edit&amp;figure_id=".$data['figure_id']."'>".$locale['cifg_0005']."</a>"; 
+			echo "<a class='btn btn-default btn-sm' href='".INFUSIONS."figurelib/admin.php".$aidlink."&amp;section=figurelib_form&amp;action=edit&amp;figure_id=".$data['figure_id']."'>".$locale['cifg_0005a']."</a><p>"; 
 }			
 //+++++++++++++++++++++++++++++++++++++++
 // PRINT BUTTON
