@@ -159,7 +159,7 @@ echo "</div>\n";
 			echo "<tr><td class='panel-footer' colspan='4' width='100%'>\n";
 			
 			
-						
+// ####### SOCIAL_SHARING   ##################################################						
 						// SETTINGS HOLEN
 						global $settings;
 						$fil_settings = get_settings("figurelib"); 
@@ -176,8 +176,8 @@ echo "</div>\n";
 						}
 					echo "</td></tr>\n";
 			echo "</table>";	
-
-// AFFILIATE PANEL  ///////////////////////////////////////////
+						
+// ########  AFFILIATE PANEL  ################################################
 				
 
 	// CSS 
@@ -278,7 +278,7 @@ echo "</div>\n";
 			 echo "</tr>\n";			
 			 echo "</table>\n";			
 			
-// AB HIER DETAILS  ////////////////////////////////////////////////////////////////
+// ###########  FIGURE DETAILS   ##############################################################
 
 echo "<div class='well clearfix'>\n";
 echo "<strong>FIGURE DATA</strong><br>";
@@ -300,9 +300,9 @@ echo "</div>\n";
 			echo "<tr>";	
 			echo "<colgroup><col width='20%'><col width='30%'><col width='20%'><col width='30%'></colgroup>\n"; 			
 			echo "<td style='word-break:break-all;word-wrap:break-word' class='panel-footer'><b>".$locale['figure_441'].":</b></td>\n";
-			echo "<td style='word-break:break-all;word-wrap:break-word' class='tbl3'>".$data['figure_variant']."</td>\n";
+			echo "<td style='word-break:break-all;word-wrap:break-word' class='p-l-5'>".$data['figure_variant']."</td>\n";
 			echo "<td style='word-break:break-all;word-wrap:break-word' class='panel-footer'><b>".$locale['figure_442'].":</b></td>\n";
-			echo "<td style='word-break:break-all;word-wrap:break-word' class='tbl3'>".$data['figure_scale_name']."</td>\n";
+			echo "<td style='word-break:break-all;word-wrap:break-word' class='p-l-5'>".$data['figure_scale_name']."</td>\n";
 			echo "<tr>";	
 			echo "</table>\n";
 
@@ -311,22 +311,18 @@ echo "</div>\n";
 			echo "<tr>";	
 			echo "<colgroup><col width='20%'><col width='30%'><col width='20%'><col width='30%'></colgroup>\n";			
 			echo "<td style='word-break:break-all;word-wrap:break-word' class='panel-footer'><b>".$locale['figure_417'].":</b></td>\n";
-			echo "<td style='word-break:break-all;word-wrap:break-word' class='tbl3'>".$data['figure_manufacturer_name']."</td>\n";
+			echo "<td style='word-break:break-all;word-wrap:break-word' class='p-l-5'>".$data['figure_manufacturer_name']."</td>\n";
 			echo "<td style='word-break:break-all;word-wrap:break-word' class='panel-footer'><b>".$locale['figure_443'].":</b></td>\n";
-			echo "<td style='word-break:break-all;word-wrap:break-word' class='tbl3'>".$data['figure_weight']."</td>\n";		
+			echo "<td style='word-break:break-all;word-wrap:break-word' class='p-l-5'>".$data['figure_weight']."</td>\n";		
 			echo "<tr>";	
 			echo "</table>\n";
 			
 			//ZEILE 3 - Sub-Manufacturer (inaktive glöscht) / Height
-			
-			
-		
 			echo "<table class='tbl-border' width='100%'>\n";
-		
 			echo "<tr>";	
 			echo "<colgroup><col width='20%'><col width='30%'><col width='20%'><col width='30%'></colgroup>\n"; 
 			echo "<td style='word-break:break-all;word-wrap:break-word' class='panel-footer'><b>&nbsp;</b></td>\n";
-			echo "<td style='word-break:break-all;word-wrap:break-word' class='tbl2'>&nbsp;</td>\n";
+			echo "<td style='word-break:break-all;word-wrap:break-word' class='p-l-5'>&nbsp;</td>\n";
 			echo "<td style='word-break:break-all;word-wrap:break-word' class='panel-footer'><b>".$locale['figure_444'].":</b></td>\n";
 			
 				$height = dbquery("SELECT fm.figure_measurements_id, fm.figure_measurements_inch, f.figure_height
@@ -337,7 +333,7 @@ echo "</div>\n";
 				   if(dbrows($height)){
 					   while($dataheight = dbarray($height)){	
 			
-			echo "<td style='word-break:break-all;word-wrap:break-word' class='tbl3'>".$dataheight['figure_measurements_inch']."</td>\n";
+			echo "<td style='word-break:break-all;word-wrap:break-word' class='p-l-5'>".$dataheight['figure_measurements_inch']."</td>\n";
 				}
 			}				
 			echo "<tr>";	
@@ -348,7 +344,7 @@ echo "</div>\n";
 			echo "<tr>";	
 			echo "<colgroup><col width='20%'><col width='30%'><col width='20%'><col width='30%'></colgroup>\n"; 			
 			echo "<td style='word-break:break-all;word-wrap:break-word' class='panel-footer'><b>".$locale['figure_452'].":</b></td>\n";
-			echo "<td style='word-break:break-all;word-wrap:break-word' class='tbl3'>".$data['figure_artists']."</td>\n";
+			echo "<td style='word-break:break-all;word-wrap:break-word' class='p-l-5'>".$data['figure_artists']."</td>\n";
 			echo "<td style='word-break:break-all;word-wrap:break-word' class='panel-footer'><b>".$locale['figure_445'].":</b></td>\n";
 				
 				$width = dbquery("SELECT fm.figure_measurements_id, fm.figure_measurements_inch, f.figure_width
@@ -359,7 +355,7 @@ echo "</div>\n";
 				   if(dbrows($width)){
 					   while($datawidth = dbarray($width)){	
 			
-			echo "<td style='word-break:break-all;word-wrap:break-word' class='tbl3'>".$datawidth['figure_measurements_inch']."</td>\n";	
+			echo "<td style='word-break:break-all;word-wrap:break-word' class='p-l-5'>".$datawidth['figure_measurements_inch']."</td>\n";	
 				}
 			}				
 			echo "<tr>";	
@@ -370,7 +366,7 @@ echo "</div>\n";
 			echo "<tr>";	
 			echo "<colgroup><col width='20%'><col width='30%'><col width='20%'><col width='30%'></colgroup>\n"; 			
 			echo "<td style='word-break:break-all;word-wrap:break-word' class='panel-footer'><b>".$locale['figure_436'].":</b></td>\n";
-			echo "<td style='word-break:break-all;word-wrap:break-word' class='tbl3'>".$data['figure_country']."</td>\n";
+			echo "<td style='word-break:break-all;word-wrap:break-word' class='p-l-5'>".$data['figure_country']."</td>\n";
 			echo "<td style='word-break:break-all;word-wrap:break-word' class='panel-footer'><b>".$locale['figure_446'].":</b></td>\n";
 				
 				$depth = dbquery("SELECT fm.figure_measurements_id, fm.figure_measurements_inch, f.figure_depth
@@ -380,7 +376,7 @@ echo "</div>\n";
 				   
 				   if(dbrows($depth)){
 					   while($datadepth = dbarray($depth)){	
-			echo "<td style='word-break:break-all;word-wrap:break-word' class='tbl3'>".$datadepth['figure_measurements_inch']."</td>\n";
+			echo "<td style='word-break:break-all;word-wrap:break-word' class='p-l-5'>".$datadepth['figure_measurements_inch']."</td>\n";
 							}
 			}	
 			echo "<tr>";	
@@ -403,9 +399,9 @@ echo "</div>\n";
 			echo "<tr>";	
 			echo "<colgroup><col width='20%'><col width='30%'><col width='20%'><col width='30%'></colgroup>\n"; 
 			echo "<td style='word-break:break-all;word-wrap:break-word' class='panel-footer'><b>".$locale['figure_438'].":</b></td>\n";
-			echo "<td style='word-break:break-all;word-wrap:break-word' class='tbl3'>".$data['figure_brand_name']."</td>\n";		
+			echo "<td style='word-break:break-all;word-wrap:break-word' class='p-l-5'>".$data['figure_brand_name']."</td>\n";		
 			echo "<td style='word-break:break-all;word-wrap:break-word' class='panel-footer'><b>".$locale['figure_447'].":</b></td>\n";
-			echo "<td style='word-break:break-all;word-wrap:break-word' class='tbl3'>".$data['figure_material_name']."</td>\n";
+			echo "<td style='word-break:break-all;word-wrap:break-word' class='p-l-5'>".$data['figure_material_name']."</td>\n";
 			echo "<tr>";	
 			echo "</table>\n";
 			
@@ -414,9 +410,9 @@ echo "</div>\n";
 			echo "<tr>";	
 			echo "<colgroup><col width='20%'><col width='30%'><col width='20%'><col width='30%'></colgroup>\n"; 			
 			echo "<td style='word-break:break-all;word-wrap:break-word' class='panel-footer'><b>".$locale['figure_439'].":</b></td>\n";
-			echo "<td style='word-break:break-all;word-wrap:break-word' class='tbl3'>".$data['figure_series']."</td>\n";
+			echo "<td style='word-break:break-all;word-wrap:break-word' class='p-l-5'>".$data['figure_series']."</td>\n";
 			echo "<td style='word-break:break-all;word-wrap:break-word' class='panel-footer'><b>".$locale['figure_455'].":</b></td>\n";
-			echo "<td style='word-break:break-all;word-wrap:break-word' class='tbl3'>".$data['figure_poa_name']."</td>\n";				
+			echo "<td style='word-break:break-all;word-wrap:break-word' class='p-l-5'>".$data['figure_poa_name']."</td>\n";				
 			echo "<tr>";	
 			echo "</table>\n";
 			
@@ -425,9 +421,9 @@ echo "</div>\n";
 			echo "<tr>";	
 			echo "<colgroup><col width='20%'><col width='30%'><col width='20%'><col width='30%'></colgroup>\n"; 			
 			echo "<td style='word-break:break-all;word-wrap:break-word' class='panel-footer'><b>".$locale['figure_419'].":</b></td>\n";
-			echo "<td style='word-break:break-all;word-wrap:break-word' class='tbl3'>".$data['figure_year']."</td>\n";
+			echo "<td style='word-break:break-all;word-wrap:break-word' class='p-l-5'>".$data['figure_year']."</td>\n";
 			echo "<td style='word-break:break-all;word-wrap:break-word' class='panel-footer'><b>".$locale['figure_448'].":</b></td>\n";
-			echo "<td style='word-break:break-all;word-wrap:break-word' class='tbl3'>".$data['figure_packaging_name']."</td>\n";	
+			echo "<td style='word-break:break-all;word-wrap:break-word' class='p-l-5'>".$data['figure_packaging_name']."</td>\n";	
 			echo "<tr>";	
 			echo "</table>\n";
 			
@@ -447,9 +443,9 @@ echo "</div>\n";
 			echo "<tr>";	
 			echo "<colgroup><col width='20%'><col width='30%'><col width='20%'><col width='30%'></colgroup>\n"; 			
 			echo "<td style='word-break:break-all;word-wrap:break-word' class='panel-footer' style='width:100px;padding:6px'><b>".$locale['figure_449'].":</b></td>\n";
-			echo "<td style='word-break:break-all;word-wrap:break-word' class='tbl3'>".$data['figure_retailprice']."</td>\n";
+			echo "<td style='word-break:break-all;word-wrap:break-word' class='p-l-5'>".$data['figure_retailprice']."</td>\n";
 			echo "<td style='word-break:break-all;word-wrap:break-word' class='panel-footer' style='width:100px;padding:6px'><b>".$locale['figure_456'].":</b></td>\n";
-			echo "<td style='word-break:break-all;word-wrap:break-word' class='tbl3'>".$data['figure_usedprice']."</td>\n";
+			echo "<td style='word-break:break-all;word-wrap:break-word' class='p-l-5'>".$data['figure_usedprice']."</td>\n";
 			echo "<tr>";	
 			echo "</table>\n";	
 
@@ -458,9 +454,9 @@ echo "</div>\n";
 			echo "<tr>";	
 			echo "<colgroup><col width='20%'><col width='30%'><col width='20%'><col width='30%'></colgroup>\n"; 
 			echo "<td style='word-break:break-all;word-wrap:break-word' class='panel-footer'><b>".$locale['figure_450'].":</b></td>\n";
-			echo "<td style='word-break:break-all;word-wrap:break-word' class='tbl3'>".$data['figure_limitation_name']."</td>\n";
+			echo "<td style='word-break:break-all;word-wrap:break-word' class='p-l-5'>".$data['figure_limitation_name']."</td>\n";
 			echo "<td style='word-break:break-all;word-wrap:break-word' class='panel-footer' style='width:100px;padding:6px'><b>".$locale['figure_451'].":</b></td>\n";
-			echo "<td style='word-break:break-all;word-wrap:break-word' class='tbl3'>".$data['figure_editionsize']."</td>\n";
+			echo "<td style='word-break:break-all;word-wrap:break-word' class='p-l-5'>".$data['figure_editionsize']."</td>\n";
 			echo "<tr>";	
 			echo "</table>\n";	
 			
@@ -480,13 +476,13 @@ echo "</div>\n";
 			echo "<tr>";	
 			echo "<colgroup><col width='20%'><col width='80%'></colgroup>\n"; 			
 			echo "<td style='word-break:break-all;word-wrap:break-word' class='panel-footer'><b>".$locale['figure_457'].":</b></td>\n";
-			echo "<td style='word-break:break-all;word-wrap:break-word' class='tbl3'>".($data['figure_accessories'] ? $data['figure_accessories'] : "-")."</td>\n";	
+			echo "<td style='word-break:break-all;word-wrap:break-word' class='p-l-5'>".($data['figure_accessories'] ? $data['figure_accessories'] : "-")."</td>\n";	
 			echo "</tr>";		
 			echo "<tr>";		
 			
 			//if ($data['figure_description']) {
 					echo "<td style='word-break:break-all;word-wrap:break-word' class='panel-footer'><b>".$locale['figure_423'].":</b></td>\n";
-					echo "<td style='word-break:break-all;word-wrap:break-word' class='tbl3'>".nl2br(parseubb(parsesmileys($data['figure_description'])))."</td>";
+					echo "<td style='word-break:break-all;word-wrap:break-word' class='p-l-5'>".nl2br(parseubb(parsesmileys($data['figure_description'])))."</td>";
 				//}					
 			
 			echo "</tr>";	
@@ -500,9 +496,9 @@ echo "</div>\n";
 			echo "<td style='word-break:break-all;word-wrap:break-word' class='tbl2'>&nbsp;</td>\n";
 			echo "<tr>";	
 			echo "</table>\n";					
-			
-// RELATED FIGURES  ///////////////////////////////////////////
-	///////////////////////////////////////////////////////////////	
+
+// ###########  RELATED FIGURES  ####################################################				
+
 				// SETTINGS HOLEN
 				$fil_settings = get_settings("figurelib");
 				if ($fil_settings['figure_related']) {
@@ -510,6 +506,7 @@ echo "</div>\n";
 echo "<div class='well clearfix'>\n";
 echo "<strong>RELATED FIGURES</strong><br>";
 echo "</div>\n";
+echo "<div class='panel panel-default'>\n";
 
 					$result3 = dbquery("
 						SELECT 
@@ -518,9 +515,12 @@ echo "</div>\n";
 							f.figure_datestamp, 
 							f.figure_visibility, 
 							fc.figure_cat_id, 
-							fc.figure_cat_name 
+							fc.figure_cat_name,
+							fm.figure_manufacturer_id,
+							fm.figure_manufacturer_name							
 						FROM ".DB_FIGURE_ITEMS." f 
-						INNER JOIN ".DB_FIGURE_CATS." fc ON f.figure_cat=fc.figure_cat_id 
+						INNER JOIN ".DB_FIGURE_CATS." fc ON f.figure_cat=fc.figure_cat_id
+						INNER JOIN ".DB_FIGURE_MANUFACTURERS." fm ON f.figure_manufacturer=fm.figure_manufacturer_id 						
 						WHERE MATCH (figure_title) AGAINST ('".$data['figure_title']."' IN BOOLEAN MODE) 
 						AND figure_id != ".$data['figure_id']." ".(iSUPERADMIN ? "" : "AND ".groupaccess('figure_visibility'))." 
 						ORDER BY RAND() LIMIT 5");
@@ -528,26 +528,33 @@ echo "</div>\n";
 					
 					if (dbrows($result3)) {
 						$i = 0;
-						while ($data3 = dbarray($result3)) {
-							echo "<table width='100%' cellspacing='1' cellpadding='0' class='tbl-border'>\n";
+						
+						
+							echo "<table width='100%' cellspacing='1' cellpadding='0' class=''>\n";	
 							echo "<tbody><tr>\n";
-							echo "<th class='tbl2' align='' width='50%'>".$locale['figure_411']."</th>\n";
-							echo "<th class='tbl2' align='' width='25%'>".$locale['figure_413']."</th>\n";
-							echo "<th class='tbl2' align='' width='25%'>".$locale['figure_418']."</th>\n";
+							echo "<th class='' align='' width='30%'>".$locale['figure_411']."</th>\n";
+							echo "<th class='' align='' width='30%'>".$locale['figure_417']."</th>\n";
+							echo "<th class='' align='' width='30%'>".$locale['figure_413']."</th>\n";
+							echo "<th class='' align='' width='10%'>".$locale['figure_418']."</th>\n";
 							echo "</tr>\n";
+						
+						while ($data3 = dbarray($result3)) {
+
 							$drating = dbarray(dbquery("SELECT SUM(rating_vote) sum_rating, COUNT(rating_item_id) count_votes FROM ".DB_RATINGS." WHERE rating_item_id='".$data3['figure_id']."' AND rating_type='FI'"));
 							$num_votes = $drating['count_votes'];
-							$rating = ($num_votes > 0 ? str_repeat("<img src='".INFUSIONS."figurelib/images/star.png'>",ceil($drating['sum_rating']/$num_votes)) : "-");
+							$rating = ($num_votes > 0 ? str_repeat("<img src='".INFUSIONS."figurelib/images/starsmall.png'>",ceil($drating['sum_rating']/$num_votes)) : "-");
 							$cell_color = ($i % 2 == 0 ? "tbl1" : "tbl2"); $i++;
 							echo "<tr>\n";
 							echo "<td class='$cell_color' width='50%'><a href='figure.php?figure_id=".$data3['figure_id']."' title='".$data3['figure_title']."'>".$data3['figure_title']."</a></td>\n";
-	
+							echo "<td class='$cell_color' width='25%' align=''>".trimlink($data3['figure_manufacturer_name'],30)."</td>\n";
 							echo "<td class='$cell_color' width='25%' align=''>".$data3['figure_cat_name']."</td>\n";
 							echo "<td class='$cell_color' width='25%' align=''>".$rating."</td>\n";
 							echo "</tr>\n";
 						}
 					} else echo "<tr><td class='tbl1' colspan='4' width='33%' align=''>".$locale['figure_426']."</td><br><br></tr>";
-					echo "</tbody></table>\n";			
+					echo "</tbody></table>\n";
+					echo "</div>\n";
+									
 				}				
 //++++++++++++++++++++++++++++++++++++++
 // RATING UND COMMENTS				
