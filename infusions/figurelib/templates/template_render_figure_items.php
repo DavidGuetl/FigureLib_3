@@ -43,8 +43,6 @@ if (!function_exists('render_figure_items')) {
 		global $locale;
 		echo render_breadcrumbs();
 	
-openside();
-
 $result = dbquery(
 			"SELECT 
 			f.*,
@@ -87,8 +85,11 @@ $result = dbquery(
 			if (dbrows($result) != 0) {
 				while ($data = dbarray($result)) {
 					
+// TITLE + KATEGORIE					
+
+ echo "<aside class='list-group-item m-b-20'>\n";
 					
-			// TITLE + KATEGORIE
+			
 			echo "<div class='panel panel-default'>\n";
 			echo "<div class='panel-heading'>\n";
 			
@@ -165,7 +166,8 @@ $result = dbquery(
 			
 						
 						// SETTINGS HOLEN
-						$fil_settings = get_settings("figurelib");
+						global $settings;
+						$fil_settings = get_settings("figurelib"); 
 
 						if ($fil_settings['figure_social_sharing']) {
 							echo "<div style='text-align:center'>\n";
@@ -551,10 +553,11 @@ $result = dbquery(
 
 //+++++++++++++++++++++++++++++++++++++++
 // LINK FÜR ADMINS ZUM BEARBETEN DER FIGUR
-
+if (iADMIN || iSUPERADMIN) {
 global $aidlink;
 	// ['cifg_0005'] = "Edit";
-			echo "<a class='btn btn-default btn-sm' href='".INFUSIONS."figurelib/admin.php".$aidlink."&amp;section=figurelib_form&amp;action=edit&amp;figure_id=".$data['figure_id']."'>".$locale['cifg_0005']."</a>"; // // 
+			echo "<a class='btn btn-default btn-sm' href='".INFUSIONS."figurelib/admin.php".$aidlink."&amp;section=figurelib_form&amp;action=edit&amp;figure_id=".$data['figure_id']."'>".$locale['cifg_0005']."</a>"; 
+}			
 //+++++++++++++++++++++++++++++++++++++++
 // PRINT BUTTON
 //echo "<a title='".$locale['news_0002']."' href='".$info['print_link']."'><i class='entypo print'></i></a>";
@@ -567,8 +570,8 @@ global $aidlink;
 		}	
 	echo "</div>";
 	
-	
-closeside();
+echo "</aside>\n";	
+//closeside();
 
 	}
 }	
