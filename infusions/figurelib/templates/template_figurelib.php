@@ -1,7 +1,6 @@
 <?php
 if (!defined("IN_FUSION")) { die("Access Denied"); }
 include INFUSIONS."figurelib/infusion_db.php";
-
 			//////////  CLICKCOUNTER FÜR FIGUR  //////////////////////////////////
 			if (isset($_GET['figure_id']) && isnum($_GET['figure_id'])) {$res = 0;			
 				$data = dbarray(dbquery("SELECT f.figure_clickcount FROM ".DB_FIGURE_ITEMS." AS f LEFT JOIN ".DB_FIGURE_CATS." AS fc ON f.figure_cat=fc.figure_cat_id WHERE f.figure_id='".intval($_GET['figure_id'])."'"));
@@ -19,13 +18,12 @@ include INFUSIONS."figurelib/infusion_db.php";
 	// GET SETTING FOR SHOW AS GALLERY OR TABLE
 	$fil_settings = get_settings("figurelib"); 
 	if ($fil_settings['figure_display']) {	
-
 // ******************************************************************************************			
 // GALLERY VIEW 
 // ******************************************************************************************	
 	
-			if (!function_exists('render_figure_item')) {
-				function render_figure_item($info) {
+			if (!function_exists('render_figure')) {
+				function render_figure($info) {
 					global $locale;
 					echo render_breadcrumbs();
 					
@@ -47,9 +45,7 @@ include INFUSIONS."figurelib/infusion_db.php";
 					echo "<div class='media-body overflow-hide'>\n";
 								
 //*******
-
 	echo "<td style='text-align:center;' class=''>\n";
-
 	echo "<a href='".$data['figure']['link']."'><img src='".INFUSIONS."figurelib/images/default.png"."' alt='".trimlink($data['figure_title'],50)."' title='".trimlink($data['figure_title'],100)."' style='border:0px;max-height:100px;max-width:100px' />";	
 	echo "<br />\n";						
 	
@@ -76,10 +72,8 @@ include INFUSIONS."figurelib/infusion_db.php";
 				$rating = ($drating['count_votes'] > 0 ? str_repeat("<img src='".INFUSIONS.$inf_folder."/images/starsmall.png'>",ceil($drating['sum_rating']/$drating['count_votes'])) : "-");
 			echo "<span class='small'><strong>Rating: </strong>".$rating."</span>\n";
 	
-
 	echo "</td>\n";
 	echo "</tr>\n</table>\n";
-
 //*******							
 					echo "</div>\n</div>\n";
 					echo "</div>\n";
@@ -121,7 +115,6 @@ include INFUSIONS."figurelib/infusion_db.php";
 /******************************************************************************************/	
 			
 } else {	
-
 /******************************************************************************************		
 		|-------------------------------------------------------|
 		| VARIANTE                     POSTED BY                |
@@ -132,9 +125,8 @@ include INFUSIONS."figurelib/infusion_db.php";
 		| YEAR	                       RATING                   |                 
 		--------------------------------------------------------|
 ******************************************************************************************/			
-
-			if (!function_exists('render_figure_item')) {
-				function render_figure_item($info) {
+			if (!function_exists('render_figure')) {
+				function render_figure($info) {
 					global $locale;
 					echo render_breadcrumbs();
 					
@@ -204,7 +196,6 @@ include INFUSIONS."figurelib/infusion_db.php";
 						")); 
 				$rating = ($drating['count_votes'] > 0 ? str_repeat("<img src='".INFUSIONS.$inf_folder."/images/starsmall.png'>",ceil($drating['sum_rating']/$drating['count_votes'])) : "-");
 			echo "<span class='small'><strong>Rating: </strong>".$rating."</span>\n";
-
 		echo "</div>\n";
 		
 		
@@ -216,7 +207,6 @@ include INFUSIONS."figurelib/infusion_db.php";
 		echo isset($data['nav']['last']) ? "<a class='btn btn-default btn-sm' href='".$data['nav']['last']['link']."' title='".$data['nav']['last']['name']."'><i class='entypo to-end'></i></a>\n" : '';
 		echo "</div>";
 		
-
 		echo "</div>\n";
 		echo "</div>\n";
 		echo "</div>\n";
@@ -278,9 +268,8 @@ include INFUSIONS."figurelib/infusion_db.php";
 }				
 		
 // ##################################################################################
-
-if (!function_exists('render_figure_cat')) {
-	function render_figure_cat($info) {
+if (!function_exists('render_figure_cats')) {
+	function render_figure_cats($info) {
 		global $locale;
 		echo render_breadcrumbs();
 		
@@ -296,7 +285,6 @@ if (!function_exists('render_figure_cat')) {
 						echo "</div>\n<div class='row m-0'>\n";
 					}
 					echo "<div class='col-xs-12 col-sm-6 col-md-6 col-lg-6 p-t-20'>\n";
-
 					echo "<div class='media'>\n";
 					echo "<div class='pull-left'><i class='entypo folder mid-opacity icon-sm'></i></div>\n";
 					echo "<div class='media-body overflow-hide'>\n";
@@ -317,8 +305,6 @@ if (!function_exists('render_figure_cat')) {
 		closetable();
 	}
 }	
-
-
 	/* NO FUNCTIONARY SHOW RIGHT INAGE FROM DB FIGURE_IMAGES
 		
 		$result2 = dbquery("SELECT
@@ -329,7 +315,6 @@ if (!function_exists('render_figure_cat')) {
 					WHERE figure_images_figure_id='".$data['figure_id']."' LIMIT 0,1");
 		
 		while($data2 = dbarray($result2)){
-
 		// WENN KEIN BILD VORHANDEN DANN ZEIGE PLATZHALTER BILD
 			if ($data2['figure_images_thumb']) {
 				echo "<a href='".$data['figure']['link']."'><img src='".INFUSIONS."figurelib/images/default.png"."' alt='".trimlink($data['figure_title'],50)."' title='".trimlink($data['figure_title'],100)."' style='border:0px;max-height:100px;max-width:100px' /></a>";
@@ -338,4 +323,3 @@ if (!function_exists('render_figure_cat')) {
 				echo "<a href='".$data['figure']['link']."'>\n<img src='".($data2['figure_images_thumb'] ? THUMBS_FIGURES.$data2['figure_images_thumb'] : INFUSIONS.$inf_folder."/images/default.png")."' alt='".trimlink($data['figure_title'],100)."' title='".trimlink($data['figure_title'],50)."' style='border:0px;max-height:100px;max-width:100px' /></a>";
 			}
 	*/
-		
