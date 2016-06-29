@@ -44,7 +44,7 @@ if (!function_exists('render_figure_cats')) {
 		
 		// ['cifg_0009'] = "Filter by:";
 		//opentable($locale['cifg_0009']);
-		echo "<div class='panel panel-default'>\n";
+		echo "<aside class='list-group-item m-b-20'>\n";
 		
 		if ($info['figure_cat_rows'] != 0) {
 			$counter = 0;
