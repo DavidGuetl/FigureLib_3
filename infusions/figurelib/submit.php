@@ -51,7 +51,7 @@ if (file_exists(INFUSIONS."figurelib/locale/".LOCALESET."locale_figurelib.php"))
 }
 // ['figure_521'] = "Submit Figure";
 add_to_title($locale['global_200'].$locale['figure_521']);
-opentable("<i class='fa fa-globe fa-lg m-r-10'></i>".$locale['figure_521']);
+openside("<i class='fa fa-globe fa-lg m-r-10'></i>".$locale['figure_521']);
 // Can Visitor Submit?
 if (iMEMBER && $fil_settings['figure_submit']) {
 	
@@ -149,8 +149,16 @@ if (iMEMBER && $fil_settings['figure_submit']) {
 							);
 							dbquery_insert(DB_FIGURE_IMAGES, $imageArray, "save");
 							
-							// message to to admin - dosent work atm
-							// send_pm("1", "1", "Hi - Subject", "Your Message", "y", "false");
+				// message to to admin - dosent work atm
+				// send_pm("1", "1", "Hi - Subject", "Your Message", "y", "FALSE");
+							
+				// if (isset($_GET['pm'])) {
+				//require_once(INCLUDES."infusions_include.php");
+				//send_pm("1", "2", "Hi - Subject", "Your Message", "y", "FALSE");
+				//echo "PM sent";
+				//}
+							
+							
 							
 						} else {
 							echo $currentUpload['error'];
@@ -193,22 +201,22 @@ if (iMEMBER && $fil_settings['figure_submit']) {
 		// Select Field "Category"
 		echo form_select_tree("figure_cat", $locale['figure_413'], $criteriaArray['figure_cat'], 
 			array(
-				"inline" => true,
+				"inline" => TRUE,
 				"width" => "400px",
-				"required" => true,
+				"required" => TRUE,
 				"placeholder" => $locale['figurelib-placeholder-101'],
 				"error_text" => $locale['figurelib/admin/figurelib.php_070'],
 				"no_root" => 1,
 				"query" => (multilang_table("FI") ? "WHERE figure_cat_language='".LANGUAGE."'" : ""),
 				"maxselect" => 1,
-				"allowclear" => true,
+				"allowclear" => TRUE,
 			),
 		DB_FIGURE_CATS, "figure_cat_name", "figure_cat_id", "figure_cat_parent");
 		// Text Field "Title"
 		echo form_text("figure_title", $locale['figure_411'], $criteriaArray['figure_title'],
 			array(
-				"inline" => true,
-				"required" => true,
+				"inline" => TRUE,
+				"required" => TRUE,
 				"width" => "400px",
 				"placeholder" => $locale['figure_1801'],
 				"error_text" => $locale['figurelib-error-101']
@@ -217,7 +225,7 @@ if (iMEMBER && $fil_settings['figure_submit']) {
 		// Text Field "Variant"
 		echo form_text("figure_variant", $locale['figure_441'], $criteriaArray['figure_variant'],
 			array(
-				"inline" => true,
+				"inline" => TRUE,
 				"width" => "400px",
 				"placeholder" => $locale['figure_1802']
 			)
@@ -225,21 +233,21 @@ if (iMEMBER && $fil_settings['figure_submit']) {
 		// Select Field "Manufacturer"
 		echo form_select_tree("figure_manufacturer", $locale['figure_417'], $criteriaArray['figure_manufacturer'], 
 			array(
-				"inline" => true,
-				"required" => true,
+				"inline" => TRUE,
+				"required" => TRUE,
 				"width" => "400px",
 				"placeholder" => $locale['figurelib-placeholder-102'],
 				"error_text" => $locale['figurelib-error-102'],
 				"no_root" => 1,
 				"query" => (multilang_table("FI") ? "WHERE figure_manufacturer_language='".LANGUAGE."'" : ""),
 				"maxselect" => 1,
-				"allowclear" => true,
+				"allowclear" => TRUE,
 			),
 		DB_FIGURE_MANUFACTURERS, "figure_manufacturer_name", "figure_manufacturer_id", "figure_manufacturer_parent");
 		// Text Field "Artists"
 		echo form_text("figure_artists", $locale['figure_452'], $criteriaArray['figure_artists'],
 			array(
-				"inline" => true,
+				"inline" => TRUE,
 				"width" => "400px",
 				"placeholder" => $locale['figure_1803']
 			)
@@ -247,7 +255,7 @@ if (iMEMBER && $fil_settings['figure_submit']) {
 		// Text Field "Country"
 		echo form_text("figure_country", $locale['figure_436'], $criteriaArray['figure_country'],
 			array(
-				"inline" => true,
+				"inline" => TRUE,
 				"width" => "400px",
 				"placeholder" => $locale['figure_1804']
 			)
@@ -255,21 +263,21 @@ if (iMEMBER && $fil_settings['figure_submit']) {
 		// Select Field "Brand"
 		echo form_select_tree("figure_brand", $locale['figure_438'], $criteriaArray['figure_brand'], 
 			array(
-				"inline" => true,
-				"required" => true,
+				"inline" => TRUE,
+				"required" => TRUE,
 				"width" => "400px",
 				"placeholder" => $locale['figurelib-placeholder-103'],
 				"error_text" => $locale['figurelib-error-103'],
 				"no_root" => 1,
 				"query" => (multilang_table("FI") ? "WHERE figure_brand_language='".LANGUAGE."'" : ""),
 				"maxselect" => 1,
-				"allowclear" => true,
+				"allowclear" => TRUE,
 			),
 		DB_FIGURE_BRANDS, "figure_brand_name", "figure_brand_id", "figure_brand_parent");
 		// Text Field "Series"
 		echo form_text("figure_series", $locale['figure_439'], $criteriaArray['figure_series'],
 			array(
-				"inline" => true,
+				"inline" => TRUE,
 				"width" => "400px",
 				"placeholder" => $locale['figure_1805']
 			)
@@ -281,21 +289,21 @@ if (iMEMBER && $fil_settings['figure_submit']) {
 		// Select Field "Scale"
 		echo form_select_tree("figure_scale", $locale['figure_442'], $criteriaArray['figure_scale'], 
 			array(
-				"inline" => true,
-				"required" => true,
+				"inline" => TRUE,
+				"required" => TRUE,
 				"width" => "400px",
 				"placeholder" => $locale['figurelib-placeholder-104'],
 				"error_text" => $locale['figurelib-error-104'],
 				"no_root" => 1,
 				"query" => (multilang_table("FI") ? "WHERE figure_scale_language='".LANGUAGE."'" : ""),
 				"maxselect" => 1,
-				"allowclear" => true,
+				"allowclear" => TRUE,
 			),
 		DB_FIGURE_SCALES, "figure_scale_name", "figure_scale_id", "figure_scale_parent");
 		// Text Field "Weight"
 		echo form_text("figure_weight", $locale['figure_443'], $criteriaArray['figure_weight'],
 			array(
-				"inline" => true,
+				"inline" => TRUE,
 				"width" => "400px",
 				"placeholder" => $locale['figure_1806']
 			)
@@ -303,43 +311,43 @@ if (iMEMBER && $fil_settings['figure_submit']) {
 		// Select Field "Height"
 		echo form_select_tree("figure_height", $locale['figure_444'], $criteriaArray['figure_height'], 
 			array(
-				"inline" => true,
+				"inline" => TRUE,
 				"width" => "400px",
-				"required" => true,
+				"required" => TRUE,
 				"placeholder" => $locale['figurelib-placeholder-105'],
 				"error_text" => $locale['figurelib/admin/figurelib.php_031'],
 				"no_root" => 1,
 				"query" => (multilang_table("FI") ? "WHERE figure_measurements_language='".LANGUAGE."'" : ""),
 				"maxselect" => 1,
-				"allowclear" => true,
+				"allowclear" => TRUE,
 			),
 		DB_FIGURE_MEASUREMENTS, "figure_measurements_inch", "figure_measurements_id", "figure_measurements_parent");
 		// Select Field "Width"
 		echo form_select_tree("figure_width", $locale['figure_445'], $criteriaArray['figure_width'], 
 			array(
-				"inline" => true,
+				"inline" => TRUE,
 				"width" => "400px",
-				"required" => true,
+				"required" => TRUE,
 				"placeholder" => $locale['figurelib-placeholder-106'],
 				"error_text" => $locale['figurelib/admin/figurelib.php_034'],
 				"no_root" => 1,
 				"query" => (multilang_table("FI") ? "WHERE figure_measurements_language='".LANGUAGE."'" : ""),
 				"maxselect" => 1,
-				"allowclear" => true,
+				"allowclear" => TRUE,
 			),
 		DB_FIGURE_MEASUREMENTS, "figure_measurements_inch", "figure_measurements_id", "figure_measurements_parent");
 		// Select Field "Depth"
 		echo form_select_tree("figure_depth", $locale['figure_446'], $criteriaArray['figure_depth'], 
 			array(
-				"inline" => true,
-				"required" => true,
+				"inline" => TRUE,
+				"required" => TRUE,
 				"width" => "400px",
 				"placeholder" => $locale['figurelib-placeholder-107'],
 				"error_text" => $locale['figurelib-error-105'],
 				"no_root" => 1,
 				"query" => (multilang_table("FI") ? "WHERE figure_measurements_language='".LANGUAGE."'" : ""),
 				"maxselect" => 1,
-				"allowclear" => true,
+				"allowclear" => TRUE,
 			),
 		DB_FIGURE_MEASUREMENTS, "figure_measurements_inch", "figure_measurements_id", "figure_measurements_parent");
 		
@@ -350,43 +358,43 @@ if (iMEMBER && $fil_settings['figure_submit']) {
 		// Select Field "Material"
 		echo form_select_tree("figure_material", $locale['figure_447'], $criteriaArray['figure_material'], 
 			array(
-				"inline" => true,
-				"required" => true,
+				"inline" => TRUE,
+				"required" => TRUE,
 				"width" => "400px",
 				"placeholder" => $locale['figurelib-placeholder-108'],
 				"error_text" => $locale['figurelib-error-106'],
 				"no_root" => 1,
 				"query" => (multilang_table("FI") ? "WHERE figure_material_language='".LANGUAGE."'" : ""),
 				"maxselect" => 1,
-				"allowclear" => true,
+				"allowclear" => TRUE,
 			),
 		DB_FIGURE_MATERIALS, "figure_material_name", "figure_material_id", "figure_material_parent");
 		// Select Field "POA"
 		echo form_select_tree("figure_poa", $locale['figure_455'], $criteriaArray['figure_poa'], 
 			array(
-				"inline" => true,
-				"required" => true,
+				"inline" => TRUE,
+				"required" => TRUE,
 				"width" => "400px",
 				"placeholder" => $locale['figurelib-placeholder-109'],
 				"error_text" => $locale['figurelib-error-107'],
 				"no_root" => 1,
 				"query" => (multilang_table("FI") ? "WHERE figure_poa_language='".LANGUAGE."'" : ""),
 				"maxselect" => 1,
-				"allowclear" => true,
+				"allowclear" => TRUE,
 			),
 		DB_FIGURE_POAS, "figure_poa_name", "figure_poa_id", "figure_poa_parent");
 		// Select Field "Packaging"
 		echo form_select_tree("figure_packaging", $locale['figure_448'], $criteriaArray['figure_packaging'], 
 			array(
-				"inline" => true,
-				"required" => true,
+				"inline" => TRUE,
+				"required" => TRUE,
 				"width" => "400px",
 				"placeholder" => $locale['figurelib-placeholder-110'],
 				"error_text" => $locale['figurelib-error-108'],
 				"no_root" => 1,
 				"query" => (multilang_table("FI") ? "WHERE figure_packaging_language='".LANGUAGE."'" : ""),
 				"maxselect" => 1,
-				"allowclear" => true,
+				"allowclear" => TRUE,
 			),
 		DB_FIGURE_PACKAGINGS, "figure_packaging_name", "figure_packaging_id", "figure_packaging_parent");
 		// Form "Space"
@@ -396,22 +404,22 @@ if (iMEMBER && $fil_settings['figure_submit']) {
 		// Select Field "Pub Date"
 		echo form_select_tree("figure_pubdate", $locale['figure_419'], $criteriaArray['figure_pubdate'], 
 			array(
-				"inline" => true,
-				"required" => true,
+				"inline" => TRUE,
+				"required" => TRUE,
 				"width" => "400px",
 				"placeholder" => $locale['figurelib-placeholder-111'],
 				"error_text" => $locale['figurelib-error-109'],
 				"no_root" => 1,
 				"query" => (multilang_table("FI") ? "WHERE figure_year_language='".LANGUAGE."'" : ""),
 				"maxselect" => 1,
-				"allowclear" => true,
+				"allowclear" => TRUE,
 			),
 		DB_FIGURE_YEARS, "figure_year", "figure_year_id", "figure_year_parent");
 		
 		// Text Field "Retail Price"
 		echo form_text("figure_retailprice", $locale['figure_449'], $criteriaArray['figure_retailprice'],
 			array(
-				"inline" => true,
+				"inline" => TRUE,
 				"width" => "400px",
 				"error_text" => $locale['figure_1814'],
 				"min" => "0",
@@ -422,7 +430,7 @@ if (iMEMBER && $fil_settings['figure_submit']) {
 		// Text Field "Used Price"
 		echo form_text("figure_usedprice", $locale['figure_456'], $criteriaArray['figure_usedprice'],
 			array(
-				"inline" => true,
+				"inline" => TRUE,
 				"width" => "400px",
 				"error_text" => $locale['figure_1815'],
 				"min" => "0",
@@ -439,21 +447,21 @@ if (iMEMBER && $fil_settings['figure_submit']) {
 		// Select Field "Limited Edition"
 		echo form_select_tree("figure_limitation", $locale['figure_450'], $criteriaArray['figure_limitation'], 
 			array(
-				"inline" => true,
-				"required" => true,
+				"inline" => TRUE,
+				"required" => TRUE,
 				"width" => "400px",
 				"placeholder" => $locale['figurelib-placeholder-112'],
 				"error_text" => $locale['figurelib-error-111'],
 				"no_root" => 1,
 				"query" => (multilang_table("FI") ? "WHERE figure_limitation_language='".LANGUAGE."'" : ""),
 				"maxselect" => 1,
-				"allowclear" => true,
+				"allowclear" => TRUE,
 			),
 		DB_FIGURE_LIMITATIONS, "figure_limitation_name", "figure_limitation_id", "figure_limitation_parent");
 		// Text Field "Editions Size"
 		echo form_text("figure_editionsize", $locale['figure_451'], $criteriaArray['figure_editionsize'],
 			array(
-				"inline" => true,
+				"inline" => TRUE,
 				"width" => "400px",
 				"min" => "1",
 				"error_text" => $locale['figure_1816'],
@@ -469,12 +477,12 @@ if (iMEMBER && $fil_settings['figure_submit']) {
 		// File Field "Images"
 		echo form_fileinput("figure_image[]", $locale['figure_136'], "", 
 			array(
-				"inline" => true,
+				"inline" => TRUE,
 				"template" => "modern",
-				"multiple" => true,
+				"multiple" => TRUE,
 				"upload_path" => INFUSIONS.'figurelib/figures/images/',
 				"thumbnail_folder" => THUMBS_FIGURES,
-				"thumbnail" => true,
+				"thumbnail" => TRUE,
 				"max_byte" => $asettings['figure_photo_max_b'],
 				"max_count" => 10
 			)
@@ -490,8 +498,8 @@ if (iMEMBER && $fil_settings['figure_submit']) {
 			array(
 				"type" => fusion_get_settings("tinymce_enabled") ? "tinymce" : "html",
 				"tinymce" => fusion_get_settings("tinymce_enabled") && iADMIN ? "advanced" : "simple",
-				"autosize" => true,
-				"required" => false,
+				"autosize" => TRUE,
+				"required" => FALSE,
 				"form_name" => "submit_form",
 			)
 		);
@@ -500,8 +508,8 @@ if (iMEMBER && $fil_settings['figure_submit']) {
 			array(
 				"type" => fusion_get_settings("tinymce_enabled") ? "tinymce" : "html",
 				"tinymce" => fusion_get_settings("tinymce_enabled") && iADMIN ? "advanced" : "simple",
-				"autosize" => true,
-				"required" => false,
+				"autosize" => TRUE,
+				"required" => FALSE,
 				"form_name" => "submit_form",
 			)
 		);
@@ -512,8 +520,8 @@ if (iMEMBER && $fil_settings['figure_submit']) {
 		// Checkbox "Terms"
 		echo form_checkbox("figure_agb", $locale['figure_1810'], $criteriaArray['figure_agb'],
 			array(
-				"inline" => true,
-				"required" => true,
+				"inline" => TRUE,
+				"required" => TRUE,
 				"error_text" => $locale['figurelib-error-112']
 			)
 		);
@@ -529,8 +537,16 @@ if (iMEMBER && $fil_settings['figure_submit']) {
 				
 				// message to admins - dosent work at moment
 				//require_once(INCLUDES."infusions_include.php");
-				//self::send_pm(-103, 1, "Figure Submission", "Figure Submission is done", "y", true);
-				//send_pm(-103, 1, "Figure Submission", "Figure Submission is done", "y", true);
+				
+				//    if (isset($_GET['pm'])) {
+					require_once(INCLUDES."infusions_include.php");
+				//	send_pm("1", "2", "Hi - Subject", "Your Message", "y", "FALSE");
+				//	echo "PM sent";
+				//	}
+				
+				
+				//self::send_pm(-103, 1, "Figure Submission", "Figure Submission is done", "y", TRUE);
+				//send_pm(-103, 1, "Figure Submission", "Figure Submission is done", "y", TRUE);
 				
 			echo "</div>\n</div>\n";
 		}
@@ -545,5 +561,8 @@ if (iMEMBER && $fil_settings['figure_submit']) {
 	// ['figure_1813'] = "Sorry, we currently do not accept any figure submissions on this site.";
 	echo "<div class='well text-center'>".$locale['figure_1813']."</div>\n";
 }
-closetable();
+closeside();
 require_once THEMES."templates/footer.php";
+
+//send_pm( -102, 1, 'Figure submittet', 'A new figure was submittet!', 'y', TRUE);
+//send_pm( -103, 1, 'Figure submittet', 'A new figure was submittet!', 'y', TRUE);
