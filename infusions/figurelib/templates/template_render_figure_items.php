@@ -148,18 +148,10 @@ echo "</div>\n";
 						echo "<td class='side-small'><a href='".INFUSIONS."figurelib/figures.php?figure_id=".$data['figure_id']."' class=''>\n<img src='".INFUSIONS."figurelib/images/default.png"."' alt='".trimlink($data['figure_title'],50)."' title='".trimlink($data['figure_title'],100)."' style='border:0px;max-height:60px;max-width:60px' /></td>";
 					 
 					 echo "</tr>\n";
-				 
-			// ZEILE FÜR I'M LOOKING FOR THIS FIGURE | I HAVE THIS FIGURE | I SELL THIS FIGURE | BUY THIS FIGURE		 
-			echo "<tr><td align='center' class='panel-footer' colspan='4' width='100%'>\n";		 
-			echo "<a href='x' target='_blank'>I'M LOOKING FOR THIS FIGURE</a> | <a href='x' target='_blank'>I HAVE THIS FIGURE</a> | <a href='x' target='_blank'>I SELL THIS FIGURE</a> | <a href='x' target='_blank'>BUY THIS FIGURE</a>";			
-			
-			echo "</td></tr>\n";
-				
-			//ZEILE SOCIALMEDIA BUTTONS SHARING BUTTONS - über komplette Breite der Tabelle						
-			echo "<tr><td class='panel-footer' colspan='4' width='100%'>\n";
-			
-			
-// ####### SOCIAL_SHARING   ##################################################						
+										
+// ####### SOCIAL_SHARING   ##################################################		
+
+					echo "<tr><td align='center' class='panel-footer' colspan='4' width=''>\n";						
 						// SETTINGS HOLEN
 						global $settings;
 						$fil_settings = get_settings("figurelib"); 
@@ -175,6 +167,7 @@ echo "</div>\n";
 							echo "</div>\n";
 						}
 					echo "</td></tr>\n";
+					
 			echo "</table>";	
 						
 // ########  AFFILIATE PANEL  ################################################
@@ -284,17 +277,6 @@ echo "<div class='well clearfix'>\n";
 echo "<strong>FIGURE DATA</strong><br>";
 echo "</div>\n";
 
-
-		// LEERZEILE
-			//echo "<table class='tbl-border' width='100%'>\n";			
-			//echo "<tr>";	
-			//echo "<colgroup><col width='50%'><col width='50%'></colgroup>\n"; 
-			//echo "<td style='word-break:break-all;word-wrap:break-word' class='tbl2'>&nbsp;</td>\n";
-			//echo "<td style='word-break:break-all;word-wrap:break-word' class='tbl2'>&nbsp;</td>\n";
-			//echo "<tr>";	
-			//echo "</table>\n";
-			
-			// AB HIER DIE FIGUREN DATEN / ZEILEN
 			//ZEILE 1 - Variant	/ Scale	
 			echo "<table class='tbl-border' width='100%'>\n";			
 			echo "<tr>";	
@@ -494,9 +476,51 @@ echo "</div>\n";
 			echo "<colgroup><col width='50%'><col width='50%'></colgroup>\n"; 
 			echo "<td style='word-break:break-all;word-wrap:break-word' class='tbl2'>&nbsp;</td>\n";
 			echo "<td style='word-break:break-all;word-wrap:break-word' class='tbl2'>&nbsp;</td>\n";
-			echo "<tr>";	
-			echo "</table>\n";					
+			echo "</tr>";	
+			echo "</table>\n";	
 
+// ####### USERFIGURES  ######################################################
+				
+		if (iMEMBER) {
+		
+	echo "<div class='well clearfix'>\n";	
+		echo "<tr><td align='center' class='panel-footer' colspan='4' width=''>\n";					
+		
+		$locale['userfigure_001'] ="Add to my collection";
+		$locale['userfigure_002'] ="Delete from my collection";
+
+		// Standard Values for Fields
+			$criteriaArray = array(
+					"figure_userfigures_figure_id" => "", 
+					"figure_userfigures_user_id" => "", );		
+		
+		// Form posted
+	if (isset($_POST['add_to_collection'])) {
+
+		// Check Fields
+		$criteriaArray = array(
+		$figure_userfigures_figure_id= form_sanitizer($_POST['figure_userfigures_figure_id'], '', 'figure_userfigures_figure_id'),
+		$figure_userfigures_user_id= form_sanitizer($_POST['figure_userfigures_user_id'], '', 'figure_userfigures_user_id'),
+		);
+
+		if (defender::safe()) {
+				$inputArray = array(
+					"figure_userfigures_figure_id" => $data['figure_id'],
+					"figure_userfigures_user_id" => $data['user_id'],);
+				dbquery_insert(DB_FIGURE_USERFIGURES, $inputArray, "save", array());			
+		}
+	}
+			echo openform('inputform', 'post', FUSION_REQUEST, array("class" => "",));
+
+			echo form_button("add_to_collection", $locale['userfigure_001'], $locale['userfigure_001'], array("class" => "btn btn-default btn-sm"));
+		
+			echo "  <a href='http://google.com' class='btn btn-default btn-sm'>".$locale['sale']."</a>";
+			echo "</td></tr>";
+			echo closeform();
+				
+
+		echo "</div>\n";			
+}
 // ###########  RELATED FIGURES  ####################################################				
 
 				// SETTINGS HOLEN
