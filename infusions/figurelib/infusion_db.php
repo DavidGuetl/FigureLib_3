@@ -19,6 +19,17 @@
 +--------------------------------------------------------*/
 if (!defined("IN_FUSION")) { die("Access Denied"); }
 
+// CONSTANTS
+// LANGUAGE
+if (!defined("FIGURELIB_LOCALE")) {
+    if (file_exists(INFUSIONS."figurelib/locale/".LOCALESET."locale_figurelib.php")) {
+        define("FIGURELIB_LOCALE", INFUSIONS."figurelib/locale/".LOCALESET."locale_figurelib.php");
+    } else {
+        define("FIGURELIB_LOCALE", INFUSIONS."figurelib/locale/English/locale_figurelib.php");
+    }
+}
+
+
 // DB TABLES
 if (!defined("DB_FIGURE_ITEMS")) {
 	define("DB_FIGURE_ITEMS", DB_PREFIX."figure_items");
