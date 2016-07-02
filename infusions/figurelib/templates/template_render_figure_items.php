@@ -1,16 +1,4 @@
 <?php
-
-	//error_reporting(E_ALL);
-	//echo "<br>";
-	// Formularinhalte prüfen
-	//print_r ($_POST);
-	//echo "<br>";
-	// GET-Parameter prüfen
-	//print_r ($_GET);
-	// Sessions prüfen
-	//echo "<br>";
-	//print_r ($_SESSION);
-
 /*-------------------------------------------------------+
 | PHP-Fusion Content Management System
 | Copyright (C) PHP-Fusion Inc
