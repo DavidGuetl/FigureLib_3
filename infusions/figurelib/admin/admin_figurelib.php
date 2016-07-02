@@ -20,18 +20,11 @@
 | written permission from the original author(s).
 +--------------------------------------------------------*/
 if (!defined("IN_FUSION")) { die("Access Denied"); }
-if (!defined("IN_FUSION")) { die("Access Denied"); }
 pageAccess("FI");
-if (fusion_get_settings("tinymce_enabled")) {
-	echo "<script language='javascript' type='text/javascript'>advanced();</script>\n";
-}
 
 // LANGUAGE
-if (file_exists(INFUSIONS."figurelib/locale/".LOCALESET."locale_figurelib.php")) {
-	include INFUSIONS."figurelib/locale/".LOCALESET."locale_figurelib.php";
-} else {
-	include INFUSIONS."figurelib/locale/English/locale_figurelib.php";
-}
+include INFUSIONS."figurelib/infusion_db.php";
+include FIGURELIB_LOCALE;
 
 if (file_exists(LOCALE.LOCALESET."admin/settings.php")) {
 	include LOCALE.LOCALESET."admin/settings.php";
@@ -91,17 +84,18 @@ if (!empty($result)) {
 			"figure_amazon_jp" => "",
 			"figure_amazon_com" => "",
 			"figure_amazon_ca" => "",
-						
 	);
 
 	
 	if ((isset($_GET['action']) && $_GET['action'] == "delete") && (isset($_GET['figure_id']) && isnum($_GET['figure_id']))) {
-		$result = dbquery("DELETE FROM ".DB_FIGURE_ITEMS." WHERE figure_id='".$_GET['figure_id']."'");
+
+        $result = dbquery("DELETE FROM ".DB_FIGURE_ITEMS." WHERE figure_id='".$_GET['figure_id']."'");
 		
 		// ['figurelib/admin/figurelib.php_001'] = "Figure deleted";
 		addNotice("success", $locale['figurelib/admin/figurelib.php_001']);
 		redirect(FUSION_SELF.$aidlink);
 	}
+
 	if (isset($_POST['save_figure'])) {
 		$data = array(
 			"figure_id" 		  => form_sanitizer($_POST['figure_id'],           0,  "figure_id"),
@@ -123,7 +117,7 @@ if (!empty($result)) {
 			"figure_poa"          => form_sanitizer($_POST['figure_poa'],          "", "figure_poa"),
 			"figure_packaging"    => form_sanitizer($_POST['figure_packaging'],    "", "figure_packaging"),
 			"figure_retailprice"  => form_sanitizer($_POST['figure_retailprice'],  "", "figure_retailprice"),
-			"fiure_usedprice"     => form_sanitizer($_POST['figure_usedprice'],    "", "figure_usedprice"),
+			"figure_usedprice"     => form_sanitizer($_POST['figure_usedprice'],    0, "figure_usedprice"),
 			"figure_limitation"   => form_sanitizer($_POST['figure_limitation'],   "", "figure_limitation"),
 			"figure_cat"          => form_sanitizer($_POST['figure_cat'],          "", "figure_cat"),
 			"figure_editionsize"  => form_sanitizer($_POST['figure_editionsize'],  "", "figure_editionsize"),
@@ -154,19 +148,40 @@ if (!empty($result)) {
 			"figure_description"  => addslash(nl2br(parseubb(stripinput($_POST['figure_description'])))),
 			"figure_accessories"  => addslash(nl2br(parseubb(stripinput($_POST['figure_accessories']))))
 		);
+
+        // upload your image here
+        if (!empty($_FILES['figure_image']) && defender::safe()) {
+            // To pair with the image into the database.
+            $image_data = (array) form_sanitizer($_FILES['figure_image'], "", "figure_image");
+            if (!empty($image_data)) {
+                foreach($image_data as $image) {
+                    $i_data = array(
+                        "figure_images_image_id" => 0,
+                        "figure_images_figure_id" => dblastid(),
+                        "figure_images_image" => $image['image_name'],
+                        "figure_images_thumb" => $image['thumb1_name'],
+                        "figure_images_sorting" => "",
+                        "figure_images_language" => LANGUAGE,
+                    );
+                    // Then insert the data.
+                    dbquery_insert(DB_FIGURE_IMAGES, $i_data, "save");
+                }
+            }
+        }
+
 		if (defender::safe()) {
 			if (dbcount("(figure_id)", DB_FIGURE_ITEMS, "figure_id='".intval($data['figure_id'])."'")) {
 				$data['figure_datestamp'] = isset($_POST['update_datestamp']) ? time() : $data['figure_datestamp'];
 				dbquery_insert(DB_FIGURE_ITEMS, $data, "update");
 				// ['figurelib/admin/figurelib.php_002'] = "Figure updated";
 				addNotice("success", $locale['figurelib/admin/figurelib.php_002']);
-				redirect(FUSION_SELF.$aidlink);
 			} else {
 				dbquery_insert(DB_FIGURE_ITEMS, $data, "save");
 				// ['figurelib/admin/figurelib.php_003'] = "Figure added";
 				addNotice("success", $locale['figurelib/admin/figurelib.php_002']);
-				redirect(FUSION_SELF.$aidlink);
 			}
+
+            //redirect(FUSION_SELF.$aidlink);
 		}
 	}
 	if ($figure_edit) {
@@ -177,7 +192,7 @@ if (!empty($result)) {
 			redirect(FUSION_SELF.$aidlink);
 		}
 	}
-	echo openform('inputform', 'post', FUSION_REQUEST, array("class" => "m-t-20"));
+	echo openform('inputform', 'post', FUSION_REQUEST, array("class" => "m-t-20", "enctype"=>true));
 	echo "<div class='row'>\n";
 	echo "<div class='col-xs-12 col-sm-8'>\n";
 
@@ -327,6 +342,7 @@ if (!empty($result)) {
 		echo form_text("figure_weight", $locale['figurelib/admin/figurelib.php_027'], $data['figure_weight'],	array(
 									"inline" => TRUE,
 									"width" => "520px",
+                                    "type" => "number",
 									"placeholder" => $locale['figurelib/admin/figurelib.php_028']
 								));	
 // Select Field "Height" /////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -447,7 +463,7 @@ if (!empty($result)) {
 									"min" => "0",
 									"placeholder" => $locale['figurelib/admin/figurelib.php_051'],
 									"type" => "number"
-								));	
+								));
 // Text Field "Used Price" ///////////////////////////////////////////////////////////////////////////////////////////////////////////
 									// ['figurelib/admin/figurelib.php_052'] = "Used Price ($)";
 									// ['figurelib/admin/figurelib.php_053'] = "Used price in US$ (only numeric input possible)";
