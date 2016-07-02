@@ -24,15 +24,6 @@
 if (!defined("IN_FUSION")) { die("Access Denied"); }
 include INFUSIONS."figurelib/infusion_db.php";
 
-// LANGUAGE
-if (!defined("FIGURELIB_LOCALE")) {
-    if (file_exists(INFUSIONS."figurelib/locale/".LOCALESET."locale_figurelib.php")) {
-        define("FIGURELIB_LOCALE", INFUSIONS."figurelib/locale/".LOCALESET."locale_figurelib.php");
-    } else {
-        define("FIGURELIB_LOCALE", INFUSIONS."figurelib/locale/English/locale_figurelib.php");
-    }
-}
-
 $locale = fusion_get_locale("", FIGURELIB_LOCALE);
 
 // INFUSION GENERAL INFORMATION
@@ -43,7 +34,7 @@ $inf_developer = "Catzenjaeger";
 $inf_email = "info@aliencollectors.com";
 $inf_weburl = "http://www.AlienCollectors.com";
 $inf_folder = "figurelib";
-$inf_image = "figurelib.png";
+$inf_image = "figure_ico.png";
 
 // Position these links under Content Administration
 $inf_adminpanel[] = array(
