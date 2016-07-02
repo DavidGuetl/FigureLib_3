@@ -64,8 +64,7 @@ if (isset($_GET['submit_id']) && isnum($_GET['submit_id'])) {
 			'figure_submitter'    => form_sanitizer($_POST['figure_submitter'],    '', 'figure_submitter'), 
 			'figure_visibility'   => form_sanitizer($_POST['figure_visibility'],   0,  'figure_visibility'), 
 			'figure_description'  => form_sanitizer($_POST['figure_description'], "",  "figure_description"),
-			'figure_accessories'  => form_sanitizer($_POST['figure_accessories'], "",  "figure_accessories"),
-			
+			'figure_accessories'  => form_sanitizer($_POST['figure_accessories'], "",  "figure_accessories"),			
 			'figure_forum_url'    => form_sanitizer($_POST['figure_forum_url'],    '', 'figure_forum_url'), 
 			'figure_affiliate_1'  => form_sanitizer($_POST['figure_affiliate_1'],  '', 'figure_affiliate_1'),
 			'figure_affiliate_2'  => form_sanitizer($_POST['figure_affiliate_2'],  '', 'figure_affiliate_2'),
@@ -85,9 +84,7 @@ if (isset($_GET['submit_id']) && isnum($_GET['submit_id'])) {
 			'figure_amazon_it'    => form_sanitizer($_POST['figure_amazon_it'],    '', 'figure_amazon_it'),
 			'figure_amazon_jp'    => form_sanitizer($_POST['figure_amazon_jp'],    '', 'figure_amazon_jp'),
 			'figure_amazon_com'   => form_sanitizer($_POST['figure_amazon_com'],   '', 'figure_amazon_com'),
-			'figure_amazon_ca'    => form_sanitizer($_POST['figure_amazon_ca'],    '', 'figure_amazon_ca'),	
-		
-			);
+			'figure_amazon_ca'    => form_sanitizer($_POST['figure_amazon_ca'],    '', 'figure_amazon_ca'),);
 			
 			
 /*
@@ -207,7 +204,6 @@ if (isset($_GET['submit_id']) && isnum($_GET['submit_id'])) {
 				"figure_description"  => parse_textarea($submit_criteria['figure_description']),
 				"figure_accessories"  => parse_textarea($submit_criteria['figure_accessories']),
 				"figure_datestamp" 	  => $data['submit_datestamp'],	
-
 				"figure_forum_url"    => $submit_criteria['figure_forum_url'],
 				"figure_affiliate_1"  => $submit_criteria['figure_affiliate_1'],
 				"figure_affiliate_2"  => $submit_criteria['figure_affiliate_2'],
@@ -227,10 +223,7 @@ if (isset($_GET['submit_id']) && isnum($_GET['submit_id'])) {
 				"figure_amazon_it"    => $submit_criteria['figure_amazon_it'],
 				"figure_amazon_jp"    => $submit_criteria['figure_amazon_jp'],
 				"figure_amazon_com"   => $submit_criteria['figure_amazon_com'],
-				"figure_amazon_ca"    => $submit_criteria['figure_amazon_ca'],
-
-		
-			);
+				"figure_amazon_ca"    => $submit_criteria['figure_amazon_ca'],);
 			
 			echo openform("publish_figure", "post", FUSION_REQUEST);
 			
