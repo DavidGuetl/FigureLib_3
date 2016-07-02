@@ -123,7 +123,27 @@ if (iMEMBER && $fil_settings['figure_submit']) {
 				"figure_accessories"  => addslash(nl2br(parseubb(stripinput($_POST['figure_accessories'])))),			
 			);
 			
-			//Save					
+			        // upload your image here
+        if (!empty($_FILES['figure_image']) && defender::safe()) {
+            // To pair with the image into the database.
+            $image_data = (array) form_sanitizer($_FILES['figure_image'], "", "figure_image");
+            if (!empty($image_data)) {
+                foreach($image_data as $image) {
+                    $i_data = array(
+                        "figure_images_image_id" => 0,
+                        "figure_images_figure_id" => dblastid(),
+                        "figure_images_image" => $image['image_name'],
+                        "figure_images_thumb" => $image['thumb1_name'],
+                        "figure_images_sorting" => "",
+                        "figure_images_language" => LANGUAGE,
+                    );
+                    // Then insert the data.
+                    //dbquery_insert(DB_FIGURE_IMAGES, $i_data, "save");
+					  dbquery_insert(DB_FIGURE_IMAGES, $i_data, "save", array("keep_session"=>true));
+                }
+            }
+        }
+							
 			if (defender::safe()) {
 				$inputArray = array(
 					"submit_type" => "f",
@@ -131,40 +151,9 @@ if (iMEMBER && $fil_settings['figure_submit']) {
 					"submit_datestamp" => time(),
 					"submit_criteria" => addslashes(serialize($criteriaArray))
 				);
-				dbquery_insert(DB_SUBMISSIONS, $inputArray, "save", array(
-									'keep_session' => TRUE));
-				$figureID = dblastid();
-				// Image Upload
-				
-				$upload = form_sanitizer($_FILES['figure_image'], '', 'figure_image');
-				if (!empty($upload)) {
-					$totalFiles = count($upload);
-					for ($i = 0; $i < $totalFiles; $i++) {
-						$currentUpload = $upload[$i];
-						if ($currentUpload['error'] == 0) {
-							$imageArray = array(
-								'figure_images_figure_id' => $figureID,
-								'figure_images_image' => $currentUpload['image_name'],
-								'figure_images_thumb' => $currentUpload['thumb1_name']
-							);
-							dbquery_insert(DB_FIGURE_IMAGES, $imageArray, "save");
-							
-				// message to to admin - dosent work atm
-				// send_pm("1", "1", "Hi - Subject", "Your Message", "y", "FALSE");
-							
-				// if (isset($_GET['pm'])) {
-				//require_once(INCLUDES."infusions_include.php");
-				//send_pm("1", "2", "Hi - Subject", "Your Message", "y", "FALSE");
-				//echo "PM sent";
-				//}
-							
-							
-							
-						} else {
-							echo $currentUpload['error'];
-						}
-					}
-				}		
+				dbquery_insert(DB_SUBMISSIONS, $inputArray, "save");
+
+									
 				// ['figs_0018'] = "Thank you for submitting your Figure";
 				addNotice("success", $locale['figs_0018']);
 				redirect(clean_request("submitted=f", array("stype"), TRUE));
@@ -480,9 +469,10 @@ if (iMEMBER && $fil_settings['figure_submit']) {
 				"inline" => TRUE,
 				"template" => "modern",
 				"multiple" => TRUE,
-				"upload_path" => INFUSIONS.'figurelib/figures/images/',
-				"thumbnail_folder" => THUMBS_FIGURES,
+				"upload_path" => INFUSIONS."figurelib/figures/images/",
+				"thumbnail_folder" => "thumbs/",
 				"thumbnail" => TRUE,
+				"required" => FALSE,
 				"max_byte" => $asettings['figure_photo_max_b'],
 				"max_count" => 10
 			)
