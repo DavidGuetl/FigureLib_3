@@ -30,10 +30,13 @@
 | copyright header is strictly prohibited without
 | written permission from the original author(s).
 +--------------------------------------------------------*/
+require_once "../../maincore.php";
+require_once INCLUDES."infusions_include.php";
 if (!defined("IN_FUSION")) { die("Access Denied"); }
 include INFUSIONS."figurelib/infusion_db.php";
-global $aidlink;
-global $settings;
+
+//global $settings, $main_style, $aidlink; $userdata; $locale; add_handler("theme_output");
+global $userdata;
 
 // ******************************************************************************************			
 // FIGURE
@@ -42,6 +45,7 @@ if (!function_exists('render_figure_items')) {
 	function render_figure_items($info) {
 		global $locale;
 		echo render_breadcrumbs();
+
 	
 $result = dbquery(
 			"SELECT 
@@ -81,7 +85,44 @@ $result = dbquery(
 			".(multilang_table("FI") ? "WHERE figure_language='".LANGUAGE."' AND" : "WHERE")." f.figure_freigabe='1'  
 			AND figure_id='".$_GET['figure_id']."'
 			");
-			
+		
+
+/*
+// USER PART RAUSGENOMMEN WEIL WRITER UNTEN SONST FALSCHE USER ID
+			$result = dbquery(
+			"SELECT 
+			f.*,
+			fc.figure_cat_id, 
+			fc.figure_cat_name, 		
+			fman.figure_manufacturer_id,
+			fman.figure_manufacturer_name, 
+			fb.figure_brand_name, 
+			fy.figure_year_id, 
+			fy.figure_year, 
+			fs.figure_scale_id, 
+			fs.figure_scale_name, 
+			fl.figure_limitation_id, 
+			fl.figure_limitation_name,
+			fpoa.figure_poa_id,
+			fpoa.figure_poa_name,
+			fpack.figure_packaging_id,
+			fpack.figure_packaging_name,
+			fmat.figure_material_id,
+			fmat.figure_material_name				
+			FROM ".DB_FIGURE_ITEMS." f
+			INNER JOIN ".DB_FIGURE_CATS." fc ON f.figure_cat=fc.figure_cat_id
+			INNER JOIN ".DB_FIGURE_MANUFACTURERS." fman ON fman.figure_manufacturer_id = f.figure_manufacturer
+			INNER JOIN ".DB_FIGURE_BRANDS." fb ON fb.figure_brand_id = f.figure_brand
+			INNER JOIN ".DB_FIGURE_SCALES." fs ON fs.figure_scale_id = f.figure_scale
+			INNER JOIN ".DB_FIGURE_YEARS." fy ON fy.figure_year_id = f.figure_pubdate
+			INNER JOIN ".DB_FIGURE_LIMITATIONS." fl ON fl.figure_limitation_id = f.figure_limitation
+			INNER JOIN ".DB_FIGURE_POAS." fpoa ON fpoa.figure_poa_id = f.figure_poa
+			INNER JOIN ".DB_FIGURE_PACKAGINGS." fpack ON fpack.figure_packaging_id = f.figure_packaging
+			INNER JOIN ".DB_FIGURE_MATERIALS." fmat ON fmat.figure_material_id = f.figure_material
+			".(multilang_table("FI") ? "WHERE figure_language='".LANGUAGE."' AND" : "WHERE")." f.figure_freigabe='1'  
+			AND figure_id='".$_GET['figure_id']."'
+			");
+*/			
 			if (dbrows($result) != 0) {
 				while ($data = dbarray($result)) {
 					
@@ -236,38 +277,52 @@ echo "</div>\n";
 			 } else { 
 			 }
 			
-			// VIERTE ZEILE AMAZON COM CA UK DE		
-			 echo "<tr>\n";
-			 echo "<colgroup><col width='25%'><col width='25%'><col width='25%'><col width='25%'></colgroup>\n"; 
-			 echo "<td style='text-align:center; vertical-align:middle;'>	\n";	 
-					if ($data['figure_amazon_com'] == "") { echo "<strike>".$locale['figure_031a']."</strike>";
-						} else { echo "<a href='".$data['figure_amazon_com']."'</a>".trimlink($data['figure_amazon_com'],15)."</td>\n"; }		 
-			 echo "<td align='center'>\n";	 
-					if ($data['figure_amazon_ca'] == "") { echo "<strike>".$locale['figure_032a']."</strike>";
-						} else { echo "<a href='".$data['figure_amazon_ca']."'</a>".trimlink($data['figure_amazon_ca'],15)."</td>\n"; }	
-			 echo "<td align='center'>\n";	 
-			 		if ($data['figure_amazon_uk'] == "") { echo "<strike>".$locale['figure_026a']."</strike>";
-						} else { echo "<a href='".$data['figure_amazon_uk']."'</a>".trimlink($data['figure_amazon_uk'],15)."</td>\n"; }	
-			 echo "<td align='center'>\n";	 
-			 		if ($data['figure_amazon_de'] == "") { echo "<strike>".$locale['figure_025a']."</strike>";
-						} else { echo "<a href='".$data['figure_amazon_de']."'</a>".trimlink($data['figure_amazon_de'],15)."</td>\n"; }	
-			 echo "</tr>\n";
-			 	 		 
+			// VIERTE ZEILE AMAZON COM CA UK DE	
+
+
+						 echo "<tr>\n";
+			echo "<colgroup><col width='25%'><col width='25%'><col width='25%'><col width='25%'></colgroup>\n"; 
+			
+			
+			echo "<td style='text-align:center; vertical-align:middle;'>	\n";	 
+					if ($data['figure_amazon_com'] == "") { echo "<img src='".INFUSIONS."figurelib/images/flags/flag_usa_sw.png"."' alt='".$locale['figure_031a']."' title='".$locale['figure_031a']."'>";
+						} else { echo "<a href='".$data['figure_amazon_com']."'><img src='".INFUSIONS."figurelib/images/flags/flag_usa.png"."' alt='".trimlink($data['figure_amazon_com'],50)."' title='".trimlink($datadata['figure_amazon_com'],100)."'></td>\n"; }		 
+			
+			echo "<td align='center'>\n";	 
+					if ($data['figure_amazon_ca'] == "") { echo "<img src='".INFUSIONS."figurelib/images/flags/flag_canada_sw.png"."' alt='".$locale['figure_032a']."' title='".$locale['figure_032a']."'>";
+						} else { echo "<a href='".$data['figure_amazon_ca']."'><img src='".INFUSIONS."figurelib/images/flags/flag_canada.png"."' alt='".trimlink($data['figure_amazon_ca'],50)."' title='".trimlink($datadata['figure_amazon_ca'],100)."'></td>\n"; }	
+			 			 	 
+			echo "<td align='center'>\n";	 
+			 		if ($data['figure_amazon_uk'] == "") { echo "<img src='".INFUSIONS."figurelib/images/flags/flag_great_britain_sw.png"."' alt='".$locale['figure_026a']."' title='".$locale['figure_026a']."'>";
+						} else { echo "<a href='".$data['figure_amazon_ca']."'><img src='".INFUSIONS."figurelib/images/flags/flag_great_britain.png"."' alt='".trimlink($data['figure_amazon_ca'],50)."' title='".trimlink($datadata['figure_amazon_ca'],100)."'></td>\n"; }	
+				
+			echo "<td align='center'>\n";	 
+			 		if ($data['figure_amazon_de'] == "") { echo "<img src='".INFUSIONS."figurelib/images/flags/flag_germany_sw.png"."' alt='".$locale['figure_025a']."' title='".$locale['figure_025a']."'>";
+						} else { echo "<a href='".$data['figure_amazon_de']."'><img src='".INFUSIONS."figurelib/images/flags/flag_germany.png"."' alt='".trimlink($data['figure_amazon_de'],50)."' title='".trimlink($datadata['figure_amazon_de'],100)."'></td>\n"; }	
+			echo "</tr>\n";
+			 
+		 
 			 // FÜNFTE ZEILE AMAZON JP FR ES IT
 			 echo "<tr>\n";
 			 echo "<colgroup><col width='25%'><col width='25%'><col width='25%'><col width='25%'></colgroup>\n"; 
-			 echo "<td style='text-align:center; vertical-align:middle;'>	\n";
-					if ($data['figure_amazon_jp'] == "") { echo "<strike>".$locale['figure_030a']."</strike>";
-						} else { echo "<a href='".$data['figure_amazon_jp']."'</a>".trimlink($data['figure_amazon_jp'],15)."</td>\n"; }	
-			 echo "<td align='center'>\n";
-					if ($data['figure_amazon_fr'] == "") { echo "<strike>".$locale['figure_027a']."</strike>";
-						} else { echo "<a href='".$data['figure_amazon_fr']."'</a>".trimlink($data['figure_amazon_fr'],15)."</td>\n"; }	
-			 echo "<td align='center'>\n";
-			 		if ($data['figure_amazon_es'] == "") { echo "<strike>".$locale['figure_028a']."</strike>";
-						} else { echo "<a href='".$data['figure_amazon_es']."'</a>".trimlink($data['figure_amazon_es'],15)."</td>\n"; }	
-			 echo "<td align='center'>\n";
-			 		if ($data['figure_amazon_it'] == "") { echo "<strike>".$locale['figure_029a']."</strike>";
-						} else { echo "<a href='".$data['figure_amazon_it']."'</a>".trimlink($data['figure_amazon_it'],15)."</td>\n"; }	
+			
+
+			echo "<td style='text-align:center; vertical-align:middle;'>	\n";
+					if ($data['figure_amazon_jp'] == "") { echo "<img src='".INFUSIONS."figurelib/images/flags/flag_japan_sw.png"."' alt='".$locale['figure_030a']."' title='".$locale['figure_030a']."'>";
+						} else { echo "<a href='".$data['figure_amazon_jp']."'><img src='".INFUSIONS."figurelib/images/flags/flag_japan.png"."' alt='".trimlink($data['figure_amazon_jp'],50)."' title='".trimlink($datadata['figure_amazon_jp'],100)."'></td>\n"; }		
+			
+			echo "<td align='center'>\n";
+					if ($data['figure_amazon_fr'] == "") { echo "<img src='".INFUSIONS."figurelib/images/flags/flag_france_sw.png"."' alt='".$locale['figure_027a']."' title='".$locale['figure_027a']."'>";
+						} else { echo "<a href='".$data['figure_amazon_fr']."'><img src='".INFUSIONS."figurelib/images/flags/flag_france.png"."' alt='".trimlink($data['figure_amazon_fr'],50)."' title='".trimlink($datadata['figure_amazon_fr'],100)."'></td>\n"; }	
+			 
+			 
+			echo "<td align='center'>\n";
+			 		if ($data['figure_amazon_es'] == "") { echo "<img src='".INFUSIONS."figurelib/images/flags/flag_spain_sw.png"."' alt='".$locale['figure_028a']."' title='".$locale['figure_028a']."'>";
+						} else { echo "<a href='".$data['figure_amazon_es']."'><img src='".INFUSIONS."figurelib/images/flags/flag_spain.png"."' alt='".trimlink($data['figure_amazon_es'],50)."' title='".trimlink($datadata['figure_amazon_es'],100)."'></td>\n"; }	
+				
+			echo "<td align='center'>\n";
+			 		if ($data['figure_amazon_it'] == "") { echo "<img src='".INFUSIONS."figurelib/images/flags/flag_italy_sw.png"."' alt='".$locale['figure_029a']."' title='".$locale['figure_029a']."'>";
+						} else { echo "<a href='".$data['figure_amazon_it']."'><img src='".INFUSIONS."figurelib/images/flags/flag_italy.png"."' alt='".trimlink($data['figure_amazon_it'],50)."' title='".trimlink($datadata['figure_amazon_it'],100)."'></td>\n"; }	
 			 echo "</tr>\n";			
 			 echo "</table>\n";			
 			
@@ -460,8 +515,11 @@ echo "</div>\n";
 			echo "<td style='word-break:break-all;word-wrap:break-word' class='panel-footer'><b>".$locale['figure_457'].":</b></td>\n";
 			echo "<td style='word-break:break-all;word-wrap:break-word' class='p-l-5'>".($data['figure_accessories'] ? $data['figure_accessories'] : "-")."</td>\n";	
 			echo "</tr>";		
-			echo "<tr>";		
+			echo "</table>\n";
 			
+			echo "<table class='tbl-border' width='100%'>\n";			
+			echo "<tr>";	
+			echo "<colgroup><col width='20%'><col width='80%'></colgroup>\n";				
 			//if ($data['figure_description']) {
 					echo "<td style='word-break:break-all;word-wrap:break-word' class='panel-footer'><b>".$locale['figure_423'].":</b></td>\n";
 					echo "<td style='word-break:break-all;word-wrap:break-word' class='p-l-5'>".nl2br(parseubb(parsesmileys($data['figure_description'])))."</td>";
@@ -478,59 +536,190 @@ echo "</div>\n";
 			echo "<td style='word-break:break-all;word-wrap:break-word' class='tbl2'>&nbsp;</td>\n";
 			echo "</tr>";	
 			echo "</table>\n";	
-
+			
 // ####### USERFIGURES  ######################################################
+
+if (iMEMBER) {				
+				global $userdata;
+				$locale['userfigure_001'] ="Add to collection";
+				$locale['userfigure_002'] ="Delete from collection";
+				$locale['userfigure_003'] ="The following members have this Figure: ";
+				$locale['userfigure_004'] ="No members have this Figure - be the first :)";
+				$locale['userfigure_005'] ="FIGURE STATS";
+				$locale['userfigure_006'] ="Your Collection";
 				
-		if (iMEMBER) {
-		
-	echo "<div class='well clearfix'>\n";	
-		echo "<tr><td align='center' class='panel-footer' colspan='4' width=''>\n";					
-		
-		$locale['userfigure_001'] ="Add to my collection";
-		$locale['userfigure_002'] ="Delete from my collection";
-
-		// Standard Values for Fields
-			$criteriaArray = array(
-					"figure_userfigures_figure_id" => "", 
-					"figure_userfigures_user_id" => "", );		
-		
-		// Form posted
-	if (isset($_POST['add_to_collection'])) {
-
-		// Check Fields
-		$criteriaArray = array(
-		$figure_userfigures_figure_id= form_sanitizer($_POST['figure_userfigures_figure_id'], '', 'figure_userfigures_figure_id'),
-		$figure_userfigures_user_id= form_sanitizer($_POST['figure_userfigures_user_id'], '', 'figure_userfigures_user_id'),
-		);
-
-		if (defender::safe()) {
-				$inputArray = array(
-					"figure_userfigures_figure_id" => $data['figure_id'],
-					"figure_userfigures_user_id" => $data['user_id'],);
-				dbquery_insert(DB_FIGURE_USERFIGURES, $inputArray, "save", array());			
-		}
-	}
-			echo openform('inputform', 'post', FUSION_REQUEST, array("class" => "",));
-
-			echo form_button("add_to_collection", $locale['userfigure_001'], $locale['userfigure_001'], array("class" => "btn btn-default btn-sm"));
-		
-			echo "  <a href='http://google.com' class='btn btn-default btn-sm'>".$locale['sale']."</a>";
-			echo "</td></tr>";
-			echo closeform();
+				echo "<div class='well clearfix'>\n";
+				echo "<strong>".$locale['userfigure_005']."</strong><br>";
+				echo "</div>\n";
 				
+				//Testausgaben um zu schauen was kommt
+				//echo "GET figure_id:<b>".$GET['figure_id']."</b><br>";
+				//echo "DATA figure_id:<b>".$data['figure_id']."</b><br>";
+				//echo "GET user_id:<b>".$GET['user_id']."</b><br>";
+				//echo "DATA user_id (Submitter) :<b>".$data['user_id']."</b><br>";
+				//echo "USERDATA user_id:<b>".$userdata['user_id']."</b><hr>";
+			
+			$resultuf = dbquery(
+				"SELECT 			
+				fu.user_id, 
+				fu.user_name, 
+				fu.user_status, 
+				fu.user_avatar, 
+				fuf.figure_userfigures_figure_id,
+				fuf.figure_userfigures_user_id			
+				FROM ".DB_FIGURE_USERFIGURES." fuf
+				LEFT JOIN ".DB_USERS." fu ON fuf.figure_userfigures_user_id=fu.user_id	
+				WHERE figure_userfigures_figure_id='".$data['figure_id']."'
+				AND user_id='".$userdata['user_id']."'
+				");
+				
+				$rows = dbrows($resultuf);
+	
+			if ($rows > 0) { // FIGUR VORHANDEN
+						
+						while ($datauf = dbarray($resultuf)) {
+						
+							//echo "<div class='well clearfix'>\n";	
+							echo "<tr><td align='center' class='panel-footer' colspan='4' width=''>\n";
+							//echo "FIGUR VORHANDEN!<br>";					
+							//echo "Anzahl:".$rows;
+							//echo "figure_id:".$data['figure_id']."</b><br>";
+							//echo "user_id:".$userdata['user_id']."</b><br>";
+							//echo "userfigures_figure_id:".$datauf['figure_userfigures_figure_id']."</b><br>";
+							//echo "userfigures_user_id:".$datauf['figure_userfigures_user_id']."</b>";
+							
+						// Form posted
+						if (isset($_POST['delete_from_collection'])) {
+						// Check Fields
+							//$criteriaArray = array(
+							//$figure_userfigures_figure_id= form_sanitizer($_POST['figure_userfigures_figure_id'], '', 'figure_userfigures_figure_id'),
+							//$figure_userfigures_user_id= form_sanitizer($_POST['figure_userfigures_user_id'], '', 'figure_userfigures_user_id'),
+							//);
+							//if (defender::safe()) {
+									//$inputArray = array(
+									//	"figure_userfigures_figure_id" => $data['figure_id'],
+									//	"figure_userfigures_user_id" => $userdata['user_id'],);
+									//dbquery("
+									//DELETE FROM ".DB_FIGURE_USERFIGURES." 
+									//WHERE ".$data['figure_id']." ==  ".$datauf['figure_userfigures_figure_id']." 
+									//AND ".$userdata['user_id']." ==  ".$datauf['figure_userfigures_user_id']."
+									//");
+									
+			
+									dbquery("
+									DELETE FROM ".DB_FIGURE_USERFIGURES." 
+									WHERE figure_userfigures_figure_id=".$data['figure_id']." 
+									AND figure_userfigures_user_id=".$userdata['user_id']." 
+									");
+									
+									redirect(clean_request("", array("delete_from_collection"), FALSE));
+									
+									
 
-		echo "</div>\n";			
-}
+							//}
+						}
+						}
+								echo openform('inputform', 'post', FUSION_REQUEST, array("class" => "",));
+								echo form_button("delete_from_collection", $locale['userfigure_002'], $locale['userfigure_002'], array("class" => "btn btn-sm btn-primary"));
+								echo "  <a href='http://google.com' class='btn btn-sm btn-primary'>".$locale['userfigure_006']."</a>";
+								echo "  <a href='http://google.com' class='btn btn-sm btn-primary'>".$locale['sale']."</a>";
+								echo "</td></tr>";
+								echo "<p>";
+								echo closeform();
+								//echo "</div>\n";
+								
+			} else { // FIGUR NICHT VORHANDEN
+							
+							//echo "<div class='well clearfix'>\n";	
+							echo "<tr><td align='center' class='panel-footer' colspan='4' width=''>\n";	
+							//echo "FIGUR NICHT VORHANDEN!<br>";
+							//echo "Anzahl:".$rows;
+							//echo "userfigures_figure_id:".$datauf['figure_userfigures_figure_id']."</b><br>";
+							//echo "userfigures_user_id:".$datauf['figure_userfigures_user_id']."</b>";
+					
+							
+						// Form posted
+						if (isset($_POST['add_to_collection'])) {
+							
+									
+						// Standard Values for Fields
+						$criteriaArray = array(
+						"figure_userfigures_figure_id" => "", 
+						"figure_userfigures_figure_id" => "", 
+						);
+
+						// Check Fields
+							$criteriaArray = array(
+							$figure_userfigures_figure_id= form_sanitizer($_POST['figure_userfigures_figure_id'], '', 'figure_userfigures_figure_id'),
+							$figure_userfigures_user_id= form_sanitizer($_POST['figure_userfigures_figure_id'], '', 'figure_userfigures_user_id'),
+							);
+
+							if (defender::safe()) {
+									$inputArray = array(
+										"figure_userfigures_figure_id" => $data['figure_id'],
+										"figure_userfigures_user_id" => $userdata['user_id'],);
+									dbquery_insert(DB_FIGURE_USERFIGURES, $inputArray, "save", array());	
+									redirect(clean_request("", array("add_to_collection"), FALSE));									
+							}
+						}
+								echo openform('inputform', 'post', FUSION_REQUEST, array("class" => "",));
+								echo form_button("add_to_collection", $locale['userfigure_001'], $locale['userfigure_001'], array("class" => "btn btn-sm btn-primary"));
+								echo "  <a href='http://google.com' class='btn btn-sm btn-primary'>".$locale['userfigure_006']."</a>";
+								echo "  <a href='http://google.com' class='btn btn-sm btn-primary'>".$locale['sale']."</a>";
+								echo "</td></tr>";
+								echo "<p>";
+								echo closeform();	
+								//echo "</div>\n";								
+							
+}					}
+// ########### 	folgende User haben die Figure  ##################################				
+				
+			$resultufc = dbquery(
+				"SELECT 			
+				fu.user_id, 
+				fu.user_name, 
+				fu.user_status, 
+				fu.user_avatar, 
+				fuf.figure_userfigures_figure_id,
+				fuf.figure_userfigures_user_id			
+				FROM ".DB_FIGURE_USERFIGURES." fuf
+				LEFT JOIN ".DB_USERS." fu ON fuf.figure_userfigures_user_id=fu.user_id	
+				WHERE figure_userfigures_figure_id='".$data['figure_id']."'
+				");
+		
+				
+		
+		if (dbrows($resultufc) != 0) {
+			
+				echo "<hr>";
+				echo $locale['userfigure_003'];		
+				echo "<p>";	
+				
+			while ($data = dbarray($resultufc)) {
+				
+				echo "<tr>\n<td class='side-small' align='left'>".THEME_BULLET."\n";
+				echo "<a href='".BASEDIR."profile.php?lookup=".$data['user_id']."' title='".$data['user_name']."' class='side'>\n";
+				echo trimlink($data['user_name'], 15)."</a></td>\n</tr>\n";
+					
+			}
+
+		} else {
+				
+				echo "<hr>";
+				echo $locale['userfigure_004'];	
+				echo "<p>";				
+		}		
+				
 // ###########  RELATED FIGURES  ####################################################				
 
 				// SETTINGS HOLEN
 				$fil_settings = get_settings("figurelib");
 				if ($fil_settings['figure_related']) {
 					
-echo "<div class='well clearfix'>\n";
-echo "<strong>RELATED FIGURES</strong><br>";
-echo "</div>\n";
-echo "<div class='panel panel-default'>\n";
+					echo "<div class='well clearfix'>\n";
+					echo "<strong>RELATED FIGURES</strong><br>";
+					echo "</div>\n";
+					echo "<div class='panel panel-default'>\n";
 
 					$result3 = dbquery("
 						SELECT 
@@ -599,6 +788,7 @@ echo "</div>\n";
 // LINK FÜR ADMINS ZUM BEARBETEN DER FIGUR
 if (iADMIN || iSUPERADMIN) {
 global $aidlink;
+global $settings;
 	// ['cifg_0005'] = "Edit";
 			echo "<a class='btn btn-default btn-sm' href='".INFUSIONS."figurelib/admin.php".$aidlink."&amp;section=figurelib_form&amp;action=edit&amp;figure_id=".$data['figure_id']."'>".$locale['cifg_0005a']."</a><p>"; 
 }			
