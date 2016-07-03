@@ -48,7 +48,7 @@ if (iMEMBER && $fil_settings['figure_submit']) {
 	if (dbcount("(figure_cat_id)", DB_FIGURE_CATS, multilang_table("FI") ? "figure_cat_language='".LANGUAGE."'" : "")) {
 	
 	// Standard Values for Fields
-	$data = array(
+	$submitdata = array(
 			"figure_freigabe" => 0, 
 			"figure_title" => "", 
 			"figure_variant" => "", 
@@ -81,7 +81,7 @@ if (iMEMBER && $fil_settings['figure_submit']) {
 		if (isset($_POST['submit_figure'])) {
 			
 			// Check Fields
-			$data = array(	
+			$submitdata = array(	
 				"figure_datestamp"    => form_sanitizer($_POST['figure_datestamp'],    "", "figure_datestamp"),			
 				"figure_freigabe"     => form_sanitizer($_POST['figure_freigabe'],     0,  "figure_freigabe"),
 				"figure_title"        => form_sanitizer($_POST['figure_title'],        "", "figure_title"),
@@ -133,7 +133,7 @@ if (iMEMBER && $fil_settings['figure_submit']) {
 							
 		// Insert Figure data 
 		if (defender::safe()) {
-				dbquery_insert(DB_FIGURE_ITEMS, $data, "save");
+				dbquery_insert(DB_FIGURE_ITEMS, $submitdata, "save");
 									
 				// ['figs_0018'] = "Thank you for submitting your Figure";
 				addNotice("success", $locale['figs_0018']);
@@ -170,7 +170,7 @@ if (iMEMBER && $fil_settings['figure_submit']) {
 		echo form_hidden("figure_datestamp", "", time());
 		
 		// Select Field "Category"
-		echo form_select_tree("figure_cat", $locale['figure_413'], $criteriaArray['figure_cat'], 
+		echo form_select_tree("figure_cat", $locale['figure_413'], $submitdata['figure_cat'], 
 			array(
 				"inline" => TRUE,
 				"width" => "400px",
@@ -184,7 +184,7 @@ if (iMEMBER && $fil_settings['figure_submit']) {
 			),
 		DB_FIGURE_CATS, "figure_cat_name", "figure_cat_id", "figure_cat_parent");
 		// Text Field "Title"
-		echo form_text("figure_title", $locale['figure_411'], $criteriaArray['figure_title'],
+		echo form_text("figure_title", $locale['figure_411'], $submitdata['figure_title'],
 			array(
 				"inline" => TRUE,
 				"required" => TRUE,
@@ -194,7 +194,7 @@ if (iMEMBER && $fil_settings['figure_submit']) {
 			)
 		);
 		// Text Field "Variant"
-		echo form_text("figure_variant", $locale['figure_441'], $criteriaArray['figure_variant'],
+		echo form_text("figure_variant", $locale['figure_441'], $submitdata['figure_variant'],
 			array(
 				"inline" => TRUE,
 				"width" => "400px",
@@ -202,7 +202,7 @@ if (iMEMBER && $fil_settings['figure_submit']) {
 			)
 		);
 		// Select Field "Manufacturer"
-		echo form_select_tree("figure_manufacturer", $locale['figure_417'], $criteriaArray['figure_manufacturer'], 
+		echo form_select_tree("figure_manufacturer", $locale['figure_417'], $submitdata['figure_manufacturer'], 
 			array(
 				"inline" => TRUE,
 				"required" => TRUE,
@@ -216,7 +216,7 @@ if (iMEMBER && $fil_settings['figure_submit']) {
 			),
 		DB_FIGURE_MANUFACTURERS, "figure_manufacturer_name", "figure_manufacturer_id", "figure_manufacturer_parent");
 		// Text Field "Artists"
-		echo form_text("figure_artists", $locale['figure_452'], $criteriaArray['figure_artists'],
+		echo form_text("figure_artists", $locale['figure_452'], $submitdata['figure_artists'],
 			array(
 				"inline" => TRUE,
 				"width" => "400px",
@@ -224,7 +224,7 @@ if (iMEMBER && $fil_settings['figure_submit']) {
 			)
 		);
 		// Text Field "Country"
-		echo form_text("figure_country", $locale['figure_436'], $criteriaArray['figure_country'],
+		echo form_text("figure_country", $locale['figure_436'], $submitdata['figure_country'],
 			array(
 				"inline" => TRUE,
 				"width" => "400px",
@@ -232,7 +232,7 @@ if (iMEMBER && $fil_settings['figure_submit']) {
 			)
 		);
 		// Select Field "Brand"
-		echo form_select_tree("figure_brand", $locale['figure_438'], $criteriaArray['figure_brand'], 
+		echo form_select_tree("figure_brand", $locale['figure_438'], $submitdata['figure_brand'], 
 			array(
 				"inline" => TRUE,
 				"required" => TRUE,
@@ -246,7 +246,7 @@ if (iMEMBER && $fil_settings['figure_submit']) {
 			),
 		DB_FIGURE_BRANDS, "figure_brand_name", "figure_brand_id", "figure_brand_parent");
 		// Text Field "Series"
-		echo form_text("figure_series", $locale['figure_439'], $criteriaArray['figure_series'],
+		echo form_text("figure_series", $locale['figure_439'], $submitdata['figure_series'],
 			array(
 				"inline" => TRUE,
 				"width" => "400px",
@@ -258,7 +258,7 @@ if (iMEMBER && $fil_settings['figure_submit']) {
 			echo "<hr>\n";
 		echo "</div>\n";
 		// Select Field "Scale"
-		echo form_select_tree("figure_scale", $locale['figure_442'], $criteriaArray['figure_scale'], 
+		echo form_select_tree("figure_scale", $locale['figure_442'], $submitdata['figure_scale'], 
 			array(
 				"inline" => TRUE,
 				"required" => TRUE,
@@ -272,7 +272,7 @@ if (iMEMBER && $fil_settings['figure_submit']) {
 			),
 		DB_FIGURE_SCALES, "figure_scale_name", "figure_scale_id", "figure_scale_parent");
 		// Text Field "Weight"
-		echo form_text("figure_weight", $locale['figure_443'], $criteriaArray['figure_weight'],
+		echo form_text("figure_weight", $locale['figure_443'], $submitdata['figure_weight'],
 			array(
 				"inline" => TRUE,
 				"width" => "400px",
@@ -280,7 +280,7 @@ if (iMEMBER && $fil_settings['figure_submit']) {
 			)
 		);
 		// Select Field "Height"
-		echo form_select_tree("figure_height", $locale['figure_444'], $criteriaArray['figure_height'], 
+		echo form_select_tree("figure_height", $locale['figure_444'], $submitdata['figure_height'], 
 			array(
 				"inline" => TRUE,
 				"width" => "400px",
@@ -294,7 +294,7 @@ if (iMEMBER && $fil_settings['figure_submit']) {
 			),
 		DB_FIGURE_MEASUREMENTS, "figure_measurements_inch", "figure_measurements_id", "figure_measurements_parent");
 		// Select Field "Width"
-		echo form_select_tree("figure_width", $locale['figure_445'], $criteriaArray['figure_width'], 
+		echo form_select_tree("figure_width", $locale['figure_445'], $submitdata['figure_width'], 
 			array(
 				"inline" => TRUE,
 				"width" => "400px",
@@ -308,7 +308,7 @@ if (iMEMBER && $fil_settings['figure_submit']) {
 			),
 		DB_FIGURE_MEASUREMENTS, "figure_measurements_inch", "figure_measurements_id", "figure_measurements_parent");
 		// Select Field "Depth"
-		echo form_select_tree("figure_depth", $locale['figure_446'], $criteriaArray['figure_depth'], 
+		echo form_select_tree("figure_depth", $locale['figure_446'], $submitdata['figure_depth'], 
 			array(
 				"inline" => TRUE,
 				"required" => TRUE,
@@ -327,7 +327,7 @@ if (iMEMBER && $fil_settings['figure_submit']) {
 			echo "<hr>\n";
 		echo "</div>\n";
 		// Select Field "Material"
-		echo form_select_tree("figure_material", $locale['figure_447'], $criteriaArray['figure_material'], 
+		echo form_select_tree("figure_material", $locale['figure_447'], $submitdata['figure_material'], 
 			array(
 				"inline" => TRUE,
 				"required" => TRUE,
@@ -341,7 +341,7 @@ if (iMEMBER && $fil_settings['figure_submit']) {
 			),
 		DB_FIGURE_MATERIALS, "figure_material_name", "figure_material_id", "figure_material_parent");
 		// Select Field "POA"
-		echo form_select_tree("figure_poa", $locale['figure_455'], $criteriaArray['figure_poa'], 
+		echo form_select_tree("figure_poa", $locale['figure_455'], $submitdata['figure_poa'], 
 			array(
 				"inline" => TRUE,
 				"required" => TRUE,
@@ -355,7 +355,7 @@ if (iMEMBER && $fil_settings['figure_submit']) {
 			),
 		DB_FIGURE_POAS, "figure_poa_name", "figure_poa_id", "figure_poa_parent");
 		// Select Field "Packaging"
-		echo form_select_tree("figure_packaging", $locale['figure_448'], $criteriaArray['figure_packaging'], 
+		echo form_select_tree("figure_packaging", $locale['figure_448'], $submitdata['figure_packaging'], 
 			array(
 				"inline" => TRUE,
 				"required" => TRUE,
@@ -373,7 +373,7 @@ if (iMEMBER && $fil_settings['figure_submit']) {
 			echo "<hr>\n";
 		echo "</div>\n";
 		// Select Field "Pub Date"
-		echo form_select_tree("figure_pubdate", $locale['figure_419'], $criteriaArray['figure_pubdate'], 
+		echo form_select_tree("figure_pubdate", $locale['figure_419'], $submitdata['figure_pubdate'], 
 			array(
 				"inline" => TRUE,
 				"required" => TRUE,
@@ -388,7 +388,7 @@ if (iMEMBER && $fil_settings['figure_submit']) {
 		DB_FIGURE_YEARS, "figure_year", "figure_year_id", "figure_year_parent");
 		
 		// Text Field "Retail Price"
-		echo form_text("figure_retailprice", $locale['figure_449'], $criteriaArray['figure_retailprice'],
+		echo form_text("figure_retailprice", $locale['figure_449'], $submitdata['figure_retailprice'],
 			array(
 				"inline" => TRUE,
 				"width" => "400px",
@@ -399,7 +399,7 @@ if (iMEMBER && $fil_settings['figure_submit']) {
 			)
 		);
 		// Text Field "Used Price"
-		echo form_text("figure_usedprice", $locale['figure_456'], $criteriaArray['figure_usedprice'],
+		echo form_text("figure_usedprice", $locale['figure_456'], $submitdata['figure_usedprice'],
 			array(
 				"inline" => TRUE,
 				"width" => "400px",
@@ -416,7 +416,7 @@ if (iMEMBER && $fil_settings['figure_submit']) {
 		echo "</div>\n";
 		
 		// Select Field "Limited Edition"
-		echo form_select_tree("figure_limitation", $locale['figure_450'], $criteriaArray['figure_limitation'], 
+		echo form_select_tree("figure_limitation", $locale['figure_450'], $submitdata['figure_limitation'], 
 			array(
 				"inline" => TRUE,
 				"required" => TRUE,
@@ -430,7 +430,7 @@ if (iMEMBER && $fil_settings['figure_submit']) {
 			),
 		DB_FIGURE_LIMITATIONS, "figure_limitation_name", "figure_limitation_id", "figure_limitation_parent");
 		// Text Field "Editions Size"
-		echo form_text("figure_editionsize", $locale['figure_451'], $criteriaArray['figure_editionsize'],
+		echo form_text("figure_editionsize", $locale['figure_451'], $submitdata['figure_editionsize'],
 			array(
 				"inline" => TRUE,
 				"width" => "400px",
@@ -458,7 +458,8 @@ if (iMEMBER && $fil_settings['figure_submit']) {
 				"max_byte" => $asettings['figure_photo_max_b'],
 				"max_count" => 10
 			)
-		);				
+		);	
+		
 	
 		// Form "Space"
 		echo "<div class='tbl1'>\n";
@@ -466,7 +467,7 @@ if (iMEMBER && $fil_settings['figure_submit']) {
 		echo "</div>\n";
 		
 		// Text Area "Accessories"
-		echo form_textarea("figure_accessories", $locale['figure_457'], $criteriaArray['figure_accessories'],
+		echo form_textarea("figure_accessories", $locale['figure_457'], $submitdata['figure_accessories'],
 			array(
 				"type" => fusion_get_settings("tinymce_enabled") ? "tinymce" : "html",
 				"tinymce" => fusion_get_settings("tinymce_enabled") && iADMIN ? "advanced" : "simple",
@@ -476,7 +477,7 @@ if (iMEMBER && $fil_settings['figure_submit']) {
 			)
 		);
 		// Text Area "Description"
-		echo form_textarea("figure_description", $locale['figure_423'], $criteriaArray['figure_description'],
+		echo form_textarea("figure_description", $locale['figure_423'], $submitdata['figure_description'],
 			array(
 				"type" => fusion_get_settings("tinymce_enabled") ? "tinymce" : "html",
 				"tinymce" => fusion_get_settings("tinymce_enabled") && iADMIN ? "advanced" : "simple",
@@ -490,7 +491,7 @@ if (iMEMBER && $fil_settings['figure_submit']) {
 			echo "<hr>\n";
 		echo "</div>\n";
 		// Checkbox "Terms"
-		echo form_checkbox("figure_agb", $locale['figure_1810'], $criteriaArray['figure_agb'],
+		echo form_checkbox("figure_agb", $locale['figure_1810'], $submitdata['figure_agb'],
 			array(
 				"inline" => TRUE,
 				"required" => TRUE,
