@@ -158,7 +158,10 @@ if (iMEMBER && $fil_settings['figure_submit']) {
 			// ['figure_532'] = "Use the following form to submit a Alien figure. Your submission will be reviewed by an ::
 			echo "<div class='alert alert-info m-b-20 submission-guidelines'>".str_replace("[SITENAME]", fusion_get_settings("sitename"),$locale['figure_532'])."</div>\n";
             //echo openform('submit_form', 'post', BASEDIR."submit.php?stype=f");
-			echo openform('submit_form', 'post', INFUSIONS."figurelib/submit.php?stype=f");
+			
+			//echo openform('submit_form', 'post', FUSION_REQUEST, array("class" => "m-t-20", "enctype"=>true));
+			echo openform('submit_form', 'post', INFUSIONS."figurelib/submit.php?stype=f", array("class" => "m-t-20", "enctype"=>true));			
+			//echo openform('submit_form', 'post', FUSION_REQUEST, array("class" => "m-t-20", "enctype"=>true));
 		
 		// Hidden Field "Freigabe"
 		echo form_hidden("figure_freigabe", "", "0");
