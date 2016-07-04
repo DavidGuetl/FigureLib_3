@@ -26,11 +26,12 @@
 /*--------------------------------------------------------*/
 
 	$result = dbquery("SELECT
-			fi.figure_id, fi.figure_datestamp, fi.figure_title, tu.user_id, tu.user_name, tu.user_avatar, tu.user_status
+			fi.figure_id, fi.figure_datestamp, fi.figure_scale, fi.figure_manufacturer, fi.figure_cat, fi.figure_title, tu.user_id, tu.user_name, tu.user_avatar, tu.user_status
 			FROM ".DB_FIGURE_ITEMS." fi
 			LEFT JOIN ".DB_USERS." tu ON fi.figure_submitter=tu.user_id
 			WHERE figure_freigabe='0' order by figure_datestamp desc
 			");
+			
 	$rows = dbrows($result);
 	if ($rows > 0) {
 		// ['figs_0021'] = "There are currently %s pending for your review.";
@@ -38,75 +39,72 @@
 		echo "<table class='table table-striped'>\n";
 		echo "<tr>\n";
 		
-		// ['figs_0013'] = "Submission Subject for Review";
-		// ['cifg_0012'] = "Category";
-		// ['cifg_0010'] = "Manufacturer"; 
-		// ['cifg_0011'] = "Scale";		
-		// ['figs_0014'] = "Submission Author";
-		// ['figs_0015'] = "Submission Time";
-        // ['cifg_0004'] = "Figure Id";
-		
-		echo "<th>".$locale['figs_0013']."</th>";
-		echo "<th>".$locale['cifg_0012']."</th>";
-		echo "<th>".$locale['cifg_0010']."</th>";
-		echo "<th>".$locale['cifg_0011']."</th>";
-		echo "<th>".$locale['figs_0014']."</th>";
-		echo "<th>".$locale['figs_0015']."</th>";
-		echo "<th>".$locale['cifg_0004']."</th>";
+		echo "<th>".$locale['figs_0013']."</th>";	// ['figs_0013'] = "Submission Subject for Review";
+		echo "<th>".$locale['cifg_0012']."</th>";	// ['cifg_0012'] = "Category";
+		echo "<th>".$locale['cifg_0010']."</th>";	// ['cifg_0010'] = "Manufacturer"; 
+		echo "<th>".$locale['cifg_0011']."</th>";	// ['cifg_0011'] = "Scale";	
+		echo "<th>".$locale['figs_0014']."</th>";	// ['figs_0014'] = "Submission Author";
+		echo "<th>".$locale['figs_0015']."</th>";	// ['figs_0015'] = "Submission Time";
+	  //echo "<th>".$locale['cifg_0004']."</th>";	// ['cifg_0004'] = "Figure Id";
 			
 		echo "</tr>\n";
 		echo "<tbody>\n";
 	while ($data = dbarray($result)) {
 					
 			echo "<tr>\n";			
-			echo "<td><a href='".FUSION_SELF.$aidlink."&amp;section=figurelib_form&amp;action=edit&amp;figure_id=".$data['figure_id']."'>".$data['figure_title']."</a></td>\n";
+				echo "<td><a href='".FUSION_SELF.$aidlink."&amp;section=figurelib_form&amp;action=edit&amp;figure_id=".$data['figure_id']."'>".$data['figure_title']."</a></td>\n";
 			
-			$category = dbquery("
-				SELECT 
-						fc.figure_cat_id,
-						fc.figure_cat_name,
-						fi.figure_cat
-					FROM ".DB_FIGURE_CATS." fc
-					INNER JOIN ".DB_FIGURE_ITEMS." fi ON fc.figure_cat_id = fi.figure_cat
-					");				
-			while($datacategory = dbarray($category)){
-			echo "<td>".$datacategory['figure_cat_name']."</td>\n";
-			}	
+									$category = dbquery("
+										SELECT 
+												fc.figure_cat_id,
+												fc.figure_cat_name,
+												fi.figure_cat
+											FROM ".DB_FIGURE_CATS." fc
+											INNER JOIN ".DB_FIGURE_ITEMS." fi ON fc.figure_cat_id = fi.figure_cat
+											WHERE figure_id='".$data['figure_id']."' 
+											");				
+									if(dbrows($category)){
+									while($datacategory = dbarray($category)){
+				echo "<td>".trimlink($datacategory['figure_cat_name'],10)."</td>\n";
+									}}	
 			
-			$manufacturer = dbquery("
-				SELECT 
-						fm.figure_manufacturer_id,
-						fm.figure_manufacturer_name,
-						fi.figure_manufacturer
-					FROM ".DB_FIGURE_MANUFACTURERS." fm
-					INNER JOIN ".DB_FIGURE_ITEMS." fi ON fm.figure_manufacturer_id = fi.figure_manufacturer
-					");						
-			while($datamanufacturer = dbarray($manufacturer)){
+									$manufacturer = dbquery("
+										SELECT 
+												fm.figure_manufacturer_id,
+												fm.figure_manufacturer_name,
+												fi.figure_manufacturer
+											FROM ".DB_FIGURE_MANUFACTURERS." fm
+											INNER JOIN ".DB_FIGURE_ITEMS." fi ON fm.figure_manufacturer_id = fi.figure_manufacturer
+											WHERE figure_id='".$data['figure_id']."' 
+											");						
+									if(dbrows($manufacturer)){
+									while($datamanufacturer = dbarray($manufacturer)){
 				
-					echo "<td>".$datamanufacturer['figure_manufacturer_name']."</td>\n";
-			}
+				echo "<td>".trimlink($datamanufacturer['figure_manufacturer_name'],10)."</td>\n";
+									}}		
+									$scale = dbquery("
+										SELECT 
+												fs.figure_scale_id,
+												fs.figure_scale_name,
+												fi.figure_scale
+											FROM ".DB_FIGURE_SCALES." fs
+											INNER JOIN ".DB_FIGURE_ITEMS." fi ON fs.figure_scale_id = fi.figure_scale
+											WHERE figure_id='".$data['figure_id']."' 
+											");				
+									if(dbrows($scale)){
+									while($datascale = dbarray($scale)){
+										
+				echo "<td>".$datascale['figure_scale_name']."</td>\n";
+									}	}	
 			
-			$scale = dbquery("
-				SELECT 
-						fs.figure_scale_id,
-						fs.figure_scale_name,
-						fi.figure_scale
-					FROM ".DB_FIGURE_SCALES." fs
-					INNER JOIN ".DB_FIGURE_ITEMS." fi ON fs.figure_scale_id = fi.figure_scale
-					");				
-			while($datascale = dbarray($scale)){
-			echo "<td>".$datascale['figure_scale_name']."</td>\n";
-			}	
-			
-			
-			
-			
-					echo "<td>".profile_link($data['user_id'], $data['user_name'], $data['user_status'])."</td>\n";
-					echo "<td>".timer($data['figure_datestamp'])."</td>\n";
-					echo "<td>".$data['figure_id']."</td>\n";
-					echo "</tr>\n";
+				echo "<td>".profile_link($data['user_id'], $data['user_name'], $data['user_status'])."</td>\n";
+				echo "<td>".timer($data['figure_datestamp'])."</td>\n";
+				//echo "<td>".$data['figure_id']."</td>\n";
+			echo "</tr>\n";
+		
 	}	
-					echo "</tbody>\n</table>\n";
+			echo "</tbody>\n</table>\n";
+	
 	} else {
 		
 		// ['figs_0017'] = "There are currently no Figure submisisons";
