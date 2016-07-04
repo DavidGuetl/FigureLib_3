@@ -205,6 +205,7 @@ $result = dbquery("
 	INNER JOIN ".DB_FIGURE_MANUFACTURERS." man on man.figure_manufacturer_id = f.figure_manufacturer
 	INNER JOIN ".DB_FIGURE_SCALES." sca on sca.figure_scale_id = f.figure_scale
 	".$catFilter."
+	WHERE figure_freigabe = 1
 	ORDER by figure_title asc, figure_datestamp desc 
 	LIMIT $rowstart, $limit
 	");
