@@ -631,17 +631,17 @@ if (iMEMBER) {
 							
 									
 						// Standard Values for Fields
-						$criteriaArray = array(
-						"figure_userfigures_figure_id" => "", 
-						"figure_userfigures_user_id" => "", 
+						$inputArray = array(
+						"figure_userfigures_figure_id" => $data['figure_id'], 
+						"figure_userfigures_user_id" => $userdata['user_id'], 
 						);
 
 						// Check Fields
-							$criteriaArray = array(
-							$figure_userfigures_figure_id= form_sanitizer($_POST['figure_userfigures_figure_id'], '', 'figure_userfigures_figure_id'),
-							$figure_userfigures_user_id= form_sanitizer($_POST['figure_userfigures_user_id'], '', 'figure_userfigures_user_id'),
-							);
-
+							//$inputArray = array(
+							//$figure_userfigures_figure_id= form_sanitizer($_POST['figure_userfigures_figure_id'], '', 'figure_userfigures_figure_id'),
+							//$figure_userfigures_user_id= form_sanitizer($_POST['figure_userfigures_user_id'], '', 'figure_userfigures_user_id'),
+						//	);
+							
 							if (defender::safe()) {
 									$inputArray = array(
 										"figure_userfigures_figure_id" => $data['figure_id'],
