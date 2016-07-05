@@ -189,9 +189,9 @@ if (isset($_GET['figure_id']) && isnum($_GET['figure_id'])) {
 				  fc.figure_cat_id, 
 				  fc.figure_cat_name, 
 				  fc.figure_cat_description, 
-				  count(f.figure_id) 'figure_clickcount'
+				  count(f.figure_id) 'figure_anzahl'
 			FROM ".DB_FIGURE_CATS." fc
-			LEFT JOIN ".DB_FIGURE_ITEMS." f on f.figure_cat = fc.figure_cat_id and ".groupaccess("f.figure_visibility")."
+			LEFT JOIN ".DB_FIGURE_ITEMS." f on f.figure_cat = fc.figure_cat_id and ".groupaccess("f.figure_visibility")." and f.figure_freigabe = 1
 			".(multilang_table("FI") ? "WHERE fc.figure_cat_language='".LANGUAGE."'" : "")."
 			GROUP BY fc.figure_cat_id
 			ORDER BY figure_cat_name
