@@ -2,12 +2,12 @@
 
 	//error_reporting(E_ALL);
 	// Formularinhalte prüfen
-	echo "Formularinhalte prüfen:";
-	print_r ($_POST);
-	echo "<br>";
+	//echo "Formularinhalte prüfen:";
+	//print_r ($_POST);
+	//echo "<br>";
 	// GET-Parameter prüfen
-	echo "GET-Parameter prüfen:";
-	print_r ($_GET);
+	//echo "GET-Parameter prüfen:";
+	//print_r ($_GET);
 	// Sessions prüfen
 	//print_r ($_SESSION);
 /*-------------------------------------------------------+
@@ -15,7 +15,7 @@
 | Copyright (C) PHP-Fusion Inc
 | http://www.php-fusion.co.uk/
 +--------------------------------------------------------+
-| Filename: figures.ph based on gallery.php
+| Filename: figures.php based on gallery.php
 | Author: PHP-Fusion Development Team
 | Co-Author: PHP-Fusion Development Team
 |
@@ -69,6 +69,7 @@ if (!isset($_GET['figure_id']) || !isset($_GET['figure_cat_id'])) {
 if (isset($_GET['figure_id']) && isnum($_GET['figure_id'])) {
 	include INCLUDES."comments_include.php";
 	include INCLUDES."ratings_include.php";
+
 	
 	$res = 0;
 	$data = dbarray(dbquery("SELECT * FROM ".DB_FIGURE_ITEMS." WHERE figure_id='".intval($_GET['figure_id'])."'"));
@@ -89,13 +90,13 @@ if (isset($_GET['figure_id']) && isnum($_GET['figure_id'])) {
     }
 
 /* ALL FIGURES FROM A CATEGORY	*/
-} else if (isset($_GET['cat_id']) && isnum($_GET['cat_id'])) {
+} else if (isset($_GET['figure_cat_id']) && isnum($_GET['figure_cat_id'])) {
 	
 	$info = array();
 	$info['item'] = array();
 
 	$result = dbquery("SELECT figure_cat_name, figure_cat_sorting FROM
-	".DB_FIGURE_CATS." ".(multilang_table("FI") ? "WHERE figure_cat_language='".LANGUAGE."' AND" : "WHERE")." figure_cat_id='".intval($_GET['cat_id'])."'");
+	".DB_FIGURE_CATS." ".(multilang_table("FI") ? "WHERE figure_cat_language='".LANGUAGE."' AND" : "WHERE")." figure_cat_id='".intval($_GET['figure_cat_id'])."'");
 
 	if (dbrows($result) != 0) {
 		$cdata = dbarray($result);
@@ -103,7 +104,7 @@ if (isset($_GET['figure_id']) && isnum($_GET['figure_id'])) {
 		add_to_title($locale['global_201'].$cdata['figure_cat_name']);
 		figure_cat_breadcrumbs($figure_cat_index);
 		add_to_meta("description", $cdata['figure_cat_name']);
-		$max_rows = dbcount("(figure_id)", DB_FIGURE_ITEMS, "figure_cat='".$_GET['cat_id']."' AND ".groupaccess('figure_visibility'));
+		$max_rows = dbcount("(figure_id)", DB_FIGURE_ITEMS, "figure_cat='".$_GET['figure_cat_id']."' AND ".groupaccess('figure_visibility'));
 		$_GET['rowstart'] = isset($_GET['rowstart']) && isnum($_GET['rowstart']) && $_GET['rowstart'] <= $max_rows ? $_GET['rowstart'] : 0;
 		if ($max_rows != 0) {
 
@@ -140,7 +141,8 @@ if (isset($_GET['figure_id']) && isnum($_GET['figure_id'])) {
 				INNER JOIN ".DB_FIGURE_SCALES." fs ON fs.figure_scale_id = f.figure_scale
 				INNER JOIN ".DB_FIGURE_YEARS." fy ON fy.figure_year_id = f.figure_pubdate	
 				WHERE ".groupaccess('figure_visibility')." 
-				AND figure_cat='".intval($_GET['cat_id'])."' 
+				AND figure_cat='".intval($_GET['figure_cat_id'])."' 
+				AND figure_freigabe = 1
 				ORDER BY ".$cdata['figure_cat_sorting']." 
 				LIMIT ".$_GET['rowstart'].",".$fil_settings['figure_per_page']
 				);	
@@ -148,12 +150,12 @@ if (isset($_GET['figure_id']) && isnum($_GET['figure_id'])) {
 			$numrows = dbrows($result);
 			$info['figure_rows'] = $numrows;
 			$fil_settings = get_settings("figurelib");
-			$info['page_nav'] = $max_rows > $fil_settings['figure_per_page'] ? makepagenav($_GET['rowstart'], $fil_settings['figure_per_page'], $max_rows, 3, INFUSIONS."figurelib/figures.php?cat_id=".$_GET['cat_id']."&amp;") : 0;
+			$info['page_nav'] = $max_rows > $fil_settings['figure_per_page'] ? makepagenav($_GET['rowstart'], $fil_settings['figure_per_page'], $max_rows, 3, INFUSIONS."figurelib/figures.php?figure_cat_id=".$_GET['figure_cat_id']."&amp;") : 0;
 			if (dbrows($result) > 0) {
 				while ($data = dbarray($result)) {
 					$data['new'] = ($data['figure_datestamp']+604800 > time()+($settings['timeoffset']*3600)) ? 1 : 0;
 					$data['figure'] = array(
-						'link' => INFUSIONS."figurelib/figures.php?cat_id=".$_GET['cat_id']."&amp;figure_id=".$data['figure_id'],
+						'link' => INFUSIONS."figurelib/figures.php?figure_cat_id=".$_GET['figure_cat_id']."&amp;figure_id=".$data['figure_id'],
 						'name' => $data['figure_title'],
 						'manufacturer' => $data['figure_manufacturer_name'],
 						'scale' => $data['figure_scale_name'],
@@ -205,7 +207,7 @@ if (isset($_GET['figure_id']) && isnum($_GET['figure_id'])) {
     if ($rows != 0) {
 		while ($data = dbarray($result)) {
 			$data['figure_item'] = array(
-				'link' => INFUSIONS."figurelib/figures.php?cat_id=".$data['figure_cat_id'],
+				'link' => INFUSIONS."figurelib/figures.php?figure_cat_id=".$data['figure_cat_id'],
 				'name' => $data['figure_cat_name']
 			);
 			$info['item'][$data['figure_cat_id']] = $data;
@@ -228,7 +230,7 @@ function figure_cat_breadcrumbs($figure_cat_index) {
 		if (isset($index[get_parent($index, $id)])) {
 			$_name = dbarray(dbquery("SELECT figure_cat_id, figure_cat_name, figure_cat_parent FROM ".DB_FIGURE_CATS." WHERE figure_cat_id='".$id."'"));
 			$crumb = array(
-				'link' => INFUSIONS."figurelib/figures.php?cat_id=".$_name['figure_cat_id'],
+				'link' => INFUSIONS."figurelib/figures.php?figure_cat_id=".$_name['figure_cat_id'],
 				'title' => $_name['figure_cat_name']
 			);
 			if (isset($index[get_parent($index, $id)])) {
@@ -246,7 +248,7 @@ function figure_cat_breadcrumbs($figure_cat_index) {
 	
 
 	// then we make a infinity recursive function to loop/break it out.
-	$crumb = breadcrumb_arrays($figure_cat_index, $_GET['cat_id']);
+	$crumb = breadcrumb_arrays($figure_cat_index, $_GET['figure_cat_id']);
 	// then we sort in reverse.
 	if (count($crumb['title']) > 1) {
 		krsort($crumb['title']);
