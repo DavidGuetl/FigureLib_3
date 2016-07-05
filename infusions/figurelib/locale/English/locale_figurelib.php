@@ -9,6 +9,7 @@ $locale['INF_ADMIN'] = "Figures Library Admin";
 $locale['clickcount'] = "Views";
 $locale['new'] = "New";
 $locale['choose'] = "... please choose ...";
+$locale['sale'] = "Sale figure";
 
 // figurelib/admin/figurelib_cats.php
 $locale['filc_0001'] = "Figure Category cannot be deleted because there are %d figures in this category";
@@ -57,7 +58,6 @@ $locale['figbm_0005'] = "There are Figure or Sub-Brand linked to this Brand";
 $locale['figbm_0006'] = "This Brand already exists.";
 $locale['figbm_0007'] = "Delete this Figure Brand?";
 
-
 // TITEL DER TABS IM AMINMENÜ 
 $locale['filt_0001'] = "Add Figure";
 $locale['filt_0002'] = "Edit Figure";
@@ -76,7 +76,6 @@ $locale['filt_0014'] = "Figure Manufacturer";
 $locale['filt_0015'] = "Edit Figure Brand";
 $locale['filt_0016'] = "Figure Brand";
 
-
 // CURRENT FIGURES
 $locale['cifg_0000'] = "Figure Name/Title";
 $locale['cifg_0001'] = "Category";
@@ -85,11 +84,13 @@ $locale['cifg_0004'] = "Figure Id";
 $locale['cifg_0005'] = "Edit";
 $locale['cifg_0005a'] = "Edit Figure";
 $locale['cifg_0006'] = "Delete";
+$locale['cifg_0006a'] = "Delete Figure";
 $locale['cifg_0007'] = "There are no figures defined";
 $locale['cifg_0008'] = "Figure Actions";
 $locale['cifg_0009'] = "Filter by:";
 $locale['cifg_0010'] = "Manufacturer";
 $locale['cifg_0011'] = "Scale";
+$locale['cifg_0012'] = "Category";
 
 // MESSAGES
 $locale['film_0001'] = "Figure added";
@@ -120,7 +121,6 @@ $locale['figs_0019'] = "Submit another Figure";
 $locale['figs_0020'] = "Return to [SITENAME]";
 $locale['figs_0021'] = "There are currently %s pending for your review.";
 
-
 // Filters
 $locale['figf_0001'] = "Filter by:";
 $locale['figf_0002'] = "Filter show category by";
@@ -146,7 +146,6 @@ $locale['figc_0015'] = "Click here";
 $locale['figc_0016'] = " to go to figure categories";
 $locale['figc_0017'] = "No Figures have been added to this Category";
 
-
 // Add/Edit Manufacturer Form
 $locale['figm_0000'] = "Manufacturer Name:";
 $locale['figm_0001'] = "Please enter a Manufacturer name";
@@ -166,7 +165,6 @@ $locale['figm_0014'] = "You must define at least one Manufacturer before you can
 $locale['figm_0015'] = "Click here";
 $locale['figm_0016'] = " to go to figure Manufacturers";
 
-
 // Add/Edit Brand Form
 $locale['figbrand_0000'] = "Brand Name:";
 $locale['figbrand_0001'] = "Please enter a Brand name";
@@ -185,7 +183,6 @@ $locale['figbrand_0013'] = "There are no figure Brands defined";
 $locale['figbrand_0014'] = "You must define at least one Brand before you can add any figures";
 $locale['figbrand_0015'] = "Click here";
 $locale['figbrand_0016'] = " to go to figure Brands";
-
 
 //PANELS
 $locale['mostclick'] = "Most Clicked";
@@ -833,6 +830,8 @@ $locale['figurelib/admin/figurelib.php_069'] = "Show figure on page?";
 $locale['figurelib/admin/figurelib.php_070'] = "You must choose a Category.";
 $locale['figurelib/admin/figurelib.php_071'] = "HIDE this figure on page & panels.";
 $locale['figurelib/admin/figurelib.php_072'] = "SHOW this figure on page & panels.";
+$locale['figurelib/admin/figurelib.php_073'] = "Submitter read and agree to the terms and conditions.";
+$locale['figurelib/admin/figurelib.php_074'] = "Save/Publish Figure";
 
 // admin_figurelib_settings.php
 $locale['figure_settings'] = "FigureLib Settings";
