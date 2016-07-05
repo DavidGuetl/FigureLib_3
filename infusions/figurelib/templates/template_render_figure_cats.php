@@ -60,7 +60,7 @@ if (!function_exists('render_figure_cats')) {
 					echo "<div class='media'>\n";
 					echo "<div class='pull-left'><i class='entypo folder mid-opacity icon-sm'></i></div>\n";
 					echo "<div class='media-body overflow-hide'>\n";
-					echo "<div class='media-heading strong'><a href='".$data['figure_item']['link']."'>".$data['figure_item']['name']."</a> <span class='small'>".$data['figure_clickcount']."</span></div>\n";
+					echo "<div class='media-heading strong'><a href='".$data['figure_item']['link']."'>".$data['figure_item']['name']."</a> <span class='small'>[ ".$data['figure_anzahl']." ]</span></div>\n";
 					if ($data['figure_cat_description'] != "") {
 						echo "<span>".$data['figure_cat_description']."</span>";
 					}
