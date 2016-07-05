@@ -191,40 +191,40 @@ $result = dbcount("(figure_cat_id)", DB_FIGURE_CATS);
 						}
 					}
 			// FORM BEGINNING #######################################################################################################################
+			
+				openside('<strong>VISIBILITY / PUBLISHING</strong>');
 								echo openform('inputform', 'post', FUSION_REQUEST, array("class" => "m-t-20", "enctype"=>true));
-								echo "<div class='row'>\n";
-								echo "<div class='col-xs-12 col-sm-8'>\n";
+														
 								echo form_hidden("figure_datestamp", "", $data['figure_datestamp']);
 								echo form_hidden("figure_id", "", $data['figure_id']);
 								echo form_hidden("figure_freigabe", "", $data['figure_freigabe']);
 								echo form_hidden("figure_submitter", "", $userdata['user_id']);
-						// Select Field "Visibillity"  ///////////////////////////////////////////////////////////////////////////////////////////////
+						
+						// Select Field "Visibillity"  ///////////////////////////////////////////////////////////////////	
 									// ['figurelib/admin/figurelib.php_009'] = "Visibility:";
 								echo form_select('figure_visibility', $locale['figurelib/admin/figurelib.php_009'], $data['figure_visibility'], array(
 									"inline" => TRUE,
-									"width" => "520px",
+									"width" => "300px",
 									'options' => fusion_get_groups()
 								));								
 						// Checkbox "Figure Freigabe"  ///////////////////////////////////////////////////////////////////////////////////////////////
-									// ['figurelib/admin/figurelib.php_069'] = "Figure release on page";
-								echo form_checkbox("figure_freigabe", $locale['figurelib/admin/figurelib.php_069'], $data['figure_freigabe'], array(
+									// ['figurelib/admin/figurelib.php_069'] = "Figure release on page";								
+								
+								$yes_no_array = array(
+								'1' => $locale['yes'], 
+								'0' => $locale['no']);
+	
+								echo form_select('figure_freigabe', $locale['figurelib/admin/figurelib.php_069'], $data['figure_freigabe'], 
+									array(
+									'options' => $yes_no_array,
 									"inline" => TRUE,
-									"width" => "520px",
-									"required" => FALSE
+									"width" => "300px",
+									'required' => TRUE
 								));	
-/*						alternative to checkbox .. here a select form							
-									// ['figurelib/admin/figurelib.php_071'] = "HIDE this figure on page & panels.";
-									// ['figurelib/admin/figurelib.php_072'] = "SHOW this figure on page & panels.";
-								echo form_select('figure_freigabe', $locale['figurelib/admin/figurelib.php_069'], $data['figure_freigabe'], array(
-									"inline" => TRUE, 
-									"width" => "520px",
-									"options" => array($locale['figurelib/admin/figurelib.php_071'], $locale['figurelib/admin/figurelib.php_072'])
-								));
-*/								
-						// Form "Space" //////////////////////////////////////////////////////////////////////////////////////////////////////////////
-									echo "<div class='tbl1'>\n";
-										echo "<hr>\n";
-									echo "</div>\n";			
+				closeside();
+				openside('<strong>FIGURE BASEDATA</strong>');
+						
+						
 						// FIGUREN NAME (TITLE) //////////////////////////////////////////////////////////////////////////////////////////////////////
 									// ['figurelib/admin/figurelib.php_004'] = "Figure title";
 									// ['figurelib/admin/figurelib.php_005'] = "Figure name";
@@ -233,7 +233,7 @@ $result = dbcount("(figure_cat_id)", DB_FIGURE_CATS);
 									 "placeholder" => $locale['figurelib/admin/figurelib.php_005'],
 									 "error_text" => $locale['figurelib/admin/figurelib.php_006'],
 									 "inline" => TRUE,
-									 "width" => "520px",
+									 "width" => "300px",
 									 'required' => TRUE
 								 ));
 						// Select Field "Kategorie" //////////////////////////////////////////////////////////////////////////////////////////////////
@@ -243,7 +243,7 @@ $result = dbcount("(figure_cat_id)", DB_FIGURE_CATS);
 								echo form_select_tree("figure_cat", $locale['figurelib/admin/figurelib.php_007'], $data['figure_cat'], array(
 									"inline" => TRUE,
 									"required" => TRUE,
-									"width" => "520px",
+									"width" => "300px",
 									"placeholder" => $locale['figurelib/admin/figurelib.php_008'],
 									"error_text" => $locale['figurelib/admin/figurelib.php_070'],
 									"no_root" => 1,
@@ -256,7 +256,7 @@ $result = dbcount("(figure_cat_id)", DB_FIGURE_CATS);
 									// ['figurelib/admin/figurelib.php_011'] = "Variant of this figure (e.g. --> black Version)";
 								echo form_text("figure_variant", $locale['figurelib/admin/figurelib.php_010'], $data['figure_variant'],	array(
 									"inline" => TRUE,
-									"width" => "520px",
+									"width" => "300px",
 									"placeholder" => $locale['figurelib/admin/figurelib.php_011']
 								));
 						// Select Field "Manufacturer" ///////////////////////////////////////////////////////////////////////////////////////////////
@@ -265,7 +265,7 @@ $result = dbcount("(figure_cat_id)", DB_FIGURE_CATS);
 								echo form_select_tree("figure_manufacturer", $locale['figurelib/admin/figurelib.php_012'], $data['figure_manufacturer'], array(
 									"inline" => TRUE,
 									"required" => TRUE,
-									"width" => "520px",
+									"width" => "300px",
 									"placeholder" => $locale['figurelib/admin/figurelib.php_013'],
 									"error_text" => $locale['figurelib/admin/figurelib.php_014'],
 									"no_root" => 1,
@@ -278,7 +278,7 @@ $result = dbcount("(figure_cat_id)", DB_FIGURE_CATS);
 									// ['figurelib/admin/figurelib.php_016'] = "Artist and/or sculper of this figure";			
 								echo form_text("figure_artists", $locale['figurelib/admin/figurelib.php_015'], $data['figure_artists'],	array(
 									"inline" => TRUE,
-									"width" => "520px",
+									"width" => "300px",
 									"placeholder" => $locale['figurelib/admin/figurelib.php_016']
 								));
 						// Text Field "Country" ///////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -286,7 +286,7 @@ $result = dbcount("(figure_cat_id)", DB_FIGURE_CATS);
 									// ['figurelib/admin/figurelib.php_018'] = "Country (e.g. --> USA / Japan / Unknown)";
 								echo form_text("figure_country", $locale['figurelib/admin/figurelib.php_017'], $data['figure_country'], array(
 									"inline" => TRUE,
-									"width" => "520px",
+									"width" => "300px",
 									"placeholder" => $locale['figurelib/admin/figurelib.php_018']
 								));	
 						// Select Field "Brand"  //////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -296,7 +296,7 @@ $result = dbcount("(figure_cat_id)", DB_FIGURE_CATS);
 								echo form_select_tree("figure_brand", $locale['figurelib/admin/figurelib.php_019'], $data['figure_brand'],	array(
 									"inline" => TRUE,
 									"required" => TRUE,
-									"width" => "520px",
+									"width" => "300px",
 									"placeholder" => $locale['figurelib/admin/figurelib.php_020'],
 									"error_text" => $locale['figurelib/admin/figurelib.php_021'],
 									"no_root" => 1,
@@ -309,13 +309,13 @@ $result = dbcount("(figure_cat_id)", DB_FIGURE_CATS);
 									// ['figurelib/admin/figurelib.php_023'] = "Serie of this figure (e.g. --> NECA Series 7)";
 								echo form_text("figure_series", $locale['figure_439'], $data['figure_series'],	array(
 									"inline" => TRUE,
-									"width" => "520px",
+									"width" => "300px",
 									"placeholder" => $locale['figurelib/admin/figurelib.php_023']
 								));	
-						// Form "Space" /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-									echo "<div class='tbl1'>\n";
-										echo "<hr>\n";
-									echo "</div>\n";		
+				closeside();			
+				openside('<strong>DIMENSIONS & MORE</strong>');
+
+						
 						// Select Field "Scale" /////////////////////////////////////////////////////////////////////////////////////////////////////////
 									// ['figurelib/admin/figurelib.php_024'] = "Scale";
 									// ['figurelib/admin/figurelib.php_025'] = "Select a Scale";
@@ -323,7 +323,7 @@ $result = dbcount("(figure_cat_id)", DB_FIGURE_CATS);
 								echo form_select_tree("figure_scale", $locale['figurelib/admin/figurelib.php_024'], $data['figure_scale'], array(
 									"inline" => TRUE,
 									"required" => TRUE,
-									"width" => "520px",
+									"width" => "300px",
 									"placeholder" => $locale['figurelib/admin/figurelib.php_025'],
 									"error_text" => $locale['figurelib/admin/figurelib.php_026'],
 									"no_root" => 1,
@@ -336,7 +336,7 @@ $result = dbcount("(figure_cat_id)", DB_FIGURE_CATS);
 									// ['figurelib/admin/figurelib.php_028'] = "Weight of figure in Gramm or Kilogramm.";
 								echo form_text("figure_weight", $locale['figurelib/admin/figurelib.php_027'], $data['figure_weight'],	array(
 									"inline" => TRUE,
-									"width" => "520px",
+									"width" => "300px",
                                     "type" => "number",
 									"placeholder" => $locale['figurelib/admin/figurelib.php_028']
 								));	
@@ -346,7 +346,7 @@ $result = dbcount("(figure_cat_id)", DB_FIGURE_CATS);
 									//['figurelib/admin/figurelib.php_031'] = "You must choose a Height.";
 								echo form_select_tree("figure_height", $locale['figurelib/admin/figurelib.php_029'], $data['figure_height'], array(
 									"inline" => TRUE,
-									"width" => "520px",
+									"width" => "300px",
 									"required" => TRUE,
 									"placeholder" => $locale['figurelib/admin/figurelib.php_030'],
 									"error_text" => $locale['figurelib/admin/figurelib.php_031'],
@@ -362,7 +362,7 @@ $result = dbcount("(figure_cat_id)", DB_FIGURE_CATS);
 								echo form_select_tree("figure_width", $locale['figurelib/admin/figurelib.php_032'], $data['figure_width'], array(
 									"inline" => TRUE,
 									"required" => TRUE,
-									"width" => "520px",
+									"width" => "300px",
 									"placeholder" => $locale['figurelib/admin/figurelib.php_033'],
 									"error_text" => $locale['figurelib/admin/figurelib.php_034'],
 									"no_root" => 1,
@@ -377,7 +377,7 @@ $result = dbcount("(figure_cat_id)", DB_FIGURE_CATS);
 								echo form_select_tree("figure_depth", $locale['figurelib/admin/figurelib.php_035'], $data['figure_depth'], array(
 									"inline" => TRUE,
 									"required" => TRUE,
-									"width" => "520px",
+									"width" => "300px",
 									"placeholder" => $locale['figurelib/admin/figurelib.php_036'],
 									"error_text" => $locale['figurelib/admin/figurelib.php_037'],
 									"no_root" => 1,
@@ -392,7 +392,7 @@ $result = dbcount("(figure_cat_id)", DB_FIGURE_CATS);
 								echo form_select_tree("figure_material", $locale['figurelib/admin/figurelib.php_038'], $data['figure_material'], 	array(
 									"inline" => TRUE,
 									"required" => TRUE,
-									"width" => "520px",
+									"width" => "300px",
 									"placeholder" => $locale['figurelib/admin/figurelib.php_039'],
 									"error_text" => $locale['figurelib/admin/figurelib.php_040'],
 									"no_root" => 1,
@@ -407,7 +407,7 @@ $result = dbcount("(figure_cat_id)", DB_FIGURE_CATS);
 								echo form_select_tree("figure_poa", $locale['figurelib/admin/figurelib.php_041'], $data['figure_poa'], array(
 									"inline" => TRUE,
 									"required" => TRUE,
-									"width" => "520px",
+									"width" => "300px",
 									"placeholder" => $locale['figurelib/admin/figurelib.php_042'],
 									"error_text" => $locale['figurelib/admin/figurelib.php_043'],
 									"no_root" => 1,
@@ -422,7 +422,7 @@ $result = dbcount("(figure_cat_id)", DB_FIGURE_CATS);
 								echo form_select_tree("figure_packaging", $locale['figurelib/admin/figurelib.php_044'], $data['figure_packaging'], array(
 									"inline" => TRUE,
 									"required" => TRUE,
-									"width" => "520px",
+									"width" => "300px",
 									"placeholder" => $locale['figurelib/admin/figurelib.php_045'],
 									"error_text" => $locale['figurelib/admin/figurelib.php_046'],
 									"no_root" => 1,
@@ -430,10 +430,9 @@ $result = dbcount("(figure_cat_id)", DB_FIGURE_CATS);
 									"maxselect" => 1,
 									"allowclear" => TRUE,
 								),	DB_FIGURE_PACKAGINGS, "figure_packaging_name", "figure_packaging_id", "figure_packaging_parent");
-						// Form "Space" //////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-									echo "<div class='tbl1'>\n";
-										echo "<hr>\n";
-									echo "</div>\n";		
+				closeside();
+				openside('<strong>PRICES AND LIMITATIONS</strong>');			
+						
 						// Select Field "Pub Date" ///////////////////////////////////////////////////////////////////////////////////////////////////////
 									// ['figurelib/admin/figurelib.php_047'] = "Release Date";
 									// ['figurelib/admin/figurelib.php_048'] = "Select a Year";
@@ -441,7 +440,7 @@ $result = dbcount("(figure_cat_id)", DB_FIGURE_CATS);
 								echo form_select_tree("figure_pubdate", $locale['figurelib/admin/figurelib.php_047'], $data['figure_pubdate'], array(
 									"inline" => TRUE,
 									"required" => TRUE,
-									"width" => "520px",
+									"width" => "300px",
 									"placeholder" => $locale['figurelib/admin/figurelib.php_048'],
 									"error_text" => $locale['figurelib/admin/figurelib.php_049'],
 									"no_root" => 1,
@@ -454,7 +453,7 @@ $result = dbcount("(figure_cat_id)", DB_FIGURE_CATS);
 								// ['figurelib/admin/figurelib.php_051'] = "Retail price in US$ (only numeric input possible)";					
 								echo form_text("figure_retailprice", $locale['figurelib/admin/figurelib.php_050'], $data['figure_retailprice'], array(
 									"inline" => TRUE,
-									"width" => "520px",
+									"width" => "300px",
 									"min" => "0",
 									"placeholder" => $locale['figurelib/admin/figurelib.php_051'],
 									"type" => "number"
@@ -464,7 +463,7 @@ $result = dbcount("(figure_cat_id)", DB_FIGURE_CATS);
 									// ['figurelib/admin/figurelib.php_053'] = "Used price in US$ (only numeric input possible)";
 								echo form_text("figure_usedprice", $locale['figurelib/admin/figurelib.php_052'], $data['figure_usedprice'],array(
 									"inline" => TRUE,
-									"width" => "520px",
+									"width" => "300px",
 									"min" => "0",
 									"placeholder" => $locale['figurelib/admin/figurelib.php_053'],
 									"type" => "number"
@@ -476,7 +475,7 @@ $result = dbcount("(figure_cat_id)", DB_FIGURE_CATS);
 								echo form_select_tree("figure_limitation", $locale['figurelib/admin/figurelib.php_054'], $data['figure_limitation'], 	array(
 									"inline" => TRUE,
 									"required" => TRUE,
-									"width" => "520px",
+									"width" => "300px",
 									"placeholder" => $locale['figurelib/admin/figurelib.php_055'],
 									"error_text" => $locale['figurelib/admin/figurelib.php_056'],
 									"no_root" => 1,
@@ -489,16 +488,14 @@ $result = dbcount("(figure_cat_id)", DB_FIGURE_CATS);
 									// ['figurelib/admin/figurelib.php_058'] = "Number of pieces (only numeric input possible)";
 								echo form_text("figure_editionsize", $locale['figurelib/admin/figurelib.php_057'], $data['figure_editionsize'],array(
 									"inline" => TRUE,
-									"width" => "520px",
+									"width" => "300px",
 									"min" => "1",
 									"placeholder" => $locale['figurelib/admin/figurelib.php_058'],
 									"type" => "number"
 								));	
-						// Form "Space"  //////////////////////////////////////////////////////////////////////////////////////////////////////////////
-									echo "<div class='tbl1'>\n";
-										echo "<hr>\n";
-									echo "</div>\n";		
-	
+				closeside();
+				openside('<strong>IMAGES</strong>');
+				
 						// File Field "Images" ////////////////////////////////////////////////////////////////////////////////////////////////////////
 									// ['figurelib/admin/figurelib.php_059'] = "Upload Image:";
 								echo form_fileinput("figure_image[]", $locale['figurelib/admin/figurelib.php_059'], "", array(
@@ -512,10 +509,9 @@ $result = dbcount("(figure_cat_id)", DB_FIGURE_CATS);
 									"max_byte" => $asettings['figure_photo_max_b'],
 									"max_count" => 10
 								));
-						// Form "Space" ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////						
-								echo "<div class='tbl1'>\n";
-										echo "<hr>\n";
-									echo "</div>\n";	
+				closeside();
+				openside('<strong>ASSESSORIES & DISCREPTIONS</strong>');
+								
 						// Text Area "Accessories" ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 									// ['figurelib/admin/figurelib.php_060'] = "Accessories";
 								echo form_textarea("figure_accessories", $locale['figurelib/admin/figurelib.php_060'], $data['figure_accessories'], array(
@@ -534,10 +530,9 @@ $result = dbcount("(figure_cat_id)", DB_FIGURE_CATS);
 									"required" => FALSE,
 									"form_name" => "submit_form",
 								));
-						// Form "Space" /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-									echo "<div class='tbl1'>\n";
-										echo "<p>&nbsp;</p>\n";
-									echo "</div>\n";
+				closeside();
+				openside('');
+	
 						// Checkbox "Terms"  /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 									// ['figurelib/admin/figurelib.php_062'] = "I have read and agree to the terms and conditions.";
 									// ['figurelib/admin/figurelib.php_063'] = "You must agree our terms and conditions.";
@@ -549,12 +544,15 @@ $result = dbcount("(figure_cat_id)", DB_FIGURE_CATS);
 									"required" => TRUE,
 									"error_text" => $locale['figurelib/admin/figurelib.php_063']
 								));	
+				closeside();
+				openside('');
+				
 						// ###################################################################################							
 						// ####### AB HIER ZUSÄTZLICHE EINTRÄGE NUR FÜR ADMINS ###############################	
 						// ###################################################################################	
 	
 								echo "<div class='well clearfix'>\n";
-								echo "<strong>EXTENDET ADMIN AREA</strong><br>";
+								echo "<strong>FORUM & E-SHOP LINK</strong><br>";
 								echo "</div>\n";
 									
 						// Text URL figure_forum_url" ////////////////////////////////////////////////////////////////////////////////////////////////
@@ -562,7 +560,7 @@ $result = dbcount("(figure_cat_id)", DB_FIGURE_CATS);
 								echo form_text("figure_forum_url", $locale['figure_460'], $data['figure_forum_url'],	array(
 									"inline" => TRUE,
 									"required" => FALSE,
-									"width" => "520px",
+									"width" => "300px",
 									"type" => "url",
 									"placeholder" => ""
 								));								
@@ -572,19 +570,21 @@ $result = dbcount("(figure_cat_id)", DB_FIGURE_CATS);
 								echo form_text("figure_eshop", $locale['figure_024'], $data['figure_eshop'],	array(
 									"inline" => TRUE,
 									"required" => FALSE,
-									"width" => "520px",
+									"width" => "300px",
 									"placeholder" => ""
 								));	
-						// Form "Space" //////////////////////////////////////////////////////////////////////////////////////////////////////////////
-									echo "<div class='tbl1'>\n";
-										echo "<hr>\n";
-									echo "</div>\n";									
+				closeside();		
+				openside('');
+				
+						echo "<div class='well clearfix'>\n";
+						echo "<strong>AMAZON LINKS</strong><br>";
+						echo "</div>\n";				
 						// Text  Amazon DE Link" /////////////////////////////////////////////////////////////////////////////////////////////////////
 									// ['figure_025'] = "Amazon DE";
 								echo form_text("figure_amazon_de", "<img src='".INFUSIONS."figurelib/images/flags/flag_germany.png"."'> ".$locale['figure_025'], $data['figure_amazon_de'],	array(
 									"inline" => TRUE,
 									"required" => FALSE,
-									"width" => "520px",
+									"width" => "300px",
 									"placeholder" => ""
 								));									
 						// Text  Amazon UK Link" /////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -592,7 +592,7 @@ $result = dbcount("(figure_cat_id)", DB_FIGURE_CATS);
 								echo form_text("figure_amazon_uk", "<img src='".INFUSIONS."figurelib/images/flags/flag_great_britain.png"."'> ".$locale['figure_026'], $data['figure_amazon_uk'],	array(
 									"inline" => TRUE,
 									"required" => FALSE,
-									"width" => "520px",
+									"width" => "300px",
 									"placeholder" => ""
 								));										
 						// Text  Amazon FR Link" /////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -600,7 +600,7 @@ $result = dbcount("(figure_cat_id)", DB_FIGURE_CATS);
 								echo form_text("figure_amazon_fr", "<img src='".INFUSIONS."figurelib/images/flags/flag_france.png"."'> ".$locale['figure_027'], $data['figure_amazon_fr'],	array(
 									"inline" => TRUE,
 									"required" => FALSE,
-									"width" => "520px",
+									"width" => "300px",
 									"placeholder" => ""
 								));	
 						// Text  Amazon ES Link" /////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -608,7 +608,7 @@ $result = dbcount("(figure_cat_id)", DB_FIGURE_CATS);
 								echo form_text("figure_amazon_es", "<img src='".INFUSIONS."figurelib/images/flags/flag_spain.png"."'> ".$locale['figure_028'], $data['figure_amazon_es'],	array(
 									"inline" => TRUE,
 									"required" => FALSE,
-									"width" => "520px",
+									"width" => "300px",
 									"placeholder" => ""
 								));	
 						// Text  Amazon IT Link" /////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -616,7 +616,7 @@ $result = dbcount("(figure_cat_id)", DB_FIGURE_CATS);
 								echo form_text("figure_amazon_it", "<img src='".INFUSIONS."figurelib/images/flags/flag_italy.png"."'> ".$locale['figure_029'], $data['figure_amazon_it'],	array(
 									"inline" => TRUE,
 									"required" => FALSE,
-									"width" => "520px",
+									"width" => "300px",
 									"placeholder" => ""
 								));	
 						// Text  Amazon JP Link" /////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -624,7 +624,7 @@ $result = dbcount("(figure_cat_id)", DB_FIGURE_CATS);
 								echo form_text("figure_amazon_jp", "<img src='".INFUSIONS."figurelib/images/flags/flag_japan.png"."'> ".$locale['figure_030'], $data['figure_amazon_jp'],	array(
 									"inline" => TRUE,
 									"required" => FALSE,
-									"width" => "520px",
+									"width" => "300px",
 									"placeholder" => ""
 								));	
 						// Text  Amazon COM Link" /////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -632,7 +632,7 @@ $result = dbcount("(figure_cat_id)", DB_FIGURE_CATS);
 								echo form_text("figure_amazon_com", "<img src='".INFUSIONS."figurelib/images/flags/flag_usa.png"."'> ".$locale['figure_031'], $data['figure_amazon_com'],	array(
 									"inline" => TRUE,
 									"required" => FALSE,
-									"width" => "520px",
+									"width" => "300px",
 									"placeholder" => ""
 								));	
 						// Text  Amazon CA Link" /////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -640,19 +640,21 @@ $result = dbcount("(figure_cat_id)", DB_FIGURE_CATS);
 								echo form_text("figure_amazon_ca", "<img src='".INFUSIONS."figurelib/images/flags/flag_canada.png"."'> ".$locale['figure_032'], $data['figure_amazon_ca'],	array(
 									"inline" => TRUE,
 									"required" => FALSE,
-									"width" => "520px",
+									"width" => "300px",
 									"placeholder" => ""
 								));									
-						// Form "Space" /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-									echo "<div class='tbl1'>\n";
-										echo "<hr>\n";
-									echo "</div>\n";									
+				closeside();	
+				openside('');
+				
+						echo "<div class='well clearfix'>\n";
+						echo "<strong>AFFILIATE LINKS</strong><br>";
+						echo "</div>\n";									
 						// Text Figure Affiliate Link 1" /////////////////////////////////////////////////////////////////////////////////////////////////////
 									// ['figure_023'] = "Figure Affiliate Link";
 								echo form_text("figure_affiliate_1", $locale['figure_023_1'], $data['figure_affiliate_1'],	array(
 									"inline" => TRUE,
 									"required" => FALSE,
-									"width" => "520px",
+									"width" => "300px",
 									"placeholder" => ""
 								));	
 						// Text Figure Affiliate Link 2" /////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -660,7 +662,7 @@ $result = dbcount("(figure_cat_id)", DB_FIGURE_CATS);
 								echo form_text("figure_affiliate_2", $locale['figure_023_2'], $data['figure_affiliate_2'],	array(
 									"inline" => TRUE,
 									"required" => FALSE,
-									"width" => "520px",
+									"width" => "300px",
 									"placeholder" => ""
 								));	
 						// Text Figure Affiliate Link 3" /////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -668,7 +670,7 @@ $result = dbcount("(figure_cat_id)", DB_FIGURE_CATS);
 								echo form_text("figure_affiliate_3", $locale['figure_023_3'], $data['figure_affiliate_3'],	array(
 									"inline" => TRUE,
 									"required" => FALSE,
-									"width" => "520px",
+									"width" => "300px",
 									"placeholder" => ""
 								));	
 						// Text Figure Affiliate Link 4" /////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -676,7 +678,7 @@ $result = dbcount("(figure_cat_id)", DB_FIGURE_CATS);
 								echo form_text("figure_affiliate_4", $locale['figure_023_4'], $data['figure_affiliate_4'],	array(
 									"inline" => TRUE,
 									"required" => FALSE,
-									"width" => "520px",
+									"width" => "300px",
 									"placeholder" => ""
 								));	
 						// Text Figure Affiliate Link 5" /////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -684,7 +686,7 @@ $result = dbcount("(figure_cat_id)", DB_FIGURE_CATS);
 								echo form_text("figure_affiliate_5", $locale['figure_023_5'], $data['figure_affiliate_5'],	array(
 									"inline" => TRUE,
 									"required" => FALSE,
-									"width" => "520px",
+									"width" => "300px",
 									"placeholder" => ""
 								));	
 						// Text Figure Affiliate Link 6" /////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -692,7 +694,7 @@ $result = dbcount("(figure_cat_id)", DB_FIGURE_CATS);
 								echo form_text("figure_affiliate_6", $locale['figure_023_6'], $data['figure_affiliate_6'],	array(
 									"inline" => TRUE,
 									"required" => FALSE,
-									"width" => "520px",
+									"width" => "300px",
 									"placeholder" => ""
 								));
 						// Text Figure Affiliate Link 7" /////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -700,7 +702,7 @@ $result = dbcount("(figure_cat_id)", DB_FIGURE_CATS);
 								echo form_text("figure_affiliate_7", $locale['figure_023_7'], $data['figure_affiliate_7'],	array(
 									"inline" => TRUE,
 									"required" => FALSE,
-									"width" => "520px",
+									"width" => "300px",
 									"placeholder" => ""
 								));									
 						// Text Figure Affiliate Link 8" /////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -708,7 +710,7 @@ $result = dbcount("(figure_cat_id)", DB_FIGURE_CATS);
 								echo form_text("figure_affiliate_8", $locale['figure_023_8'], $data['figure_affiliate_8'],	array(
 									"inline" => TRUE,
 									"required" => FALSE,
-									"width" => "520px",
+									"width" => "300px",
 									"placeholder" => ""
 								));	
 						// Text Figure Affiliate Link 9" /////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -716,7 +718,7 @@ $result = dbcount("(figure_cat_id)", DB_FIGURE_CATS);
 								echo form_text("figure_affiliate_9", $locale['figure_023_9'], $data['figure_affiliate_9'],	array(
 									"inline" => TRUE,
 									"required" => FALSE,
-									"width" => "520px",
+									"width" => "300px",
 									"placeholder" => ""
 								));	
 						// Text Figure Affiliate Link 10" /////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -724,22 +726,26 @@ $result = dbcount("(figure_cat_id)", DB_FIGURE_CATS);
 								echo form_text("figure_affiliate_10", $locale['figure_023_10'], $data['figure_affiliate_10'],	array(
 									"inline" => TRUE,
 									"required" => FALSE,
-									"width" => "520px",
+									"width" => "300px",
 									"placeholder" => ""
 								));									
 						// ###################################################################################							
 						// ####### ENDE ZUSÄTZLICHE EINTRÄGE NUR FÜR ADMINS ##################################	
 						// ###################################################################################	
-								echo "</div>\n</div>\n";								
-								// Form Button  
-								// ['figurelib/admin/figurelib.php_064'] = "Save Figure";
-								echo form_button('save_figure', $locale['figurelib/admin/figurelib.php_064'], $locale['figurelib/admin/figurelib.php_064'], array('class' => 'btn-primary m-t-10'));
 
-			// ['cifg_0006a'] = "Delete Figure";
-			echo form_button("delete", $locale['cifg_0006a'], $locale['cifg_0006a'], array("class"=>"btn-primary m-t-10"));
-									
-			echo closeform();
-									
+				closeside();	
+				openside('');				
+			
+						// Form Button  
+						// ['figurelib/admin/figurelib.php_074'] = "Save/Publish Figure";
+						echo form_button('save_figure', $locale['figurelib/admin/figurelib.php_074'], $locale['figurelib/admin/figurelib.php_074'], array('class' => 'btn-primary m-t-10'));
+
+						// ['cifg_0006a'] = "Delete Figure";
+						echo form_button("delete", $locale['cifg_0006a'], $locale['cifg_0006a'], array("class"=>"btn-primary m-t-10"));						
+						echo closeform();
+				closeside();
+				
+							
 	} else {
 			// ['figurelib/admin/figurelib.php_065'] = "There are no figure categories defined";
 			// ['figurelib/admin/figurelib.php_066'] = "You must define at least one category before you can add any figure";
