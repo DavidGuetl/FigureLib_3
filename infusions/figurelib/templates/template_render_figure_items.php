@@ -34,7 +34,6 @@ if (!function_exists('render_figure_items')) {
 		global $locale;
 		echo render_breadcrumbs();
 
-	
 		$result = dbquery(
 			"SELECT 
 					f.*,
@@ -70,7 +69,7 @@ if (!function_exists('render_figure_items')) {
 				INNER JOIN ".DB_FIGURE_POAS." fpoa ON fpoa.figure_poa_id = f.figure_poa
 				INNER JOIN ".DB_FIGURE_PACKAGINGS." fpack ON fpack.figure_packaging_id = f.figure_packaging
 				INNER JOIN ".DB_FIGURE_MATERIALS." fmat ON fmat.figure_material_id = f.figure_material
-				".(multilang_table("FI") ? "WHERE figure_language='".LANGUAGE."' AND" : "WHERE")." f.figure_freigabe='1'  
+				".(multilang_table("FI") ? "WHERE figure_language='".LANGUAGE."' AND" : "WHERE")." figure_freigabe='1'  
 				AND figure_id='".$_GET['figure_id']."'
 			");
 		
@@ -764,7 +763,9 @@ if (iMEMBER) {
 							global $aidlink;
 							global $settings;
 							// ['cifg_0005'] = "Edit";
-							echo "<a class='btn btn-default btn-sm' href='".INFUSIONS."figurelib/admin.php".$aidlink."&amp;section=figurelib_form&amp;action=edit&amp;figure_id=".$data['figure_id']."'>".$locale['cifg_0005a']."</a><p>"; 
+							echo "<a class='btn btn-default btn-sm' href='".INFUSIONS."figurelib/admin.php".$aidlink."&amp;section=figurelib_form&amp;action=edit&amp;figure_id=".$_GET['figure_id']."'>".$locale['cifg_0005a']."</a><p>"; 
+							
+							
 				}			
 				
 				//+++++++++++++++++++++++++++++++++++++++
