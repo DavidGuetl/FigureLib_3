@@ -234,19 +234,19 @@ echo "</div>\n";
 						
 			echo "<td style='text-align:center; vertical-align:middle;'>	\n";	 
 					if ($data['figure_amazon_com'] == "") { echo "<img src='".INFUSIONS."figurelib/images/flags/flag_usa_sw.png"."' alt='".$locale['figure_031a']."' title='".$locale['figure_031a']."'>";
-						} else { echo "<a href='".$data['figure_amazon_com']."'><img src='".INFUSIONS."figurelib/images/flags/flag_usa.png"."' alt='".trimlink($data['figure_amazon_com'],50)."' title='".trimlink($datadata['figure_amazon_com'],100)."'></td>\n"; }		 
+						} else { echo "<a href='".$data['figure_amazon_com']."'><img src='".INFUSIONS."figurelib/images/flags/flag_usa.png"."' alt='".trimlink($data['figure_amazon_com'],50)."' title='".trimlink($data['figure_amazon_com'],100)."'></td>\n"; }		 
 			
 			echo "<td align='center'>\n";	 
 					if ($data['figure_amazon_ca'] == "") { echo "<img src='".INFUSIONS."figurelib/images/flags/flag_canada_sw.png"."' alt='".$locale['figure_032a']."' title='".$locale['figure_032a']."'>";
-						} else { echo "<a href='".$data['figure_amazon_ca']."'><img src='".INFUSIONS."figurelib/images/flags/flag_canada.png"."' alt='".trimlink($data['figure_amazon_ca'],50)."' title='".trimlink($datadata['figure_amazon_ca'],100)."'></td>\n"; }	
+						} else { echo "<a href='".$data['figure_amazon_ca']."'><img src='".INFUSIONS."figurelib/images/flags/flag_canada.png"."' alt='".trimlink($data['figure_amazon_ca'],50)."' title='".trimlink($data['figure_amazon_ca'],100)."'></td>\n"; }	
 			 			 	 
 			echo "<td align='center'>\n";	 
 			 		if ($data['figure_amazon_uk'] == "") { echo "<img src='".INFUSIONS."figurelib/images/flags/flag_great_britain_sw.png"."' alt='".$locale['figure_026a']."' title='".$locale['figure_026a']."'>";
-						} else { echo "<a href='".$data['figure_amazon_ca']."'><img src='".INFUSIONS."figurelib/images/flags/flag_great_britain.png"."' alt='".trimlink($data['figure_amazon_ca'],50)."' title='".trimlink($datadata['figure_amazon_ca'],100)."'></td>\n"; }	
+						} else { echo "<a href='".$data['figure_amazon_ca']."'><img src='".INFUSIONS."figurelib/images/flags/flag_great_britain.png"."' alt='".trimlink($data['figure_amazon_ca'],50)."' title='".trimlink($data['figure_amazon_ca'],100)."'></td>\n"; }	
 				
 			echo "<td align='center'>\n";	 
 			 		if ($data['figure_amazon_de'] == "") { echo "<img src='".INFUSIONS."figurelib/images/flags/flag_germany_sw.png"."' alt='".$locale['figure_025a']."' title='".$locale['figure_025a']."'>";
-						} else { echo "<a href='".$data['figure_amazon_de']."'><img src='".INFUSIONS."figurelib/images/flags/flag_germany.png"."' alt='".trimlink($data['figure_amazon_de'],50)."' title='".trimlink($datadata['figure_amazon_de'],100)."'></td>\n"; }	
+						} else { echo "<a href='".$data['figure_amazon_de']."'><img src='".INFUSIONS."figurelib/images/flags/flag_germany.png"."' alt='".trimlink($data['figure_amazon_de'],50)."' title='".trimlink($data['figure_amazon_de'],100)."'></td>\n"; }	
 			echo "</tr>\n";
 			 		 
 			 // FIFTH LINE AMAZON JP FR ES IT
@@ -256,19 +256,19 @@ echo "</div>\n";
 
 			echo "<td style='text-align:center; vertical-align:middle;'>	\n";
 					if ($data['figure_amazon_jp'] == "") { echo "<img src='".INFUSIONS."figurelib/images/flags/flag_japan_sw.png"."' alt='".$locale['figure_030a']."' title='".$locale['figure_030a']."'>";
-						} else { echo "<a href='".$data['figure_amazon_jp']."'><img src='".INFUSIONS."figurelib/images/flags/flag_japan.png"."' alt='".trimlink($data['figure_amazon_jp'],50)."' title='".trimlink($datadata['figure_amazon_jp'],100)."'></td>\n"; }		
+						} else { echo "<a href='".$data['figure_amazon_jp']."'><img src='".INFUSIONS."figurelib/images/flags/flag_japan.png"."' alt='".trimlink($data['figure_amazon_jp'],50)."' title='".trimlink($data['figure_amazon_jp'],100)."'></td>\n"; }		
 			
 			echo "<td align='center'>\n";
 					if ($data['figure_amazon_fr'] == "") { echo "<img src='".INFUSIONS."figurelib/images/flags/flag_france_sw.png"."' alt='".$locale['figure_027a']."' title='".$locale['figure_027a']."'>";
-						} else { echo "<a href='".$data['figure_amazon_fr']."'><img src='".INFUSIONS."figurelib/images/flags/flag_france.png"."' alt='".trimlink($data['figure_amazon_fr'],50)."' title='".trimlink($datadata['figure_amazon_fr'],100)."'></td>\n"; }	
+						} else { echo "<a href='".$data['figure_amazon_fr']."'><img src='".INFUSIONS."figurelib/images/flags/flag_france.png"."' alt='".trimlink($data['figure_amazon_fr'],50)."' title='".trimlink($data['figure_amazon_fr'],100)."'></td>\n"; }	
 			 		 
 			echo "<td align='center'>\n";
 			 		if ($data['figure_amazon_es'] == "") { echo "<img src='".INFUSIONS."figurelib/images/flags/flag_spain_sw.png"."' alt='".$locale['figure_028a']."' title='".$locale['figure_028a']."'>";
-						} else { echo "<a href='".$data['figure_amazon_es']."'><img src='".INFUSIONS."figurelib/images/flags/flag_spain.png"."' alt='".trimlink($data['figure_amazon_es'],50)."' title='".trimlink($datadata['figure_amazon_es'],100)."'></td>\n"; }	
+						} else { echo "<a href='".$data['figure_amazon_es']."'><img src='".INFUSIONS."figurelib/images/flags/flag_spain.png"."' alt='".trimlink($data['figure_amazon_es'],50)."' title='".trimlink($data['figure_amazon_es'],100)."'></td>\n"; }	
 				
 			echo "<td align='center'>\n";
 			 		if ($data['figure_amazon_it'] == "") { echo "<img src='".INFUSIONS."figurelib/images/flags/flag_italy_sw.png"."' alt='".$locale['figure_029a']."' title='".$locale['figure_029a']."'>";
-						} else { echo "<a href='".$data['figure_amazon_it']."'><img src='".INFUSIONS."figurelib/images/flags/flag_italy.png"."' alt='".trimlink($data['figure_amazon_it'],50)."' title='".trimlink($datadata['figure_amazon_it'],100)."'></td>\n"; }	
+						} else { echo "<a href='".$data['figure_amazon_it']."'><img src='".INFUSIONS."figurelib/images/flags/flag_italy.png"."' alt='".trimlink($data['figure_amazon_it'],50)."' title='".trimlink($data['figure_amazon_it'],100)."'></td>\n"; }	
 			 echo "</tr>\n";			
 			 echo "</table>\n";			
 			
@@ -482,82 +482,6 @@ echo "</div>\n";
 			echo "<td style='word-break:break-all;word-wrap:break-word' class='tbl2'>&nbsp;</td>\n";
 			echo "</tr>";	
 			echo "</table>\n";	
-			
-// ###########  RELATED FIGURES  ####################################################				
-
-				// SETTINGS HOLEN
-				$fil_settings = get_settings("figurelib");
-				if ($fil_settings['figure_related']) {
-					
-					echo "<div class='well clearfix'>\n";
-					echo "<strong>RELATED FIGURES</strong><br>";
-					echo "</div>\n";
-					echo "<div class='panel panel-default'>\n";
-
-					$result3 = dbquery("
-						SELECT 
-							f.figure_id, 
-							f.figure_title, 
-							f.figure_datestamp, 
-							f.figure_visibility, 
-							fc.figure_cat_id, 
-							fc.figure_cat_name,
-							fm.figure_manufacturer_id,
-							fm.figure_manufacturer_name							
-						FROM ".DB_FIGURE_ITEMS." f 
-						INNER JOIN ".DB_FIGURE_CATS." fc ON f.figure_cat=fc.figure_cat_id
-						INNER JOIN ".DB_FIGURE_MANUFACTURERS." fm ON f.figure_manufacturer=fm.figure_manufacturer_id 						
-						WHERE MATCH (figure_title) AGAINST ('".$data['figure_title']."' IN BOOLEAN MODE) 
-						AND figure_id != ".$data['figure_id']." ".(iSUPERADMIN ? "" : "AND ".groupaccess('figure_visibility'))." 
-						ORDER BY RAND() LIMIT 5");
-				
-					
-					if (dbrows($result3)) {
-						$i = 0;
-						
-						
-							echo "<table width='100%' cellspacing='1' cellpadding='0' class=''>\n";	
-							echo "<tbody><tr>\n";
-							echo "<th class='' align='' width='30%'>".$locale['figure_411']."</th>\n";
-							echo "<th class='' align='' width='30%'>".$locale['figure_417']."</th>\n";
-							echo "<th class='' align='' width='30%'>".$locale['figure_413']."</th>\n";
-							echo "<th class='' align='' width='10%'>".$locale['figure_418']."</th>\n";
-							echo "</tr>\n";
-						
-						while ($data3 = dbarray($result3)) {
-
-							$drating = dbarray(dbquery("SELECT SUM(rating_vote) sum_rating, COUNT(rating_item_id) count_votes FROM ".DB_RATINGS." WHERE rating_item_id='".$data3['figure_id']."' AND rating_type='FI'"));
-							$num_votes = $drating['count_votes'];
-							$rating = ($num_votes > 0 ? str_repeat("<img src='".INFUSIONS."figurelib/images/starsmall.png'>",ceil($drating['sum_rating']/$num_votes)) : "-");
-							$cell_color = ($i % 2 == 0 ? "tbl1" : "tbl2"); $i++;
-							echo "<tr>\n";
-							echo "<td class='$cell_color' width='50%'><a href='figure.php?figure_id=".$data3['figure_id']."' title='".$data3['figure_title']."'>".$data3['figure_title']."</a></td>\n";
-							echo "<td class='$cell_color' width='25%' align=''>".trimlink($data3['figure_manufacturer_name'],30)."</td>\n";
-							echo "<td class='$cell_color' width='25%' align=''>".$data3['figure_cat_name']."</td>\n";
-							echo "<td class='$cell_color' width='25%' align=''>".$rating."</td>\n";
-							echo "</tr>\n";
-						}
-					} else echo "<tr><td class='tbl1' colspan='4' width='33%' align=''>".$locale['figure_426']."</td><br><br></tr>";
-					echo "</tbody></table>\n";
-					echo "</div>\n";
-									
-				}				
-//++++++++++++++++++++++++++++++++++++++
-// RATING UND COMMENTS	
-$fil_settings = get_settings("figurelib");	
-		
-		if ($data['figure_allow_comments']) { 
-			echo "<div class='well clearfix'>\n";
-			//echo "<strong>COMMENTS</strong><br>";
-			echo "</div>\n";
-			showcomments("FI", DB_FIGURE_ITEMS, "figure_id", $_GET['figure_id'], INFUSIONS."figurelib/figures.php?figure_id=".$_GET['figure_id']);
-		}
-		if ($data['figure_allow_ratings']) { 
-			echo "<div class='well clearfix'>\n";
-			echo "<strong>RATINGS</strong><br>";
-			echo "</div>\n";
-			showratings("FI", $_GET['figure_id'], INFUSIONS."figurelib/figures.php?figure_id=".$_GET['figure_id']);
-		}
 // ####### USERFIGURES  ######################################################
 
 if (iMEMBER) {				
@@ -724,6 +648,82 @@ if (iMEMBER) {
 				echo $locale['userfigure_004'];	
 				echo "<p>";				
 		}	
+			
+// ###########  RELATED FIGURES  ####################################################				
+
+				// SETTINGS HOLEN
+				$fil_settings = get_settings("figurelib");
+				if ($fil_settings['figure_related']) {
+					
+					echo "<div class='well clearfix'>\n";
+					echo "<strong>RELATED FIGURES</strong><br>";
+					echo "</div>\n";
+					echo "<div class='panel panel-default'>\n";
+
+					$result3 = dbquery("
+						SELECT 
+							f.figure_id, 
+							f.figure_title, 
+							f.figure_datestamp, 
+							f.figure_visibility, 
+							fc.figure_cat_id, 
+							fc.figure_cat_name,
+							fm.figure_manufacturer_id,
+							fm.figure_manufacturer_name							
+						FROM ".DB_FIGURE_ITEMS." f 
+						INNER JOIN ".DB_FIGURE_CATS." fc ON f.figure_cat=fc.figure_cat_id
+						INNER JOIN ".DB_FIGURE_MANUFACTURERS." fm ON f.figure_manufacturer=fm.figure_manufacturer_id 						
+						WHERE MATCH (figure_title) AGAINST ('".$data['figure_title']."' IN BOOLEAN MODE) 
+						AND figure_id != ".$data['figure_id']." ".(iSUPERADMIN ? "" : "AND ".groupaccess('figure_visibility'))." 
+						ORDER BY RAND() LIMIT 5");
+				
+					
+					if (dbrows($result3)) {
+						$i = 0;
+						
+						
+							echo "<table width='100%' cellspacing='1' cellpadding='0' class=''>\n";	
+							echo "<tbody><tr>\n";
+							echo "<th class='' align='' width='30%'>".$locale['figure_411']."</th>\n";
+							echo "<th class='' align='' width='30%'>".$locale['figure_417']."</th>\n";
+							echo "<th class='' align='' width='30%'>".$locale['figure_413']."</th>\n";
+							echo "<th class='' align='' width='10%'>".$locale['figure_418']."</th>\n";
+							echo "</tr>\n";
+						
+						while ($data3 = dbarray($result3)) {
+
+							$drating = dbarray(dbquery("SELECT SUM(rating_vote) sum_rating, COUNT(rating_item_id) count_votes FROM ".DB_RATINGS." WHERE rating_item_id='".$data3['figure_id']."' AND rating_type='FI'"));
+							$num_votes = $drating['count_votes'];
+							$rating = ($num_votes > 0 ? str_repeat("<img src='".INFUSIONS."figurelib/images/starsmall.png'>",ceil($drating['sum_rating']/$num_votes)) : "-");
+							$cell_color = ($i % 2 == 0 ? "tbl1" : "tbl2"); $i++;
+							echo "<tr>\n";
+							echo "<td class='$cell_color' width='50%'><a href='figure.php?figure_id=".$data3['figure_id']."' title='".$data3['figure_title']."'>".$data3['figure_title']."</a></td>\n";
+							echo "<td class='$cell_color' width='25%' align=''>".trimlink($data3['figure_manufacturer_name'],30)."</td>\n";
+							echo "<td class='$cell_color' width='25%' align=''>".$data3['figure_cat_name']."</td>\n";
+							echo "<td class='$cell_color' width='25%' align=''>".$rating."</td>\n";
+							echo "</tr>\n";
+						}
+					} else echo "<tr><td class='tbl1' colspan='4' width='33%' align=''>".$locale['figure_426']."</td><br><br></tr>";
+					echo "</tbody></table>\n";
+					echo "</div>\n";
+									
+				}				
+//++++++++++++++++++++++++++++++++++++++
+// RATING UND COMMENTS	
+$fil_settings = get_settings("figurelib");	
+		
+		if ($data['figure_allow_comments']) { 
+			echo "<div class='well clearfix'>\n";
+			//echo "<strong>COMMENTS</strong><br>";
+			echo "</div>\n";
+			showcomments("FI", DB_FIGURE_ITEMS, "figure_id", $_GET['figure_id'], INFUSIONS."figurelib/figures.php?figure_id=".$_GET['figure_id']);
+		}
+		if ($data['figure_allow_ratings']) { 
+			echo "<div class='well clearfix'>\n";
+			echo "<strong>RATINGS</strong><br>";
+			echo "</div>\n";
+			showratings("FI", $_GET['figure_id'], INFUSIONS."figurelib/figures.php?figure_id=".$_GET['figure_id']);
+		}
 
 // ########################################
 				
