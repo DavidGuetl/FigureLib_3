@@ -563,7 +563,8 @@ if (iMEMBER) {
 					}
 								echo openform('inputform', 'post', FUSION_REQUEST, array("class" => "",));
 								echo form_button("delete_from_collection", $locale['userfigure_002'], $locale['userfigure_002'], array("class" => "btn btn-sm btn-primary"));
-								echo "  <a href='http://google.com' class='btn btn-sm btn-primary'>".$locale['userfigure_006']."</a>";
+								echo "  <a href='".INFUSIONS."figurelib/mycollection.php' class='btn btn-sm btn-primary'>".$locale['userfigure_006']."</a>";
+								
 								echo "  <a href='http://google.com' class='btn btn-sm btn-primary'>".$locale['sale']."</a>";
 								echo "</td></tr>";
 								echo "<p>";
@@ -605,7 +606,8 @@ if (iMEMBER) {
 					
 								echo openform('inputform', 'post', FUSION_REQUEST, array("class" => "",));
 								echo form_button("add_to_collection", $locale['userfigure_001'], $locale['userfigure_001'], array("class" => "btn btn-sm btn-primary"));
-								echo "  <a href='http://google.com' class='btn btn-sm btn-primary'>".$locale['userfigure_006']."</a>";
+								echo "  <a href='".INFUSIONS."figurelib/mycollection.php' class='btn btn-sm btn-primary'>".$locale['userfigure_006']."</a>";
+								
 								echo "  <a href='http://google.com' class='btn btn-sm btn-primary'>".$locale['sale']."</a>";
 								echo "</td></tr>";
 								echo "<p>";
