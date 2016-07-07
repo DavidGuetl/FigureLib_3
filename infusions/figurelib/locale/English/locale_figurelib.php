@@ -10,6 +10,8 @@ $locale['clickcount'] = "Views";
 $locale['new'] = "New";
 $locale['choose'] = "... please choose ...";
 $locale['sale'] = "Sale figure";
+$locale['mycollection'] = "My Figure Collection";
+
 
 // figurelib/admin/figurelib_cats.php
 $locale['filc_0001'] = "Figure Category cannot be deleted because there are %d figures in this category";
@@ -75,6 +77,8 @@ $locale['filt_0013'] = "Edit Figure Manufacturer";
 $locale['filt_0014'] = "Figure Manufacturer";
 $locale['filt_0015'] = "Edit Figure Brand";
 $locale['filt_0016'] = "Figure Brand";
+$locale['filt_0017'] = "Edit/Publish Figure";
+$locale['filt_0018'] = "Here can you add, delete, edit and publish figures";
 
 // CURRENT FIGURES
 $locale['cifg_0000'] = "Figure Name/Title";
@@ -215,17 +219,17 @@ $locale['figure_020'] = "Figure Packagings";
 $locale['figure_021'] = "Limitations";
 $locale['figure_022'] = "Figure Limitations";
 
-$locale['figure_023'] = "Figure Affiliate Link";
-$locale['figure_023_1'] = "Figure Affiliate Link 1";
-$locale['figure_023_2'] = "Figure Affiliate Link 2";
-$locale['figure_023_3'] = "Figure Affiliate Link 3";
-$locale['figure_023_4'] = "Figure Affiliate Link 4";
-$locale['figure_023_5'] = "Figure Affiliate Link 5";
-$locale['figure_023_6'] = "Figure Affiliate Link 6";
-$locale['figure_023_7'] = "Figure Affiliate Link 7";
-$locale['figure_023_8'] = "Figure Affiliate Link 8";
-$locale['figure_023_9'] = "Figure Affiliate Link 9";
-$locale['figure_023_10'] = "Figure Affiliate Link 10";
+$locale['figure_023'] = "Affiliate Link";
+$locale['figure_023_1'] = "Affiliate Link 1";
+$locale['figure_023_2'] = "Affiliate Link 2";
+$locale['figure_023_3'] = "Affiliate Link 3";
+$locale['figure_023_4'] = "Affiliate Link 4";
+$locale['figure_023_5'] = "Affiliate Link 5";
+$locale['figure_023_6'] = "Affiliate Link 6";
+$locale['figure_023_7'] = "Affiliate Link 7";
+$locale['figure_023_8'] = "Affiliate Link 8";
+$locale['figure_023_9'] = "Affiliate Link 9";
+$locale['figure_023_10'] = "Affiliate Link 10";
 
 $locale['figure_024'] = "Figure E-Shop Link";
 
