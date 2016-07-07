@@ -76,73 +76,73 @@ $result = dbquery(
 			
 			if (dbrows($result) != 0) {
 				while ($data = dbarray($result)) {
-					
-						// TITLE + KATEGORIE					
 
-						echo "<aside class='list-group-item m-b-20'>\n";
-																	
-						// ONE COVER IMAGE PLUS 9 MINI-IMAGES  //////////////////////////////////////////////////////////////
-								
-						echo "<div class='panel panel-default'>\n";
-						//echo "<div class='panel-body'>\n";
-						echo "<center><table class='' width='100%'>\n";
-								
-						echo "<div class='well clearfix'>\n";
-						echo "<strong>".$data['figure_title']."</strong><br>";
-						echo "</div>\n";
-					 
-						echo "<tr>\n";				  
-						// COVER IMAGE
-						//echo "<td align='center' class='tbl-border tbl1' rowspan='3'><a href='".($data['figure_image_cover'] ? IMAGES_FIGURE.$data['figure_image_cover'] : INFUSIONS.$inf_folder."/images/default.png")."'  height='100%' width='100%' alt='".$data['figure_title']."'><img src='".($data['figure_image_cover'] ? IMAGES_FIGURE.$data['figure_image_cover'] : INFUSIONS.$inf_folder."/images/default.png")."'  height='100%' width='400px' alt='".$data['figure_title']."' />COVER</a>\n";					
-						echo "<td align='center' class='tbl-border tbl1' rowspan='3'><a href='".INFUSIONS."figurelib/figures.php?figure_id=".$data['figure_id']."' class=''>\n<img src='".INFUSIONS."figurelib/images/default.png"."' alt='".trimlink($data['figure_title'],50)."' title='".trimlink($data['figure_title'],100)."' style='border:0px;max-height:100%;max-width:180px' /></td>";
-						
-						// THUMB 1
-						//echo "<td align='center' class='tbl-border tbl1'><a href='".($data['figure_image'] ? IMAGES_FIGURE.$data['figure_image'] : INFUSIONS.$inf_folder."/images/default.png")."'  height='100%' width='100%' alt='".$data['figure_title']."'><img src='".($data['figure_image'] ? IMAGES_FIGURE.$data['figure_image'] : INFUSIONS.$inf_folder."/images/default.png")."'  height='100%' width='50px' alt='".$data['figure_title']."' /></a>THUMB 1</td>\n";
-						echo "<td class='side-small'><a href='".INFUSIONS."figurelib/figures.php?figure_id=".$data['figure_id']."' class=''>\n<img src='".INFUSIONS."figurelib/images/default.png"."' alt='".trimlink($data['figure_title'],50)."' title='".trimlink($data['figure_title'],100)."' style='border:0px;max-height:60px;max-width:60px' /></td>";
-						
-						// THUMB 2
-						//echo "<td align='center' class='tbl-border tbl1'><a href='".($data['figure_image'] ? IMAGES_FIGURE.$data['figure_image'] : INFUSIONS.$inf_folder."/images/default.png")."'  height='100%' width='100%' alt='".$data['figure_title']."'><img src='".($data['figure_image'] ? IMAGES_FIGURE.$data['figure_image'] : INFUSIONS.$inf_folder."/images/default.png")."'  height='100%' width='50px' alt='".$data['figure_title']."' /></a>THUMB 2</td>\n";
-						echo "<td class='side-small'><a href='".INFUSIONS."figurelib/figures.php?figure_id=".$data['figure_id']."' class=''>\n<img src='".INFUSIONS."figurelib/images/default.png"."' alt='".trimlink($data['figure_title'],50)."' title='".trimlink($data['figure_title'],100)."' style='border:0px;max-height:60px;max-width:60px' /></td>";
-						
-						// THUMB 3
-						//echo "<td align='center' class='tbl-border tbl1'><a href='".($data['figure_image'] ? IMAGES_FIGURE.$data['figure_image'] : INFUSIONS.$inf_folder."/images/default.png")."'  height='100%' width='100%' alt='".$data['figure_title']."'><img src='".($data['figure_image'] ? IMAGES_FIGURE.$data['figure_image'] : INFUSIONS.$inf_folder."/images/default.png")."'  height='100%' width='50px' alt='".$data['figure_title']."' /></a>THUMB 3</td>\n";	
-						echo "<td class='side-small'><a href='".INFUSIONS."figurelib/figures.php?figure_id=".$data['figure_id']."' class=''>\n<img src='".INFUSIONS."figurelib/images/default.png"."' alt='".trimlink($data['figure_title'],50)."' title='".trimlink($data['figure_title'],100)."' style='border:0px;max-height:60px;max-width:60px' /></td>";
-					  
-					  echo "</tr>\n";
-					  echo "<tr>\n";
-					  
-						// THUMB 4
-						//echo "<td align='center' class='tbl-border tbl1'><a href='".($data['figure_image'] ? IMAGES_FIGURE.$data['figure_image'] : INFUSIONS.$inf_folder."/images/default.png")."'  height='100%' width='100%' alt='".$data['figure_title']."'><img src='".($data['figure_image'] ? IMAGES_FIGURE.$data['figure_image'] : INFUSIONS.$inf_folder."/images/default.png")."'  height='100%' width='50px' alt='".$data['figure_title']."' /></a>THUMB 4</td>\n";
-						echo "<td class='side-small'><a href='".INFUSIONS."figurelib/figures.php?figure_id=".$data['figure_id']."' class=''>\n<img src='".INFUSIONS."figurelib/images/default.png"."' alt='".trimlink($data['figure_title'],50)."' title='".trimlink($data['figure_title'],100)."' style='border:0px;max-height:60px;max-width:60px' /></td>";
-						
-						// THUMB 5
-						//echo "<td align='center' class='tbl-border tbl1'><a href='".($data['figure_image'] ? IMAGES_FIGURE.$data['figure_image'] : INFUSIONS.$inf_folder."/images/default.png")."'  height='100%' width='100%' alt='".$data['figure_title']."'><img src='".($data['figure_image'] ? IMAGES_FIGURE.$data['figure_image'] : INFUSIONS.$inf_folder."/images/default.png")."'  height='100%' width='50px' alt='".$data['figure_title']."' /></a>THUMB 5</td>\n";
-						echo "<td class='side-small'><a href='".INFUSIONS."figurelib/figures.php?figure_id=".$data['figure_id']."' class=''>\n<img src='".INFUSIONS."figurelib/images/default.png"."' alt='".trimlink($data['figure_title'],50)."' title='".trimlink($data['figure_title'],100)."' style='border:0px;max-height:60px;max-width:60px' /></td>";
-						
-						// THUMB 6
-						//echo "<td align='center' class='tbl-border tbl1'><a href='".($data['figure_image'] ? IMAGES_FIGURE.$data['figure_image'] : INFUSIONS.$inf_folder."/images/default.png")."'  height='100%' width='100%' alt='".$data['figure_title']."'><img src='".($data['figure_image'] ? IMAGES_FIGURE.$data['figure_image'] : INFUSIONS.$inf_folder."/images/default.png")."'  height='100%' width='50px' alt='".$data['figure_title']."' /></a>THUMB 6</td>\n";
-						echo "<td class='side-small'><a href='".INFUSIONS."figurelib/figures.php?figure_id=".$data['figure_id']."' class=''>\n<img src='".INFUSIONS."figurelib/images/default.png"."' alt='".trimlink($data['figure_title'],50)."' title='".trimlink($data['figure_title'],100)."' style='border:0px;max-height:60px;max-width:60px' /></td>";
-					  
-					  echo "</tr>\n";
-					  echo "<tr>\n";
-					  
-						// THUMB 7
-						//echo "<td align='center' class='tbl-border tbl1'><a href='".($data['figure_image'] ? IMAGES_FIGURE.$data['figure_image'] : INFUSIONS.$inf_folder."/images/default.png")."'  height='100%' width='100%' alt='".$data['figure_title']."'><img src='".($data['figure_image'] ? IMAGES_FIGURE.$data['figure_image'] : INFUSIONS.$inf_folder."/images/default.png")."'  height='100%' width='50px' alt='".$data['figure_title']."' /></a>THUMB 7</td>\n";
-						echo "<td class='side-small'><a href='".INFUSIONS."figurelib/figures.php?figure_id=".$data['figure_id']."' class=''>\n<img src='".INFUSIONS."figurelib/images/default.png"."' alt='".trimlink($data['figure_title'],50)."' title='".trimlink($data['figure_title'],100)."' style='border:0px;max-height:60px;max-width:60px' /></td>";
-						
-						// THUMB 8
-						//echo "<td align='center' class='tbl-border tbl1'><a href='".($data['figure_image'] ? IMAGES_FIGURE.$data['figure_image'] : INFUSIONS.$inf_folder."/images/default.png")."'  height='100%' width='100%' alt='".$data['figure_title']."'><img src='".($data['figure_image'] ? IMAGES_FIGURE.$data['figure_image'] : INFUSIONS.$inf_folder."/images/default.png")."'  height='100%' width='50px' alt='".$data['figure_title']."' /></a>THUMB 8</td>\n";
-						echo "<td class='side-small'><a href='".INFUSIONS."figurelib/figures.php?figure_id=".$data['figure_id']."' class=''>\n<img src='".INFUSIONS."figurelib/images/default.png"."' alt='".trimlink($data['figure_title'],50)."' title='".trimlink($data['figure_title'],100)."' style='border:0px;max-height:60px;max-width:60px' /></td>";
-						
-						// THUMB 9
-						//echo "<td align='center' class='tbl-border tbl1'><a href='".($data['figure_image'] ? IMAGES_FIGURE.$data['figure_image'] : INFUSIONS.$inf_folder."/images/default.png")."'  height='100%' width='100%' alt='".$data['figure_title']."'><img src='".($data['figure_image'] ? IMAGES_FIGURE.$data['figure_image'] : INFUSIONS.$inf_folder."/images/default.png")."'  height='100%' width='50px' alt='".$data['figure_title']."' /></a>THUMB 9</td>\n";
-						echo "<td class='side-small'><a href='".INFUSIONS."figurelib/figures.php?figure_id=".$data['figure_id']."' class=''>\n<img src='".INFUSIONS."figurelib/images/default.png"."' alt='".trimlink($data['figure_title'],50)."' title='".trimlink($data['figure_title'],100)."' style='border:0px;max-height:60px;max-width:60px' /></td>";
-					 
-					 echo "</tr>\n";
+// IMAGES	
+
+/* ###########################################################################################
+
+I found a old panel for making a slidshow and include it --> latest_photo_slideshow_panel.php
+However, it displays the images only partially. Cut off.
+I guees we have better slideshows for make this --> HTML 5???? 
+http://www.kvisoft.com/tutorials/html5-image-slideshow.html 
+
+*/ ###########################################################################################
+			
+echo "<aside class='list-group-item m-b-20'>\n";
+
+openside();		
+global $settings;
+
+
+/* BEGIN
+| Filename: latest_photo_slideshow_panel.php
+| Release : v1.3 [24 Jan 2013] - PHP-Fusion v7.02
+| Author  : AT0m
+*/	
+$result2 = dbquery ("
+	SELECT
+		figure_images_image_id, 	
+		figure_images_figure_id, 	
+		figure_images_image, 	
+		figure_images_thumb 
+	FROM ".DB_FIGURE_IMAGES."
+	WHERE figure_images_figure_id='".$data['figure_id']."' ");
+
+
+$XML_File = "<slideshow>";
+
+if (dbrows($result2)) while ($data2 = dbarray($result2)){
+	$XML_File .= "
+	<slide>
+		<file>".INFUSIONS."figurelib/figures/images/".$data2['figure_images_image']."</file>
+		<tnfile>".INFUSIONS."figurelib/figures/images/thumbs/".$data2['figure_images_thumb']."</tnfile>
+	</slide>";
+		}
+			
+$XML_File .= "</slideshow>";
+
+file_put_contents(INFUSIONS."figurelib/FlashSlide.xml",$XML_File);
+
+echo "\n<!-- SlideShow -->\n";
+echo "<div align='center'>\n";
+echo "<embed src='".INFUSIONS."figurelib/FlashSlide.swf' ";
+echo "type='application/x-shockwave-flash' pluginspage='http://www.macromedia.com/go/getflashplayer' ";
+echo "quality='high' allowscriptaccess='always' allowFullScreen='true' wmode='transparent' ";
+echo "width='100%' height='100%' align='middle'></embed>\n";
+echo "</div>\n\n";
+
+/* END
+| Filename: latest_photo_slideshow_panel.php
+| Release : v1.3 [24 Jan 2013] - PHP-Fusion v7.02
+| Author  : AT0m
+*/
+closeside;
 										
 // ####### SOCIAL_SHARING   ##################################################		
 
-					echo "<tr><td align='center' class='panel-footer' colspan='4' width=''>\n";						
+			echo "<table width='100%'>\n";
+					//echo "<tr><td align='center' class='panel-footer' colspan='4' width=''>\n";	
+					echo "<tr><td>\n";						
 						// SETTINGS HOLEN
 						global $settings;
 						$fil_settings = get_settings("figurelib"); 
