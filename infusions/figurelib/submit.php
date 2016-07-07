@@ -1,4 +1,3 @@
-
 <?php
 /*-------------------------------------------------------+
 | PHP-Fusion Content Management System
@@ -26,10 +25,8 @@ include "infusion_db.php";
 require_once THEMES . "templates/header.php";
 require_once INCLUDES."html_buttons_include.php";
 require_once INCLUDES."infusions_include.php";
-
 // get settings
 $fil_settings = get_settings("figurelib");
-
 // get language
 if (file_exists(INFUSIONS."figurelib/locale/".LOCALESET."locale_figurelib.php")) {
     include INFUSIONS."figurelib/locale/".LOCALESET."locale_figurelib.php";
@@ -39,8 +36,6 @@ if (file_exists(INFUSIONS."figurelib/locale/".LOCALESET."locale_figurelib.php"))
 // ['figure_521'] = "Submit Figure";
 add_to_title($locale['global_200'].$locale['figure_521']);
 openside("<i class='fa fa-globe fa-lg m-r-10'></i>".$locale['figure_521']);
-
-
 // Can members submit?
 if (iMEMBER && $fil_settings['figure_submit']) {
 	
@@ -111,16 +106,22 @@ if (iMEMBER && $fil_settings['figure_submit']) {
 				"figure_accessories"  => addslash(nl2br(parseubb(stripinput($_POST['figure_accessories'])))),			
 			);
 			
-		// Image upload
-        if (!empty($_FILES['figure_image']) && defender::safe()) {
+		// Insert Figure data 
+		if (defender::safe()) {
+				dbquery_insert(DB_FIGURE_ITEMS, $submitdata, "save", array("keep_session"=>true));
+				
+		$unique_id = dblastid();		
+				// Image upload
+        if (!empty($_FILES['figure_image'])) {
             // To pair with the image into the database.
             $image_data = (array) form_sanitizer($_FILES['figure_image'], "", "figure_image");
             if (!empty($image_data)) {
                 foreach($image_data as $image) {
                     $i_data = array(
                         "figure_images_image_id" => 0,
-                        "figure_images_figure_id" => dblastid(),
-                        "figure_images_image" => $image['image_name'],
+                       // "figure_images_figure_id" => dblastid(), // This will be the primary_key of your last saved record
+                       "figure_images_figure_id" => $unique_id,
+					   "figure_images_image" => $image['image_name'],
                         "figure_images_thumb" => $image['thumb1_name'],
                         "figure_images_sorting" => "",
                         "figure_images_language" => LANGUAGE,
@@ -130,10 +131,17 @@ if (iMEMBER && $fil_settings['figure_submit']) {
                 }
             }
         }
-							
-		// Insert Figure data 
-		if (defender::safe()) {
-				dbquery_insert(DB_FIGURE_ITEMS, $submitdata, "save");
+        
+        /**
+         * So, when you want to find your image
+         * example : yoursite.com/infusions/......./script.php?figure_id=1
+         * 
+         * $_GET['figure_id'] = !empty($_GET['figure_id']) && isnum($_GET['figure_id']) ? intval($_GET['figure_id']) : 0;
+         * 
+         * $result = dbquery("SELECT * FROM ".DB_FIGURE_IMAGES." WHERE figure_images_figure_id='$_GET['figure_id']."'');
+         * 
+         **/
+				
 									
 				// ['figs_0018'] = "Thank you for submitting your Figure";
 				addNotice("success", $locale['figs_0018']);
@@ -141,6 +149,7 @@ if (iMEMBER && $fil_settings['figure_submit']) {
 			}
 		
 	}	
+	
 		if (isset($_GET['submitted']) && $_GET['submitted'] == "f") {
            // ['figs_0018'] = "Thank you for submitting your Figure";
 		   echo "<div class='well text-center'><p><strong>".$locale['figs_0018']."</strong></p>";
@@ -539,6 +548,5 @@ if (iMEMBER && $fil_settings['figure_submit']) {
 }
 closeside();
 require_once THEMES."templates/footer.php";
-
 //send_pm( -102, 1, 'Figure submittet', 'A new figure was submittet!', 'y', TRUE);
 //send_pm( -103, 1, 'Figure submittet', 'A new figure was submittet!', 'y', TRUE);
