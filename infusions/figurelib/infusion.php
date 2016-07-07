@@ -630,13 +630,16 @@ if (!empty($enabled_languages)) {
 	foreach($enabled_languages as $language) {
 		include LOCALE.$language."/setup.php";
 		// add new language records
-		$mlt_insertdbrow[$language][] = DB_SITE_LINKS." (link_name, link_url, link_visibility, link_position, link_window, link_order, link_language) VALUES ('".$locale['INF_TITLE']."', 'infusions/figurelib/figures.php', '0', '2', '0', '2', '".$language."')";
+		$mlt_insertdbrow[$language][] = DB_SITE_LINKS." (link_name, link_url, link_visibility, link_position, link_window, link_order, 		link_language) VALUES ('".$locale['INF_TITLE']."', 'infusions/figurelib/figures.php', '0', '2', '0', '2', '".$language."')";
 		
-		$mlt_insertdbrow[$language][] = DB_SITE_LINKS." (link_name, link_url, link_visibility, link_position, link_window, link_order, link_language) VALUES ('".$locale['mycollection']."', 'infusions/figurelib/mycollection.php', '0', '3', '0', '2', '".$language."')";
+		$mlt_insertdbrow[$language][] = DB_SITE_LINKS." (link_name, link_url, link_visibility, link_position, link_window, link_order, link_language) VALUES ('".$locale['mycollection']."', 'infusions/figurelib/mycollection.php', ".USER_LEVEL_MEMBER.", '2', '0', '3', '".$language."')";
 				
-		$mlt_insertdbrow[$language][] = DB_SITE_LINKS." (link_name, link_url, link_visibility, link_position, link_window, link_order, link_language) VALUES ('".$locale['figure_521']."', 'infusions/figurelib/submit.php?stype=f', ".USER_LEVEL_MEMBER.", '1', '0', '15', '".$language."')";
+		$mlt_insertdbrow[$language][] = DB_SITE_LINKS." (link_name, link_url, link_visibility, link_position, link_window, link_order, link_language) VALUES ('".$locale['figure_521']."', 'infusions/figurelib/submit.php?stype=f', ".USER_LEVEL_MEMBER.", '2', '0', '4', '".$language."')";
+		
+		
 		// drop deprecated language records
 		$mlt_deldbrow[$language][] = DB_SITE_LINKS." WHERE link_url='infusions/figurelib/figures.php' AND link_language='".$language."'";
+		$mlt_deldbrow[$language][] = DB_SITE_LINKS." WHERE link_url='infusions/figurelib/mycollection.php' AND link_language='".$language."'";
 		$mlt_deldbrow[$language][] = DB_SITE_LINKS." WHERE link_url='infusions/figurelib/submit.php?stype=f' AND link_language='".$language."'";
 		$mlt_deldbrow[$language][] = DB_FIGURE_CATS." WHERE figure_cat_language='".$language."'";
 	}
