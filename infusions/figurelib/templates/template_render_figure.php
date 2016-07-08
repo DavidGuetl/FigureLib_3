@@ -61,9 +61,26 @@ global $settings;
 								
 //*******
 
-	echo "<td style='text-align:center;' class=''>\n";
+	echo "<td style='text-align:center;' class='small'>\n";
 
-	echo "<a href='".$data['figure']['link']."'><img src='".INFUSIONS."figurelib/images/default.png"."' alt='".trimlink($data['figure_title'],50)."' title='".trimlink($data['figure_title'],100)."' style='border:0px;max-height:100px;max-width:100px' />";	
+	
+	$result2 = dbquery("SELECT							   
+						figure_images_image_id, 	
+						figure_images_figure_id, 	
+						figure_images_image, 	
+						figure_images_thumb 	
+				FROM ".DB_FIGURE_IMAGES."
+				WHERE figure_images_figure_id='".$data['figure_id']."' LIMIT 0,1");
+ 
+			   // Fragen, ob überhaupt ein Ergebnis kommt
+				if(dbrows($result2)){
+     
+				while($data2 = dbarray($result2)){
+	
+	echo "<center><a href='".$data['figure']['link']."'><img src='".($data2['figure_images_thumb'] ? THUMBS_FIGURES.$data2['figure_images_thumb'] : INFUSIONS.$inf_folder."/images/default.png")."' alt='".trimlink($data['figure_title'],100)."' title='".trimlink($data['figure_title'],50)."' style='border:0px;max-height:120px;max-width:120px' />";
+	
+	}
+	}
 	echo "<br />\n";						
 	
 	// ['figure_453'] = "["; //  ['figure_454'] = "] ";
@@ -73,9 +90,11 @@ global $settings;
 	echo "<span class='small'><strong>".$locale['figure_414'].":</strong> ".showdate("shortdate", $data['figure_datestamp'])."</span><br>\n";
 	
 	echo "<span class='small'><strong>Views: </strong>".$data['figure']['views']."</span><br>\n";
-			echo "<span class='small'><strong>User Count: </strong>Variable  hier einbauen</span><br>\n";
-			
-			$comments = dbcount("(comment_id)", DB_COMMENTS, "comment_type='FI' AND comment_item_id='".$data['figure_id']."'");
+						
+	$count = dbcount("(figure_userfigures_id)", DB_FIGURE_USERFIGURES, "figure_userfigures_user_id='".$data['figure_id']."'");	
+	echo "<span class='small'><strong>User Count: </strong>".$count."</span><br>";						
+	
+	$comments = dbcount("(comment_id)", DB_COMMENTS, "comment_type='FI' AND comment_item_id='".$data['figure_id']."'");
 	echo "<span class='small'><strong>Comments: </strong>".$comments."<br/></span>\n";
 			// Bewertung
 				$drating = dbarray(dbquery("
