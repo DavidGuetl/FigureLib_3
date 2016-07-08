@@ -75,19 +75,20 @@ $locale['mc_0012']= "HERE";
 				global $userdata;
 					$resultlast = dbquery(
 						"SELECT f.figure_id,
+								f.figure_cat,
 								f.figure_title, 			
 								f.figure_submitter, 
 								f.figure_freigabe, 
 								f.figure_pubdate, 
 								f.figure_scale, 
-								f.figure_title, 
 								f.figure_manufacturer, 
 								f.figure_brand, 
-								f.figure_datestamp, 
-								f.figure_cat, 
+								f.figure_datestamp, 						
 								fc.figure_cat_id, 
 								fc.figure_cat_name, 
-								fm.figure_manufacturer_name, 
+								fm.figure_manufacturer_id,
+								fm.figure_manufacturer_name,
+								fb.figure_brand_id, 
 								fb.figure_brand_name, 
 								fy.figure_year_id, 
 								fy.figure_year, 
@@ -97,27 +98,24 @@ $locale['mc_0012']= "HERE";
 								fuf.figure_userfigures_user_id 		
 						FROM ".DB_FIGURE_ITEMS." f
 						INNER JOIN ".DB_FIGURE_USERFIGURES." fuf ON fuf.figure_userfigures_figure_id=f.figure_id
-						INNER JOIN ".DB_FIGURE_CATS." fc ON f.figure_cat=fc.figure_cat_id
-						INNER JOIN ".DB_FIGURE_MANUFACTURERS." fm ON fm.figure_manufacturer_id = f.figure_manufacturer
-						INNER JOIN ".DB_FIGURE_BRANDS." fb ON fb.figure_brand_id = f.figure_brand
-						INNER JOIN ".DB_FIGURE_SCALES." fs ON fs.figure_scale_id = f.figure_scale
-						INNER JOIN ".DB_FIGURE_YEARS." fy ON fy.figure_year_id = f.figure_pubdate
+						INNER JOIN ".DB_FIGURE_CATS." fc ON fc.figure_cat_id=f.figure_cat
+						INNER JOIN ".DB_FIGURE_MANUFACTURERS." fm ON fm.figure_manufacturer_id=f.figure_manufacturer
+						INNER JOIN ".DB_FIGURE_BRANDS." fb ON fb.figure_brand_id=f.figure_brand
+						INNER JOIN ".DB_FIGURE_SCALES." fs ON fs.figure_scale_id=f.figure_scale
+						INNER JOIN ".DB_FIGURE_YEARS." fy ON fy.figure_year_id=f.figure_pubdate
 						".(multilang_table("FI") ? "WHERE figure_language='".LANGUAGE."' AND" : "WHERE")." figure_userfigures_user_id=".$userdata['user_id']."
-						ORDER BY figure_datestamp DESC LIMIT 0,1 
+						ORDER BY figure_datestamp DESC LIMIT 1
 						");
 							if (dbrows($resultlast) != 0) {
 								while($data = dbarray($resultlast)){
 							
 										echo "<td class='side-small'>".$locale['mc_0009']."
-										<a href='".INFUSIONS."figurelib/figures.php?figure_id=".$data['figure_id']."'>".trimlink($data['figure_title'], 18)."</a>";
-							
-							
+										<a href='".INFUSIONS."figurelib/figures.php?figure_id=".$data['figure_id']."'>".trimlink($data['figure_title'], 18)."</a>";						
 								}
 							} else {	
 						
 										echo $locale['mc_0010'];
 							}
-
 echo "</div>";
 
 closeside();
@@ -174,15 +172,15 @@ global $userdata;
 			INNER JOIN ".DB_FIGURE_SCALES." fs ON fs.figure_scale_id = f.figure_scale
 			INNER JOIN ".DB_FIGURE_YEARS." fy ON fy.figure_year_id = f.figure_pubdate
 			".(multilang_table("FI") ? "WHERE figure_language='".LANGUAGE."' AND" : "WHERE")." figure_userfigures_user_id=".$userdata['user_id']."
-			ORDER BY figure_datestamp DESC LIMIT 0,100
+			ORDER BY figure_datestamp DESC 
 			");
 	
 		
 		// PANEL open	
  
- openside($locale['yours']);
+openside($locale['yours']);
  	 
-		if (dbrows($result) != 0) {
+	if (dbrows($result) != 0) {
 		 
 			echo "<table cellpadding='0' cellspacing='1' class='tbl-border' style='text-align:left;width:100%; margin-bottom: 4px;'>";
 			echo "
@@ -265,63 +263,62 @@ global $userdata;
 			echo "<td>".$rating."</td>";
 			echo "</tr>";
 	
-	}
+		}
 			
 			echo "</table>";
 			
+		//nav
+	 $fil_settings = get_settings("figurelib"); 
+		
+		$max_rows = dbcount("(figure_userfigures_id)", DB_FIGURE_USERFIGURES, "figure_userfigures_user_id='".$userdata['user_id']."'");	
+		$_GET['rowstart'] = isset($_GET['rowstart']) && isnum($_GET['rowstart']) && $_GET['rowstart'] <= $max_rows ? $_GET['rowstart'] : 0;
+		
+		if ($max_rows != 0) {
+			
+			$resultrow = dbquery("
+				SELECT * 
+				FROM ".DB_FIGURE_USERFIGURES." 
+				WHERE figure_userfigures_user_id='".$userdata['user_id']." 
+				LIMIT ".$_GET['rowstart'].",".$asettings['figure_per_page']);
+
+			$numrows = dbrows($resultrow);
+			$info['figure_rows'] = $numrows;
+			$info['page_nav'] = $max_rows > $asettings['figure_per_page'] ? makepagenav($_GET['rowstart'], $asettings['figure_per_page'], $max_rows, 3, INFUSIONS."figurelib/mycollection.php?&amp;") : 0;
+			echo $info['page_nav'] ? "<div class='text-right'>".$info['page_nav']."</div>" : '';
+		}
+
+//Output test for variables
+	print_p("Max rows found  --> $max_rows ");
+	print_p("Item per page --> ".$asettings['figure_per_page']);
+	//print_p("figure_rows --> ".$info['figure_rows']);
+	print_p("user_id --> ".$userdata['user_id']);	
 	
 	} else {
 			echo "<div style='text-align: center;'>".$locale['CLFP_001']."</div>"; // 001 = No figures available"
 	}
 
+
+
 	closeside();
 	echo "</div>";
 
-		$max_rows = $count;
-		$_GET['rowstart'] = isset($_GET['rowstart']) && isnum($_GET['rowstart']) && $_GET['rowstart'] <= $max_rows ? $_GET['rowstart'] : 0;
-		if ($max_rows != 0) {
-		$fil_settings = get_settings("figurelib");
-		$numrows = dbrows($result);
-		$info['figure_rows'] = $numrows;
-					$fil_settings = get_settings("figurelib");
-					$info['page_nav'] = $max_rows > $fil_settings['figure_per_page'] ? makepagenav($_GET['rowstart'], $fil_settings['figure_per_page'], $max_rows, 3, INFUSIONS."figurelib/figures.php?figure_cat_id=".$_GET['figure_cat_id']."&amp;") : 0;
-		}
 
 } else {
 	$locale['mc_0001']= "My Figure Collection";
 	$locale['mc_0011']= "This feature is only available for registered members. Please Sign up ";
 	$locale['mc_0012']= "HERE";
 	
-	openside($locale['mc_0001']);
+openside($locale['mc_0001']);
 
 	echo $locale['mc_0011'];
 	echo "<a href='".BASEDIR."register.php'>".$locale['mc_0012']."</a>";
 
 	closeside();
-
-
-
 }
+
+
 closetable();
 
-//nav
-	 $fil_settings = get_settings("figurelib"); 
-		$max_rows = dbcount("(figure_userfigures_id)", DB_FIGURE_USERFIGURES, "figure_userfigures_user_id='".$userdata['user_id']."'");	
 
-		$_GET['rowstart'] = isset($_GET['rowstart']) && isnum($_GET['rowstart']) && $_GET['rowstart'] <= $max_rows ? $_GET['rowstart'] : 0;
-		
-		if ($max_rows != 0) {
-			
-			$result = dbquery("SELECT * FROM ".DB_FIGURE_USERFIGURES." WHERE figure_userfigures_user_id='".$userdata['user_id']." LIMIT ".$_GET['rowstart'].",".$asettings['figure_per_page']);
-			echo $result;
-			$numrows = dbrows($result);
-			$info['figure_rows'] = $numrows;
-			$info['page_nav'] = $max_rows > $asettings['figure_per_page'] ? makepagenav($_GET['rowstart'], $asettings['figure_per_page'], $max_rows, 3, INFUSIONS."figurelib/mycollection.php?&amp;") : 0;
-			echo $info['page_nav'] ? "<div class='text-right'>".$info['page_nav']."</div>" : '';
-		}
-
-print_p("Max rows found - $max_rows ");
-print_p("Item per page ".$asettings['figure_per_page']);
-		
 
 require_once THEMES."templates/footer.php";
