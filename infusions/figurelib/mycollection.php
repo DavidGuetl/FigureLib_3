@@ -16,6 +16,8 @@ require_once THEMES."templates/header.php";
 require_once INCLUDES."infusions_include.php";
 if (!db_exists(DB_FIGURE_ITEMS)) { redirect(BASEDIR."error.php?code=404"); }
 
+	$fil_settings = get_settings("figurelib"); 
+
 if (iMEMBER) {
 
 // GET GLOBAL VARIABLES
@@ -42,8 +44,8 @@ $locale['mc_0008']= " figures in your collection!";
 $locale['mc_0009']= "Name of your last figure: ";
 $locale['mc_0010']= "You have no figures";
 $locale['mc_0011']= "This feature is only available for registered members. Please Sign up ";
-$locale['mc_0012']= "HERE";
-
+$locale['mc_0012']= "HERE";		
+			
 			//echo "<div class='well clearfix'>\n";
 			//echo "<strong>".$locale['mc_0001']."</strong><br>";
 			//echo "</div>\n";
@@ -295,8 +297,31 @@ global $userdata;
 	echo $locale['mc_0011'];
 	echo "<a href='".BASEDIR."register.php'>".$locale['mc_0012']."</a>";
 
-	closeside();	
+	closeside();
+
+
+
 }
 closetable();
+
+//nav
+	 $fil_settings = get_settings("figurelib"); 
+		$max_rows = dbcount("(figure_userfigures_id)", DB_FIGURE_USERFIGURES, "figure_userfigures_user_id='".$userdata['user_id']."'");	
+
+		$_GET['rowstart'] = isset($_GET['rowstart']) && isnum($_GET['rowstart']) && $_GET['rowstart'] <= $max_rows ? $_GET['rowstart'] : 0;
+		
+		if ($max_rows != 0) {
+			
+			$result = dbquery("SELECT * FROM ".DB_FIGURE_USERFIGURES." WHERE figure_userfigures_user_id='".$userdata['user_id']." LIMIT ".$_GET['rowstart'].",".$asettings['figure_per_page']);
+			echo $result;
+			$numrows = dbrows($result);
+			$info['figure_rows'] = $numrows;
+			$info['page_nav'] = $max_rows > $asettings['figure_per_page'] ? makepagenav($_GET['rowstart'], $asettings['figure_per_page'], $max_rows, 3, INFUSIONS."figurelib/mycollection.php?&amp;") : 0;
+			echo $info['page_nav'] ? "<div class='text-right'>".$info['page_nav']."</div>" : '';
+		}
+
+print_p("Max rows found - $max_rows ");
+print_p("Item per page ".$asettings['figure_per_page']);
+		
 
 require_once THEMES."templates/footer.php";
