@@ -91,7 +91,7 @@ global $settings;
 	
 	echo "<span class='small'><strong>Views: </strong>".$data['figure']['views']."</span><br>\n";
 						
-	$count = dbcount("(figure_userfigures_id)", DB_FIGURE_USERFIGURES, "figure_userfigures_user_id='".$data['figure_id']."'");	
+	$count = dbcount("(figure_userfigures_id)", DB_FIGURE_USERFIGURES, "figure_userfigures_figure_id='".$data['figure_id']."'");	
 	echo "<span class='small'><strong>User Count: </strong>".$count."</span><br>";						
 	
 	$comments = dbcount("(comment_id)", DB_COMMENTS, "comment_type='FI' AND comment_item_id='".$data['figure_id']."'");
