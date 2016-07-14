@@ -72,7 +72,7 @@ if (isset($_GET['figure_id']) && isnum($_GET['figure_id'])) {
 
 	
 	$res = 0;
-	$data = dbarray(dbquery("SELECT * FROM ".DB_FIGURE_ITEMS." WHERE figure_id='".intval($_GET['figure_id'])."'"));
+	$data = dbarray(dbquery("SELECT * FROM ".DB_FIGURE_ITEMS." WHERE figure_id='".intval($_GET['figure_id'])."' AND figure_freigabe = 1"));
 
 	if (checkgroup($data['figure_visibility'])) {
 		$res = 1;
@@ -95,8 +95,18 @@ if (isset($_GET['figure_id']) && isnum($_GET['figure_id'])) {
 	$info = array();
 	$info['item'] = array();
 
-	$result = dbquery("SELECT figure_cat_name, figure_cat_sorting FROM
-	".DB_FIGURE_CATS." ".(multilang_table("FI") ? "WHERE figure_cat_language='".LANGUAGE."' AND" : "WHERE")." figure_cat_id='".intval($_GET['figure_cat_id'])."'");
+$result = dbquery("
+  SELECT
+    f.figure_cat,
+    f.figure_freigabe,
+    fc.figure_cat_id,
+    fc.figure_cat_name,
+	fc.figure_cat_sorting 
+  FROM ".DB_FIGURE_ITEMS." f
+  LEFT JOIN ".DB_FIGURE_CATS." fc ON fc.figure_cat_id=f.figure_cat
+  WHERE figure_freigabe=1
+  AND figure_cat=".intval($_GET['figure_cat_id'])."
+");	
 
 	if (dbrows($result) != 0) {
 		$cdata = dbarray($result);
@@ -104,7 +114,7 @@ if (isset($_GET['figure_id']) && isnum($_GET['figure_id'])) {
 		add_to_title($locale['global_201'].$cdata['figure_cat_name']);
 		figure_cat_breadcrumbs($figure_cat_index);
 		add_to_meta("description", $cdata['figure_cat_name']);
-		$max_rows = dbcount("(figure_id)", DB_FIGURE_ITEMS, "figure_cat='".$_GET['figure_cat_id']."' AND ".groupaccess('figure_visibility'));
+		$max_rows = dbcount("(figure_id)", DB_FIGURE_ITEMS, "figure_cat='".$_GET['figure_cat_id']."' AND figure_freigabe=1 AND ".groupaccess('figure_visibility'));
 		$_GET['rowstart'] = isset($_GET['rowstart']) && isnum($_GET['rowstart']) && $_GET['rowstart'] <= $max_rows ? $_GET['rowstart'] : 0;
 		if ($max_rows != 0) {
 
@@ -113,6 +123,7 @@ if (isset($_GET['figure_id']) && isnum($_GET['figure_id'])) {
 		$result = dbquery("
 				SELECT figure_id, 
 					f.figure_title, 
+					f.figure_freigabe,
 					f.figure_description, 
 					f.figure_datestamp, 
 					f.figure_clickcount,
@@ -186,14 +197,16 @@ if (isset($_GET['figure_id']) && isnum($_GET['figure_id'])) {
 
     $result = dbquery("
 			SELECT 
+				  f.figure_cat,
+				  f.figure_visibility,
 				  fc.figure_cat_id, 
 				  fc.figure_cat_name, 
 				  fc.figure_cat_description, 
 				  count(f.figure_id) 'figure_anzahl'
 			FROM ".DB_FIGURE_CATS." fc
-			LEFT JOIN ".DB_FIGURE_ITEMS." f on f.figure_cat = fc.figure_cat_id and ".groupaccess("f.figure_visibility")." and f.figure_freigabe = 1
+			LEFT JOIN ".DB_FIGURE_ITEMS." f on f.figure_cat = fc.figure_cat_id and ".groupaccess("figure_visibility")." AND figure_freigabe = 1
 			".(multilang_table("FI") ? "WHERE fc.figure_cat_language='".LANGUAGE."'" : "")."
-			GROUP BY fc.figure_cat_id
+			GROUP BY figure_cat_id
 			ORDER BY figure_cat_name
 			");
 
