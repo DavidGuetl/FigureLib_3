@@ -73,13 +73,13 @@ global $settings;
 				WHERE figure_images_figure_id='".$data['figure_id']."' LIMIT 0,1");
  
 			   // Fragen, ob überhaupt ein Ergebnis kommt
-				if(dbrows($result2)){
+	if(dbrows($result2)){
      
 				while($data2 = dbarray($result2)){
 	
-	echo "<center><a href='".$data['figure']['link']."'><img src='".($data2['figure_images_thumb'] ? THUMBS_FIGURES.$data2['figure_images_thumb'] : INFUSIONS.$inf_folder."/images/default.png")."' alt='".trimlink($data['figure_title'],100)."' title='".trimlink($data['figure_title'],50)."' style='border:0px;max-height:120px;max-width:120px' />";
+					echo "<center><a href='".$data['figure']['link']."'><img src='".($data2['figure_images_thumb'] ? THUMBS_FIGURES.$data2['figure_images_thumb'] : INFUSIONS.$inf_folder."/images/default.png")."' alt='".trimlink($data['figure_title'],100)."' title='".trimlink($data['figure_title'],50)."' style='border:0px;max-height:120px;max-width:120px' />";
 	
-	}
+				}
 	}
 	echo "<br />\n";						
 	
@@ -108,7 +108,6 @@ global $settings;
 				$rating = ($drating['count_votes'] > 0 ? str_repeat("<img src='".INFUSIONS."figurelib/images/starsmall.png'>",ceil($drating['sum_rating']/$drating['count_votes'])) : "-");
 			echo "<span class='small'><strong>Rating: </strong>".$rating."</span>\n";
 	
-
 	echo "</td>\n";
 	echo "</tr>\n</table>\n";
 
