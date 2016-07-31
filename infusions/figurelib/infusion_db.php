@@ -5,7 +5,7 @@
 | https://www.php-fusion.co.uk/
 +--------------------------------------------------------+
 | Filename: infusions_db.php
-| Author: Catzenjaeger
+| Author: Catzenjaeger, Frederick MC Chan
 | URL: www.aliencollectors.com
 | E-Mail: admin@aliencollectors.com
 +--------------------------------------------------------+

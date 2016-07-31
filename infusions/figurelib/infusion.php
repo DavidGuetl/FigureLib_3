@@ -5,11 +5,7 @@
 | http://www.php-fusion.co.uk/
 +--------------------------------------------------------+
 | Filename: infusion.php
-| Author: Khalid545
-| URL: http://khalidb.co.cc/
-| E-Mail: khalidd545@gmail.com
-| 
-| Modification: Catzenjaeger
+| Author: Catzenjaeger, Frederick MC Chan
 | URL: www.aliencollectors.com
 | E-Mail: admin@aliencollectors.com
 +--------------------------------------------------------+
@@ -28,11 +24,11 @@ $locale = fusion_get_locale("", FIGURELIB_LOCALE);
 $inf_title = $locale['INF_TITLE'];
 $inf_description = $locale['INF_DESC'];
 $inf_version = "1.00";
-$inf_developer = "Catzenjaeger";
+$inf_developer = "Catzenjaeger, Frederick MC Chan";
 $inf_email = "info@aliencollectors.com";
 $inf_weburl = "http://www.AlienCollectors.com";
 $inf_folder = "figurelib";
-$inf_image = "figurelib.png";
+$inf_image = "icon.png";
 //$inf_image = "figure_ico.png";
 // Position these links under Content Administration
 $inf_adminpanel[] = array(
@@ -59,59 +55,59 @@ $inf_newtable[] = DB_FIGURE_CATS." (
 ) ENGINE=MyISAM DEFAULT CHARSET=UTF8 COLLATE=utf8_unicode_ci";
 /////////////////////////////////////////////////////////////////////////////////
 $inf_newtable[] = DB_FIGURE_ITEMS." (
-		figure_id mediumint(8) unsigned NOT NULL AUTO_INCREMENT,
-		figure_freigabe tinyint(1) unsigned NOT NULL DEFAULT '0',
-		figure_submitter varchar(200) NOT NULL DEFAULT '',
-		figure_agb tinyint(1) unsigned NOT NULL DEFAULT '0',
-		figure_cat mediumint(8) unsigned NOT NULL DEFAULT '0',
-		figure_title varchar(200) NOT NULL DEFAULT '',
-		figure_variant varchar(200) NOT NULL DEFAULT '',
-		figure_manufacturer varchar(200) NOT NULL DEFAULT '',
-		figure_artists varchar(400) NOT NULL DEFAULT '',
-		figure_country varchar(200) NOT NULL DEFAULT '',
-		figure_brand varchar(200) NOT NULL DEFAULT '',
-		figure_series varchar(200) NOT NULL DEFAULT '',
-		figure_scale varchar(200) NOT NULL DEFAULT '',
-		figure_weight varchar(200) NOT NULL DEFAULT '',
-		figure_height varchar(200) NOT NULL DEFAULT '',
-		figure_width varchar(200) NOT NULL DEFAULT '',
-		figure_depth varchar(200) NOT NULL DEFAULT '',
-		figure_material varchar(200) NOT NULL DEFAULT '',
-		figure_poa varchar(200) NOT NULL DEFAULT '',
-		figure_packaging varchar(200) NOT NULL DEFAULT '',
-		figure_pubdate varchar(200) NOT NULL DEFAULT '',
+		figure_id MEDIUMINT(8) UNSIGNED NOT NULL AUTO_INCREMENT,
+		figure_freigabe TINYINT(1) UNSIGNED NOT NULL DEFAULT '0',
+		figure_submitter VARCHAR(200) NOT NULL DEFAULT '',
+		figure_agb TINYINT(1) UNSIGNED NOT NULL DEFAULT '0',
+		figure_cat MEDIUMINT(8) UNSIGNED NOT NULL DEFAULT '0',
+		figure_title VARCHAR(200) NOT NULL DEFAULT '',
+		figure_variant VARCHAR(200) NOT NULL DEFAULT '',
+		figure_manufacturer VARCHAR(200) NOT NULL DEFAULT '',
+		figure_artists VARCHAR(400) NOT NULL DEFAULT '',
+		figure_country VARCHAR(200) NOT NULL DEFAULT '',
+		figure_brand VARCHAR(200) NOT NULL DEFAULT '',
+		figure_series VARCHAR(200) NOT NULL DEFAULT '',
+		figure_scale VARCHAR(200) NOT NULL DEFAULT '',
+		figure_weight VARCHAR(200) NOT NULL DEFAULT '',
+		figure_height VARCHAR(200) NOT NULL DEFAULT '',
+		figure_width VARCHAR(200) NOT NULL DEFAULT '',
+		figure_depth VARCHAR(200) NOT NULL DEFAULT '',
+		figure_material VARCHAR(200) NOT NULL DEFAULT '',
+		figure_poa VARCHAR(200) NOT NULL DEFAULT '',
+		figure_packaging VARCHAR(200) NOT NULL DEFAULT '',
+		figure_pubdate VARCHAR(200) NOT NULL DEFAULT '',
 		figure_retailprice decimal(8,2) NOT NULL,
 		figure_usedprice decimal(8,2) NOT NULL,
-		figure_limitation varchar(200) NOT NULL DEFAULT '',
+		figure_limitation VARCHAR(200) NOT NULL DEFAULT '',
 		figure_editionsize decimal(8) NOT NULL,
-		figure_forum_url varchar(200) NOT NULL DEFAULT '',
-		figure_affiliate_1 varchar(500) NOT NULL DEFAULT '',
-		figure_affiliate_2 varchar(500) NOT NULL DEFAULT '',
-		figure_affiliate_3 varchar(500) NOT NULL DEFAULT '',
-		figure_affiliate_4 varchar(500) NOT NULL DEFAULT '',
-		figure_affiliate_5 varchar(500) NOT NULL DEFAULT '',
-		figure_affiliate_6 varchar(500) NOT NULL DEFAULT '',
-		figure_affiliate_7 varchar(500) NOT NULL DEFAULT '',
-		figure_affiliate_8 varchar(500) NOT NULL DEFAULT '',
-		figure_affiliate_9 varchar(500) NOT NULL DEFAULT '',
-		figure_affiliate_10 varchar(500) NOT NULL DEFAULT '',
-		figure_eshop varchar(400) NOT NULL DEFAULT '',
-		figure_amazon_de varchar(400) NOT NULL DEFAULT '',
-		figure_amazon_uk varchar(400) NOT NULL DEFAULT '',
-		figure_amazon_fr varchar(400) NOT NULL DEFAULT '',
-		figure_amazon_es varchar(400) NOT NULL DEFAULT '',
-		figure_amazon_it varchar(400) NOT NULL DEFAULT '',
-		figure_amazon_jp varchar(400) NOT NULL DEFAULT '',
-		figure_amazon_com varchar(400) NOT NULL DEFAULT '',
-		figure_amazon_ca varchar(400) NOT NULL DEFAULT '',
-		figure_accessories text NOT NULL,
-		figure_description text NOT NULL,
+		figure_forum_url VARCHAR(200) NOT NULL DEFAULT '',
+		figure_affiliate_1 VARCHAR(500) NOT NULL DEFAULT '',
+		figure_affiliate_2 VARCHAR(500) NOT NULL DEFAULT '',
+		figure_affiliate_3 VARCHAR(500) NOT NULL DEFAULT '',
+		figure_affiliate_4 VARCHAR(500) NOT NULL DEFAULT '',
+		figure_affiliate_5 VARCHAR(500) NOT NULL DEFAULT '',
+		figure_affiliate_6 VARCHAR(500) NOT NULL DEFAULT '',
+		figure_affiliate_7 VARCHAR(500) NOT NULL DEFAULT '',
+		figure_affiliate_8 VARCHAR(500) NOT NULL DEFAULT '',
+		figure_affiliate_9 VARCHAR(500) NOT NULL DEFAULT '',
+		figure_affiliate_10 VARCHAR(500) NOT NULL DEFAULT '',
+		figure_eshop VARCHAR(400) NOT NULL DEFAULT '',
+		figure_amazon_de VARCHAR(400) NOT NULL DEFAULT '',
+		figure_amazon_uk VARCHAR(400) NOT NULL DEFAULT '',
+		figure_amazon_fr VARCHAR(400) NOT NULL DEFAULT '',
+		figure_amazon_es VARCHAR(400) NOT NULL DEFAULT '',
+		figure_amazon_it VARCHAR(400) NOT NULL DEFAULT '',
+		figure_amazon_jp VARCHAR(400) NOT NULL DEFAULT '',
+		figure_amazon_com VARCHAR(400) NOT NULL DEFAULT '',
+		figure_amazon_ca VARCHAR(400) NOT NULL DEFAULT '',
+		figure_accessories TEXT NOT NULL,
+		figure_description TEXT NOT NULL,
 		figure_visibility TINYINT(4) NOT NULL DEFAULT '0',		
-		figure_datestamp int(10) unsigned NOT NULL DEFAULT '0',
-		figure_clickcount int(10) unsigned NOT NULL DEFAULT '0',
-		figure_allow_comments tinyint(1) unsigned NOT NULL DEFAULT '1',
-		figure_allow_ratings tinyint(1) unsigned NOT NULL DEFAULT '1',
-		figure_sorting varchar(50) NOT NULL DEFAULT '',
+		figure_datestamp int(10) UNSIGNED NOT NULL DEFAULT '0',
+		figure_clickcount int(10) UNSIGNED NOT NULL DEFAULT '0',
+		figure_allow_comments TINYINT(1) UNSIGNED NOT NULL DEFAULT '1',
+		figure_allow_ratings TINYINT(1) UNSIGNED NOT NULL DEFAULT '1',
+		figure_sorting VARCHAR(50) NOT NULL DEFAULT '',
 		figure_language VARCHAR(50) NOT NULL DEFAULT '".LANGUAGE."',
 		KEY figure_datestamp (figure_datestamp),
 		KEY figure_clickcount (figure_clickcount),
@@ -120,118 +116,118 @@ $inf_newtable[] = DB_FIGURE_ITEMS." (
 /////////////////////////////////////////////////////////////////////////////////	
 /*
 $inf_newtable[] = DB_FIGURE_SETTINGS." (
-		settings_name varchar(200) NOT NULL DEFAULT '',
-		settings_value text NOT NULL
-		settings_inf text NOT NULL
+		settings_name VARCHAR(200) NOT NULL DEFAULT '',
+		settings_value TEXT NOT NULL
+		settings_inf TEXT NOT NULL
 	) ENGINE=MyISAM DEFAULT CHARSET=UTF8 COLLATE=utf8_unicode_ci";
 */	
 /////////////////////////////////////////////////////////////////////////////////
 $inf_newtable[] = DB_FIGURE_MANUFACTURERS." (
-		figure_manufacturer_id mediumint(8) unsigned NOT NULL AUTO_INCREMENT,
-		figure_manufacturer_name varchar(100) NOT NULL DEFAULT '',
-		figure_manufacturer_description text NOT NULL,
+		figure_manufacturer_id MEDIUMINT(8) UNSIGNED NOT NULL AUTO_INCREMENT,
+		figure_manufacturer_name VARCHAR(100) NOT NULL DEFAULT '',
+		figure_manufacturer_description TEXT NOT NULL,
 		figure_manufacturer_parent MEDIUMINT(8) UNSIGNED NOT NULL DEFAULT '0',
-		figure_manufacturer_sorting varchar(50) NOT NULL DEFAULT '',
+		figure_manufacturer_sorting VARCHAR(50) NOT NULL DEFAULT '',
 		figure_manufacturer_language VARCHAR(50) NOT NULL DEFAULT '".LANGUAGE."',
 		PRIMARY KEY (figure_manufacturer_id)
 	) ENGINE=MyISAM DEFAULT CHARSET=UTF8 COLLATE=utf8_unicode_ci";
 /////////////////////////////////////////////////////////////////////////////////
 $inf_newtable[] = DB_FIGURE_BRANDS." (
-		figure_brand_id mediumint(8) unsigned NOT NULL AUTO_INCREMENT,
-		figure_brand_name varchar(100) NOT NULL DEFAULT '',
-		figure_brand_description text NOT NULL,
+		figure_brand_id MEDIUMINT(8) UNSIGNED NOT NULL AUTO_INCREMENT,
+		figure_brand_name VARCHAR(100) NOT NULL DEFAULT '',
+		figure_brand_description TEXT NOT NULL,
 		figure_brand_parent MEDIUMINT(8) UNSIGNED NOT NULL DEFAULT '0',
-		figure_brand_sorting varchar(50) NOT NULL DEFAULT '',
+		figure_brand_sorting VARCHAR(50) NOT NULL DEFAULT '',
 		figure_brand_language VARCHAR(50) NOT NULL DEFAULT '".LANGUAGE."',
 		PRIMARY KEY (figure_brand_id)
 	) ENGINE=MyISAM DEFAULT CHARSET=UTF8 COLLATE=utf8_unicode_ci";
 /////////////////////////////////////////////////////////////////////////////////
 $inf_newtable[] = DB_FIGURE_MATERIALS." (
-		figure_material_id mediumint(8) unsigned NOT NULL AUTO_INCREMENT,
-		figure_material_name varchar(100) NOT NULL DEFAULT '',
-		figure_material_description text NOT NULL,
+		figure_material_id MEDIUMINT(8) UNSIGNED NOT NULL AUTO_INCREMENT,
+		figure_material_name VARCHAR(100) NOT NULL DEFAULT '',
+		figure_material_description TEXT NOT NULL,
 		figure_material_parent MEDIUMINT(8) UNSIGNED NOT NULL DEFAULT '0',
-		figure_material_sorting varchar(50) NOT NULL DEFAULT '',
+		figure_material_sorting VARCHAR(50) NOT NULL DEFAULT '',
 		figure_material_language VARCHAR(50) NOT NULL DEFAULT '".LANGUAGE."',
 		PRIMARY KEY (figure_material_id)
 	) ENGINE=MyISAM DEFAULT CHARSET=UTF8 COLLATE=utf8_unicode_ci";
 /////////////////////////////////////////////////////////////////////////////////
 $inf_newtable[] = DB_FIGURE_SCALES." (
-		figure_scale_id mediumint(8) unsigned NOT NULL AUTO_INCREMENT,
-		figure_scale_name varchar(100) NOT NULL DEFAULT '',
-		figure_scale_description text NOT NULL,
+		figure_scale_id MEDIUMINT(8) UNSIGNED NOT NULL AUTO_INCREMENT,
+		figure_scale_name VARCHAR(100) NOT NULL DEFAULT '',
+		figure_scale_description TEXT NOT NULL,
 		figure_scale_parent MEDIUMINT(8) UNSIGNED NOT NULL DEFAULT '0',
-		figure_scale_sorting varchar(50) NOT NULL DEFAULT '',
+		figure_scale_sorting VARCHAR(50) NOT NULL DEFAULT '',
 		figure_scale_language VARCHAR(50) NOT NULL DEFAULT '".LANGUAGE."',
 		PRIMARY KEY (figure_scale_id)
 	) ENGINE=MyISAM DEFAULT CHARSET=UTF8 COLLATE=utf8_unicode_ci";
 /////////////////////////////////////////////////////////////////////////////////
 $inf_newtable[] = DB_FIGURE_POAS." (
-		figure_poa_id mediumint(8) unsigned NOT NULL AUTO_INCREMENT,
-		figure_poa_name varchar(100) NOT NULL DEFAULT '',
-		figure_poa_description text NOT NULL,
+		figure_poa_id MEDIUMINT(8) UNSIGNED NOT NULL AUTO_INCREMENT,
+		figure_poa_name VARCHAR(100) NOT NULL DEFAULT '',
+		figure_poa_description TEXT NOT NULL,
 		figure_poa_parent MEDIUMINT(8) UNSIGNED NOT NULL DEFAULT '0',
-		figure_poa_sorting varchar(50) NOT NULL DEFAULT '',
+		figure_poa_sorting VARCHAR(50) NOT NULL DEFAULT '',
 		figure_poa_language VARCHAR(50) NOT NULL DEFAULT '".LANGUAGE."',
 		PRIMARY KEY (figure_poa_id)
 	) ENGINE=MyISAM DEFAULT CHARSET=UTF8 COLLATE=utf8_unicode_ci";
 /////////////////////////////////////////////////////////////////////////////////
 $inf_newtable[] = DB_FIGURE_PACKAGINGS." (
-		figure_packaging_id mediumint(8) unsigned NOT NULL AUTO_INCREMENT,
-		figure_packaging_name varchar(100) NOT NULL DEFAULT '',
-		figure_packaging_description text NOT NULL,
+		figure_packaging_id MEDIUMINT(8) UNSIGNED NOT NULL AUTO_INCREMENT,
+		figure_packaging_name VARCHAR(100) NOT NULL DEFAULT '',
+		figure_packaging_description TEXT NOT NULL,
 		figure_packaging_parent MEDIUMINT(8) UNSIGNED NOT NULL DEFAULT '0',
-		figure_packaging_sorting varchar(50) NOT NULL DEFAULT '',
+		figure_packaging_sorting VARCHAR(50) NOT NULL DEFAULT '',
 		figure_packaging_language VARCHAR(50) NOT NULL DEFAULT '".LANGUAGE."',
 		PRIMARY KEY (figure_packaging_id)
 	) ENGINE=MyISAM DEFAULT CHARSET=UTF8 COLLATE=utf8_unicode_ci";
 /////////////////////////////////////////////////////////////////////////////////
 $inf_newtable[] = DB_FIGURE_LIMITATIONS." (
-		figure_limitation_id mediumint(8) unsigned NOT NULL AUTO_INCREMENT,
-		figure_limitation_name varchar(100) NOT NULL DEFAULT '',
-		figure_limitation_description text NOT NULL,
+		figure_limitation_id MEDIUMINT(8) UNSIGNED NOT NULL AUTO_INCREMENT,
+		figure_limitation_name VARCHAR(100) NOT NULL DEFAULT '',
+		figure_limitation_description TEXT NOT NULL,
 		figure_limitation_parent MEDIUMINT(8) UNSIGNED NOT NULL DEFAULT '0',
-		figure_limitation_sorting varchar(50) NOT NULL DEFAULT '',
+		figure_limitation_sorting VARCHAR(50) NOT NULL DEFAULT '',
 		figure_limitation_language VARCHAR(50) NOT NULL DEFAULT '".LANGUAGE."',
 		PRIMARY KEY (figure_limitation_id)
 	) ENGINE=MyISAM DEFAULT CHARSET=UTF8 COLLATE=utf8_unicode_ci";
 /////////////////////////////////////////////////////////////////////////////////
 $inf_newtable[] = DB_FIGURE_MEASUREMENTS." (
-figure_measurements_id mediumint(8) unsigned NOT NULL AUTO_INCREMENT, 
-figure_measurements_inch varchar(100) NOT NULL DEFAULT '',
-figure_measurements_cm varchar(100) NOT NULL DEFAULT '',
-figure_measurements_description text NOT NULL,
+figure_measurements_id MEDIUMINT(8) UNSIGNED NOT NULL AUTO_INCREMENT, 
+figure_measurements_inch VARCHAR(100) NOT NULL DEFAULT '',
+figure_measurements_cm VARCHAR(100) NOT NULL DEFAULT '',
+figure_measurements_description TEXT NOT NULL,
 figure_measurements_parent MEDIUMINT(8) UNSIGNED NOT NULL DEFAULT '0',
-figure_measurements_sorting varchar(50) NOT NULL DEFAULT '',
+figure_measurements_sorting VARCHAR(50) NOT NULL DEFAULT '',
 figure_measurements_language VARCHAR(50) NOT NULL DEFAULT '".LANGUAGE."',
 PRIMARY KEY (figure_measurements_id)
 	) ENGINE=MyISAM DEFAULT CHARSET=UTF8 COLLATE=utf8_unicode_ci";
 /////////////////////////////////////////////////////////////////////////////////
 $inf_newtable[] = DB_FIGURE_USERFIGURES." (
-figure_userfigures_id mediumint(8) unsigned NOT NULL AUTO_INCREMENT, 
-figure_userfigures_figure_id varchar(100) NOT NULL DEFAULT '',
-figure_userfigures_user_id varchar(100) NOT NULL DEFAULT '',
-figure_userfigures_sorting varchar(50) NOT NULL DEFAULT '',
+figure_userfigures_id MEDIUMINT(8) UNSIGNED NOT NULL AUTO_INCREMENT, 
+figure_userfigures_figure_id VARCHAR(100) NOT NULL DEFAULT '',
+figure_userfigures_user_id VARCHAR(100) NOT NULL DEFAULT '',
+figure_userfigures_sorting VARCHAR(50) NOT NULL DEFAULT '',
 figure_userfigures_language VARCHAR(50) NOT NULL DEFAULT '".LANGUAGE."',
 PRIMARY KEY (figure_userfigures_id)
 	) ENGINE=MyISAM DEFAULT CHARSET=UTF8 COLLATE=utf8_unicode_ci";
 /////////////////////////////////////////////////////////////////////////////////
 $inf_newtable[] = DB_FIGURE_IMAGES." (
-figure_images_image_id mediumint(8) unsigned NOT NULL AUTO_INCREMENT, 
-figure_images_figure_id varchar(100) NOT NULL DEFAULT '',
-figure_images_image varchar(100) NOT NULL DEFAULT '',
-figure_images_thumb varchar(100) NOT NULL DEFAULT '',
-figure_images_sorting varchar(50) NOT NULL DEFAULT '',
+figure_images_image_id MEDIUMINT(8) UNSIGNED NOT NULL AUTO_INCREMENT, 
+figure_images_figure_id VARCHAR(100) NOT NULL DEFAULT '',
+figure_images_image VARCHAR(100) NOT NULL DEFAULT '',
+figure_images_thumb VARCHAR(100) NOT NULL DEFAULT '',
+figure_images_sorting VARCHAR(50) NOT NULL DEFAULT '',
 figure_images_language VARCHAR(50) NOT NULL DEFAULT '".LANGUAGE."',
 PRIMARY KEY (figure_images_image_id)
 	) ENGINE=MyISAM DEFAULT CHARSET=UTF8 COLLATE=utf8_unicode_ci";
 /////////////////////////////////////////////////////////////////////////////////
 $inf_newtable[] = DB_FIGURE_YEARS." (
-figure_year_id mediumint(8) unsigned NOT NULL AUTO_INCREMENT, 
-figure_year varchar(100) NOT NULL DEFAULT '',
-figure_year_description text NOT NULL,
+figure_year_id MEDIUMINT(8) UNSIGNED NOT NULL AUTO_INCREMENT, 
+figure_year VARCHAR(100) NOT NULL DEFAULT '',
+figure_year_description TEXT NOT NULL,
 figure_year_parent MEDIUMINT(8) UNSIGNED NOT NULL DEFAULT '0',
-figure_year_sorting varchar(50) NOT NULL DEFAULT '',
+figure_year_sorting VARCHAR(50) NOT NULL DEFAULT '',
 figure_year_language VARCHAR(50) NOT NULL DEFAULT '".LANGUAGE."',
 PRIMARY KEY (figure_year_id)
 	) ENGINE=MyISAM DEFAULT CHARSET=UTF8 COLLATE=utf8_unicode_ci";

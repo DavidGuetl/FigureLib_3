@@ -4,7 +4,7 @@ $locale['comma'] = ",";
 
 // infusion.php
 $locale['INF_TITLE'] = "Figures Library";
-$locale['INF_DESC'] = "";
+$locale['INF_DESC'] = "Figure Collection System";
 $locale['INF_ADMIN'] = "Figures Library Admin";
 $locale['clickcount'] = "Views";
 $locale['new'] = "New";
@@ -251,6 +251,7 @@ $locale['figure_032'] = "Amazon CA";
 $locale['figure_032a'] = "Amazon CA";
 $locale['figure_033'] = "No Offers";
 $locale['figure_034'] = "Release (Freigabe)";
+$locale['figure_035'] = "Max. filesize %s / Allowed filetypes GIF, JPEG or PNG.";
 
 // figure_items.php
 $locale['figure_100'] = "Add Figure";

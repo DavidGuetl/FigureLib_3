@@ -70,6 +70,7 @@ $figure_edit = isset($_GET['action']) && $_GET['action'] == "edit" && isset($_GE
 $figureCat_edit = isset($_GET['action']) && $_GET['action'] == "edit" && isset($_GET['cat_id']) && isnum($_GET['cat_id']) ? TRUE : FALSE;
 $figureMan_edit = isset($_GET['action']) && $_GET['action'] == "edit" && isset($_GET['man_id']) && isnum($_GET['man_id']) ? TRUE : FALSE;
 $figureBrand_edit = isset($_GET['action']) && $_GET['action'] == "edit" && isset($_GET['brand_id']) && isnum($_GET['brand_id']) ? TRUE : FALSE;
+$figure_id = ($figure_edit) ? intval($_GET['figure_id']) : 0;
 
 // TAB MENÜ OBERPUNKTE
 		// ['filt_0003'] = "Current Figures";
