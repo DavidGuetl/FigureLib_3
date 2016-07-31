@@ -90,8 +90,10 @@ http://www.kvisoft.com/tutorials/html5-image-slideshow.html
 			
 echo "<aside class='list-group-item m-b-20'>\n";
 
-openside();		
-global $settings;
+openside('');
+
+//global $settings; // dont do this
+$settings = fusion_get_settings(); // do like this to prevent injection
 
 
 /* BEGIN
@@ -136,7 +138,7 @@ echo "</div>\n\n";
 | Release : v1.3 [24 Jan 2013] - PHP-Fusion v7.02
 | Author  : AT0m
 */
-closeside;
+closeside();
 										
 // ####### SOCIAL_SHARING   ##################################################		
 
