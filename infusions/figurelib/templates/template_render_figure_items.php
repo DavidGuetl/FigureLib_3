@@ -130,7 +130,8 @@ echo "<div align='center'>\n";
 echo "<embed src='".INFUSIONS."figurelib/FlashSlide.swf' ";
 echo "type='application/x-shockwave-flash' pluginspage='http://www.macromedia.com/go/getflashplayer' ";
 echo "quality='high' allowscriptaccess='always' allowFullScreen='true' wmode='transparent' ";
-echo "width='100%' height='100%' align='middle'></embed>\n";
+//echo "width='100%' height='100%' align='middle'></embed>\n";
+echo "width='100%' height='400px' align='middle'></embed>\n";
 echo "</div>\n\n";
 
 /* END
@@ -731,13 +732,11 @@ $fil_settings = get_settings("figurelib");
 
 // ########################################
 				
-			}
-		}	
-	echo "</div>";
-	echo "</aside>\n";	
+
 		
 //+++++++++++++++++++++++++++++++++++++++
 // LINK FÜR ADMINS ZUM BEARBETEN DER FIGUR
+openside('');	
 if (iADMIN || iSUPERADMIN) {
 	global $aidlink;
 	global $settings;
@@ -751,7 +750,11 @@ if (iADMIN || iSUPERADMIN) {
 //echo "<a class='m-r-10' title='".$locale['news_0002']."' href='".BASEDIR."print.php?type=F&amp;item_id=".$data['figure_id']."'><i class='entypo print'></i></a>";
 //+++++++++++++++++++++++++++++++++++++++
 		
-
+			}
+		}	
+	
+	echo "</div>";
+	echo "</aside>\n";	
 
 	}
 }	
