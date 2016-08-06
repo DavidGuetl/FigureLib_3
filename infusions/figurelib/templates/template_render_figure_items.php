@@ -633,7 +633,7 @@ if (iMEMBER) {
 				LEFT JOIN ".DB_USERS." fu ON fuf.figure_userfigures_user_id=fu.user_id	
 				WHERE figure_userfigures_figure_id='".$data['figure_id']."'
 				");	
-*/
+
 
         $resultufc = dbquery(
             "SELECT             
@@ -646,12 +646,30 @@ if (iMEMBER) {
             FROM ".DB_FIGURE_USERFIGURES." fuf
             INNER JOIN ".DB_USERS." fu ON fuf.figure_userfigures_user_id=fu.user_id  
             WHERE fuf.figure_userfigures_figure_id='".$data['figure_id']."'
-            AND fu.user_id='".$userdata['user_id']."' GROUP BY fu.user_id ORDER BY fu.figure_userfigures_figure_id DESC
+            AND fu.user_id='".$userdata['user_id']."' 
+			GROUP BY fu.user_id ORDER BY fu.figure_userfigures_figure_id DESC
             ");				
-		
+*/	
+        $resultufc = dbquery(
+            "SELECT             
+            fu.user_id, 
+            fu.user_name, 
+            fu.user_status, 
+            fu.user_avatar, 
+            fuf.figure_userfigures_figure_id,
+            fuf.figure_userfigures_user_id          
+            FROM ".DB_FIGURE_USERFIGURES." fuf
+            INNER JOIN ".DB_USERS." fu ON fuf.figure_userfigures_user_id=fu.user_id  
+            WHERE fuf.figure_userfigures_figure_id='".$data['figure_id']."'
+            AND fu.user_id='".$userdata['user_id']."' 
+			GROUP BY fu.user_id 
+			
+            ");	
+
+	
 		if (dbrows($resultufc) != 0) {
 			
-				echo "<hr>";
+				//echo "<hr>";
 				echo $locale['userfigure_003'];		
 				echo "<p>";	
 				
@@ -665,7 +683,7 @@ if (iMEMBER) {
 
 		} else {
 				
-				echo "<hr>";
+				//echo "<hr>";
 				echo $locale['userfigure_004'];	
 				echo "<p>";				
 		}	
