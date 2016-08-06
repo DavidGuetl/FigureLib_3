@@ -521,6 +521,7 @@ if (iMEMBER) {
 				AND user_id='".$userdata['user_id']."'
 				");
 				
+				
 				$rows = dbrows($resultuf);
 	
 			if ($rows > 0) { // FIGUR VORHANDEN
@@ -620,7 +621,7 @@ if (iMEMBER) {
 	}
 // ########### 	folgende User haben die Figure  ##################################				
 				
-		$resultufc = dbquery(
+/*		$resultufc = dbquery(
 				"SELECT 			
 					fu.user_id, 
 					fu.user_name, 
@@ -631,7 +632,22 @@ if (iMEMBER) {
 				FROM ".DB_FIGURE_USERFIGURES." fuf
 				LEFT JOIN ".DB_USERS." fu ON fuf.figure_userfigures_user_id=fu.user_id	
 				WHERE figure_userfigures_figure_id='".$data['figure_id']."'
-				");		
+				");	
+*/
+
+        $resultufc = dbquery(
+            "SELECT             
+            fu.user_id, 
+            fu.user_name, 
+            fu.user_status, 
+            fu.user_avatar, 
+            fuf.figure_userfigures_figure_id,
+            fuf.figure_userfigures_user_id          
+            FROM ".DB_FIGURE_USERFIGURES." fuf
+            INNER JOIN ".DB_USERS." fu ON fuf.figure_userfigures_user_id=fu.user_id  
+            WHERE fuf.figure_userfigures_figure_id='".$data['figure_id']."'
+            AND fu.user_id='".$userdata['user_id']."' GROUP BY fu.user_id ORDER BY fu.figure_userfigures_figure_id DESC
+            ");				
 		
 		if (dbrows($resultufc) != 0) {
 			
@@ -714,12 +730,13 @@ if (iMEMBER) {
 									
 				}				
 //++++++++++++++++++++++++++++++++++++++
+
 // RATING UND COMMENTS	
 $fil_settings = get_settings("figurelib");	
 		
 		if ($data['figure_allow_comments']) { 
 			echo "<div class='well clearfix'>\n";
-			//echo "<strong>COMMENTS</strong><br>";
+			echo "<strong>COMMENTS</strong><br>";
 			echo "</div>\n";
 			showcomments("FI", DB_FIGURE_ITEMS, "figure_id", $_GET['figure_id'], INFUSIONS."figurelib/figures.php?figure_id=".$_GET['figure_id']);
 		}
@@ -730,32 +747,36 @@ $fil_settings = get_settings("figurelib");
 			showratings("FI", $_GET['figure_id'], INFUSIONS."figurelib/figures.php?figure_id=".$_GET['figure_id']);
 		}
 
-// ########################################
-				
+			}
+		}	
+//echo "</div>";
+	
 
-		
 //+++++++++++++++++++++++++++++++++++++++
 // LINK FÜR ADMINS ZUM BEARBETEN DER FIGUR
-openside('');	
+
 if (iADMIN || iSUPERADMIN) {
+echo "<hr>\n";
+echo "<div class='well clearfix'>\n";
+echo "<strong>ADMIN OPTIONS</strong><br>";
+echo "</div>\n";		
 	global $aidlink;
 	global $settings;
 			// ['cifg_0005'] = "Edit";
 			echo "<a class='btn btn-default btn-sm' href='".INFUSIONS."figurelib/admin.php".$aidlink."&amp;section=figurelib_form&amp;action=edit&amp;figure_id=".$_GET['figure_id']."'>".$locale['cifg_0005a']."</a><p>"; 
-}			
+		
+}		
 //+++++++++++++++++++++++++++++++++++++++
 // PRINT BUTTON
 //echo "<a title='".$locale['news_0002']."' href='".$info['print_link']."'><i class='entypo print'></i></a>";
 //echo "<a class='m-r-10' title='".$locale['news_0002']."' href='".$info['print_link']."'><i class='entypo print'></i></a>";
 //echo "<a class='m-r-10' title='".$locale['news_0002']."' href='".BASEDIR."print.php?type=F&amp;item_id=".$data['figure_id']."'><i class='entypo print'></i></a>";
 //+++++++++++++++++++++++++++++++++++++++
-		
-			}
-		}	
-	
-	echo "</div>";
-	echo "</aside>\n";	
+
+echo "</aside>\n";
 
 	}
-}	
+	
+}
+	
 
