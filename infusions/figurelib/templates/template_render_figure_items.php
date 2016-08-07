@@ -23,7 +23,6 @@ require_once INCLUDES."infusions_include.php";
 if (!defined("IN_FUSION")) { die("Access Denied"); }
 include INFUSIONS."figurelib/infusion_db.php";
 
-//global $settings, $main_style, $aidlink; $userdata; $locale; add_handler("theme_output");
 global $userdata;
 
 // ******************************************************************************************			
@@ -33,32 +32,31 @@ if (!function_exists('render_figure_items')) {
 	function render_figure_items($info) {
 		global $locale;
 		echo render_breadcrumbs();
-
 	
 $result = dbquery(
 			"SELECT 
-			f.*,
-			fc.figure_cat_id, 
-			fc.figure_cat_name, 		
-			fu.user_id, 
-			fu.user_name, 
-			fu.user_status, 
-			fu.user_avatar, 
-			fman.figure_manufacturer_id,
-			fman.figure_manufacturer_name, 
-			fb.figure_brand_name, 
-			fy.figure_year_id, 
-			fy.figure_year, 
-			fs.figure_scale_id, 
-			fs.figure_scale_name, 
-			fl.figure_limitation_id, 
-			fl.figure_limitation_name,
-			fpoa.figure_poa_id,
-			fpoa.figure_poa_name,
-			fpack.figure_packaging_id,
-			fpack.figure_packaging_name,
-			fmat.figure_material_id,
-			fmat.figure_material_name				
+				f.*,
+				fc.figure_cat_id, 
+				fc.figure_cat_name, 		
+				fu.user_id, 
+				fu.user_name, 
+				fu.user_status, 
+				fu.user_avatar, 
+				fman.figure_manufacturer_id,
+				fman.figure_manufacturer_name, 
+				fb.figure_brand_name, 
+				fy.figure_year_id, 
+				fy.figure_year, 
+				fs.figure_scale_id, 
+				fs.figure_scale_name, 
+				fl.figure_limitation_id, 
+				fl.figure_limitation_name,
+				fpoa.figure_poa_id,
+				fpoa.figure_poa_name,
+				fpack.figure_packaging_id,
+				fpack.figure_packaging_name,
+				fmat.figure_material_id,
+				fmat.figure_material_name				
 			FROM ".DB_FIGURE_ITEMS." f
 			LEFT JOIN ".DB_USERS." fu ON f.figure_submitter=fu.user_id
 			INNER JOIN ".DB_FIGURE_CATS." fc ON f.figure_cat=fc.figure_cat_id
@@ -74,52 +72,47 @@ $result = dbquery(
 			AND figure_id='".$_GET['figure_id']."'
 			");
 			
-			if (dbrows($result) != 0) {
-				while ($data = dbarray($result)) {
+	if (dbrows($result) != 0) {
+		while ($data = dbarray($result)) {
 
 // IMAGES	
 
 /* ###########################################################################################
-
 I found a old panel for making a slidshow and include it --> latest_photo_slideshow_panel.php
 However, it displays the images only partially. Cut off.
 I guees we have better slideshows for make this --> HTML 5???? 
 http://www.kvisoft.com/tutorials/html5-image-slideshow.html 
-
 */ ###########################################################################################
 			
 echo "<aside class='list-group-item m-b-20'>\n";
 
 openside('');
 
-//global $settings; // dont do this
 $settings = fusion_get_settings(); // do like this to prevent injection
-
 
 /* BEGIN
 | Filename: latest_photo_slideshow_panel.php
 | Release : v1.3 [24 Jan 2013] - PHP-Fusion v7.02
 | Author  : AT0m
 */	
-$result2 = dbquery ("
-	SELECT
-		figure_images_image_id, 	
-		figure_images_figure_id, 	
-		figure_images_image, 	
-		figure_images_thumb 
-	FROM ".DB_FIGURE_IMAGES."
-	WHERE figure_images_figure_id='".$data['figure_id']."' ");
-
+	$result2 = dbquery ("
+		SELECT
+			figure_images_image_id, 	
+			figure_images_figure_id, 	
+			figure_images_image, 	
+			figure_images_thumb 
+		FROM ".DB_FIGURE_IMAGES."
+		WHERE figure_images_figure_id='".$data['figure_id']."' ");
 
 $XML_File = "<slideshow>";
 
-if (dbrows($result2)) while ($data2 = dbarray($result2)){
-	$XML_File .= "
-	<slide>
-		<file>".INFUSIONS."figurelib/figures/images/".$data2['figure_images_image']."</file>
-		<tnfile>".INFUSIONS."figurelib/figures/images/thumbs/".$data2['figure_images_thumb']."</tnfile>
-	</slide>";
-		}
+	if (dbrows($result2)) while ($data2 = dbarray($result2)){
+		$XML_File .= "
+		<slide>
+			<file>".INFUSIONS."figurelib/figures/images/".$data2['figure_images_image']."</file>
+			<tnfile>".INFUSIONS."figurelib/figures/images/thumbs/".$data2['figure_images_thumb']."</tnfile>
+		</slide>";
+	}
 			
 $XML_File .= "</slideshow>";
 
@@ -140,14 +133,14 @@ echo "</div>\n\n";
 | Author  : AT0m
 */
 closeside();
-										
-// ####### SOCIAL_SHARING   ##################################################		
+// ############################################################################################	
 
-			echo "<table width='100%'>\n";
-					//echo "<tr><td align='center' class='panel-footer' colspan='4' width=''>\n";	
-					echo "<tr><td>\n";						
+// ####### SOCIAL_SHARING   ###################################################################	
+openside('');										
+							
 						// SETTINGS HOLEN
-						global $settings;
+						//$settings = fusion_get_settings();
+						$settings = fusion_get_settings();
 						$fil_settings = get_settings("figurelib"); 
 
 						if ($fil_settings['figure_social_sharing']) {
@@ -159,14 +152,14 @@ closeside();
 							echo "<a href='http://reddit.com/submit?url=".$link."' target='_blank'><img alt='Reddit' src='".INFUSIONS."figurelib/images/reddit.png' border='0'></a>&nbsp;\n";
 							echo "<a href='http://del.icio.us/post?url=".$link."' target='_blank'><img alt='Del.icio.us' src='".INFUSIONS."figurelib/images/delicious.png' border='0'></a>&nbsp;\n";
 							echo "</div>\n";
-						}
-					echo "</td></tr>\n";
-					
-			echo "</table>";	
-						
-// ########  AFFILIATE PANEL  ################################################
-				
+						}	
+closeside();
+// ############################################################################################	
 
+
+// ########  AFFILIATE PANEL  #################################################################
+openside("<div class='well clearfix'><strong>AFFILIATES</strong></div>");						
+				
 	// CSS 
 		echo "<style type='text/css'>
 		<!--
@@ -176,11 +169,7 @@ closeside();
 		}
 		-->
 		</style>\n";	
-
-echo "<div class='well clearfix'>\n";
-echo "<strong>AFFILIATES</strong><br>";
-echo "</div>\n";		
-			
+					
 			echo "<table style='cellspacing:10px; cellpadding:10px;' class='table' width='100%'>\n";
 		
 			 // FIRST LINE ESHOP (PRIORITY 1)		 
@@ -227,61 +216,62 @@ echo "</div>\n";
 						if ($data['figure_affiliate_8'] == "") { echo "<strike>".$locale['figure_033']."</strike>";
 							} else { echo "<a href='".$data['figure_affiliate_8']."'</a>".trimlink($data['figure_affiliate_8'],15)."</td>\n"; }	
 				 echo "</tr>\n";
-			 } else { 
+			
+			} else { 
 			 }
 			
 			// FOURTH LINE AMAZON COM CA UK DE	
 
-						 echo "<tr>\n";
-			echo "<colgroup><col width='25%'><col width='25%'><col width='25%'><col width='25%'></colgroup>\n"; 
+				echo "<tr>\n";
+				echo "<colgroup><col width='25%'><col width='25%'><col width='25%'><col width='25%'></colgroup>\n"; 
 						
-			echo "<td style='text-align:center; vertical-align:middle;'>	\n";	 
+				echo "<td style='text-align:center; vertical-align:middle;'>	\n";	 
 					if ($data['figure_amazon_com'] == "") { echo "<img src='".INFUSIONS."figurelib/images/flags/flag_usa_sw.png"."' alt='".$locale['figure_031a']."' title='".$locale['figure_031a']."'>";
 						} else { echo "<a href='".$data['figure_amazon_com']."'><img src='".INFUSIONS."figurelib/images/flags/flag_usa.png"."' alt='".trimlink($data['figure_amazon_com'],50)."' title='".trimlink($data['figure_amazon_com'],100)."'></td>\n"; }		 
 			
-			echo "<td align='center'>\n";	 
+				echo "<td align='center'>\n";	 
 					if ($data['figure_amazon_ca'] == "") { echo "<img src='".INFUSIONS."figurelib/images/flags/flag_canada_sw.png"."' alt='".$locale['figure_032a']."' title='".$locale['figure_032a']."'>";
 						} else { echo "<a href='".$data['figure_amazon_ca']."'><img src='".INFUSIONS."figurelib/images/flags/flag_canada.png"."' alt='".trimlink($data['figure_amazon_ca'],50)."' title='".trimlink($data['figure_amazon_ca'],100)."'></td>\n"; }	
 			 			 	 
-			echo "<td align='center'>\n";	 
+				echo "<td align='center'>\n";	 
 			 		if ($data['figure_amazon_uk'] == "") { echo "<img src='".INFUSIONS."figurelib/images/flags/flag_great_britain_sw.png"."' alt='".$locale['figure_026a']."' title='".$locale['figure_026a']."'>";
 						} else { echo "<a href='".$data['figure_amazon_ca']."'><img src='".INFUSIONS."figurelib/images/flags/flag_great_britain.png"."' alt='".trimlink($data['figure_amazon_ca'],50)."' title='".trimlink($data['figure_amazon_ca'],100)."'></td>\n"; }	
 				
-			echo "<td align='center'>\n";	 
+				echo "<td align='center'>\n";	 
 			 		if ($data['figure_amazon_de'] == "") { echo "<img src='".INFUSIONS."figurelib/images/flags/flag_germany_sw.png"."' alt='".$locale['figure_025a']."' title='".$locale['figure_025a']."'>";
 						} else { echo "<a href='".$data['figure_amazon_de']."'><img src='".INFUSIONS."figurelib/images/flags/flag_germany.png"."' alt='".trimlink($data['figure_amazon_de'],50)."' title='".trimlink($data['figure_amazon_de'],100)."'></td>\n"; }	
-			echo "</tr>\n";
+				echo "</tr>\n";
 			 		 
 			 // FIFTH LINE AMAZON JP FR ES IT
-			 echo "<tr>\n";
-			 echo "<colgroup><col width='25%'><col width='25%'><col width='25%'><col width='25%'></colgroup>\n"; 
+				echo "<tr>\n";
+				echo "<colgroup><col width='25%'><col width='25%'><col width='25%'><col width='25%'></colgroup>\n"; 
 			
 
-			echo "<td style='text-align:center; vertical-align:middle;'>	\n";
+				echo "<td style='text-align:center; vertical-align:middle;'>	\n";
 					if ($data['figure_amazon_jp'] == "") { echo "<img src='".INFUSIONS."figurelib/images/flags/flag_japan_sw.png"."' alt='".$locale['figure_030a']."' title='".$locale['figure_030a']."'>";
 						} else { echo "<a href='".$data['figure_amazon_jp']."'><img src='".INFUSIONS."figurelib/images/flags/flag_japan.png"."' alt='".trimlink($data['figure_amazon_jp'],50)."' title='".trimlink($data['figure_amazon_jp'],100)."'></td>\n"; }		
 			
-			echo "<td align='center'>\n";
+				echo "<td align='center'>\n";
 					if ($data['figure_amazon_fr'] == "") { echo "<img src='".INFUSIONS."figurelib/images/flags/flag_france_sw.png"."' alt='".$locale['figure_027a']."' title='".$locale['figure_027a']."'>";
 						} else { echo "<a href='".$data['figure_amazon_fr']."'><img src='".INFUSIONS."figurelib/images/flags/flag_france.png"."' alt='".trimlink($data['figure_amazon_fr'],50)."' title='".trimlink($data['figure_amazon_fr'],100)."'></td>\n"; }	
 			 		 
-			echo "<td align='center'>\n";
+				echo "<td align='center'>\n";
 			 		if ($data['figure_amazon_es'] == "") { echo "<img src='".INFUSIONS."figurelib/images/flags/flag_spain_sw.png"."' alt='".$locale['figure_028a']."' title='".$locale['figure_028a']."'>";
 						} else { echo "<a href='".$data['figure_amazon_es']."'><img src='".INFUSIONS."figurelib/images/flags/flag_spain.png"."' alt='".trimlink($data['figure_amazon_es'],50)."' title='".trimlink($data['figure_amazon_es'],100)."'></td>\n"; }	
 				
-			echo "<td align='center'>\n";
+				echo "<td align='center'>\n";
 			 		if ($data['figure_amazon_it'] == "") { echo "<img src='".INFUSIONS."figurelib/images/flags/flag_italy_sw.png"."' alt='".$locale['figure_029a']."' title='".$locale['figure_029a']."'>";
 						} else { echo "<a href='".$data['figure_amazon_it']."'><img src='".INFUSIONS."figurelib/images/flags/flag_italy.png"."' alt='".trimlink($data['figure_amazon_it'],50)."' title='".trimlink($data['figure_amazon_it'],100)."'></td>\n"; }	
-			 echo "</tr>\n";			
-			 echo "</table>\n";			
-			
+				echo "</tr>\n";			
+				echo "</table>\n";			
+closeside();
+// ############################################################################################
+				
+
 // ###########  FIGURE DETAILS   ##############################################################
+openside("<div class='well clearfix'><strong>FIGURE DATA</strong></div>");
 
-echo "<div class='well clearfix'>\n";
-echo "<strong>FIGURE DATA</strong><br>";
-echo "</div>\n";
-
-			//ZEILE 1 - Variant	/ Scale	
+			//LINE 1 - Variant	/ Scale	
 			echo "<table class='tbl-border' width='100%'>\n";			
 			echo "<tr>";	
 			echo "<colgroup><col width='20%'><col width='30%'><col width='20%'><col width='30%'></colgroup>\n"; 			
@@ -292,7 +282,7 @@ echo "</div>\n";
 			echo "<tr>";	
 			echo "</table>\n";
 
-			//ZEILE 2 - Manufacturer / Weight
+			//LINE 2 - Manufacturer / Weight
 			echo "<table class='tbl-border' width='100%'>\n";			
 			echo "<tr>";	
 			echo "<colgroup><col width='20%'><col width='30%'><col width='20%'><col width='30%'></colgroup>\n";			
@@ -303,7 +293,7 @@ echo "</div>\n";
 			echo "<tr>";	
 			echo "</table>\n";
 			
-			//ZEILE 3 - Sub-Manufacturer (inaktive glöscht) / Height
+			//LINE 3 - Sub-Manufacturer (inaktive glöscht) / Height
 			echo "<table class='tbl-border' width='100%'>\n";
 			echo "<tr>";	
 			echo "<colgroup><col width='20%'><col width='30%'><col width='20%'><col width='30%'></colgroup>\n"; 
@@ -325,7 +315,7 @@ echo "</div>\n";
 			echo "<tr>";	
 			echo "</table>\n";
 		
-			//ZEILE 4 - Artists / Width
+			//LINE 4 - Artists / Width
 			echo "<table class='tbl-border' width='100%'>\n";			
 			echo "<tr>";	
 			echo "<colgroup><col width='20%'><col width='30%'><col width='20%'><col width='30%'></colgroup>\n"; 			
@@ -347,244 +337,196 @@ echo "</div>\n";
 			echo "<tr>";	
 			echo "</table>\n";
 			
-			//ZEILE 5 - Country		Depth
+			//LINE 5 - Country		Depth
 			echo "<table class='tbl-border' width='100%'>\n";			
-			echo "<tr>";	
-			echo "<colgroup><col width='20%'><col width='30%'><col width='20%'><col width='30%'></colgroup>\n"; 			
-			echo "<td style='word-break:break-all;word-wrap:break-word' class='panel-footer'><b>".$locale['figure_436'].":</b></td>\n";
-			echo "<td style='word-break:break-all;word-wrap:break-word' class='p-l-5'>".$data['figure_country']."</td>\n";
-			echo "<td style='word-break:break-all;word-wrap:break-word' class='panel-footer'><b>".$locale['figure_446'].":</b></td>\n";
-				
-				$depth = dbquery("SELECT fm.figure_measurements_id, fm.figure_measurements_inch, f.figure_depth
-				   FROM ".DB_FIGURE_MEASUREMENTS." fm
-				   INNER JOIN ".DB_FIGURE_ITEMS." f ON f.figure_depth = fm.figure_measurements_id
-				   WHERE figure_id='".$data['figure_id']."'");
-				   
-				   if(dbrows($depth)){
-					   while($datadepth = dbarray($depth)){	
-			echo "<td style='word-break:break-all;word-wrap:break-word' class='p-l-5'>".$datadepth['figure_measurements_inch']."</td>\n";
-							}
-			}	
-			echo "<tr>";	
+				echo "<tr>";	
+					echo "<colgroup><col width='20%'><col width='30%'><col width='20%'><col width='30%'></colgroup>\n"; 			
+					echo "<td style='word-break:break-all;word-wrap:break-word' class='panel-footer'><b>".$locale['figure_436'].":</b></td>\n";
+					echo "<td style='word-break:break-all;word-wrap:break-word' class='p-l-5'>".$data['figure_country']."</td>\n";
+					echo "<td style='word-break:break-all;word-wrap:break-word' class='panel-footer'><b>".$locale['figure_446'].":</b></td>\n";
+						
+						$depth = dbquery("SELECT fm.figure_measurements_id, fm.figure_measurements_inch, f.figure_depth
+						   FROM ".DB_FIGURE_MEASUREMENTS." fm
+						   INNER JOIN ".DB_FIGURE_ITEMS." f ON f.figure_depth = fm.figure_measurements_id
+						   WHERE figure_id='".$data['figure_id']."'");
+						   
+						   if(dbrows($depth)){
+							   while($datadepth = dbarray($depth)){	
+								echo "<td style='word-break:break-all;word-wrap:break-word' class='p-l-5'>".$datadepth['figure_measurements_inch']."</td>\n";
+								}
+							}	
+				echo "<tr>";	
 			echo "</table>\n";
 			
-			//LEERZEILE
+			//BLANK LINE
 			echo "<table class='tbl-border' width='100%'>\n";			
-			echo "<tr>";	
-			echo "<colgroup><col width='20%'><col width='30%'><col width='20%'><col width='30%'></colgroup>\n"; 
-			echo "<td class='tbl2'>&nbsp;</td>\n";
-			echo "<td class='tbl2'>&nbsp;</td>\n";
-			echo "<td class='tbl2'>&nbsp;</td>\n";
-			echo "<td class='tbl2'>&nbsp;</td>\n";		
-			echo "<tr>";	
+				echo "<tr>";	
+					echo "<colgroup><col width='20%'><col width='30%'><col width='20%'><col width='30%'></colgroup>\n"; 
+					echo "<td class='tbl2'>&nbsp;</td>\n";
+					echo "<td class='tbl2'>&nbsp;</td>\n";
+					echo "<td class='tbl2'>&nbsp;</td>\n";
+					echo "<td class='tbl2'>&nbsp;</td>\n";		
+				echo "<tr>";	
 			echo "</table>\n";
 			
-			//ZEILE 6 - Brand / Material	
-			
+			//LINE 6 - Brand / Material				
 			echo "<table class='tbl-border' width='100%'>\n";			
-			echo "<tr>";	
-			echo "<colgroup><col width='20%'><col width='30%'><col width='20%'><col width='30%'></colgroup>\n"; 
-			echo "<td style='word-break:break-all;word-wrap:break-word' class='panel-footer'><b>".$locale['figure_438'].":</b></td>\n";
-			echo "<td style='word-break:break-all;word-wrap:break-word' class='p-l-5'>".$data['figure_brand_name']."</td>\n";		
-			echo "<td style='word-break:break-all;word-wrap:break-word' class='panel-footer'><b>".$locale['figure_447'].":</b></td>\n";
-			echo "<td style='word-break:break-all;word-wrap:break-word' class='p-l-5'>".$data['figure_material_name']."</td>\n";
-			echo "<tr>";	
+				echo "<tr>";	
+					echo "<colgroup><col width='20%'><col width='30%'><col width='20%'><col width='30%'></colgroup>\n"; 
+					echo "<td style='word-break:break-all;word-wrap:break-word' class='panel-footer'><b>".$locale['figure_438'].":</b></td>\n";
+					echo "<td style='word-break:break-all;word-wrap:break-word' class='p-l-5'>".$data['figure_brand_name']."</td>\n";		
+					echo "<td style='word-break:break-all;word-wrap:break-word' class='panel-footer'><b>".$locale['figure_447'].":</b></td>\n";
+					echo "<td style='word-break:break-all;word-wrap:break-word' class='p-l-5'>".$data['figure_material_name']."</td>\n";
+				echo "<tr>";	
 			echo "</table>\n";
 			
-			//ZEILE 7 - Series / Articulations Points
+			//LINE 7 - Series / Articulations Points
 			echo "<table class='tbl-border' width='100%'>\n";			
-			echo "<tr>";	
-			echo "<colgroup><col width='20%'><col width='30%'><col width='20%'><col width='30%'></colgroup>\n"; 			
-			echo "<td style='word-break:break-all;word-wrap:break-word' class='panel-footer'><b>".$locale['figure_439'].":</b></td>\n";
-			echo "<td style='word-break:break-all;word-wrap:break-word' class='p-l-5'>".$data['figure_series']."</td>\n";
-			echo "<td style='word-break:break-all;word-wrap:break-word' class='panel-footer'><b>".$locale['figure_455'].":</b></td>\n";
-			echo "<td style='word-break:break-all;word-wrap:break-word' class='p-l-5'>".$data['figure_poa_name']."</td>\n";				
-			echo "<tr>";	
+				echo "<tr>";	
+					echo "<colgroup><col width='20%'><col width='30%'><col width='20%'><col width='30%'></colgroup>\n"; 			
+					echo "<td style='word-break:break-all;word-wrap:break-word' class='panel-footer'><b>".$locale['figure_439'].":</b></td>\n";
+					echo "<td style='word-break:break-all;word-wrap:break-word' class='p-l-5'>".$data['figure_series']."</td>\n";
+					echo "<td style='word-break:break-all;word-wrap:break-word' class='panel-footer'><b>".$locale['figure_455'].":</b></td>\n";
+					echo "<td style='word-break:break-all;word-wrap:break-word' class='p-l-5'>".$data['figure_poa_name']."</td>\n";				
+				echo "<tr>";	
 			echo "</table>\n";
 			
-			//ZEILE 8 - Release Date / Packaging
+			//LINE 8 - Release Date / Packaging
 			echo "<table class='tbl-border' width='100%'>\n";			
-			echo "<tr>";	
-			echo "<colgroup><col width='20%'><col width='30%'><col width='20%'><col width='30%'></colgroup>\n"; 			
-			echo "<td style='word-break:break-all;word-wrap:break-word' class='panel-footer'><b>".$locale['figure_419'].":</b></td>\n";
-			echo "<td style='word-break:break-all;word-wrap:break-word' class='p-l-5'>".$data['figure_year']."</td>\n";
-			echo "<td style='word-break:break-all;word-wrap:break-word' class='panel-footer'><b>".$locale['figure_448'].":</b></td>\n";
-			echo "<td style='word-break:break-all;word-wrap:break-word' class='p-l-5'>".$data['figure_packaging_name']."</td>\n";	
-			echo "<tr>";	
+				echo "<tr>";	
+					echo "<colgroup><col width='20%'><col width='30%'><col width='20%'><col width='30%'></colgroup>\n"; 			
+					echo "<td style='word-break:break-all;word-wrap:break-word' class='panel-footer'><b>".$locale['figure_419'].":</b></td>\n";
+					echo "<td style='word-break:break-all;word-wrap:break-word' class='p-l-5'>".$data['figure_year']."</td>\n";
+					echo "<td style='word-break:break-all;word-wrap:break-word' class='panel-footer'><b>".$locale['figure_448'].":</b></td>\n";
+					echo "<td style='word-break:break-all;word-wrap:break-word' class='p-l-5'>".$data['figure_packaging_name']."</td>\n";	
+				echo "<tr>";	
 			echo "</table>\n";
 			
-			//LEERZEILE
+			//BLANK LINE
 			echo "<table class='tbl-border' width='100%'>\n";			
-			echo "<tr>";	
-			echo "<colgroup><col width='20%'><col width='30%'><col width='20%'><col width='30%'></colgroup>\n"; 
-			echo "<td class='tbl2'>&nbsp;</td>\n";
-			echo "<td class='tbl2'>&nbsp;</td>\n";
-			echo "<td class='tbl2'>&nbsp;</td>\n";
-			echo "<td class='tbl2'>&nbsp;</td>\n";		
-			echo "<tr>";	
+				echo "<tr>";	
+					echo "<colgroup><col width='20%'><col width='30%'><col width='20%'><col width='30%'></colgroup>\n"; 
+					echo "<td class='tbl2'>&nbsp;</td>\n";
+					echo "<td class='tbl2'>&nbsp;</td>\n";
+					echo "<td class='tbl2'>&nbsp;</td>\n";
+					echo "<td class='tbl2'>&nbsp;</td>\n";		
+				echo "<tr>";	
 			echo "</table>\n";
 			
-			//ZEILE 9 - MSRP (Price by Release)	/ Used Price	
+			//LINE 9 - MSRP (Price by Release)	/ Used Price	
 			echo "<table class='tbl-border' width='100%'>\n";			
-			echo "<tr>";	
-			echo "<colgroup><col width='20%'><col width='30%'><col width='20%'><col width='30%'></colgroup>\n"; 			
-			echo "<td style='word-break:break-all;word-wrap:break-word' class='panel-footer' style='width:100px;padding:6px'><b>".$locale['figure_449'].":</b></td>\n";
-			echo "<td style='word-break:break-all;word-wrap:break-word' class='p-l-5'>".$data['figure_retailprice']."</td>\n";
-			echo "<td style='word-break:break-all;word-wrap:break-word' class='panel-footer' style='width:100px;padding:6px'><b>".$locale['figure_456'].":</b></td>\n";
-			echo "<td style='word-break:break-all;word-wrap:break-word' class='p-l-5'>".$data['figure_usedprice']."</td>\n";
-			echo "<tr>";	
+				echo "<tr>";	
+					echo "<colgroup><col width='20%'><col width='30%'><col width='20%'><col width='30%'></colgroup>\n"; 			
+					echo "<td style='word-break:break-all;word-wrap:break-word' class='panel-footer' style='width:100px;padding:6px'><b>".$locale['figure_449'].":</b></td>\n";
+					echo "<td style='word-break:break-all;word-wrap:break-word' class='p-l-5'>".$data['figure_retailprice']."</td>\n";
+					echo "<td style='word-break:break-all;word-wrap:break-word' class='panel-footer' style='width:100px;padding:6px'><b>".$locale['figure_456'].":</b></td>\n";
+					echo "<td style='word-break:break-all;word-wrap:break-word' class='p-l-5'>".$data['figure_usedprice']."</td>\n";
+				echo "<tr>";	
 			echo "</table>\n";	
 
-			//ZEILE 10 - Limited Edition YES/NO / Edition Size
+			//LINE 10 - Limited Edition YES/NO / Edition Size
 			echo "<table class='tbl-border' width='100%'>\n";			
-			echo "<tr>";	
-			echo "<colgroup><col width='20%'><col width='30%'><col width='20%'><col width='30%'></colgroup>\n"; 
-			echo "<td style='word-break:break-all;word-wrap:break-word' class='panel-footer'><b>".$locale['figure_450'].":</b></td>\n";
-			echo "<td style='word-break:break-all;word-wrap:break-word' class='p-l-5'>".$data['figure_limitation_name']."</td>\n";
-			echo "<td style='word-break:break-all;word-wrap:break-word' class='panel-footer' style='width:100px;padding:6px'><b>".$locale['figure_451'].":</b></td>\n";
-			echo "<td style='word-break:break-all;word-wrap:break-word' class='p-l-5'>".$data['figure_editionsize']."</td>\n";
-			echo "<tr>";	
+				echo "<tr>";	
+					echo "<colgroup><col width='20%'><col width='30%'><col width='20%'><col width='30%'></colgroup>\n"; 
+					echo "<td style='word-break:break-all;word-wrap:break-word' class='panel-footer'><b>".$locale['figure_450'].":</b></td>\n";
+					echo "<td style='word-break:break-all;word-wrap:break-word' class='p-l-5'>".$data['figure_limitation_name']."</td>\n";
+					echo "<td style='word-break:break-all;word-wrap:break-word' class='panel-footer' style='width:100px;padding:6px'><b>".$locale['figure_451'].":</b></td>\n";
+					echo "<td style='word-break:break-all;word-wrap:break-word' class='p-l-5'>".$data['figure_editionsize']."</td>\n";
+				echo "<tr>";	
 			echo "</table>\n";	
 			
-			//LEERZEILE
+			//SPACE
 			echo "<table class='tbl-border' width='100%'>\n";			
-			echo "<tr>";	
-			echo "<colgroup><col width='20%'><col width='30%'><col width='20%'><col width='30%'></colgroup>\n"; 
-			echo "<td class='tbl2'>&nbsp;</td>\n";
-			echo "<td class='tbl2'>&nbsp;</td>\n";
-			echo "<td class='tbl2'>&nbsp;</td>\n";
-			echo "<td class='tbl2'>&nbsp;</td>\n";		
-			echo "<tr>";	
+				echo "<tr>";	
+					echo "<colgroup><col width='20%'><col width='30%'><col width='20%'><col width='30%'></colgroup>\n"; 
+					echo "<td class='tbl2'>&nbsp;</td>\n";
+					echo "<td class='tbl2'>&nbsp;</td>\n";
+					echo "<td class='tbl2'>&nbsp;</td>\n";
+					echo "<td class='tbl2'>&nbsp;</td>\n";		
+				echo "<tr>";	
 			echo "</table>\n";
 
-			//ZEILE 11 - Accessories / 
+			//LINE 11 - Accessories / 
 			echo "<table class='tbl-border' width='100%'>\n";			
-			echo "<tr>";	
-			echo "<colgroup><col width='20%'><col width='80%'></colgroup>\n"; 			
-			echo "<td style='word-break:break-all;word-wrap:break-word' class='panel-footer'><b>".$locale['figure_457'].":</b></td>\n";
-			echo "<td style='word-break:break-all;word-wrap:break-word' class='p-l-5'>".($data['figure_accessories'] ? $data['figure_accessories'] : "-")."</td>\n";	
-			echo "</tr>";		
+				echo "<tr>";	
+					echo "<colgroup><col width='20%'><col width='80%'></colgroup>\n"; 			
+					echo "<td style='word-break:break-all;word-wrap:break-word' class='panel-footer'><b>".$locale['figure_457'].":</b></td>\n";
+					echo "<td style='word-break:break-all;word-wrap:break-word' class='p-l-5'>".($data['figure_accessories'] ? $data['figure_accessories'] : "-")."</td>\n";	
+				echo "</tr>";		
 			echo "</table>\n";
 			
-			echo "<table class='tbl-border' width='100%'>\n";			
-			echo "<tr>";	
-			echo "<colgroup><col width='20%'><col width='80%'></colgroup>\n";				
-			//if ($data['figure_description']) {
+			echo "<table class='tbl-border' width='100%'>\n";						
+				echo "<tr>";	
+					echo "<colgroup><col width='20%'><col width='80%'></colgroup>\n";				
 					echo "<td style='word-break:break-all;word-wrap:break-word' class='panel-footer'><b>".$locale['figure_423'].":</b></td>\n";
-					echo "<td style='word-break:break-all;word-wrap:break-word' class='p-l-5'>".nl2br(parseubb(parsesmileys($data['figure_description'])))."</td>";
-				//}					
-			
-			echo "</tr>";	
+					echo "<td style='word-break:break-all;word-wrap:break-word' class='p-l-5'>".nl2br(parseubb(parsesmileys($data['figure_description'])))."</td>";		
+				echo "</tr>";	
 			echo "</table>\n";	
-		
-		// LEERZEILE
-			echo "<table class='tbl-border' width='100%'>\n";			
-			echo "<tr>";	
-			echo "<colgroup><col width='50%'><col width='50%'></colgroup>\n"; 
-			echo "<td style='word-break:break-all;word-wrap:break-word' class='tbl2'>&nbsp;</td>\n";
-			echo "<td style='word-break:break-all;word-wrap:break-word' class='tbl2'>&nbsp;</td>\n";
-			echo "</tr>";	
-			echo "</table>\n";	
-// ####### USERFIGURES  ######################################################
 
-if (iMEMBER) {				
-				global $userdata;
-				$locale['userfigure_001'] ="Add to collection";
-				$locale['userfigure_002'] ="Delete from collection";
-				$locale['userfigure_003'] ="The following members have this Figure: ";
-				$locale['userfigure_004'] ="No members have this Figure - be the first :)";
-				$locale['userfigure_005'] ="FIGURE STATS";
-				$locale['userfigure_006'] ="Your Collection";
+closeside();
+// ############################################################################################
+
+
 				
-				echo "<div class='well clearfix'>\n";
-				echo "<strong>".$locale['userfigure_005']."</strong><br>";
-				echo "</div>\n";
-				
-				//Testausgaben um zu schauen was kommt
-				//echo "GET figure_id:<b>".$GET['figure_id']."</b><br>";
-				//echo "DATA figure_id:<b>".$data['figure_id']."</b><br>";
-				//echo "GET user_id:<b>".$GET['user_id']."</b><br>";
-				//echo "DATA user_id (Submitter) :<b>".$data['user_id']."</b><br>";
-				//echo "USERDATA user_id:<b>".$userdata['user_id']."</b><hr>";
+// ####### USERFIGURES  #######################################################################
 			
+	if (iMEMBER) {
+		global $userdata;
+				
+		// LOCALE
+		$locale['userfigure_001'] ="Add to collection";
+		$locale['userfigure_002'] ="Delete from collection";
+		$locale['userfigure_003'] ="The following members have this Figure: ";
+		$locale['userfigure_004'] ="No members have this Figure - be the first :)";
+		$locale['userfigure_005'] ="FIGURE STATS";
+		$locale['userfigure_006'] ="Your Collection";
+
+		openside("<div class='well clearfix'><strong>".$locale['userfigure_005']."</strong></div>");	
+							
 			$resultuf = dbquery(
-				"SELECT 			
-				fu.user_id, 
-				fu.user_name, 
-				fu.user_status, 
-				fu.user_avatar, 
-				fuf.figure_userfigures_figure_id,
-				fuf.figure_userfigures_user_id			
-				FROM ".DB_FIGURE_USERFIGURES." fuf
-				LEFT JOIN ".DB_USERS." fu ON fuf.figure_userfigures_user_id=fu.user_id	
-				WHERE figure_userfigures_figure_id='".$data['figure_id']."'
-				AND user_id='".$userdata['user_id']."'
-				");
-				
-				
+				"SELECT             
+					fu.user_id, 
+					fu.user_name, 
+					fu.user_status, 
+					fu.user_avatar, 
+					fuf.figure_userfigures_figure_id,
+					fuf.figure_userfigures_user_id          
+            FROM ".DB_FIGURE_USERFIGURES." fuf
+            INNER JOIN ".DB_USERS." fu ON fuf.figure_userfigures_user_id=fu.user_id  
+            WHERE fuf.figure_userfigures_figure_id='".$data['figure_id']."'
+            AND fu.user_id='".$userdata['user_id']."' 
+			GROUP BY fu.user_id 
+            ");
+								
 				$rows = dbrows($resultuf);
 	
-			if ($rows > 0) { // FIGUR VORHANDEN
+			// USER HAVE THE FIGURE
+			if ($rows > 0) { 
 						
 					while ($datauf = dbarray($resultuf)) {
-						
-							//echo "<div class='well clearfix'>\n";	
-							echo "<tr><td align='center' class='panel-footer' colspan='4' width=''>\n";
-							//echo "FIGUR VORHANDEN!<br>";					
-							//echo "Anzahl:".$rows;
-							//echo "figure_id:".$data['figure_id']."</b><br>";
-							//echo "user_id:".$userdata['user_id']."</b><br>";
-							//echo "userfigures_figure_id:".$datauf['figure_userfigures_figure_id']."</b><br>";
-							//echo "userfigures_user_id:".$datauf['figure_userfigures_user_id']."</b>";
-							
-							// Form posted
+													
 						if (isset($_POST['delete_from_collection'])) {
-							// Check Fields
-							//$criteriaArray = array(
-							//$figure_userfigures_figure_id= form_sanitizer($_POST['figure_userfigures_figure_id'], '', 'figure_userfigures_figure_id'),
-							//$figure_userfigures_user_id= form_sanitizer($_POST['figure_userfigures_user_id'], '', 'figure_userfigures_user_id'),
-							//);
-							//if (defender::safe()) {
-									//$inputArray = array(
-									//	"figure_userfigures_figure_id" => $data['figure_id'],
-									//	"figure_userfigures_user_id" => $userdata['user_id'],);
-									//dbquery("
-									//DELETE FROM ".DB_FIGURE_USERFIGURES." 
-									//WHERE ".$data['figure_id']." ==  ".$datauf['figure_userfigures_figure_id']." 
-									//AND ".$userdata['user_id']." ==  ".$datauf['figure_userfigures_user_id']."
-									//");
 									
 									dbquery("
-									DELETE FROM ".DB_FIGURE_USERFIGURES." 
-									WHERE figure_userfigures_figure_id=".$data['figure_id']." 
-									AND figure_userfigures_user_id=".$userdata['user_id']." 
-									");
-									
+										DELETE FROM ".DB_FIGURE_USERFIGURES." 
+										WHERE figure_userfigures_figure_id=".$data['figure_id']." 
+										AND figure_userfigures_user_id=".$userdata['user_id']." 
+										");									
 									redirect(clean_request("", array("delete_from_collection"), FALSE));
 
-							//}
 						}
 					}
-								echo openform('inputform', 'post', FUSION_REQUEST, array("class" => "",));
+							echo openform('inputform', 'post', FUSION_REQUEST, array("class" => "",));
 								echo form_button("delete_from_collection", $locale['userfigure_002'], $locale['userfigure_002'], array("class" => "btn btn-sm btn-primary"));
 								echo "  <a href='".INFUSIONS."figurelib/mycollection.php' class='btn btn-sm btn-primary'>".$locale['userfigure_006']."</a>";
 								
 								echo "  <a href='http://google.com' class='btn btn-sm btn-primary'>".$locale['sale']."</a>";
-								echo "</td></tr>";
 								echo "<p>";
-								echo closeform();
-								//echo "</div>\n";
-								
-			} else { // FIGUR NICHT VORHANDEN
+							echo closeform();
+
+			// USER DOSEN'T HAVE THE FIGURE					
+			} else { 
 									
-							//echo "<div class='well clearfix'>\n";	
-							echo "<tr><td align='center' class='panel-footer' colspan='4' width=''>\n";	
-							//echo "FIGUR NICHT VORHANDEN!<br>";
-							//echo "Anzahl:".$rows;
-							//echo "userfigures_figure_id:".$datauf['figure_userfigures_figure_id']."</b><br>";
-							//echo "userfigures_user_id:".$datauf['figure_userfigures_user_id']."</b>";
-								
-							// Form posted
 						if (isset($_POST['add_to_collection'])) {
 											
 							// Standard Values for Fields
@@ -593,12 +535,7 @@ if (iMEMBER) {
 							"figure_userfigures_figure_id" => $userdata['user_id'], 
 							);
 
-							// Check Fields
-							//$inputArray = array(
-							//$figure_userfigures_figure_id= form_sanitizer($_POST['figure_userfigures_figure_id'], '', 'figure_userfigures_figure_id'),
-							//$figure_userfigures_user_id= form_sanitizer($_POST['figure_userfigures_figure_id'], '', 'figure_userfigures_user_id'),
-							//);
-
+							// SAVE DATA
 							if (defender::safe()) {
 									$inputArray = array(
 										"figure_userfigures_figure_id" => $data['figure_id'],
@@ -608,68 +545,37 @@ if (iMEMBER) {
 							}
 						}
 					
-								echo openform('inputform', 'post', FUSION_REQUEST, array("class" => "",));
+							echo openform('inputform', 'post', FUSION_REQUEST, array("class" => "",));
 								echo form_button("add_to_collection", $locale['userfigure_001'], $locale['userfigure_001'], array("class" => "btn btn-sm btn-primary"));
 								echo "  <a href='".INFUSIONS."figurelib/mycollection.php' class='btn btn-sm btn-primary'>".$locale['userfigure_006']."</a>";
 								
 								echo "  <a href='http://google.com' class='btn btn-sm btn-primary'>".$locale['sale']."</a>";
-								echo "</td></tr>";
+
 								echo "<p>";
-								echo closeform();	
-								//echo "</div>\n";															
-			}					
+							echo closeform();	
+														
+					}					
 	}
-// ########### 	folgende User haben die Figure  ##################################				
-				
-/*		$resultufc = dbquery(
-				"SELECT 			
+	
+// ########### 	LIST OF ALL USER WHERE HAVE THIS FIGURE  ##################################				
+
+        $resultufc = dbquery(
+				"SELECT             
 					fu.user_id, 
 					fu.user_name, 
 					fu.user_status, 
 					fu.user_avatar, 
 					fuf.figure_userfigures_figure_id,
-					fuf.figure_userfigures_user_id			
-				FROM ".DB_FIGURE_USERFIGURES." fuf
-				LEFT JOIN ".DB_USERS." fu ON fuf.figure_userfigures_user_id=fu.user_id	
-				WHERE figure_userfigures_figure_id='".$data['figure_id']."'
-				");	
-
-
-        $resultufc = dbquery(
-            "SELECT             
-            fu.user_id, 
-            fu.user_name, 
-            fu.user_status, 
-            fu.user_avatar, 
-            fuf.figure_userfigures_figure_id,
-            fuf.figure_userfigures_user_id          
+					fuf.figure_userfigures_user_id          
             FROM ".DB_FIGURE_USERFIGURES." fuf
             INNER JOIN ".DB_USERS." fu ON fuf.figure_userfigures_user_id=fu.user_id  
             WHERE fuf.figure_userfigures_figure_id='".$data['figure_id']."'
             AND fu.user_id='".$userdata['user_id']."' 
-			GROUP BY fu.user_id ORDER BY fu.figure_userfigures_figure_id DESC
-            ");				
-*/	
-        $resultufc = dbquery(
-            "SELECT             
-            fu.user_id, 
-            fu.user_name, 
-            fu.user_status, 
-            fu.user_avatar, 
-            fuf.figure_userfigures_figure_id,
-            fuf.figure_userfigures_user_id          
-            FROM ".DB_FIGURE_USERFIGURES." fuf
-            INNER JOIN ".DB_USERS." fu ON fuf.figure_userfigures_user_id=fu.user_id  
-            WHERE fuf.figure_userfigures_figure_id='".$data['figure_id']."'
-            AND fu.user_id='".$userdata['user_id']."' 
-			GROUP BY fu.user_id 
-			
+			GROUP BY fu.user_id 			
             ");	
-
 	
 		if (dbrows($resultufc) != 0) {
 			
-				//echo "<hr>";
 				echo $locale['userfigure_003'];		
 				echo "<p>";	
 				
@@ -683,20 +589,24 @@ if (iMEMBER) {
 
 		} else {
 				
-				//echo "<hr>";
 				echo $locale['userfigure_004'];	
 				echo "<p>";				
 		}	
-			
-// ###########  RELATED FIGURES  ####################################################				
+closeside();
+// ############################################################################################
 
-				// SETTINGS HOLEN
+
+// ###########  RELATED FIGURES  ##############################################################	
+openside("<div class='well clearfix'><strong>RELATED FIGURES</strong></div>");			
+			
+
+				// GET SETTINGS 
 				$fil_settings = get_settings("figurelib");
 				if ($fil_settings['figure_related']) {
 					
-					echo "<div class='well clearfix'>\n";
-					echo "<strong>RELATED FIGURES</strong><br>";
-					echo "</div>\n";
+					//echo "<div class='well clearfix'>\n";
+					//echo "<strong>RELATED FIGURES</strong><br>";
+					//echo "</div>\n";
 					echo "<div class='panel panel-default'>\n";
 
 					$result3 = dbquery("
@@ -719,8 +629,7 @@ if (iMEMBER) {
 					
 					if (dbrows($result3)) {
 						$i = 0;
-						
-						
+												
 							echo "<table width='100%' cellspacing='1' cellpadding='0' class=''>\n";	
 							echo "<tbody><tr>\n";
 							echo "<th class='' align='' width='30%'>".$locale['figure_411']."</th>\n";
@@ -746,10 +655,14 @@ if (iMEMBER) {
 					echo "</tbody></table>\n";
 					echo "</div>\n";
 									
-				}				
-//++++++++++++++++++++++++++++++++++++++
+				}	
+closeside();
+// ############################################################################################				
 
-// RATING UND COMMENTS	
+
+// ######  RATING UND COMMENTS	###############################################################
+openside("<div class='well clearfix'><strong>COMMENTS & RATINGS</strong></div>");	
+
 $fil_settings = get_settings("figurelib");	
 		
 		if ($data['figure_allow_comments']) { 
@@ -764,32 +677,37 @@ $fil_settings = get_settings("figurelib");
 			echo "</div>\n";
 			showratings("FI", $_GET['figure_id'], INFUSIONS."figurelib/figures.php?figure_id=".$_GET['figure_id']);
 		}
-
-			}
-		}	
-//echo "</div>";
-	
-
-//+++++++++++++++++++++++++++++++++++++++
-// LINK FÜR ADMINS ZUM BEARBETEN DER FIGUR
-
-if (iADMIN || iSUPERADMIN) {
-echo "<hr>\n";
-echo "<div class='well clearfix'>\n";
-echo "<strong>ADMIN OPTIONS</strong><br>";
-echo "</div>\n";		
-	global $aidlink;
-	global $settings;
-			// ['cifg_0005'] = "Edit";
-			echo "<a class='btn btn-default btn-sm' href='".INFUSIONS."figurelib/admin.php".$aidlink."&amp;section=figurelib_form&amp;action=edit&amp;figure_id=".$_GET['figure_id']."'>".$locale['cifg_0005a']."</a><p>"; 
 		
-}		
-//+++++++++++++++++++++++++++++++++++++++
-// PRINT BUTTON
+closeside();
+// ############################################################################################
+
+	}
+}	
+
+	
+// ###### LINK FOR ADMINS TO EDIT THE FIGURE ##################################################
+if (iADMIN || iSUPERADMIN) {
+
+openside("<div class='well clearfix'><strong>ADMIN OPTIONS</strong></div>");	
+//echo "<div class='well clearfix'>\n";
+//echo "<strong>ADMIN OPTIONS</strong><br>";
+//echo "</div>\n";		
+	global $aidlink;
+	$settings = fusion_get_settings();
+			// ['cifg_0005'] = "Edit";
+			echo "<div align='center'>\n";
+			echo "<a class='btn btn-default btn-sm' href='".INFUSIONS."figurelib/admin.php".$aidlink."&amp;section=figurelib_form&amp;action=edit&amp;figure_id=".$_GET['figure_id']."'>".$locale['cifg_0005a']."</a><p>"; 
+			echo "</div>";
+closeside();
+// ############################################################################################
+		
+}
+		
+// ##### PRINT BUTTON #########################################################################
 //echo "<a title='".$locale['news_0002']."' href='".$info['print_link']."'><i class='entypo print'></i></a>";
 //echo "<a class='m-r-10' title='".$locale['news_0002']."' href='".$info['print_link']."'><i class='entypo print'></i></a>";
 //echo "<a class='m-r-10' title='".$locale['news_0002']."' href='".BASEDIR."print.php?type=F&amp;item_id=".$data['figure_id']."'><i class='entypo print'></i></a>";
-//+++++++++++++++++++++++++++++++++++++++
+// ############################################################################################
 
 echo "</aside>\n";
 
