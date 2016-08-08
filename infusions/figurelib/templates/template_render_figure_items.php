@@ -136,14 +136,14 @@ closeside();
 // ############################################################################################	
 
 // ####### SOCIAL_SHARING   ###################################################################	
-openside('');										
-							
+															
 						// SETTINGS HOLEN
 						//$settings = fusion_get_settings();
 						$settings = fusion_get_settings();
 						$fil_settings = get_settings("figurelib"); 
 
 						if ($fil_settings['figure_social_sharing']) {
+							openside('');	
 							echo "<div style='text-align:center'>\n";
 							$link = $settings['siteurl'].str_replace("../","",INFUSIONS)."figurelib/figure.php?figure_id=".$_GET['figure_id'];
 							echo "<a href='http://www.facebook.com/share.php?u=".$link."' target='_blank'><img alt='Facebook' src='".INFUSIONS."figurelib/images/facebook.png' border='0'></a>&nbsp;\n";
@@ -152,8 +152,9 @@ openside('');
 							echo "<a href='http://reddit.com/submit?url=".$link."' target='_blank'><img alt='Reddit' src='".INFUSIONS."figurelib/images/reddit.png' border='0'></a>&nbsp;\n";
 							echo "<a href='http://del.icio.us/post?url=".$link."' target='_blank'><img alt='Del.icio.us' src='".INFUSIONS."figurelib/images/delicious.png' border='0'></a>&nbsp;\n";
 							echo "</div>\n";
+							closeside();
 						}	
-closeside();
+
 // ############################################################################################	
 
 
@@ -469,19 +470,16 @@ closeside();
 
 				
 // ####### USERFIGURES  #######################################################################
-			
-	if (iMEMBER) {
-		global $userdata;
-				
 		// LOCALE
 		$locale['userfigure_001'] ="Add to collection";
 		$locale['userfigure_002'] ="Delete from collection";
 		$locale['userfigure_003'] ="The following members have this Figure: ";
 		$locale['userfigure_004'] ="No members have this Figure - be the first :)";
 		$locale['userfigure_005'] ="FIGURE STATS";
-		$locale['userfigure_006'] ="Your Collection";
-
+		$locale['userfigure_006'] ="Your Collection";			
 		openside("<div class='well clearfix'><strong>".$locale['userfigure_005']."</strong></div>");	
+	if (iMEMBER) {
+		global $userdata;
 							
 			$resultuf = dbquery(
 				"SELECT             
@@ -499,7 +497,7 @@ closeside();
             ");
 								
 				$rows = dbrows($resultuf);
-	
+
 			// USER HAVE THE FIGURE
 			if ($rows > 0) { 
 						
@@ -554,7 +552,8 @@ closeside();
 								echo "<p>";
 							echo closeform();	
 														
-					}					
+					}	
+					
 	}
 	
 // ########### 	LIST OF ALL USER WHERE HAVE THIS FIGURE  ##################################				
@@ -596,18 +595,12 @@ closeside();
 // ############################################################################################
 
 
-// ###########  RELATED FIGURES  ##############################################################	
-openside("<div class='well clearfix'><strong>RELATED FIGURES</strong></div>");			
-			
-
-				// GET SETTINGS 
-				$fil_settings = get_settings("figurelib");
-				if ($fil_settings['figure_related']) {
+// ###########  RELATED FIGURES  ##############################################################			
+	$fil_settings = get_settings("figurelib");
+	if ($fil_settings['figure_related']) { // RELATED FIGURES
+		openside("<div class='well clearfix'><strong>RELATED FIGURES</strong></div>");	
 					
-					//echo "<div class='well clearfix'>\n";
-					//echo "<strong>RELATED FIGURES</strong><br>";
-					//echo "</div>\n";
-					echo "<div class='panel panel-default'>\n";
+				echo "<div class='panel panel-default'>\n";
 
 					$result3 = dbquery("
 						SELECT 
@@ -650,18 +643,21 @@ openside("<div class='well clearfix'><strong>RELATED FIGURES</strong></div>");
 							echo "<td class='$cell_color' width='25%' align=''>".$data3['figure_cat_name']."</td>\n";
 							echo "<td class='$cell_color' width='25%' align=''>".$rating."</td>\n";
 							echo "</tr>\n";
-						}
-					} else echo "<tr><td class='tbl1' colspan='4' width='33%' align=''>".$locale['figure_426']."</td><br><br></tr>";
-					echo "</tbody></table>\n";
-					echo "</div>\n";
-									
-				}	
-closeside();
-// ############################################################################################				
+						} 
+					
+					} else {
+							
+							echo "<tr><td class='tbl1' colspan='4' width='33%' align=''>".$locale['figure_426']."</td><br><br></tr>"; // ['figure_426'] = "No related figures found.";
 
+					}
+							echo "</div>\n";
+							echo "</tbody></table>\n";
+		closeside();										
+}					
+// ############################################################################################
 
 // ######  RATING UND COMMENTS	###############################################################
-openside("<div class='well clearfix'><strong>COMMENTS & RATINGS</strong></div>");	
+	openside("<div class='well clearfix'><strong>COMMENTS & RATINGS</strong></div>");	
 
 $fil_settings = get_settings("figurelib");	
 		
@@ -678,31 +674,28 @@ $fil_settings = get_settings("figurelib");
 			showratings("FI", $_GET['figure_id'], INFUSIONS."figurelib/figures.php?figure_id=".$_GET['figure_id']);
 		}
 		
-closeside();
+	closeside();
 // ############################################################################################
 
-	}
-}	
+	} // TO LINE 75
+}	// TO LINE 74
 
 	
 // ###### LINK FOR ADMINS TO EDIT THE FIGURE ##################################################
 if (iADMIN || iSUPERADMIN) {
 
-openside("<div class='well clearfix'><strong>ADMIN OPTIONS</strong></div>");	
-//echo "<div class='well clearfix'>\n";
-//echo "<strong>ADMIN OPTIONS</strong><br>";
-//echo "</div>\n";		
-	global $aidlink;
-	$settings = fusion_get_settings();
-			// ['cifg_0005'] = "Edit";
-			echo "<div align='center'>\n";
-			echo "<a class='btn btn-default btn-sm' href='".INFUSIONS."figurelib/admin.php".$aidlink."&amp;section=figurelib_form&amp;action=edit&amp;figure_id=".$_GET['figure_id']."'>".$locale['cifg_0005a']."</a><p>"; 
-			echo "</div>";
-closeside();
-// ############################################################################################
-		
+	openside("<div class='well clearfix'><strong>ADMIN OPTIONS</strong></div>");		
+		global $aidlink;
+		$settings = fusion_get_settings();
+				// ['cifg_0005'] = "Edit";
+				echo "<div align='center'>\n";
+				echo "<a class='btn btn-default btn-sm' href='".INFUSIONS."figurelib/admin.php".$aidlink."&amp;section=figurelib_form&amp;action=edit&amp;figure_id=".$_GET['figure_id']."'>".$locale['cifg_0005a']."</a><p>"; 
+				echo "</div>";
+	closeside();		
 }
-		
+// ############################################################################################	
+
+	
 // ##### PRINT BUTTON #########################################################################
 //echo "<a title='".$locale['news_0002']."' href='".$info['print_link']."'><i class='entypo print'></i></a>";
 //echo "<a class='m-r-10' title='".$locale['news_0002']."' href='".$info['print_link']."'><i class='entypo print'></i></a>";
@@ -711,8 +704,8 @@ closeside();
 
 echo "</aside>\n";
 
-	}
+	} // TO LINE 31
 	
-}
+} // TO LINE 32
 	
 
