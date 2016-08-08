@@ -477,7 +477,9 @@ closeside();
 		$locale['userfigure_004'] ="No members have this Figure - be the first :)";
 		$locale['userfigure_005'] ="FIGURE STATS";
 		$locale['userfigure_006'] ="Your Collection";			
-		openside("<div class='well clearfix'><strong>".$locale['userfigure_005']."</strong></div>");	
+	
+	openside("<div class='well clearfix'><strong>".$locale['userfigure_005']."</strong></div>");	
+	
 	if (iMEMBER) {
 		global $userdata;
 							
@@ -521,6 +523,7 @@ closeside();
 								echo "  <a href='http://google.com' class='btn btn-sm btn-primary'>".$locale['sale']."</a>";
 								echo "<p>";
 							echo closeform();
+							
 
 			// USER DOSEN'T HAVE THE FIGURE					
 			} else { 
