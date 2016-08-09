@@ -52,6 +52,8 @@ if (!empty($result)) {
         "figure_freigabe" => 0,
 		"figure_allow_comments" => 0,
 		"figure_allow_ratings" => 0, 
+		"figure_language" => LANGUAGE,
+		"figure_sorting" => "",
         "figure_title" => "",
         "figure_variant" => "",
         "figure_manufacturer" => "",
@@ -142,6 +144,8 @@ if (!empty($result)) {
             "figure_freigabe" => form_sanitizer($_POST['figure_freigabe'], 0, "figure_freigabe"),
 			"figure_allow_comments" => form_sanitizer($_POST['figure_allow_comments'], 0, "figure_allow_comments"),
 			"figure_allow_ratings" => form_sanitizer($_POST['figure_allow_ratings'], 0, "figure_allow_ratings"),
+			"figure_language" => form_sanitizer($_POST['figure_language'], "", "figure_language"),
+			"figure_sorting" => form_sanitizer($_POST['figure_sorting'], "", "figure_sorting"),
             "figure_title" => form_sanitizer($_POST['figure_title'], "", "figure_title"),
             "figure_variant" => form_sanitizer($_POST['figure_variant'], "", "figure_variant"),
             "figure_manufacturer" => form_sanitizer($_POST['figure_manufacturer'], "", "figure_manufacturer"),
@@ -348,10 +352,7 @@ if (!empty($result)) {
 					array(
 						"inline" => TRUE,
 						"required" => FALSE
-					));	
-
-
-			
+					));			
     closeside();
 
     openside('<strong>IMAGES</strong>');
