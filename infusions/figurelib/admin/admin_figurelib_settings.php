@@ -32,6 +32,8 @@ if (isset($_POST['savesettings'])) {
 	$inputArray = array(	
 		"figure_per_page" => form_sanitizer($_POST['figure_per_page'], 0, "figure_per_page"),
 		"figure_per_line" => form_sanitizer($_POST['figure_per_line'], 0, "figure_per_line"),
+		"figure_allow_comments" => isset($_POST['figure_allow_comments']) ? 1 : 0,
+		"figure_allow_ratings" => isset($_POST['figure_allow_ratings']) ? 1 : 0,
 		"figure_display" => isset($_POST['figure_display']) ? 1 : 0,
 		"figure_submit" => isset($_POST['figure_submit']) ? 1 : 0,
 		"figure_related" => isset($_POST['figure_related']) ? 1 : 0,
@@ -185,7 +187,6 @@ echo "<div class='col-xs-12 col-sm-4'>\n";
 
 openside("");
 
-
 	// ['figure_335'] = "Allow users to submit figures:";
 	// ALS CHECKBOX
 		echo form_checkbox('figure_submit', $locale['figure_335'], $fil_settings['figure_submit']);
@@ -216,6 +217,16 @@ openside("");
 			"options" => array($locale['disable'], $locale['enable'])
 		));
 */	
+
+	// ['figure_363'] = "Allow Comments:";
+	// ALS CHECKBOX
+		echo form_checkbox('figure_allow_comments', $locale['figure_363'], $fil_settings['figure_allow_comments']);
+		
+	// ['figure_364'] = "Allow Ratings:";
+	// ALS CHECKBOX
+		echo form_checkbox('figure_allow_ratings', $locale['figure_364'], $fil_settings['figure_allow_ratings']);
+
+
 	// ['figure_339'] = "Gallery Mode on";
 		echo form_checkbox('figure_display', $locale['figure_339'], $fil_settings['figure_display']);
 		
