@@ -50,6 +50,8 @@ if (!empty($result)) {
     $data = array(
         "figure_id" => 0,
         "figure_freigabe" => 0,
+		"figure_allow_comments" => 0,
+		"figure_allow_ratings" => 0, 
         "figure_title" => "",
         "figure_variant" => "",
         "figure_manufacturer" => "",
@@ -138,6 +140,8 @@ if (!empty($result)) {
             "figure_id" => form_sanitizer($_POST['figure_id'], 0, "figure_id"),
             "figure_datestamp" => form_sanitizer($_POST['figure_datestamp'], "", "figure_datestamp"),
             "figure_freigabe" => form_sanitizer($_POST['figure_freigabe'], 0, "figure_freigabe"),
+			"figure_allow_comments" => form_sanitizer($_POST['figure_allow_comments'], 0, "figure_allow_comments"),
+			"figure_allow_ratings" => form_sanitizer($_POST['figure_allow_ratings'], 0, "figure_allow_ratings"),
             "figure_title" => form_sanitizer($_POST['figure_title'], "", "figure_title"),
             "figure_variant" => form_sanitizer($_POST['figure_variant'], "", "figure_variant"),
             "figure_manufacturer" => form_sanitizer($_POST['figure_manufacturer'], "", "figure_manufacturer"),
@@ -294,21 +298,60 @@ if (!empty($result)) {
     echo form_hidden("figure_freigabe", "", $data['figure_freigabe']);
     echo form_hidden("figure_submitter", "", $userdata['user_id']);
 
-// Select Field "Visibillity"  ////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// Select Field "Visibillity" /////////////////////////////////////////////////////////////////////////////
     // ['figurelib/admin/figurelib.php_009'] = "Visibility:";
     echo form_select('figure_visibility', $locale['figurelib/admin/figurelib.php_009'], $data['figure_visibility'],
                      array(
                          "inline" => TRUE,
-                         "width" => "520px",
                          'options' => fusion_get_groups()
                      ));
-// Checkbox "Figure Freigabe"  /////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+// Dropdown "figure_language" ///////////////////////////////////////////////////////////////////////////	
+	if (multilang_table("FI")) {
+			echo form_select('figure_language', $locale['global_ML100'], $data['figure_language'], 
+					array(
+						'options' => fusion_get_enabled_languages(),
+						"inline" => TRUE,
+					));
+	} else {										   
+											   
+			echo form_hidden('figure_language', '', $data['figure_language']);				
+	}
+
+// Dropdown "figure_sorting" ///////////////////////////////////////////////////////////////////////////	
+	// ['figm_0008'] = "Ascending"; 
+	// ['figm_0009'] = "Descending";
+	// ['figurelib/admin/figurelib.php_077'] = "Sorting";
+	echo form_select('figure_sorting', $locale['figurelib/admin/figurelib.php_077'], $data['figure_sorting'], array(
+		"inline" => TRUE,
+		'options' => array('ASC' => $locale['figm_0008'], 'DESC' => $locale['figm_0009']),
+	));
+	
+// Checkbox "Figure Freigabe" ///////////////////////////////////////////////////////////////////////////////////
     // ['figurelib/admin/figurelib.php_069'] = "Figure release on page";
-    echo form_checkbox("figure_freigabe", $locale['figurelib/admin/figurelib.php_069'], $data['figure_freigabe'], array(
-        "inline" => TRUE,
-        "width" => "520px",
-        "required" => FALSE
-    ));
+    echo form_checkbox("figure_freigabe", $locale['figurelib/admin/figurelib.php_069'], $data['figure_freigabe'], 
+					array(
+						"inline" => TRUE,
+						"required" => FALSE
+					));
+	
+// Checkbox "figure_allow_comments" ////////////////////////////////////////////////////////////////////////////
+    // $locale['figurelib/admin/figurelib.php_075'] = "Show Comments?";
+	echo form_checkbox("figure_allow_comments", $locale['figurelib/admin/figurelib.php_075'], $data['figure_allow_comments'], 			array(
+						"inline" => TRUE,
+						"required" => FALSE
+					));	
+	
+// Checkbox "figure_allow_ratings" ///////////////////////////////////////////////////////////////////////////
+    // $locale['figurelib/admin/figurelib.php_076'] = "Show Ratings?";
+	echo form_checkbox("figure_allow_ratings", $locale['figurelib/admin/figurelib.php_076'], $data['figure_allow_ratings'], 
+					array(
+						"inline" => TRUE,
+						"required" => FALSE
+					));	
+
+
+			
     closeside();
 
     openside('<strong>IMAGES</strong>');
