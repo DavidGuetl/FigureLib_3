@@ -837,6 +837,9 @@ $locale['figurelib/admin/figurelib.php_071'] = "HIDE this figure on page & panel
 $locale['figurelib/admin/figurelib.php_072'] = "SHOW this figure on page & panels.";
 $locale['figurelib/admin/figurelib.php_073'] = "Submitter read and agree to the terms and conditions.";
 $locale['figurelib/admin/figurelib.php_074'] = "Save/Publish Figure";
+$locale['figurelib/admin/figurelib.php_075'] = "Show comments?";
+$locale['figurelib/admin/figurelib.php_076'] = "Show ratings";
+$locale['figurelib/admin/figurelib.php_077'] = "Sorting";
 
 // admin_figurelib_settings.php
 $locale['figure_settings'] = "FigureLib Settings";
