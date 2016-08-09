@@ -349,6 +349,8 @@ $locale['figure_359'] = "Figure photo max width:";
 $locale['figure_360'] = "Figure photo max heigh:";
 $locale['figure_361'] = "Only values 1-500 allowed!";
 $locale['figure_362'] = "Only values 1-10 allowed!";
+$locale['figure_363'] = "Allow comments:";
+$locale['figure_364'] = "Allow ratings:";
 
 // figure.php
 $locale['figure_410'] = "[NEW]";
