@@ -252,6 +252,7 @@ $locale['figure_032a'] = "Amazon CA";
 $locale['figure_033'] = "No Offers";
 $locale['figure_034'] = "Release (Freigabe)";
 $locale['figure_035'] = "Max. filesize %s / Allowed filetypes GIF, JPEG or PNG.";
+$locale['figure_036'] = " / Max. image upload count: ";
 
 // figure_items.php
 $locale['figure_100'] = "Add Figure";
@@ -351,6 +352,7 @@ $locale['figure_361'] = "Only values 1-500 allowed!";
 $locale['figure_362'] = "Only values 1-10 allowed!";
 $locale['figure_363'] = "Allow comments:";
 $locale['figure_364'] = "Allow ratings:";
+$locale['figure_365'] = "Image upload count per figure:";
 
 // figure.php
 $locale['figure_410'] = "[NEW]";
@@ -749,6 +751,8 @@ $locale['figurelib-error-109'] = "You must choose a Packaging.";
 $locale['figurelib-error-110'] = "You must choose a Release Date.";
 $locale['figurelib-error-111'] = "You must choose a Limited Edition.";
 $locale['figurelib-error-112'] = "You must agree our Terms.";
+$locale['figurelib-error-113'] = "Attention: only 40 characters allowed!";
+$locale['figurelib-error-114'] = "Attention: only 50 characters allowed!";
 
 // Placeholders
 $locale['figurelib-placeholder-101'] = "Select a Category";
