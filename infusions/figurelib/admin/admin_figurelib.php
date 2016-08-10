@@ -50,10 +50,10 @@ if (!empty($result)) {
     $data = array(
         "figure_id" => 0,
         "figure_freigabe" => 0,
-	"figure_allow_comments" => 0,
-	"figure_allow_ratings" => 0, 
-	"figure_language" => LANGUAGE,
-	"figure_sorting" => "",
+		"figure_allow_comments" => 0,
+		"figure_allow_ratings" => 0, 
+		"figure_language" => LANGUAGE,
+		"figure_sorting" => "",
         "figure_title" => "",
         "figure_variant" => "",
         "figure_manufacturer" => "",
@@ -142,10 +142,10 @@ if (!empty($result)) {
             "figure_id" => form_sanitizer($_POST['figure_id'], 0, "figure_id"),
             "figure_datestamp" => form_sanitizer($_POST['figure_datestamp'], "", "figure_datestamp"),
             "figure_freigabe" => form_sanitizer($_POST['figure_freigabe'], 0, "figure_freigabe"),
-	    "figure_allow_comments" => form_sanitizer($_POST['figure_allow_comments'], 0, "figure_allow_comments"),
-	    "figure_allow_ratings" => form_sanitizer($_POST['figure_allow_ratings'], 0, "figure_allow_ratings"),
-	    "figure_language" => form_sanitizer($_POST['figure_language'], "", "figure_language"),
-	    "figure_sorting" => form_sanitizer($_POST['figure_sorting'], "", "figure_sorting"),
+			"figure_allow_comments" => form_sanitizer($_POST['figure_allow_comments'], 0, "figure_allow_comments"),
+			"figure_allow_ratings" => form_sanitizer($_POST['figure_allow_ratings'], 0, "figure_allow_ratings"),
+			"figure_language" => form_sanitizer($_POST['figure_language'], "", "figure_language"),
+			"figure_sorting" => form_sanitizer($_POST['figure_sorting'], "", "figure_sorting"),
             "figure_title" => form_sanitizer($_POST['figure_title'], "", "figure_title"),
             "figure_variant" => form_sanitizer($_POST['figure_variant'], "", "figure_variant"),
             "figure_manufacturer" => form_sanitizer($_POST['figure_manufacturer'], "", "figure_manufacturer"),
@@ -293,7 +293,7 @@ if (!empty($result)) {
     echo "<div class='text-right'>\n";
     echo form_button('save_figure', $locale['figurelib/admin/figurelib.php_064'],
                      $locale['figurelib/admin/figurelib.php_064'], array('input_id'=>'top_save', 'class' => 'btn btn-default btn-sm'));
-	echo "<a class='btn btn-default btn-sm'  href='".FUSION_SELF.$aidlink."&amp;section=figurelib_form&amp;action=delete&amp;figure_id=".$data['figure_id']."&amp;figure_id=".$data['figure_id']."' onclick=\"return confirm('".$locale['film_0004']."');\">".$locale['cifg_0006']."</a>"; 
+	echo "<a class='btn btn-default btn-sm'  href='".FUSION_SELF.$aidlink."&amp;section=figurelib_form&amp;action=delete&amp;figure_id=".$data['figure_id']."&amp;figure_id=".$data['figure_id']."' onclick=\"return confirm('".$locale['film_0004']."');\"> ".$locale['cifg_0006']."</a>"; 
 
 
    echo "</div>\n";
@@ -359,9 +359,10 @@ if (!empty($result)) {
     closeside();
 
     openside('<strong>IMAGES</strong>');
-    $max_image_allowed = 10;
+    //$max_image_allowed = 10;
+	$max_image_allowed = $asettings['figure_image_upload_count'];
     $image_count = dbcount("(figure_images_image_id)", DB_FIGURE_IMAGES, "figure_images_figure_id='$figure_id'");
-
+	
     $file_input_options = array(
         "inline" => TRUE,
         "template" => "modern",
@@ -379,7 +380,7 @@ if (!empty($result)) {
         "thumbnail_folder" => "thumbs/",
         'delete_original' => 0,
         'type' => 'image',
-        'ext_tip' => sprintf($locale['figure_035'], parsebytesize($asettings['figure_photo_max_b'])),
+        'ext_tip' => sprintf($locale['figure_035'], parsebytesize($asettings['figure_photo_max_b']) . $locale['figure_036'] . $max_image_allowed),
         'deactivate' => $image_count > 10 ? true : false,
     );
 
@@ -973,7 +974,7 @@ if (!empty($result)) {
 // ['film_0004'] = "Delete this Figure?";
 // ['cifg_0006'] = "Delete";
 				
-	echo "<a class='btn btn-default btn-sm'  href='".FUSION_SELF.$aidlink."&amp;section=figurelib_form&amp;action=delete&amp;figure_id=".$data['figure_id']."&amp;figure_id=".$data['figure_id']."' onclick=\"return confirm('".$locale['film_0004']."');\">".$locale['cifg_0006']."</a>"; 
+	echo "<a class='btn btn-default btn-sm'  href='".FUSION_SELF.$aidlink."&amp;section=figurelib_form&amp;action=delete&amp;figure_id=".$data['figure_id']."&amp;figure_id=".$data['figure_id']."' onclick=\"return confirm('".$locale['film_0004']."');\"> ".$locale['cifg_0006']."</a>"; 
 
     echo closeform();
 
