@@ -201,6 +201,7 @@ if (iMEMBER && $fil_settings['figure_submit']) {
 				"inline" => TRUE,
 				"required" => TRUE,
 				"width" => "400px",
+				"max_length" => 320,
 				"placeholder" => $locale['figure_1801'],
 				"error_text" => $locale['figurelib-error-101']
 			)
@@ -210,6 +211,7 @@ if (iMEMBER && $fil_settings['figure_submit']) {
 			array(
 				"inline" => TRUE,
 				"width" => "400px",
+				"max_length" => 320,
 				"placeholder" => $locale['figure_1802']
 			)
 		);
@@ -239,6 +241,7 @@ if (iMEMBER && $fil_settings['figure_submit']) {
 		echo form_text("figure_country", $locale['figure_436'], $submitdata['figure_country'],
 			array(
 				"inline" => TRUE,
+				"max_length" => 100,
 				"width" => "400px",
 				"placeholder" => $locale['figure_1804']
 			)
@@ -288,6 +291,8 @@ if (iMEMBER && $fil_settings['figure_submit']) {
 			array(
 				"inline" => TRUE,
 				"width" => "400px",
+				"max_length" => 40,
+				"error_text" => $locale['figurelib-error-113'],
 				"placeholder" => $locale['figure_1806']
 			)
 		);
@@ -458,6 +463,8 @@ if (iMEMBER && $fil_settings['figure_submit']) {
 		echo "</div>\n";
 				
 		// File Field "Images"
+		//$max_image_allowed = 10;
+		$max_image_allowed = $asettings['figure_image_upload_count'];
 		echo form_fileinput("figure_image[]", $locale['figure_136'], "", 
 			array(
 				"inline" => TRUE,
@@ -467,8 +474,9 @@ if (iMEMBER && $fil_settings['figure_submit']) {
 				"thumbnail_folder" => "thumbs/",
 				"thumbnail" => TRUE,
 				"required" => FALSE,
+				'ext_tip' => sprintf($locale['figure_035'], parsebytesize($asettings['figure_photo_max_b']) . $locale['figure_036'] . $max_image_allowed),
 				"max_byte" => $asettings['figure_photo_max_b'],
-				"max_count" => 10
+				"max_count" => $max_image_allowed
 			)
 		);	
 		
