@@ -133,10 +133,14 @@ if ($image_count) {
       if (!$image_thumb) {
          $image_thumb = IMAGES."imagenotfound70.jpg";
       }
-      
-      // Bild einfügen
+	  
+	  $image_image = get_figure_image_path($image_data['figure_images_image']);
+      if (!$image_image) {
+         $image_image = IMAGES."imagenotfound70.jpg";
+      }
+        
       $images .= "<div class='item".($i == 0 ? " active" : "")."'>\n";
-         $images .= "<center><img src='".$image_thumb."' alt='".$locale['figure_588']."' />\n";
+         $images .= "<center><a href='".$image_image."'  height='100%' width='100%' alt='".$data['figure_title']."'><img src='".$image_thumb."' alt='".$locale['figure_588']."' /></a>\n";
       $images .= "</div>\n";
 
       // Counter erhöhen
