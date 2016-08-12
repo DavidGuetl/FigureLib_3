@@ -75,66 +75,37 @@ $result = dbquery(
 		while ($data = dbarray($result)) {
 
 // IMAGES ####################################################################################	
+
 openside("<div class='well clearfix'><strong></strong>&nbsp;&nbsp;<a href='".INFUSIONS."figurelib/figures.php?figure_id=".$data['figure_id']."'>".trimlink($data['figure_title'], 23)." (".trimlink($data['figure_manufacturer_name'], 23).") [".$data['figure_year']."]</a></div>");
-/*
-$figure_id = $data['figure_id'];
-	
-		$image_count = dbcount("(figure_images_image_id)", DB_FIGURE_IMAGES, "figure_images_figure_id='$figure_id'");
-    
-    if ($image_count) {
-        echo "<div class='row'>\n";
-        $resultimage = dbquery("SELECT * FROM ".DB_FIGURE_IMAGES." WHERE figure_images_figure_id='$figure_id'");
-                while ($image_data = dbarray($resultimage)) {
-
-            $image_thumb = get_figure_image_path($image_data['figure_images_image'], $image_data['figure_images_thumb']);
-            if (!$image_thumb) {
-                $image_thumb = IMAGES."imagenotfound70.jpg";
-            }
-            echo "<div class='col-xs-12 col-sm-4'>\n";
-            
-
-            echo "<div class='' style='height: 250px '>";
-            echo "<img class='img-responsive img-thumbnail' src='".$image_thumb."' alt='".$locale['figure_588']."' />\n";
-            echo "</div>";
-
-            echo "</div>\n";
-
-        }
-
-        echo "</div>\n";
-
-    }
-	
-*/	
 
 // Figure ID
 $figure_id = $data['figure_id'];
 
-// Alle Bilder zählen
+// Alle Bilder zählen - (image count)
 $image_count = dbcount("(figure_images_image_id)", DB_FIGURE_IMAGES, "figure_images_figure_id='".$figure_id."'");
 
 // Insofern Bilder vorhanden sind, Ausgabe beginnen
 if ($image_count) {
    
-   // Standard Variablen
+   // Standard Variablen  (standard variables)
    $indicators = "";
    $images     = "";
    $i          = 0;
    
-   // Bilder auslesen
+   // Bilder auslesen (get image data)
    $resultimage = dbquery("SELECT * FROM ".DB_FIGURE_IMAGES." WHERE figure_images_figure_id='".$figure_id."'");
    while ($image_data = dbarray($resultimage)) {
 
-      // Indikator einfügen
+      // Indikator einfügen (add indicators)
       $indicators .= "<li data-target='#myCarousel' data-slide-to='".$i."'".($i == 0 ? " class='active'" : "")."></li>\n";
    
-      // Bild auslesen
+      // Bild auslesen (get image)
       $image_thumb = get_figure_image_path($image_data['figure_images_image'], $image_data['figure_images_thumb']);
       if (!$image_thumb) {
          $image_thumb = IMAGES."imagenotfound70.jpg";
       }
 	  
-	  $image_image = get_figure_image_path($image_data['figure_images_image']);
+	  $image_image = get_figure_image_path($image_data['figure_images_image'], $image_data['figure_images_image']);
       if (!$image_image) {
          $image_image = IMAGES."imagenotfound70.jpg";
       }
@@ -143,11 +114,11 @@ if ($image_count) {
          $images .= "<center><a href='".$image_image."'  height='100%' width='100%' alt='".$data['figure_title']."'><img src='".$image_thumb."' alt='".$locale['figure_588']."' /></a>\n";
       $images .= "</div>\n";
 
-      // Counter erhöhen
+      // Counter erhöhen (counter +1)
       $i++;
    }
    
-   // Carousel anzeigen
+   // Carousel anzeigen (show carousel)
    echo "<div id='myCarousel' class='carousel slide' data-ride='carousel'>\n";
       echo "<ol class='carousel-indicators'>\n";
          echo $indicators;
@@ -165,100 +136,68 @@ if ($image_count) {
       echo "</a>\n";
    echo "</div>\n";
    
-   // Variablen löschen
+   // Variablen löschen (delete variables)
    unset($indicators, $images, $i);
 }
-
 // ############################################################################################	
 
-
 // ###########  FIGURE DETAILS   ##############################################################
-	
-				
-/*		
-   echo "<div class='panel-group' id='accordion'><div class='panel panel-default'><div class='panel-heading'>
-      <h4 class='panel-title'><a data-toggle='collapse' data-parent='#accordion' href='#collapse1'>".$locale['figure_441']."</a></h4></div>
-    <div id='collapse1' class='panel-collapse collapse in'><div class='panel-body'>".$data['figure_variant']."</div></div></div>\n";
-   
-   echo "<div class='panel panel-default'><div class='panel-heading'>
-		<h4 class='panel-title'><a data-toggle='collapse' data-parent='#accordion' href='#collapse2'>".$locale['figure_439']."</a></h4></div>
-    <div id='collapse2' class='panel-collapse collapse'><div class='panel-body'>".$data['figure_series']."</div></div></div>\n";
-	
-   echo "<div class='panel panel-default'><div class='panel-heading'>
-		<h4 class='panel-title'><a data-toggle='collapse' data-parent='#accordion' href='#collapse3'>".$locale['figure_417']."</a></h4></div>
-    <div id='collapse3' class='panel-collapse collapse'><div class='panel-body'>".$data['figure_manufacturer_name']."</div></div></div>\n";
-	
-   echo "<div class='panel panel-default'><div class='panel-heading'>
-		<h4 class='panel-title'><a data-toggle='collapse' data-parent='#accordion' href='#collapse4'>".$locale['figure_419']."</a></h4></div>
-    <div id='collapse4' class='panel-collapse collapse'><div class='panel-body'>".$data['figure_year']."</div></div></div>\n";
-	
-   echo "<div class='panel panel-default'><div class='panel-heading'>
-		<h4 class='panel-title'><a data-toggle='collapse' data-parent='#accordion' href='#collapse5'>".$locale['figure_436']."</a></h4></div>
-    <div id='collapse5' class='panel-collapse collapse'><div class='panel-body'>".$data['figure_country']."</div></div></div>\n";
-    
-   echo "<div class='panel panel-default'><div class='panel-heading'>
-      <h4 class='panel-title'><a data-toggle='collapse' data-parent='#accordion' href='#collapse6'>".$locale['figure_452']."</a></h4></div>
-    <div id='collapse6' class='panel-collapse collapse'><div class='panel-body'>".$data['figure_artists']."</div>
-	</div></div></div>\n";
-
-*/
-		
-			// Variant
-
+			
+		// Variant
 			echo "<table class='table table-hover'><tr>\n";	
 				echo "<colgroup><col width='20%'><col width='80%'></colgroup>\n"; 			
 					echo "<td  class='navbar-default'><div class='text-smaller text-uppercase'><strong>".$locale['figure_441'].":</strong></div></td>\n";
 					echo "<td  class=''><small>".$data['figure_variant']."</small></td>\n";	
 			echo "</tr>\n";		
 			
-			// Series
+		// Series
 			echo "<tr>\n";			
 					echo "<td  class='navbar-default'><div class='text-smaller text-uppercase'><strong>".$locale['figure_439'].":</strong></div></td>\n";
 					echo "<td  class=''><small>".$data['figure_series']."</small></td>\n";				
 			echo "</tr>\n";	
 
-			// Manufacturer
+		// Manufacturer
 			echo "<tr>\n"; 			
 					echo "<td  class='navbar-default'><div class='text-smaller text-uppercase'><strong>".$locale['figure_417'].":</strong></div></td>\n";
 					echo "<td  class=''><small>".$data['figure_manufacturer_name']."</small></td>\n";
 			echo "</tr>\n";
 			
-			// Release Date
+		// Release Date
 			echo "<tr>\n";		
 					echo "<td  class='navbar-default'><div class='text-smaller text-uppercase'><strong>".$locale['figure_419'].":</strong></div></td>\n";
 					echo "<td  class=''><small>".$data['figure_year']."</small></td>\n";
 			echo "</tr>\n";
 			
-			// Country
+		// Country
 			echo "<tr>\n"; 			
 					echo "<td  class='navbar-default'><div class='text-smaller text-uppercase'><strong>".$locale['figure_436'].":</strong></div></td>\n";
 					echo "<td  class=''><small>".$data['figure_country']."</small></td>\n";						
 			echo "</tr>\n";
 			
-			// Artists
+		// Artists
 			echo "<tr>\n"; 			
 					echo "<td  class='navbar-default'><div class='text-smaller text-uppercase'><strong>".$locale['figure_452'].":</strong></div></td>\n";
 					echo "<td  class=''><small>".$data['figure_artists']."</small></td>\n";						
 						
-			//BLANK LINE		
+		// Space
 			echo "<tr>\n";
 					echo "<td class='active'></td>\n";
 					echo "<td class='active'></td>\n";	
 			echo "</tr>\n";
 			
-			// Scale
+		// Scale
 			echo "<tr>\n"; 			
 					echo "<td  class='navbar-default'><div class='text-smaller text-uppercase'><strong>".$locale['figure_442'].":</strong></div></td>\n";
 					echo "<td  class=''><small>".$data['figure_scale_name']."</small></td>\n";	
 			echo "</tr>\n";	
 			
-			// Weight
+		// Weight
 			echo "<tr>\n";			
 					echo "<td  class='navbar-default'><div class='text-smaller text-uppercase'><strong>".$locale['figure_443'].":</strong></div></td>\n";
 					echo "<td  class=''><small>".$data['figure_weight']."</small></td>\n";	
 			echo "</tr>\n";			
 						
-			// Height
+		// Height
 			echo "<tr>\n";			
 					echo "<td  class='navbar-default'><div class='text-smaller text-uppercase'><strong>".$locale['figure_444'].":</strong></div></td>\n";
 			
@@ -274,9 +213,8 @@ if ($image_count) {
 						}
 					}						
 			echo "</tr>\n";	
-			
-				
-			// Width
+							
+		// Width
 			echo "<tr>\n"; 	
 					echo "<td  class='navbar-default'><div class='text-smaller text-uppercase'><strong>".$locale['figure_445'].":</strong></div></td>\n";
 				
@@ -292,9 +230,8 @@ if ($image_count) {
 						}
 					}				
 			echo "</tr>\n";
-					
-					
-			// Depth
+										
+		// Depth
 			echo "<tr>\n"; 			
 					echo "<td  class='navbar-default'><div class='text-smaller text-uppercase'><strong>".$locale['figure_446'].":</strong></div></td>\n";
 						
@@ -310,85 +247,82 @@ if ($image_count) {
 							}	
 			echo "</tr>\n";
 			
-			//BLANK LINE		
+		// Space		
 			echo "<tr>\n";
 					echo "<td class='active'></td>\n";
 					echo "<td class='active'></td>\n";	
 			echo "</tr>\n";
 			
-			// Brand
+		// Brand
 			echo "<tr>\n"; 				
 					echo "<td  class='navbar-default'><div class='text-smaller text-uppercase'><strong>".$locale['figure_438'].":</strong></div></td>\n";
 					echo "<td  class=''><small>".$data['figure_brand_name']."</small></td>\n";		
 			echo "</tr>\n";					
-					
-										
-			//  Material
+															
+		//  Material
 			echo "<tr>\n"; 				
 					echo "<td  class='navbar-default'><div class='text-smaller text-uppercase'><strong>".$locale['figure_447'].":</strong></div></td>\n";
 					echo "<td  class=''><small>".$data['figure_material_name']."</small></td>\n";
 			echo "</tr>\n";
 					
-			// Articulations Points
+		// Articulations Points
 			echo "<tr>\n"; 			
 					echo "<td  class='navbar-default'><div class='text-smaller text-uppercase'><strong>".$locale['figure_455'].":</strong></div></td>\n";
 					echo "<td  class=''><small>".$data['figure_poa_name']."</small></td>\n";				
 			echo "</tr>\n";	
 									
-			// Packaging
+		// Packaging
 			echo "<tr>\n"; 		
 					echo "<td  class='navbar-default'><div class='text-smaller text-uppercase'><strong>".$locale['figure_448'].":</strong></div></td>\n";
 					echo "<td  class=''><small>".$data['figure_packaging_name']."</small></td>\n";	
 			echo "</tr>\n";
 									
-			//BLANK LINE		
+		//BLANK LINE		
 			echo "<tr>\n";
 					echo "<td class='active'></td>\n";
 					echo "<td class='active'></td>\n";	
 			echo "</tr>\n";
 			
-			// MSRP (Price by Release)
+		// MSRP (Price by Release)
 			echo "<tr>\n"; 				
 					echo "<td  class='navbar-default'><div class='text-smaller text-uppercase'><strong>".$locale['figure_449'].":</strong></div></td>\n";
 					echo "<td  class=''><small>".$data['figure_retailprice']."</small></td>\n";					
 			echo "</tr>\n";
 			
-			// Used Price	
+		// Used Price	
 			echo "<tr>\n"; 				
 					echo "<td  class='navbar-default'><div class='text-smaller text-uppercase'><strong>".$locale['figure_456'].":</strong></div></td>\n";
 					echo "<td  class=''><small>".$data['figure_usedprice']."</small></td>\n";
 			echo "</tr>\n";			
 
-			// Limited Edition YES/NO 
+		// Limited Edition YES/NO 
 			echo "<tr>\n"; 
 					echo "<td  class='navbar-default'><div class='text-smaller text-uppercase'><strong>".$locale['figure_450'].":</strong></div></td>\n";
 					echo "<td  class=''><small>".$data['figure_limitation_name']."</small></td>\n";
 			echo "</tr>\n";
 			
-			// Edition Size
+		// Edition Size
 			echo "<tr>\n"; 
 					echo "<td  class='navbar-default'><div class='text-smaller text-uppercase'><strong>".$locale['figure_451'].":</strong></div></td>\n";
 					echo "<td  class=''><small>".$data['figure_editionsize']."</small></td>\n";
 			echo "</tr>\n";
 						
-			//BLANK LINE		
+		// Space		
 			echo "<tr>\n";
 					echo "<td class='active'></td>\n";
 					echo "<td class='active'></td>\n";	
 			echo "</tr>\n";
 
-			// Accessories 	
+		// Accessories 	
 			echo "<tr>\n"; 			
 					echo "<td  class='navbar-default'><div class='text-smaller text-uppercase'><strong>".$locale['figure_457'].":</strong></div></td>\n";					
 					echo "<td style='word-break: break-all; word-wrap: break-word;'><small>".($data['figure_accessories'] ? $data['figure_accessories'] : "-")."</small></td>\n";						
-					//echo "<td  class=''><small><div style='width:45em;'><span style='word-wrap: break-word; word-break: break-all;'>".($data['figure_accessories'] ? $data['figure_accessories'] : "-")."</span></div></small></td>\n";	
 			echo "</tr>\n";
 			
-			// Discreption 
+		// Discreption 
 			echo "<tr>\n";				
 					echo "<td  class='navbar-default'><div class='text-smaller text-uppercase'><strong>".$locale['figure_423'].":</strong></div></td>\n";
-					echo "<td style='word-break: break-all; word-wrap: break-word;'><small>".nl2br(parseubb(parsesmileys($data['figure_description'])))."</small></td>";	
-					//echo "<td  class='list-group-item'><small><div style='width:45em;'><span style='word-wrap: break-word; word-break: break-all;'>".nl2br(parseubb(parsesmileys($data['figure_description'])))."</span></div></small></td>";		
+					echo "<td style='word-break: break-all; word-wrap: break-word;'><small>".nl2br(parseubb(parsesmileys($data['figure_description'])))."</small></td>";		
 			echo "</tr></table>\n";	
 
 closeside();
@@ -409,7 +343,6 @@ if (iADMIN || iSUPERADMIN) {
 }
 // ############################################################################################	
 
-
 // ########  AFFILIATE PANEL  #################################################################
 openside("<div class='well clearfix'><strong>AFFILIATES</strong></div>");						
 				
@@ -425,12 +358,12 @@ openside("<div class='well clearfix'><strong>AFFILIATES</strong></div>");
 					
 			echo "<table style='cellspacing:10px; cellpadding:10px;' class='table' width='100%'>\n";
 		
-			 // FIRST LINE ESHOP (PRIORITY 1)		 
+		// FIRST LINE ESHOP (PRIORITY 1)		 
 			 if ($data['figure_eshop'] == "") { 
 						} else { 
 						echo "<tr><td style='text-align:center; vertical-align:middle;' colspan='4'><a href='".$data['figure_eshop']."'</a>".trimlink($data['figure_eshop'],15)."</td></tr>\n"; }	
 			 
-			// SECOND LINE AFFILIATE (PRIORITY 2)			 
+		// SECOND LINE AFFILIATE (PRIORITY 2)			 
 			 if ($data['figure_affiliate_1']  ||  $data['figure_affiliate_2'] ||  $data['figure_affiliate_3'] || $data['figure_affiliate_4'] != "") { 
 			 
 				 echo "<tr>\n";
@@ -451,7 +384,7 @@ openside("<div class='well clearfix'><strong>AFFILIATES</strong></div>");
 			 } else { 
 			 }
 			 
-			// THIRD LINE AFFILIATE (PRIORITY 2)		 
+		// THIRD LINE AFFILIATE (PRIORITY 2)		 
 			if ($data['figure_affiliate_5']  ||  $data['figure_affiliate_6'] ||  $data['figure_affiliate_7'] || $data['figure_affiliate_8'] != "") { 
 			 
 				 echo "<tr>\n";
@@ -473,7 +406,7 @@ openside("<div class='well clearfix'><strong>AFFILIATES</strong></div>");
 			} else { 
 			 }
 			
-			// FOURTH LINE AMAZON COM CA UK DE	
+		// FOURTH LINE AMAZON COM CA UK DE	
 
 				echo "<tr>\n";
 				echo "<colgroup><col width='25%'><col width='25%'><col width='25%'><col width='25%'></colgroup>\n"; 
@@ -495,7 +428,7 @@ openside("<div class='well clearfix'><strong>AFFILIATES</strong></div>");
 						} else { echo "<a href='".$data['figure_amazon_de']."'><img src='".INFUSIONS."figurelib/images/flags/flag_germany.png"."' alt='".trimlink($data['figure_amazon_de'],50)."' title='".trimlink($data['figure_amazon_de'],100)."'></td>\n"; }	
 				echo "</tr>\n";
 			 		 
-			 // FIFTH LINE AMAZON JP FR ES IT
+		// FIFTH LINE AMAZON JP FR ES IT
 				echo "<tr>\n";
 				echo "<colgroup><col width='25%'><col width='25%'><col width='25%'><col width='25%'></colgroup>\n"; 
 			
@@ -518,7 +451,6 @@ openside("<div class='well clearfix'><strong>AFFILIATES</strong></div>");
 				echo "</tr></table>\n";			
 closeside();
 // ############################################################################################
-
 				
 // ####### USERFIGURES  #######################################################################
 		// LOCALE
@@ -605,10 +537,8 @@ closeside();
 								//echo "  <a href='http://google.com' class='btn btn-sm btn-primary'>".$locale['sale']."</a>";
 								echo "</div>\n";
 								echo "<p>";
-							echo closeform();	
-														
-					}	
-					
+							echo closeform();															
+					}						
 	}
 	
 // ########### 	LIST OF ALL USER WHERE HAVE THIS FIGURE  ##################################				
@@ -650,7 +580,6 @@ closeside();
 		}	
 closeside();
 // ############################################################################################
-
 
 // ###########  RELATED FIGURES  ##############################################################			
 	$fil_settings = get_settings("figurelib");
@@ -703,8 +632,8 @@ closeside();
 						} 
 					
 					} else {
-							
-							echo "<tr><td class='tbl1' colspan='4' width='33%' align=''>".$locale['figure_426']."</td><br><br></tr>"; // ['figure_426'] = "No related figures found.";
+							// ['figure_426'] = "No related figures found.";
+							echo "<tr><td class='tbl1' colspan='4' width='33%' align=''>".$locale['figure_426']."</td><br><br></tr>"; 
 
 					}
 							//echo "</div>\n";
@@ -712,7 +641,6 @@ closeside();
 		closeside();										
 	}					
 // ############################################################################################
-
 
 // ######  RATING UND COMMENTS	###############################################################
 	
@@ -751,8 +679,8 @@ closeside();
 
 // ############################################################################################		
 
-	} // TO LINE 75
-}	// TO LINE 74
+	} 				// TO LINE 75
+}					// TO LINE 74
 
 // ############################################################################################
 	
@@ -765,32 +693,28 @@ closeside();
 
 echo "</aside>\n";
 
-	} // TO LINE 31
+	} 				// TO LINE 31
 	
-} // TO LINE 32
+} 					// TO LINE 32
 	
+// ##### FUNCTINS FOR IMAGES  #################################################################
 
 function get_figure_image_path($figure_images_image, $figure_images_thumb, $hiRes = FALSE) {
     if (!$hiRes) {
         if ($figure_images_thumb && file_exists(THUMBS_FIGURES.$figure_images_thumb)) {
             return THUMBS_FIGURES.$figure_images_thumb;
         }
-        if ($figure_images_thumb && file_exists(IMAGES_FIGURES.$figure_images_thumb)) {
-            return IMAGES_FIGURES.$figure_images_thumb;
-        }
-        if ($figure_images_image && file_exists(IMAGES_FIGURES.$figure_images_image)) {
+		if ($figure_images_image && file_exists(IMAGES_FIGURES.$figure_images_image)) {
             return IMAGES_FIGURES.$figure_images_image;
-        }
+        }		
     } else {
-        if ($figure_images_image && file_exists(IMAGES_FIGURES.$figure_images_image)) {
-            return IMAGES_FIGURES.$figure_images_image;
-        }
-        if ($figure_images_thumb && file_exists(IMAGES_FIGURES.$figure_images_thumb)) {
-            return IMAGES_FIGURES.$figure_images_thumb;
-        }
         if ($figure_images_thumb && file_exists(THUMBS_FIGURES.$figure_images_thumb)) {
             return THUMBS_FIGURES.$figure_images_thumb;
+        }
+		if ($figure_images_image && file_exists(IMAGES_FIGURES.$figure_images_image)) {
+            return IMAGES_FIGURES.$figure_images_image;
         }
     }
 
 }
+// ############################################################################################
