@@ -76,7 +76,7 @@ $result = dbquery(
 
 // IMAGES ####################################################################################	
 openside("<div class='well clearfix'><strong></strong>&nbsp;&nbsp;<a href='".INFUSIONS."figurelib/figures.php?figure_id=".$data['figure_id']."'>".trimlink($data['figure_title'], 23)." (".trimlink($data['figure_manufacturer_name'], 23).") [".$data['figure_year']."]</a></div>");
-
+/*
 $figure_id = $data['figure_id'];
 	
 		$image_count = dbcount("(figure_images_image_id)", DB_FIGURE_IMAGES, "figure_images_figure_id='$figure_id'");
@@ -104,8 +104,66 @@ $figure_id = $data['figure_id'];
         echo "</div>\n";
 
     }
+	
+*/	
 
+// Figure ID
+$figure_id = $data['figure_id'];
 
+// Alle Bilder zählen
+$image_count = dbcount("(figure_images_image_id)", DB_FIGURE_IMAGES, "figure_images_figure_id='".$figure_id."'");
+
+// Insofern Bilder vorhanden sind, Ausgabe beginnen
+if ($image_count) {
+   
+   // Standard Variablen
+   $indicators = "";
+   $images     = "";
+   $i          = 0;
+   
+   // Bilder auslesen
+   $resultimage = dbquery("SELECT * FROM ".DB_FIGURE_IMAGES." WHERE figure_images_figure_id='".$figure_id."'");
+   while ($image_data = dbarray($resultimage)) {
+
+      // Indikator einfügen
+      $indicators .= "<li data-target='#myCarousel' data-slide-to='".$i."'".($i == 0 ? " class='active'" : "")."></li>\n";
+   
+      // Bild auslesen
+      $image_thumb = get_figure_image_path($image_data['figure_images_image'], $image_data['figure_images_thumb']);
+      if (!$image_thumb) {
+         $image_thumb = IMAGES."imagenotfound70.jpg";
+      }
+      
+      // Bild einfügen
+      $images .= "<div class='item".($i == 0 ? " active" : "")."'>\n";
+         $images .= "<center><img src='".$image_thumb."' alt='".$locale['figure_588']."' />\n";
+      $images .= "</div>\n";
+
+      // Counter erhöhen
+      $i++;
+   }
+   
+   // Carousel anzeigen
+   echo "<div id='myCarousel' class='carousel slide' data-ride='carousel'>\n";
+      echo "<ol class='carousel-indicators'>\n";
+         echo $indicators;
+      echo "</ol>\n";
+      echo "<div class='carousel-inner' role='listbox'>\n";
+         echo $images;
+      echo "</div>\n";
+      echo "<a class='left carousel-control' href='#myCarousel' role='button' data-slide='prev'>\n";
+         echo "<span class='glyphicon glyphicon-chevron-left' aria-hidden='true'></span>\n";
+         echo "<span class='sr-only'>Previous</span>\n";
+      echo "</a>\n";
+      echo "<a class='right carousel-control' href='#myCarousel' role='button' data-slide='next'>\n";
+         echo "<span class='glyphicon glyphicon-chevron-right' aria-hidden='true'></span>\n";
+         echo "<span class='sr-only'>Next</span>\n";
+      echo "</a>\n";
+   echo "</div>\n";
+   
+   // Variablen löschen
+   unset($indicators, $images, $i);
+}
 
 // ############################################################################################	
 
