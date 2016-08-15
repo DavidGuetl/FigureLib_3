@@ -198,8 +198,9 @@ $locale['lastentries']= "Last Figures";
 				echo "</div>\n";
 				echo "</div>\n";
 				echo "</div>\n";
-
+				
 		}
+				echo "<hr>\n";
 
 					if (iADMIN || iSUPERADMIN) {		
 										
