@@ -109,9 +109,13 @@ $locale['lastentries']= "Last Figures";
 				
 				echo "<hr>";
 		 
-		while($data = dbarray($result)){
-		
-					// WHILE SCHLEIFE FÜR DAS HOLEN DES BILDES AUS ORDNER / ORDNER MUSS IN infusion.db.php deklariert sein!
+	while($data = dbarray($result)){
+				
+				echo "<div class='row'>\n";			
+				echo "<div class='container-fluid'>\n";
+				echo "<div class='table-responsive'>\n";
+				
+				// WHILE SCHLEIFE FÜR DAS HOLEN DES BILDES AUS ORDNER / ORDNER MUSS IN infusion.db.php deklariert sein!
 				
 					$result2 = dbquery("SELECT
 						   figure_images_image_id,
@@ -126,9 +130,7 @@ $locale['lastentries']= "Last Figures";
 				while($data2 = dbarray($result2)){
 						
 			
-				echo "<div class='row'>\n";			
-				echo "<div class='container-fluid'>\n";
-				echo "<div class='table-responsive'>\n";
+				
 						
 						// COLUMN 1 (image clickable)
 						echo "<div class='col-lg-1 col-md-2 col-sm-2 col-xs-2'>\n";
@@ -292,7 +294,7 @@ $locale['lastentries']= "Last Figures";
 		
 	} else {
 		
-		// Menü unterhalb nur für gäste
+			// Menü unterhalb nur für gäste
 				
 				echo "<hr>\n";
 				echo "<div class='row'>\n";
@@ -320,7 +322,7 @@ $locale['lastentries']= "Last Figures";
 				echo "</div>\n";
 				echo "</div>\n";
 			
-}
+			}
  } else {
 			echo "<div style='text-align: center;'>".$locale['CLFP_001']."</div>"; // 001 = No figures available"
  }
