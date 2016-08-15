@@ -65,6 +65,8 @@ global $settings;
 					
 		if ($info['figure_rows'] != 0) {						
 						$counter = 0;
+						
+						// DIESER WERT IST WICHTIG WENN MEHRERE FIGUREN ENBENEINANDER HABEN WILL
 						$columns = 4;
 						echo "<div class='row m-0'>\n";
 				if (!empty($info['item'])) {
