@@ -112,11 +112,30 @@ if (!empty($result)) {
         }
     }
 
+	$result = dbquery(
+						"SELECT f.figure_id,					
+								fuf.figure_userfigures_figure_id 	
+						FROM ".DB_FIGURE_ITEMS." f
+						INNER JOIN ".DB_FIGURE_USERFIGURES." fuf ON fuf.figure_userfigures_figure_id=f.figure_id
+						".(multilang_table("FI") ? "WHERE figure_language='".LANGUAGE."' AND" : "WHERE")." ");
+						
+			if (dbrows($result) != 0) {
+				while($data = dbarray($result)){	
+				
+				addNotice("success", $locale['figure_1709']);
+	
+				}
+
+			} else {
+	
     if ((isset($_GET['action']) && $_GET['action'] == "delete") && (isset($_GET['figure_id']) && isnum($_GET['figure_id']))) {
 
         $result = dbquery("DELETE FROM ".DB_FIGURE_ITEMS." WHERE figure_id='".$_GET['figure_id']."'");
-        $result = dbquery("SELECT * FROM ".DB_FIGURE_IMAGES." WHERE figure_id='".intval($figure_id)."'");
-        if (dbrows($result) > 0) {
+        
+		$result = dbquery("SELECT * FROM ".DB_FIGURE_IMAGES." WHERE figure_id='".intval($figure_id)."'");
+		//$result = dbquery("SELECT * FROM ".DB_FIGURE_IMAGES." WHERE figure_id='".intval($_GET['figure_id'])."'");
+       
+	   if (dbrows($result) > 0) {
             $photo = dbarray($result);
             if (!empty($photo['figure_images_image']) && file_exists(IMAGES_FIGURES.$photo['figure_images_image'])) {
                 unlink(IMAGES_FIGURES.$photo['figure_images_image']);
@@ -128,6 +147,7 @@ if (!empty($result)) {
         }
 
         dbquery("DELETE FROM  ".DB_FIGURE_IMAGES." WHERE figure_id='".intval($figure_id)."'");
+		//dbquery("DELETE FROM  ".DB_FIGURE_IMAGES." WHERE figure_id='".intval($_GET['figure_id'])."'");
 
         // ['figurelib/admin/figurelib.php_001'] = "Figure deleted";
         addNotice("success", $locale['figurelib/admin/figurelib.php_001']);
@@ -135,6 +155,8 @@ if (!empty($result)) {
 
 
     }
+	}
+	
 
     if (isset($_POST['save_figure'])) {
 
