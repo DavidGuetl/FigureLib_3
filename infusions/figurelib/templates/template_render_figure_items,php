@@ -139,11 +139,354 @@ if ($image_count) {
    // Variablen löschen (delete variables)
    unset($indicators, $images, $i);
 }
+//closeside();
 // ############################################################################################	
 
 // ###########  FIGURE DETAILS   ##############################################################
+//openside('');
+
+	echo "<hr>";
+
+	// BEGINN OF BOOTSTRAP GRID
+	echo "<table class='table'>";
+
 			
-		// Variant
+				echo "<div class='container-fluid'>\n";
+				echo "<div class='table-responsive'>\n";
+				echo "<div class='row'>\n";	
+				
+				// MODUL 1 BEGIN ##################################################################################################
+									
+						// VARIANT LOCALE
+						echo "<div class='col-lg-4 col-md-4 col-sm-12 col-xs-12'>\n";
+							echo "<div class='navbar-default'><div class='text-smaller text-uppercase'><strong>".$locale['figure_441']."</strong>\n";
+						echo "</div></div></div>\n";									
+						
+						// VARIANT DATA
+						echo "<div class='col-lg-8 col-md-8 col-sm-12 col-xs-12'>\n";
+								echo "<span class='small'>&nbsp;".$data['figure_variant']."</span>\n";		
+						echo "</div>\n";
+						
+						// ++++++++++++++++
+						
+						// SERIES LOCALE
+						echo "<div class='col-lg-4 col-md-4 col-sm-12 col-xs-12'>\n";
+							echo "<div class='navbar-default'><div class='text-smaller text-uppercase'><strong>".$locale['figure_439']."</strong>\n";
+						echo "</div></div></div>\n";
+						
+						// SERIES DATA
+						echo "<div class='col-lg-8 col-md-8 col-sm-12 col-xs-12'>\n";
+								echo "<span class='small'>&nbsp;".$data['figure_series']."</span>\n";
+						echo "</div>\n";
+						
+						// ++++++++++++++++
+						
+						// MANUFACTURER LOCALE
+						echo "<div class='col-lg-4 col-md-4 col-sm-12 col-xs-12'>\n";
+							echo "<div class='navbar-default'><div class='text-smaller text-uppercase'><strong>".$locale['figure_417']." :</strong>\n";
+						echo "</div></div></div>\n";									
+						
+						// MANUFACTURER DATA
+						echo "<div class='col-lg-8 col-md-8 col-sm-12 col-xs-12'>\n";
+								echo "<span class='small'>&nbsp;".$data['figure_manufacturer_name']."</span>\n";		
+						echo "</div>\n";
+						
+						// ++++++++++++++++
+						
+						// Release Date LOCALE
+						echo "<div class='col-lg-4 col-md-4 col-sm-12 col-xs-12'>\n";
+							echo "<div class='navbar-default'><div class='text-smaller text-uppercase'><strong>".$locale['figure_419']."</strong>\n";
+						echo "</div></div></div>\n";
+						
+						// Release Date DATA
+						echo "<div class='col-lg-8 col-md-8 col-sm-12 col-xs-12'>\n";
+								echo "<span class='small'>&nbsp;".$data['figure_year']."</span>\n";
+						echo "</div>\n";
+						
+						// ++++++++++++++++
+						
+						// Country LOCALE
+						echo "<div class='col-lg-4 col-md-4 col-sm-12 col-xs-12'>\n";
+							echo "<div class='navbar-default'><div class='text-smaller text-uppercase'><strong>".$locale['figure_436']."</strong>\n";
+						echo "</div></div></div>\n";									
+						
+						// Country DATA
+						echo "<div class='col-lg-8 col-md-8 col-sm-12 col-xs-12'>\n";
+								echo "<span class='small'>&nbsp;".$data['figure_country']."</span>\n";		
+						echo "</div>\n";
+						
+						// ++++++++++++++++
+						
+						// Artists Date LOCALE
+						echo "<div class='col-lg-4 col-md-4 col-sm-12 col-xs-12'>\n";
+							echo "<div class='navbar-default'><div class='text-smaller text-uppercase'><strong>".$locale['figure_452']."</strong>\n";
+						echo "</div></div></div>\n";
+						
+						// Artists Date DATA
+						echo "<div class='col-lg-8 col-md-8 col-sm-12 col-xs-12'>\n";
+								echo "<span class='small'>&nbsp;".$data['figure_artists']."</span>\n";
+						echo "</div>\n";
+
+			echo "</div>\n";
+			echo "</div>\n";
+			echo "</div>\n";
+			// MODUL 1 END ########################################################################################################
+						
+	echo "<hr>";
+
+			// MODUL 2 Begin  #####################################################################################################
+			echo "<div class='container-fluid'>\n";
+			echo "<div class='table-responsive'>\n";
+			echo "<div class='row'>\n";	
+						
+						// Scale LOCALE
+						echo "<div class='col-lg-4 col-md-4 col-sm-12 col-xs-12'>\n";
+							echo "<div class='navbar-default'><div class='text-smaller text-uppercase'><strong>".$locale['figure_442']."</strong>\n";
+						echo "</div></div></div>\n";									
+						
+						// Scale DATA
+						echo "<div class='col-lg-8 col-md-8 col-sm-12 col-xs-12'>\n";
+								echo "<span class='small'>&nbsp;".$data['figure_scale_name']."</span>\n";		
+						echo "</div>\n";
+						
+						// ++++++++++++++++
+						
+						// Weight LOCALE
+						echo "<div class='col-lg-4 col-md-4 col-sm-12 col-xs-12'>\n";
+							echo "<div class='navbar-default'><div class='text-smaller text-uppercase'><strong>".$locale['figure_443']."</strong>\n";
+						echo "</div></div></div>\n";
+						
+						// Weight DATA
+						echo "<div class='col-lg-8 col-md-8 col-sm-12 col-xs-12'>\n";
+								echo "<span class='small'>&nbsp;".$data['figure_weight']."</span>\n";
+						echo "</div>\n";
+						
+						// ++++++++++++++++
+						
+						// Height LOCALE
+						echo "<div class='col-lg-4 col-md-4 col-sm-12 col-xs-12'>\n";
+							echo "<div class='navbar-default'><div class='text-smaller text-uppercase'><strong>".$locale['figure_444']."</strong>\n";
+						echo "</div></div></div>\n";									
+						
+						// Height DATA
+						echo "<div class='col-lg-8 col-md-8 col-sm-12 col-xs-12'>\n";						
+						$height = dbquery("SELECT fm.figure_measurements_id, fm.figure_measurements_inch, f.figure_height
+						FROM ".DB_FIGURE_MEASUREMENTS." fm
+						INNER JOIN ".DB_FIGURE_ITEMS." f ON f.figure_height = fm.figure_measurements_id
+						WHERE figure_id='".$data['figure_id']."'");
+				   
+						if(dbrows($height)){
+						   while($dataheight = dbarray($height)){								
+									echo "<span class='small'>&nbsp;".$dataheight['figure_measurements_inch']."</span>\n";		
+							}
+						}
+						echo "</div>\n";
+						
+						// ++++++++++++++++
+						
+						// Width LOCALE
+						echo "<div class='col-lg-4 col-md-4 col-sm-12 col-xs-12'>\n";
+							echo "<div class='navbar-default'><div class='text-smaller text-uppercase'><strong>".$locale['figure_445']."</strong>\n";
+						echo "</div></div></div>\n";
+						
+						// Width DATA
+						echo "<div class='col-lg-8 col-md-8 col-sm-12 col-xs-12'>\n";
+						$width = dbquery("SELECT fm.figure_measurements_id, fm.figure_measurements_inch, f.figure_width
+						FROM ".DB_FIGURE_MEASUREMENTS." fm
+						INNER JOIN ".DB_FIGURE_ITEMS." f ON f.figure_width = fm.figure_measurements_id
+						WHERE figure_id='".$data['figure_id']."'");
+				   
+						if(dbrows($width)){
+						   while($datawidth = dbarray($width)){	
+									echo "<span class='small'>&nbsp;".$datawidth['figure_measurements_inch']."</span>\n";
+							}
+						}
+						echo "</div>\n";
+						
+						// ++++++++++++++++
+						
+						// Depth LOCALE
+						echo "<div class='col-lg-4 col-md-4 col-sm-12 col-xs-12'>\n";
+							echo "<div class='navbar-default'><div class='text-smaller text-uppercase'><strong>".$locale['figure_446']."</strong>\n";
+						echo "</div></div></div>\n";									
+						
+						// Depth DATA
+						echo "<div class='col-lg-8 col-md-8 col-sm-12 col-xs-12'>\n";
+						$depth = dbquery("SELECT fm.figure_measurements_id, fm.figure_measurements_inch, f.figure_depth
+						   FROM ".DB_FIGURE_MEASUREMENTS." fm
+						   INNER JOIN ".DB_FIGURE_ITEMS." f ON f.figure_depth = fm.figure_measurements_id
+						   WHERE figure_id='".$data['figure_id']."'");
+						   
+						 if(dbrows($depth)){
+							while($datadepth = dbarray($depth)){	
+									echo "<span class='small'>&nbsp;".$datadepth['figure_measurements_inch']."</span>\n";	
+							}
+						}								
+						echo "</div>\n";
+						
+			echo "</div>\n";
+			echo "</div>\n";
+			echo "</div>\n";
+			// MODUL 2 END ########################################################################################################
+			
+	echo "<hr>";
+
+			// MODUL 3 Begin  #####################################################################################################
+			echo "<div class='container-fluid'>\n";
+			echo "<div class='table-responsive'>\n";
+			echo "<div class='row'>\n";	
+						
+						// Brand LOCALE
+						echo "<div class='col-lg-4 col-md-4 col-sm-12 col-xs-12'>\n";
+							echo "<div class='navbar-default'><div class='text-smaller text-uppercase'><strong>".$locale['figure_438']."</strong>\n";
+						echo "</div></div></div>\n";									
+						
+						// Brand DATA
+						echo "<div class='col-lg-8 col-md-8 col-sm-12 col-xs-12'>\n";
+								echo "<span class='small'>&nbsp;".$data['figure_brand_name']."</span>\n";		
+						echo "</div>\n";
+						
+						// ++++++++++++++++
+						
+						// Material LOCALE
+						echo "<div class='col-lg-4 col-md-4 col-sm-12 col-xs-12'>\n";
+							echo "<div class='navbar-default'><div class='text-smaller text-uppercase'><strong>".$locale['figure_447']."</strong>\n";
+						echo "</div></div></div>\n";
+						
+						// Material DATA
+						echo "<div class='col-lg-8 col-md-8 col-sm-12 col-xs-12'>\n";
+								echo "<span class='small'>&nbsp;".$data['figure_material_name']."</span>\n";
+						echo "</div>\n";
+						
+						// ++++++++++++++++
+						
+						// Articulations Points LOCALE
+						echo "<div class='col-lg-4 col-md-4 col-sm-12 col-xs-12'>\n";
+							echo "<div class='navbar-default'><div class='text-smaller text-uppercase'><strong>".$locale['figure_455']."</strong>\n";
+						echo "</div></div></div>\n";									
+						
+						// Articulations Points DATA
+						echo "<div class='col-lg-8 col-md-8 col-sm-12 col-xs-12'>\n";
+								echo "<span class='small'>&nbsp;".$data['figure_poa_name']."</span>\n";		
+						echo "</div>\n";
+						
+						// ++++++++++++++++
+						
+						// Packaging LOCALE
+						echo "<div class='col-lg-4 col-md-4 col-sm-12 col-xs-12'>\n";
+							echo "<div class='navbar-default'><div class='text-smaller text-uppercase'><strong>".$locale['figure_448']."</strong>\n";
+						echo "</div></div></div>\n";
+						
+						// Packaging DATA
+						echo "<div class='col-lg-8 col-md-8 col-sm-12 col-xs-12'>\n";
+								echo "<span class='small'>&nbsp;".$data['figure_packaging_name']."</span>\n";
+						echo "</div>\n";
+											
+			echo "</div>\n";
+			echo "</div>\n";
+			echo "</div>\n";
+			// MODUL 3 END ########################################################################################################
+			
+	echo "<hr>";
+
+			// MODUL 4 Begin  #####################################################################################################
+			echo "<div class='container-fluid'>\n";
+			echo "<div class='table-responsive'>\n";
+			echo "<div class='row'>\n";	
+						
+						// MSRP (Price by Release) LOCALE
+						echo "<div class='col-lg-4 col-md-4 col-sm-12 col-xs-12'>\n";
+							echo "<div class='navbar-default'><div class='text-smaller text-uppercase'><strong>".$locale['figure_449']."</strong>\n";
+						echo "</div></div></div>\n";									
+						
+						// MSRP (Price by Release) DATA
+						echo "<div class='col-lg-8 col-md-8 col-sm-12 col-xs-12'>\n";
+								echo "<span class='small'>&nbsp;".$data['figure_retailprice']."</span>\n";		
+						echo "</div>\n";
+						
+						// ++++++++++++++++
+						
+						// Used Price LOCALE
+						echo "<div class='col-lg-4 col-md-4 col-sm-12 col-xs-12'>\n";
+							echo "<div class='navbar-default'><div class='text-smaller text-uppercase'><strong>".$locale['figure_456']."</strong>\n";
+						echo "</div></div></div>\n";
+						
+						// Used Price DATA
+						echo "<div class='col-lg-8 col-md-8 col-sm-12 col-xs-12'>\n";
+								echo "<span class='small'>&nbsp;".$data['figure_usedprice']."</span>\n";
+						echo "</div>\n";
+						
+						// ++++++++++++++++
+						
+						// Limited Edition YES/NO LOCALE
+						echo "<div class='col-lg-4 col-md-4 col-sm-12 col-xs-12'>\n";
+							echo "<div class='navbar-default'><div class='text-smaller text-uppercase'><strong>".$locale['figure_450']."</strong>\n";
+						echo "</div></div></div>\n";									
+						
+						// Limited Edition YES/NO DATA
+						echo "<div class='col-lg-8 col-md-8 col-sm-12 col-xs-12'>\n";
+								echo "<span class='small'>&nbsp;".$data['figure_limitation_name']."</span>\n";		
+						echo "</div>\n";
+						
+						// ++++++++++++++++
+						
+						// Edition Size LOCALE
+						echo "<div class='col-lg-4 col-md-4 col-sm-12 col-xs-12'>\n";
+							echo "<div class='navbar-default'><div class='text-smaller text-uppercase'><strong>".$locale['figure_451']."</strong>\n";
+						echo "</div></div></div>\n";
+						
+						// Edition Size DATA
+						echo "<div class='col-lg-8 col-md-8 col-sm-12 col-xs-12'>\n";
+								echo "<span class='small'>&nbsp;".$data['figure_editionsize']."</span>\n";
+						echo "</div>\n";
+												
+			echo "</div>\n";
+			echo "</div>\n";
+			echo "</div>\n";
+			// MODUL 4 END ########################################################################################################			
+				
+	echo "<hr>";
+
+			// MODUL 5 Begin  #####################################################################################################
+			echo "<div class='container-fluid'>\n";
+			echo "<div class='table-responsive'>\n";
+			echo "<div class='row'>\n";	
+						
+						// Accessories LOCALE
+						echo "<div class='col-lg-4 col-md-4 col-sm-12 col-xs-12'>\n";
+							echo "<div class='navbar-default'><div class='text-smaller text-uppercase'><strong>".$locale['figure_457']."</strong>\n";
+						echo "</div></div></div>\n";									
+						
+						// Accessories DATA
+						echo "<div class='col-lg-8 col-md-8 col-sm-12 col-xs-12'>\n";
+								echo "<span class='small' style='word-break: break-all; word-wrap: break-word;'>&nbsp;".($data['figure_accessories'] ? $data['figure_accessories'] : "-")."</span>\n";		
+						echo "</div>\n";
+						
+						// ++++++++++++++++
+						
+						// Discreption  LOCALE
+						echo "<div class='col-lg-4 col-md-4 col-sm-12 col-xs-12'>\n";
+							echo "<div class='navbar-default'><div class='text-smaller text-uppercase'><strong>".$locale['figure_423']."</strong>\n";
+						echo "</div></div></div>\n";
+						
+						// Discreption  DATA
+						echo "<div class='col-lg-8 col-md-8 col-sm-12 col-xs-12'>\n";
+								echo "<span class='small' style='word-break: break-all; word-wrap: break-word;'>&nbsp;".nl2br(parseubb(parsesmileys($data['figure_description'])))."</span>\n";
+						echo "</div>\n";
+					
+			echo "</div>\n";
+			echo "</div>\n";
+			echo "</div>\n";
+			// MODUL 5 END ########################################################################################################					
+				
+	// END OF BOOTSTRAP GRID	
+	echo "</table>\n";
+		
+//closeside();
+
+/*
+openside('');		
+		// Variant	
 			echo "<table class='table table-hover'><tr>\n";	
 				echo "<colgroup><col width='20%'><col width='80%'></colgroup>\n"; 			
 					echo "<td  class='navbar-default'><div class='text-smaller text-uppercase'><strong>".$locale['figure_441'].":</strong></div></td>\n";
@@ -325,7 +668,9 @@ if ($image_count) {
 					echo "<td style='word-break: break-all; word-wrap: break-word;'><small>".nl2br(parseubb(parsesmileys($data['figure_description'])))."</small></td>";		
 			echo "</tr></table>\n";	
 
+*/
 closeside();
+
 // ############################################################################################
 
 // ###### LINK FOR ADMINS TO EDIT THE FIGURE ##################################################
@@ -542,7 +887,7 @@ closeside();
 	}
 	
 // ########### 	LIST OF ALL USER WHERE HAVE THIS FIGURE  ##################################				
-
+global $userdata;
         $resultufc = dbquery(
 				"SELECT             
 					fu.user_id, 
