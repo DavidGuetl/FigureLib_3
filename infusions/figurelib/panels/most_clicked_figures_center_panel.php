@@ -10,7 +10,6 @@
  *   the Free Software Foundation; either version 2 of the License, or     *
  *   (at your option) any later version.                                   *
  ***************************************************************************/
-//if (!defined("IN_FUSION")) { die("Access Denied"); }
 require_once "../../../maincore.php";
 require_once THEMES."templates/header.php";
 global $aidlink;
@@ -53,54 +52,55 @@ $locale['lastentries']= "Last Figures";
 			INNER JOIN ".DB_FIGURE_SCALES." tbs ON tbs.figure_scale_id = tb.figure_scale
 			INNER JOIN ".DB_FIGURE_YEARS." tby ON tby.figure_year_id = tb.figure_pubdate
 			".(multilang_table("FI") ? "WHERE figure_language='".LANGUAGE."' AND" : "WHERE")." tb.figure_freigabe='1' ORDER BY figure_clickcount DESC LIMIT 0,10");	
-			
-		// PANEL ÖFFNEN / ANFANG		
+	
 		
+		// PANEL ÖFFNEN / ANFANG		
+ 
+ //openside($locale['lastentries']);
+ 	 
 		// WENN DATEN UNGLEICH = 0 DANN DARSTELLUNG DER DATEN
 		if (dbrows($result) != 0) {
-		 		
-				echo "<hr>";				
-				echo "<div class='row'>\n";					
-				echo "<div class='navbar-default'>";
+		 						
+				echo "<div class='row'>\n";	
 				echo "<div class='container-fluid'>\n";
 				echo "<div class='table-responsive'>\n";
-										
+				echo "<hr>";
+						
 						// COLUMN 1 (image)
 						echo "<div class='col-lg-1 col-md-2 col-sm-2 col-xs-2'>\n";
-							echo "<div class='text-smaller text-uppercase'>".$locale['CLFP_018']."</div>\n";
-						echo "</div>\n";
+							echo "<div class='navbar-default'><div class='text-smaller text-uppercase'>".$locale['CLFP_018']."</div>\n";
+						echo "</div></div>\n";
 
 						// COLUMN 2 (name of figure)
 						echo "<div class='col-lg-3 col-md-3 col-sm-4 col-xs-4'>\n";
-							echo "<div class='text-smaller text-uppercase'>".$locale['CLFP_002']."</div>\n";
-						echo "</div>\n";						
+							echo "<div class='navbar-default'><div class='text-smaller text-uppercase'>".$locale['CLFP_002']."</div>\n";
+						echo "</div></div>\n";						
 						
 						// COLUMN 3 (manufacturer)
 						echo "<div class='col-lg-2 col-md-3 col-sm-4 col-xs-4'>\n";
-							echo "<div class='text-smaller text-uppercase'>".$locale['CLFP_003']."</div>\n";
-						echo "</div>\n";
+							echo "<div class='navbar-default'><div class='text-smaller text-uppercase'>".$locale['CLFP_003']."</div>\n";
+						echo "</div></div>\n";
 						
 						// COLUMN 4 (brand)
 						echo "<div class='col-lg-2 hidden-md hidden-sm hidden-xs'>\n";
-							echo "<div class='text-smaller text-uppercase'>".$locale['CLFP_004']."</div>\n";
-						echo "</div>\n";
+							echo "<div class='navbar-default'><div class='text-smaller text-uppercase'>".$locale['CLFP_004']."</div>\n";
+						echo "</div></div>\n";
 						
 						// COLUMN 5 (scale)
 						echo "<div class='col-lg-1 col-md-2 hidden-sm hidden-xs'>\n";
-							echo "<div class='text-smaller text-uppercase'>".$locale['CLFP_005']."</div>\n";
-						echo "</div>\n";
+							echo "<div class='navbar-default'><div class='text-smaller text-uppercase'>".$locale['CLFP_005']."</div>\n";
+						echo "</div></div>\n";
 						
 						// COLUMN 6 (release date)
 						echo "<div class='col-lg-1 col-md-2 col-sm-2 col-xs-2'>\n";
-							echo "<div class='text-smaller text-uppercase'>".$locale['CLFP_006']."</div>\n";
-						echo "</div>\n";
+							echo "<div class='navbar-default'><div class='text-smaller text-uppercase'>".$locale['CLFP_006']."</div>\n";
+						echo "</div></div>\n";
 						
 						// COLUMN 7 (rating)
 						echo "<div class='col-lg-2 hidden-md hidden-sm hidden-xs'>\n";
-							echo "<div class='text-smaller text-uppercase'>".$locale['CLFP_010']."</div>\n";
-						echo "</div>\n";
+							echo "<div class='navbar-default'><div class='text-smaller text-uppercase'>".$locale['CLFP_010']."</div>\n";
+						echo "</div></div>\n";
 						
-				echo "</div>\n";
 				echo "</div>\n";
 				echo "</div>\n";
 				echo "</div>\n";
@@ -108,37 +108,40 @@ $locale['lastentries']= "Last Figures";
 				echo "<hr>";
 		 
 		while($data = dbarray($result)){
-		
-					// WHILE SCHLEIFE FÜR DAS HOLEN DES BILDES AUS ORDNER / ORDNER MUSS IN infusion.db.php deklariert sein!
+									echo "<div class='row'>\n";	
+									echo "<div class='container-fluid'>\n";
+									echo "<div class='table-responsive'>\n";
+						
+						// WHILE SCHLEIFE FÜR DAS HOLEN DES BILDES AUS ORDNER / ORDNER MUSS IN infusion.db.php deklariert sein!
 				
-					$result2 = dbquery("SELECT
+						$result2 = dbquery("SELECT
 						   figure_images_image_id,
 						   figure_images_image,
 						   figure_images_thumb
 						FROM ".DB_FIGURE_IMAGES."
 						WHERE figure_images_figure_id='".$data['figure_id']."' LIMIT 0,1");
  
-			   // Fragen, ob überhaupt ein Ergebnis kommt
-			if(dbrows($result2)){
-     
-				while($data2 = dbarray($result2)){
+						// Fragen, ob überhaupt ein Ergebnis kommt
+						if(dbrows($result2)){
+				 
+							while($data2 = dbarray($result2)){
+									
+									
+									
+									
+									// COLUMN 1 (image clickable)
+									echo "<div class='col-lg-1 col-md-2 col-sm-2 col-xs-2'>\n";
+										echo "<div class='side-small'><a href='".INFUSIONS."figurelib/figures.php?figure_id=".$data['figure_id']."'>\n<img src='". THUMBS_FIGURES.$data2['figure_images_thumb'] ."' alt='".$locale['CLFP_002']." : ".$data['figure_title']."' title='".$locale['CLFP_002']." : ".$data['figure_title']."' style='border:0px;max-height:20px;max-width:20px'/></a>";
+									echo "</div></div>\n";					
+							}
 						
-						echo "<div class='container-fluid'>\n";
-						echo "<div class='table-responsive'>\n";
-						echo "<div class='row'>\n";	
-						
-						// COLUMN 1 (image clickable)
-						echo "<div class='col-lg-1 col-md-2 col-sm-2 col-xs-2'>\n";
-							echo "<div class='side-small'><a href='".INFUSIONS."figurelib/figures.php?figure_id=".$data['figure_id']."'>\n<img src='". THUMBS_FIGURES.$data2['figure_images_thumb'] ."' alt='".$locale['CLFP_002']." : ".$data['figure_title']."' title='".$locale['CLFP_002']." : ".$data['figure_title']."' style='border:0px;max-height:20px;max-width:20px'/></a>";
-						echo "</div></div>\n";					
-				}
-			} else { 
-						
-						echo "<div class='col-lg-1 col-md-2 col-sm-2 col-xs-2'>\n";
-							echo "<div class='side-small'><a href='".INFUSIONS."figurelib/figures.php?figure_id=".$data['figure_id']."'>\n<img src='".($data2['figure_images_thumb'] ? THUMBS_FIGURES.$data2['figure_images_thumb'] : INFUSIONS.$inf_folder."/images/default.png")."' alt='".$locale['CLFP_002']." : ".$data['figure_title']."' title='".$locale['CLFP_002']." : ".$data['figure_title']."' style='border:0px;max-height:20px;max-width:20px'/></a>";
-						echo "</div></div>\n";				
-				
-			}	
+						} else { 
+									
+									echo "<div class='col-lg-1 col-md-2 col-sm-2 col-xs-2'>\n";
+										echo "<div class='side-small'><a href='".INFUSIONS."figurelib/figures.php?figure_id=".$data['figure_id']."'>\n<img src='".($data2['figure_images_thumb'] ? THUMBS_FIGURES.$data2['figure_images_thumb'] : INFUSIONS.$inf_folder."/images/default.png")."' alt='".$locale['CLFP_002']." : ".$data['figure_title']."' title='".$locale['CLFP_002']." : ".$data['figure_title']."' style='border:0px;max-height:20px;max-width:20px'/></a>";
+									echo "</div></div>\n";				
+							
+								}	
 
 						// COLUMN 2 (name of figure)
 						echo "<div class='col-lg-3 col-md-3 col-sm-4 col-xs-4'>\n";
@@ -160,19 +163,20 @@ $locale['lastentries']= "Last Figures";
 							echo "<div class='side-small' title='".$locale['CLFP_005']." : ".$data['figure_scale_name']."' alt='".$locale['CLFP_005']." : ".$data['figure_scale_name']."'>".trimlink($data['figure_scale_name'],7)."</div>\n";
 						echo "</div>\n";
 			
-			// No release date or unknown = "no data" / WENN KEIN WERT ZUM DATUM IN DB DANN ZEIGE HINWEIS "NO DATA"
-			if ($data['figure_pubdate'] == "") {
-				
-						// COLUMN 6 (release date)
-						echo "<div class='col-lg-1 col-md-2 col-sm-2 col-xs-2'>\n";
-							echo "<div class='side-small' title='".$locale['CLFP_006']." : ".$locale['CLFP_008']."' alt='".$locale['CLFP_006']." : ".$locale['CLFP_008']."'>".$locale['CLFP_008']."</div>\n";
-						echo "</div>\n";			
-			} else {
-				
-						echo "<div class='col-lg-1 col-md-2 col-sm-2 col-xs-2'>\n";
-							echo "<div class='side-small' title='".$locale['CLFP_006']." : ".$data['figure_year']."' alt='".$locale['CLFP_006']." : ".$data['figure_year']."'>".$data['figure_year']."</div>\n";
-						echo "</div>\n";						
-			} 
+						// No release date or unknown = "no data" / WENN KEIN WERT ZUM DATUM IN DB DANN ZEIGE HINWEIS "NO DATA"
+						if ($data['figure_pubdate'] == "") {
+								
+										// COLUMN 6 (release date)
+										echo "<div class='col-lg-1 col-md-2 col-sm-2 col-xs-2'>\n";
+											echo "<div class='side-small' title='".$locale['CLFP_006']." : ".$locale['CLFP_008']."' alt='".$locale['CLFP_006']." : ".$locale['CLFP_008']."'>".$locale['CLFP_008']."</div>\n";
+										echo "</div>\n";			
+						} else {
+								
+										echo "<div class='col-lg-1 col-md-2 col-sm-2 col-xs-2'>\n";
+											echo "<div class='side-small' title='".$locale['CLFP_006']." : ".$data['figure_year']."' alt='".$locale['CLFP_006']." : ".$data['figure_year']."'>".$data['figure_year']."</div>\n";
+										echo "</div>\n";						
+								} 
+
 		
 						// COLUMN 7 (rating)
 						$drating = dbarray(dbquery("
@@ -189,33 +193,32 @@ $locale['lastentries']= "Last Figures";
 						echo "<div class='col-lg-2 hidden-md hidden-sm hidden-xs'>\n";
 							echo "<div class='side-small' title='".$locale['CLFP_010']."' alt='".$locale['CLFP_010']."'>".$rating."</div>\n";
 						echo "</div>\n";
-  				
-				echo "</div>\n";
-				echo "</div>\n";
-				echo "</div>\n";
+  
 				
-	}
-	echo "<hr>\n";
+				echo "</div>\n";
+				echo "</div>\n";
+				echo "</div>\n";
 
-	if (iADMIN || iSUPERADMIN) {		
+		}
+
+					if (iADMIN || iSUPERADMIN) {		
+										
+								echo "<div class='row'>\n";	
+								echo "<div class='container-fluid'>\n";
+								echo "<div class='table-responsive'>\n";				
+										// ['CLFP_016']." = "Admin"
+											echo "<div align='center'><div class='btn btn-default btn-block btn-xs'>
+												  <a href='".INFUSIONS.'figurelib/admin.php'.$aidlink."'>".$locale['CLFP_016']."</a>
+												  </div></div>\n";
+								echo "</div>\n";
+								echo "</div>\n";
+								echo "</div>\n";
+								echo "<hr>\n";
 						
-				echo "<div class='row'>\n";	
-				echo "<div class='navbar-default'>";
-				echo "<div class='container-fluid'>\n";
-				echo "<div class='table-responsive'>\n";
-				
-						// ['CLFP_016']." = "Admin"
-						echo "<div class='col-lg-12 col-md-12 col-sm-12 col-xs-12'>\n";
-							echo "<div align='center'><a href='".INFUSIONS.'figurelib/admin.php'.$aidlink."'>".$locale['CLFP_016']."</a>				  </div></div>\n";
-				echo "</div>\n";
-				echo "</div>\n";
-				echo "</div>\n";
-				echo "</div>\n";
-				echo "<hr>\n";
-		
-			}
+					} 
+			
+
  } else {
 			echo "<div style='text-align: center;'>".$locale['CLFP_001']."</div>"; // 001 = No figures available"
  }
- closetable();
- require_once THEMES."templates/footer.php";
+require_once THEMES."templates/footer.php";
