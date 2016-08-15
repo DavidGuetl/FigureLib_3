@@ -67,7 +67,10 @@ global $settings;
 						$counter = 0;
 						
 						// DIESER WERT IST WICHTIG WENN MEHRERE FIGUREN ENBENEINANDER HABEN WILL
-						$columns = 4;
+						// wert aus settings holen
+						$fil_settings = get_settings("figurelib");
+						// Anzahl der spalten ( 4 max ratsam )						
+						$columns = $fil_settings['figure_per_line'];
 						echo "<div class='row m-0'>\n";
 				if (!empty($info['item'])) {
 							
@@ -83,7 +86,8 @@ global $settings;
 						// BOOTSTRAP GIRD BEGIN
 						echo "<div class='row'>";
 						//echo "<div class='col-xs-12 col-sm-12 col-md-12 col-lg-12'>\n";
-	// ......................IMAGE	
+	// ......................IMAGE
+	
 									$result2 = dbquery("SELECT							   
 											figure_images_image_id, 	
 											figure_images_figure_id, 	
@@ -108,7 +112,8 @@ global $settings;
 	// ......................MANUFACTURER & FIGURE TITLE	
 	// ['figure_453'] = "["; //  ['figure_454'] = "] ";
 			echo "<strong>".$locale['figure_453']."".trimlink($data['figure']['manufacturer'],15)."".$locale['figure_454']."</strong><br />\n";	
-			echo "<strong>".trimlink($data['figure']['name'],15)."</strong></a><br />\n";	
+			echo "<strong>".trimlink($data['figure']['name'],15)."</strong></a><br />\n";
+			
 
 	// ......................DATE	
 			echo "<span class='small'><strong>".$locale['figure_414'].":</strong> ".showdate("shortdate", $data['figure_datestamp'])."</span><br>\n";
