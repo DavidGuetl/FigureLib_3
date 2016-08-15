@@ -139,146 +139,260 @@ closeside();
 					$locale['CLFP_014']= "Submit";
 					$locale['CLFP_015']= "Most viewed";
 					$locale['CLFP_016']= "Admin";
+					$locale['CLFP_017']= "MY COLLECTION";
+					$locale['CLFP_018']= "IMAGE";
 					$locale['yours']= "Your Figures";		
 				
 	// PANEL OF ALL FIGURE FROM USER 
 	openside($locale['yours']);
+	
 		global $userdata;
 		$fil_settings = get_settings("figurelib"); 
-
+		$info = array();
+		$info['item'] = array();
 		
-			$max_rows = dbcount("(figure_userfigures_figure_id)", DB_FIGURE_USERFIGURES, "figure_userfigures_user_id='".$userdata['user_id']."' AND ".groupaccess('figure_visibility'));
+		$result = dbquery("
+			  SELECT
+				f.figure_id,
+				f.figure_freigabe,
+				fuf.figure_userfigures_user_id
+			  FROM ".DB_FIGURE_ITEMS." f
+			  LEFT JOIN ".DB_FIGURE_USERFIGURES." fuf ON fuf.figure_userfigures_user_id=f.figure_id
+			  WHERE figure_freigabe=1");	
+	
+	if (dbrows($result) != 0) {
+		
+		$cdata = dbarray($result);
+		$info = $cdata;
+		
+		$max_rows = dbcount("(figure_userfigures_figure_id)", DB_FIGURE_USERFIGURES, "figure_userfigures_user_id='".$userdata['user_id']."'");
 			$_GET['rowstart'] = isset($_GET['rowstart']) && isnum($_GET['rowstart']) && $_GET['rowstart'] <= $max_rows ? $_GET['rowstart'] : 0;
 					$numrows = dbrows($result);
+		$fil_settings = get_settings("figurelib");
 					
-		
-		$result = dbquery(
-			"SELECT tb.figure_id, tb.figure_submitter, tb.figure_freigabe, tb.figure_pubdate, tb.figure_scale, tb.figure_title, tb.figure_manufacturer, tb.figure_brand, tb.figure_datestamp, tb.figure_cat, tbc.figure_cat_id, tbc.figure_cat_name, tbu.user_id, tbu.user_name, tbu.user_status, tbu.user_avatar, tbm.figure_manufacturer_name, tbb.figure_brand_name, tby.figure_year_id, tby.figure_year, tbs.figure_scale_id, tbs.figure_scale_name, fuf.figure_userfigures_figure_id, fuf.figure_userfigures_user_id 
-			FROM ".DB_FIGURE_ITEMS." tb
-			LEFT JOIN ".DB_USERS." tbu ON tb.figure_submitter=tbu.user_id
-			INNER JOIN ".DB_FIGURE_USERFIGURES." fuf ON fuf.figure_userfigures_figure_id=tb.figure_id
-			INNER JOIN ".DB_FIGURE_CATS." tbc ON tb.figure_cat=tbc.figure_cat_id
-			INNER JOIN ".DB_FIGURE_MANUFACTURERS." tbm ON tbm.figure_manufacturer_id = tb.figure_manufacturer
-			INNER JOIN ".DB_FIGURE_BRANDS." tbb ON tbb.figure_brand_id = tb.figure_brand
-			INNER JOIN ".DB_FIGURE_SCALES." tbs ON tbs.figure_scale_id = tb.figure_scale
-			INNER JOIN ".DB_FIGURE_YEARS." tby ON tby.figure_year_id = tb.figure_pubdate
-			".(multilang_table("FI") ? "WHERE figure_language='".LANGUAGE."' AND" : "WHERE")." tb.figure_freigabe='1' 
-			AND figure_userfigures_user_id=".$userdata['user_id']."
-			LIMIT ".$_GET['rowstart'].",".$fil_settings['figure_per_page']."");
-
-
-        if (dbrows($result)) {
-            $data = dbarray($result);
+			$result = dbquery("SELECT 
+					tb.figure_id, 
+					tb.figure_submitter, 
+					tb.figure_freigabe, 
+					tb.figure_pubdate, 
+					tb.figure_scale, 
+					tb.figure_title, 
+					tb.figure_manufacturer, 
+					tb.figure_brand, 
+					tb.figure_datestamp, 
+					tb.figure_cat, 
+					tbc.figure_cat_id, 
+					tbc.figure_cat_name, 
+					tbu.user_id, 
+					tbu.user_name, 
+					tbu.user_status, 
+					tbu.user_avatar, 
+					tbm.figure_manufacturer_name, 
+					tbb.figure_brand_name, 
+					tby.figure_year_id, 
+					tby.figure_year, 
+					tbs.figure_scale_id, 
+					tbs.figure_scale_name, 							
+					fuf.figure_userfigures_figure_id, 
+					fuf.figure_userfigures_user_id 
+						FROM ".DB_FIGURE_ITEMS." tb
+						LEFT JOIN ".DB_USERS." tbu ON tb.figure_submitter=tbu.user_id
+						INNER JOIN ".DB_FIGURE_USERFIGURES." fuf ON fuf.figure_userfigures_figure_id=tb.figure_id
+						INNER JOIN ".DB_FIGURE_CATS." tbc ON tb.figure_cat=tbc.figure_cat_id
+						INNER JOIN ".DB_FIGURE_MANUFACTURERS." tbm ON tbm.figure_manufacturer_id = tb.figure_manufacturer
+						INNER JOIN ".DB_FIGURE_BRANDS." tbb ON tbb.figure_brand_id = tb.figure_brand
+						INNER JOIN ".DB_FIGURE_SCALES." tbs ON tbs.figure_scale_id = tb.figure_scale
+						INNER JOIN ".DB_FIGURE_YEARS." tby ON tby.figure_year_id = tb.figure_pubdate
+						".(multilang_table("FI") ? "WHERE figure_language='".LANGUAGE."' AND" : "WHERE")." tb.figure_freigabe='1' 
+						AND figure_userfigures_user_id=".$userdata['user_id']."
+						LIMIT ".$_GET['rowstart'].",".$fil_settings['figure_per_page']."
+			");
+			$numrows = dbrows($result);
+			$info['figure_rows'] = $numrows;
+			$fil_settings = get_settings("figurelib");
 			
-		$info['figure_rows'] = $numrows;
-		$info['page_nav'] = $max_rows > $fil_settings['figure_per_page'] ? makepagenav($_GET['rowstart'], $fil_settings['figure_per_page'], $max_rows, 3, INFUSIONS."figurelib/figures.php?figure_id=".$data['figure_id']."&amp;") : 0;	
-		
-		//$info['page_nav'] = $max_rows > $fil_settings['figure_per_page'] ? makepagenav($_GET['rowstart'], $asettings['figure_per_page'], $max_rows, 3, INFUSIONS."figurelib/figures.php?figure_id=".$_GET['figure_id']."&amp;") : 0;	
-		
-		echo $info['page_nav'] ? "<div class='text-right'>".$info['page_nav']."</div>" : '';
+			$info['page_nav'] = $max_rows > $fil_settings['figure_per_page'] ? makepagenav($_GET['rowstart'], $fil_settings['figure_per_page'], $max_rows, 3, INFUSIONS."figurelib/mycollection.php?&amp;") : 0;
+			
 
-		}
-echo $numrows; echo " --> numrows";
-echo "<br>";
-echo $max_rows; echo " --> max_rows";
-echo "<br>";
-echo $info['figure_rows']; echo " --> infofigure_rows]";
-echo "<br>";
-echo $_GET['rowstart']; echo " --> $GET rowstart ";
-echo "<br>"; 
-echo $_GET['figure_id']; echo " --> $ GET figure id ";
-echo "<br>"; 
-echo $data['figure_id']; echo " --> $ data figure id ";
-
-
- 	 
-		// WENN DATEN UNGLEICH = 0 DANN DARSTELLUNG DER DATEN
-		if (dbrows($result) != 0) {
-		 
-			echo "<table cellpadding='0' cellspacing='1' class='tbl-border' style='text-align:left;width:100%; margin-bottom: 4px;'>";
-			echo "
-					<colgroup>
-						<col width='10%'>
-						<col width='20%'>
-						<col width='20%'>
-						<col width='20%'>
-						<col width='10%'>
-						<col width='10%'>
-						<col width='10%'>
-					</colgroup>
-				";					
+	if (dbrows($result) > 0) {
 				
-			 echo "<tr class='breadcrumb'>";
-			 echo "<td><strong>Image</strong></td>";
-			 echo "<td><strong>".$locale['CLFP_002']."</strong></td>";   // ['CLFP_002']= "Name";
-			 echo "<td><strong>".$locale['CLFP_003']."</strong></td>";   // ['CLFP_003']= "Manufacturer";;
-			 echo "<td><strong>".$locale['CLFP_004']."</strong></td>";   // ['CLFP_004']= "Brand";
-			 echo "<td><strong>".$locale['CLFP_005']."</strong></td>";   // ['CLFP_005']= "Scale";
-			 echo "<td><strong>".$locale['CLFP_006']."</strong></td>";   // ['CLFP_006']= "Year";
-			 echo "<td><strong>".$locale['CLFP_010']."</strong></td>";   // ['CLFP_010']= "Rating";
-			 echo "</tr>";
+
+				// WENN DATEN UNGLEICH = 0 DANN DARSTELLUNG DER DATEN
+	 		
+				echo "<hr>";				
+				echo "<div class='row'>\n";					
+				echo "<div class='navbar-default'>";
+				echo "<div class='container-fluid'>\n";
+				echo "<div class='table-responsive'>\n";
+				
+										
+						// COLUMN 1 (image)
+						echo "<div class='col-lg-1 col-md-2 col-sm-2 col-xs-2'>\n";
+							echo "<div class='text-smaller text-uppercase'>".$locale['CLFP_018']."</div>\n";
+						echo "</div>\n";
+
+						// COLUMN 2 (name of figure)
+						echo "<div class='col-lg-3 col-md-3 col-sm-4 col-xs-4'>\n";
+							echo "<div class='text-smaller text-uppercase'>".$locale['CLFP_002']."</div>\n";
+						echo "</div>\n";						
+						
+						// COLUMN 3 (manufacturer)
+						echo "<div class='col-lg-2 col-md-3 col-sm-4 col-xs-4'>\n";
+							echo "<div class='text-smaller text-uppercase'>".$locale['CLFP_003']."</div>\n";
+						echo "</div>\n";
+						
+						// COLUMN 4 (brand)
+						echo "<div class='col-lg-2 hidden-md hidden-sm hidden-xs'>\n";
+							echo "<div class='text-smaller text-uppercase'>".$locale['CLFP_004']."</div>\n";
+						echo "</div>\n";
+						
+						// COLUMN 5 (scale)
+						echo "<div class='col-lg-1 col-md-2 hidden-sm hidden-xs'>\n";
+							echo "<div class='text-smaller text-uppercase'>".$locale['CLFP_005']."</div>\n";
+						echo "</div>\n";
+						
+						// COLUMN 6 (release date)
+						echo "<div class='col-lg-1 col-md-2 col-sm-2 col-xs-2'>\n";
+							echo "<div class='text-smaller text-uppercase'>".$locale['CLFP_006']."</div>\n";
+						echo "</div>\n";
+						
+						// COLUMN 7 (rating)
+						echo "<div class='col-lg-2 hidden-md hidden-sm hidden-xs'>\n";
+							echo "<div class='text-smaller text-uppercase'>".$locale['CLFP_010']."</div>\n";
+						echo "</div>\n";
+						
+				echo "</div>\n";
+				echo "</div>\n";
+				echo "</div>\n";
+				echo "</div>\n";
+				
+				echo "<hr>";
 		 
 		while($data = dbarray($result)){
-
-			 echo "<tr>";
-			
-			// WHILE SCHLEIFE FÜR DAS HOLEN DES BILDES AUS ORDNER / ORDNER MUSS IN infusion.db.php deklariert sein!
-				
-			$result2 = dbquery("SELECT
-				   figure_images_image_id,
-				   figure_images_image,
-				   figure_images_thumb
-				FROM ".DB_FIGURE_IMAGES."
-				WHERE figure_images_figure_id='".$data['figure_id']."' LIMIT 0,1");
- 
-			   // Fragen, ob überhaupt ein Ergebnis kommt
-				if(dbrows($result2)){
-     
-				while($data2 = dbarray($result2)){
-           
-					echo "<td class='side-small'><a href='".INFUSIONS."figurelib/figures.php?figure_id=".$data['figure_id']."' class=''>\n<img src='". THUMBS_FIGURES.$data2['figure_images_thumb'] ."' alt='".trimlink($data['figure_title'],100)."' title='".trimlink($data['figure_title'],50)."' style='border:0px;max-height:40px;max-width:40px' /></td>";
-			}
-			} else { 
-					echo "<td class='side-small'><a href='".INFUSIONS."figurelib/figures.php?figure_id=".$data['figure_id']."' class=''>\n<img src='".($data2['figure_images_thumb'] ? THUMBS_FIGURES.$data2['figure_images_thumb'] : INFUSIONS.$inf_folder."/images/default.png")."' alt='".trimlink($data['figure_title'],100)."' title='".trimlink($data['figure_title'],50)."' style='border:0px;max-height:40px;max-width:40px' /></td>";
-				
-					}		
-
-			echo "<td class='side-small'>
-			<a href='".INFUSIONS."figurelib/figures.php?figure_id=".$data['figure_id']."'>".trimlink($data['figure_title'], 12)."</a>
-			</td>";
-			echo "<td class='side-small'>".trimlink($data['figure_manufacturer_name'],18)."</td>";
-			echo "<td>".trimlink($data['figure_brand_name'],18)."</td>";
-			echo "<td>".trimlink($data['figure_scale_name'],7)."</td>";
- 
-	// WENN KEIN WERT ZUM DATUM IN DB DANN ZEIGE HINWEIS "NO DATA"
-			if ($data['figure_pubdate'] == "") {
-			
-				echo "<td>".$locale['CLFP_008']."</td>";
-			
-			} else {
-			
-				echo "<td>".$data['figure_year']."</td>";
-			
-			} 
 		
-	// BEWERTUNG
-		   $drating = dbarray(dbquery("
-			   SELECT 
-					SUM(rating_vote) sum_rating, 
-					COUNT(rating_item_id) count_votes 
-					FROM ".DB_RATINGS." 
-					WHERE rating_type='FI' 
-					AND  rating_item_id='".$data['figure_id']."'
-				")); 
-   
-   $rating = ($drating['count_votes'] > 0 ? str_repeat("<img src='".INFUSIONS.$inf_folder."/images/starsmall.png'>",ceil($drating['sum_rating']/$drating['count_votes'])) : "-");
-			echo "<td>".$rating."</td>";
-			echo "</tr>";
-	
-	}
-	
+					// WHILE SCHLEIFE FÜR DAS HOLEN DES BILDES AUS ORDNER / ORDNER MUSS IN infusion.db.php deklariert sein!				
+					$result2 = dbquery("SELECT
+						   figure_images_image_id,
+						   figure_images_image,
+						   figure_images_thumb
+						FROM ".DB_FIGURE_IMAGES."
+						WHERE figure_images_figure_id='".$data['figure_id']."' LIMIT 0,1");
+ 
+						if(dbrows($result2)){
+				 
+							while($data2 = dbarray($result2)){
+									
+									echo "<div class='container-fluid'>\n";
+									echo "<div class='table-responsive'>\n";
+									echo "<div class='row'>\n";	
+									
+									// COLUMN 1 (image clickable)
+									echo "<div class='col-lg-1 col-md-2 col-sm-2 col-xs-2'>\n";
+										echo "<div class='side-small'><a href='".INFUSIONS."figurelib/figures.php?figure_id=".$data['figure_id']."'>\n<img src='". THUMBS_FIGURES.$data2['figure_images_thumb'] ."' alt='".$locale['CLFP_002']." : ".$data['figure_title']."' title='".$locale['CLFP_002']." : ".$data['figure_title']."' style='border:0px;max-height:20px;max-width:20px'/></a>";
+									echo "</div></div>\n";					
+							}
+						} else { 
+									
+									echo "<div class='col-lg-1 col-md-2 col-sm-2 col-xs-2'>\n";
+										echo "<div class='side-small'><a href='".INFUSIONS."figurelib/figures.php?figure_id=".$data['figure_id']."'>\n<img src='".($data2['figure_images_thumb'] ? THUMBS_FIGURES.$data2['figure_images_thumb'] : INFUSIONS.$inf_folder."/images/default.png")."' alt='".$locale['CLFP_002']." : ".$data['figure_title']."' title='".$locale['CLFP_002']." : ".$data['figure_title']."' style='border:0px;max-height:20px;max-width:20px'/></a>";
+									echo "</div></div>\n";				
+							
+						}	
+
+						// COLUMN 2 (name of figure)
+						echo "<div class='col-lg-3 col-md-3 col-sm-4 col-xs-4'>\n";
+							echo "<div class='side-small'><a href='".INFUSIONS."figurelib/figures.php?figure_id=".$data['figure_id']."' title='".$locale['CLFP_002']." : ".$data['figure_title']."' alt='".$locale['CLFP_002']." : ".$data['figure_title']."'>".trimlink($data['figure_title'], 10)."</a>";
+						echo "</div></div>\n";	
+
+						// COLUMN 3 (manufacturer)
+						echo "<div class='col-lg-2 col-md-3 col-sm-4 col-xs-4'>\n";
+							echo "<div class='side-small' title='".$locale['CLFP_003']." : ".$data['figure_manufacturer_name']."' alt='".$locale['CLFP_003']." : ".$data['figure_manufacturer_name']."'>".trimlink($data['figure_manufacturer_name'],10)."</div>\n";
+						echo "</div>\n";
+						
+						// COLUMN 4 (brand)
+						echo "<div class='col-lg-2 hidden-md hidden-sm hidden-xs'>\n";
+							echo "<div class='side-small' title='".$locale['CLFP_004']." : ".$data['figure_brand_name']."' alt='".$locale['CLFP_004']." : ".$data['figure_brand_name']."'>".trimlink($data['figure_brand_name'],10)."</div>\n";
+						echo "</div>\n";
+						
+						// COLUMN 5 (scale)
+						echo "<div class='col-lg-1 col-md-2 hidden-sm hidden-xs'>\n";
+							echo "<div class='side-small' title='".$locale['CLFP_005']." : ".$data['figure_scale_name']."' alt='".$locale['CLFP_005']." : ".$data['figure_scale_name']."'>".trimlink($data['figure_scale_name'],7)."</div>\n";
+						echo "</div>\n";
 			
-			echo "</table>";			
+					// No release date or unknown = "no data" / WENN KEIN WERT ZUM DATUM IN DB DANN ZEIGE HINWEIS "NO DATA"
+						if ($data['figure_pubdate'] == "") {
+							
+									// COLUMN 6 (release date)
+									echo "<div class='col-lg-1 col-md-2 col-sm-2 col-xs-2'>\n";
+										echo "<div class='side-small' title='".$locale['CLFP_006']." : ".$locale['CLFP_008']."' alt='".$locale['CLFP_006']." : ".$locale['CLFP_008']."'>".$locale['CLFP_008']."</div>\n";
+									echo "</div>\n";			
+						} else {
+							
+									echo "<div class='col-lg-1 col-md-2 col-sm-2 col-xs-2'>\n";
+										echo "<div class='side-small' title='".$locale['CLFP_006']." : ".$data['figure_year']."' alt='".$locale['CLFP_006']." : ".$data['figure_year']."'>".$data['figure_year']."</div>\n";
+									echo "</div>\n";						
+						} 
+		
+						// COLUMN 7 (rating)
+						$drating = dbarray(dbquery("
+						   SELECT 
+								SUM(rating_vote) sum_rating, 
+								COUNT(rating_item_id) count_votes 
+								FROM ".DB_RATINGS." 
+								WHERE rating_type='FI' 
+								AND  rating_item_id='".$data['figure_id']."'
+							")); 
+   
+						$rating = ($drating['count_votes'] > 0 ? str_repeat("<img src='".INFUSIONS.$inf_folder."/images/starsmall.png'>",ceil($drating['sum_rating']/$drating['count_votes'])) : "-");
+						
+						echo "<div class='col-lg-2 hidden-md hidden-sm hidden-xs'>\n";
+							echo "<div class='side-small' title='".$locale['CLFP_010']."' alt='".$locale['CLFP_010']."'>".$rating."</div>\n";
+						echo "</div>\n";
+  				
+				echo "</div>\n";
+				echo "</div>\n";
+				echo "</div>\n";
+						
+		}
+				echo "<hr>\n";
+				
+				// PAGE NAV
+				echo $info['page_nav'] ? "<div class='text-right'>".$info['page_nav']."</div>" : '';
+
+					if (iADMIN || iSUPERADMIN) {		
+										
+								echo "<div class='row'>\n";	
+								echo "<div class='navbar-default'>";
+								echo "<div class='container-fluid'>\n";
+								echo "<div class='table-responsive'>\n";
+								
+										// ['CLFP_016']." = "Admin"
+										echo "<div class='col-lg-12 col-md-12 col-sm-12 col-xs-12'>\n";
+											echo "<div align='center'><a href='".INFUSIONS.'figurelib/admin.php'.$aidlink."'>".$locale['CLFP_016']."</a>				  </div></div>\n";
+								echo "</div>\n";
+								echo "</div>\n";
+								echo "</div>\n";
+								echo "</div>\n";
+								echo "<hr>\n";
+					}
+											
+			// show variables - for admins and only for tests
+		
+			echo $numrows; echo " --> numrows";
+			echo "<br>";
+			echo $max_rows; echo " --> max_rows";
+			echo "<br>";
+			echo $info['figure_rows']; echo " --> $ info figure_rows";
+			echo "<br>";
+			echo $_GET['rowstart']; echo " --> $ GET rowstart ";
+			echo "<br>"; 
+			echo $_GET['figure_id']; echo " --> $ GET figure id ";
+			echo "<br>"; 
+			echo $data['figure_id']; echo " --> $ data figure id ";
+			
+
+			
+		}
 	} else {
 			
 						echo "<div style='text-align: center;'>".$locale['CLFP_001']."</div>"; // 001 = No figures available"
@@ -309,4 +423,5 @@ echo $data['figure_id']; echo " --> $ data figure id ";
 	// Sessions prüfen
 	print_r ($_SESSION);
 	*/
+	
 require_once THEMES."templates/footer.php";
