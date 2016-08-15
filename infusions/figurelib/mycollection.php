@@ -20,39 +20,39 @@ if (!db_exists(DB_FIGURE_ITEMS)) { redirect(BASEDIR."error.php?code=404"); }
 
 if (iMEMBER) {
 
-// GET GLOBAL VARIABLES
-global $aidlink;
-global $settings;
-global $userdata;
+				// GET GLOBAL VARIABLES
+				global $aidlink;
+				global $settings;
+				global $userdata;
 
-// LANGUAGE
-if (file_exists(INFUSIONS."figurelib/locale/".LOCALESET."locale_figurelib.php")) {
-    include INFUSIONS."figurelib/locale/".LOCALESET."locale_figurelib.php";
-} else {
-    include INFUSIONS."figurelib/locale/English/locale_figurelib.php";
-}
-// LOCALE
-$locale['mc_0001']= "My Figure Collection";
-$locale['mc_0002']= "Collection Count: ";
-$locale['mc_0003']= "Figures List";
-$locale['mc_0004']= "Submits";
-$locale['mc_0005']= "My newest figure";
-$locale['mc_0006']= "My figures counter";
-$locale['mc_0007']= "You have ";
-$locale['mc_0008']= " figures in your collection!";
-$locale['mc_0009']= "Name of your last figure: ";
-$locale['mc_0010']= "You have no figures";
-$locale['mc_0011']= "This feature is only available for registered members. Please Sign up ";
-$locale['mc_0012']= "HERE";		
+				// LANGUAGE
+				if (file_exists(INFUSIONS."figurelib/locale/".LOCALESET."locale_figurelib.php")) {
+					include INFUSIONS."figurelib/locale/".LOCALESET."locale_figurelib.php";
+				} else {
+					include INFUSIONS."figurelib/locale/English/locale_figurelib.php";
+				}
+				// LOCALE
+				$locale['mc_0001']= "My Figure Collection";
+				$locale['mc_0002']= "Collection Count: ";
+				$locale['mc_0003']= "Figures List";
+				$locale['mc_0004']= "Submits";
+				$locale['mc_0005']= "My newest figure";
+				$locale['mc_0006']= "My figures counter";
+				$locale['mc_0007']= "You have ";
+				$locale['mc_0008']= " figures in your collection!";
+				$locale['mc_0009']= "Name of your last figure: ";
+				$locale['mc_0010']= "You have no figures";
+				$locale['mc_0011']= "This feature is only available for registered members. Please Sign up ";
+				$locale['mc_0012']= "HERE";		
 			
-			//echo "<div class='well clearfix'>\n";
-			//echo "<strong>".$locale['mc_0001']."</strong><br>";
-			//echo "</div>\n";
+				//echo "<div class='well clearfix'>\n";
+				//echo "<strong>".$locale['mc_0001']."</strong><br>";
+				//echo "</div>\n";
 	
 	opentable("<strong>".$locale['mc_0001']."</strong>");
 		echo "<div class='col-xs-12 col-sm-6'>\n";	
 	
-	// My figures counter
+			// My figures counter
 	openside($locale['mc_0006']);
 				
 				$count = dbcount("(figure_userfigures_id)", DB_FIGURE_USERFIGURES, "figure_userfigures_user_id='".$userdata['user_id']."'");	
@@ -212,7 +212,7 @@ closeside();
 			$fil_settings = get_settings("figurelib");
 			
 			$info['page_nav'] = $max_rows > $fil_settings['figure_per_page'] ? makepagenav($_GET['rowstart'], $fil_settings['figure_per_page'], $max_rows, 3, INFUSIONS."figurelib/mycollection.php?&amp;") : 0;
-			
+			//$info['page_nav'] = ($max_rows > $fil_settings['figure_per_page']) ? makepagenav($_GET['rowstart'], $fil_settings['figure_per_page'], $max_rows, 3, FUSION_SELF."?&amp;") : "";
 
 	if (dbrows($result) > 0) {
 				
@@ -288,13 +288,13 @@ closeside();
 									
 									// COLUMN 1 (image clickable)
 									echo "<div class='col-lg-1 col-md-2 col-sm-2 col-xs-2'>\n";
-										echo "<div class='side-small'><a href='".INFUSIONS."figurelib/figures.php?figure_id=".$data['figure_id']."'>\n<img src='". THUMBS_FIGURES.$data2['figure_images_thumb'] ."' alt='".$locale['CLFP_002']." : ".$data['figure_title']."' title='".$locale['CLFP_002']." : ".$data['figure_title']."' style='border:0px;max-height:20px;max-width:20px'/></a>";
+										echo "<div class='side-small'><a href='".INFUSIONS."figurelib/figures.php?figure_id=".$data['figure_id']."'>\n<img src='".THUMBS_FIGURES.$data2['figure_images_thumb']."' alt='".$locale['CLFP_002']." : ".$data['figure_title']."' title='".$locale['CLFP_002']." : ".$data['figure_title']."' style='border:0px;max-height:30px;max-width:30px'/></a>";
 									echo "</div></div>\n";					
 							}
 						} else { 
 									
 									echo "<div class='col-lg-1 col-md-2 col-sm-2 col-xs-2'>\n";
-										echo "<div class='side-small'><a href='".INFUSIONS."figurelib/figures.php?figure_id=".$data['figure_id']."'>\n<img src='".($data2['figure_images_thumb'] ? THUMBS_FIGURES.$data2['figure_images_thumb'] : INFUSIONS.$inf_folder."/images/default.png")."' alt='".$locale['CLFP_002']." : ".$data['figure_title']."' title='".$locale['CLFP_002']." : ".$data['figure_title']."' style='border:0px;max-height:20px;max-width:20px'/></a>";
+										echo "<div class='side-small'><a href='".INFUSIONS."figurelib/figures.php?figure_id=".$data['figure_id']."'>\n<img src='".INFUSIONS.$inf_folder."/images/default.png' alt='".$locale['CLFP_002']." : ".$data['figure_title']."' title='".$locale['CLFP_002']." : ".$data['figure_title']."' style='border:0px;max-height:30px;max-width:30px'/></a>";
 									echo "</div></div>\n";				
 							
 						}	
@@ -376,22 +376,7 @@ closeside();
 								echo "<hr>\n";
 					}
 											
-			// show variables - for admins and only for tests
 		
-			echo $numrows; echo " --> numrows";
-			echo "<br>";
-			echo $max_rows; echo " --> max_rows";
-			echo "<br>";
-			echo $info['figure_rows']; echo " --> $ info figure_rows";
-			echo "<br>";
-			echo $_GET['rowstart']; echo " --> $ GET rowstart ";
-			echo "<br>"; 
-			echo $_GET['figure_id']; echo " --> $ GET figure id ";
-			echo "<br>"; 
-			echo $data['figure_id']; echo " --> $ data figure id ";
-			
-
-			
 		}
 	} else {
 			
