@@ -1,4 +1,3 @@
-
 <?php
 /***************************************************************************
  *   mycollection.php for FIGURELIB                                        *
@@ -18,7 +17,7 @@ require_once INCLUDES."infusions_include.php";
 if (!db_exists(DB_FIGURE_ITEMS)) { redirect(BASEDIR."error.php?code=404"); }
 	$fil_settings = get_settings("figurelib"); 
 
-if (iMEMBER) {
+	if (iMEMBER) {
 
 				// GET GLOBAL VARIABLES
 				global $aidlink;
@@ -49,11 +48,11 @@ if (iMEMBER) {
 				//echo "<strong>".$locale['mc_0001']."</strong><br>";
 				//echo "</div>\n";
 	
-	opentable("<strong>".$locale['mc_0001']."</strong>");
+		opentable("<strong>".$locale['mc_0001']."</strong>");
 		echo "<div class='col-xs-12 col-sm-6'>\n";	
 	
 			// My figures counter
-	openside($locale['mc_0006']);
+		openside($locale['mc_0006']);
 				
 				$count = dbcount("(figure_userfigures_id)", DB_FIGURE_USERFIGURES, "figure_userfigures_user_id='".$userdata['user_id']."'");	
 				
@@ -66,12 +65,12 @@ if (iMEMBER) {
 						echo $locale['mc_0010'];
 				}
 				echo "</div>";
-	closeside();
+		closeside();
 	
-	echo "<div class='col-xs-12 col-sm-6'>\n";
+		echo "<div class='col-xs-12 col-sm-6'>\n";
 	
-	// My newest figure
-	openside($locale['mc_0005']);
+		// My newest figure
+		openside($locale['mc_0005']);
 				global $userdata;
 					$resultlast = dbquery(
 						"SELECT f.figure_id,
@@ -117,10 +116,12 @@ if (iMEMBER) {
 						
 										echo $locale['mc_0010'];
 							}
-echo "</div>";
-closeside();
+		echo "</div>";
+		closeside();
 				global $userdata;
-					echo "<div class='col-xs-12 col-sm-12'>\n";
+	
+	echo "<div class='col-xs-12 col-sm-12'>\n";
+	
 					// Locale
 					$locale['CLFP_000']= "Alien Figures Database";
 					$locale['CLFP_001']= "No figures found";
@@ -143,15 +144,15 @@ closeside();
 					$locale['CLFP_018']= "IMAGE";
 					$locale['yours']= "Your Figures";		
 				
-	// PANEL OF ALL FIGURE FROM USER 
-	openside($locale['yours']);
+		// PANEL OF ALL FIGURE FROM USER 
+		openside($locale['yours']);
 	
 		global $userdata;
 		$fil_settings = get_settings("figurelib"); 
 		$info = array();
 		$info['item'] = array();
 		
-		$result = dbquery("
+		$resultnav = dbquery("
 			  SELECT
 				f.figure_id,
 				f.figure_freigabe,
@@ -160,17 +161,15 @@ closeside();
 			  LEFT JOIN ".DB_FIGURE_USERFIGURES." fuf ON fuf.figure_userfigures_user_id=f.figure_id
 			  WHERE figure_freigabe=1");	
 	
-	if (dbrows($result) != 0) {
+		if (dbrows($resultnav) != 0) {
 		
-		$cdata = dbarray($result);
-		$info = $cdata;
+			$cdata = dbarray($resultnav);
+			$info = $cdata;
 		
-		$max_rows = dbcount("(figure_userfigures_figure_id)", DB_FIGURE_USERFIGURES, "figure_userfigures_user_id='".$userdata['user_id']."'");
+			$max_rows = dbcount("(figure_userfigures_figure_id)", DB_FIGURE_USERFIGURES, "figure_userfigures_user_id='".$userdata['user_id']."'");
 			$_GET['rowstart'] = isset($_GET['rowstart']) && isnum($_GET['rowstart']) && $_GET['rowstart'] <= $max_rows ? $_GET['rowstart'] : 0;
-					$numrows = dbrows($result);
-		$fil_settings = get_settings("figurelib");
-					
-			$result = dbquery("SELECT 
+							
+				$result = dbquery("SELECT 
 					tb.figure_id, 
 					tb.figure_submitter, 
 					tb.figure_freigabe, 
@@ -207,25 +206,28 @@ closeside();
 						AND figure_userfigures_user_id=".$userdata['user_id']."
 						LIMIT ".$_GET['rowstart'].",".$fil_settings['figure_per_page']."
 			");
+			
 			$numrows = dbrows($result);
 			$info['figure_rows'] = $numrows;
 			$fil_settings = get_settings("figurelib");
 			
 			$info['page_nav'] = $max_rows > $fil_settings['figure_per_page'] ? makepagenav($_GET['rowstart'], $fil_settings['figure_per_page'], $max_rows, 3, INFUSIONS."figurelib/mycollection.php?&amp;") : 0;
+			
+			//$info['page_nav'] = $max_rows > $fil_settings['figure_per_page'] ? makepagenav($_GET['rowstart'], $fil_settings['figure_per_page'], $max_rows, 3, INFUSIONS."figurelib/mycollection.php?figure_id=".$_GET['figure_id']."&amp;") : 0;
+			
 			//$info['page_nav'] = ($max_rows > $fil_settings['figure_per_page']) ? makepagenav($_GET['rowstart'], $fil_settings['figure_per_page'], $max_rows, 3, FUSION_SELF."?&amp;") : "";
 
-	if (dbrows($result) > 0) {
-				
+		if (dbrows($result) > 0) {				
 
 				// WENN DATEN UNGLEICH = 0 DANN DARSTELLUNG DER DATEN
 	 		
-				echo "<hr>";				
+				echo "<hr>";
+				
 				echo "<div class='row'>\n";					
 				echo "<div class='navbar-default'>";
 				echo "<div class='container-fluid'>\n";
 				echo "<div class='table-responsive'>\n";
-				
-										
+														
 						// COLUMN 1 (image)
 						echo "<div class='col-lg-1 col-md-2 col-sm-2 col-xs-2'>\n";
 							echo "<div class='text-smaller text-uppercase'>".$locale['CLFP_018']."</div>\n";
@@ -268,7 +270,7 @@ closeside();
 				
 				echo "<hr>";
 		 
-		while($data = dbarray($result)){
+			while($data = dbarray($result)){
 		
 					// WHILE SCHLEIFE FÜR DAS HOLEN DES BILDES AUS ORDNER / ORDNER MUSS IN infusion.db.php deklariert sein!				
 					$result2 = dbquery("SELECT
@@ -282,9 +284,9 @@ closeside();
 				 
 							while($data2 = dbarray($result2)){
 									
-									echo "<div class='container-fluid'>\n";
-									echo "<div class='table-responsive'>\n";
-									echo "<div class='row'>\n";	
+				echo "<div class='container-fluid'>\n";
+				echo "<div class='table-responsive'>\n";
+				echo "<div class='row'>\n";	
 									
 									// COLUMN 1 (image clickable)
 									echo "<div class='col-lg-1 col-md-2 col-sm-2 col-xs-2'>\n";
@@ -353,7 +355,7 @@ closeside();
 				echo "</div>\n";
 				echo "</div>\n";
 						
-		}
+			}
 				echo "<hr>\n";
 				
 				// PAGE NAV
@@ -361,31 +363,35 @@ closeside();
 
 					if (iADMIN || iSUPERADMIN) {		
 										
-								echo "<div class='row'>\n";	
-								echo "<div class='navbar-default'>";
-								echo "<div class='container-fluid'>\n";
-								echo "<div class='table-responsive'>\n";
+				echo "<div class='row'>\n";	
+				echo "<div class='navbar-default'>";
+				echo "<div class='container-fluid'>\n";
+				echo "<div class='table-responsive'>\n";
 								
 										// ['CLFP_016']." = "Admin"
 										echo "<div class='col-lg-12 col-md-12 col-sm-12 col-xs-12'>\n";
 											echo "<div align='center'><a href='".INFUSIONS.'figurelib/admin.php'.$aidlink."'>".$locale['CLFP_016']."</a>				  </div></div>\n";
-								echo "</div>\n";
-								echo "</div>\n";
-								echo "</div>\n";
-								echo "</div>\n";
-								echo "<hr>\n";
+				echo "</div>\n";
+				echo "</div>\n";
+				echo "</div>\n";
+				echo "</div>\n";
+				
+				echo "<hr>\n";
 					}
-											
-		
+												
 		}
-	} else {
+	
+		} else {
 			
 						echo "<div style='text-align: center;'>".$locale['CLFP_001']."</div>"; // 001 = No figures available"
-	}
-		closeside();
-						echo "</div>";
 		
-} else {
+		}
+		
+		echo "</div>";
+		closeside();
+						
+		
+	} else {
 						$locale['mc_0001']= "My Figure Collection";
 						$locale['mc_0011']= "This feature is only available for registered members. Please Sign up ";
 						$locale['mc_0012']= "HERE";
@@ -394,7 +400,7 @@ closeside();
 						echo $locale['mc_0011'];
 						echo "<a href='".BASEDIR."register.php'>".$locale['mc_0012']."</a>";
 		closeside();
-}
+	}
 		closetable();
 /*		
 	error_reporting(E_ALL);
