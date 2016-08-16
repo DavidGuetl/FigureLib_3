@@ -339,10 +339,11 @@ if (!db_exists(DB_FIGURE_ITEMS)) { redirect(BASEDIR."error.php?code=404"); }
 				echo "</div>\n";	
 				echo "</div>\n";		
 			
-				echo "<hr>\n";
+				//echo "<hr>\n";
 				
 				// PAGE NAV
 				echo $info['page_nav'] ? "<div class='text-right'>".$info['page_nav']."</div>" : '';
+				
 				echo "<hr>\n";
 					
 					if (iADMIN || iSUPERADMIN) {		
@@ -360,7 +361,7 @@ if (!db_exists(DB_FIGURE_ITEMS)) { redirect(BASEDIR."error.php?code=404"); }
 						echo "</div>\n";
 						echo "</div>\n";
 						
-						echo "<hr>\n";
+				echo "<hr>\n";
 					}												
 		}
 	
