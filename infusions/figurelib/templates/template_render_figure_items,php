@@ -183,7 +183,7 @@ if ($image_count) {
 						
 						// MANUFACTURER LOCALE
 						echo "<div class='col-lg-4 col-md-4 col-sm-12 col-xs-12'>\n";
-							echo "<div class='navbar-default'><div class='text-smaller text-uppercase'><strong>".$locale['figure_417']." :</strong>\n";
+							echo "<div class='navbar-default'><div class='text-smaller text-uppercase'><strong>".$locale['figure_417']."</strong>\n";
 						echo "</div></div></div>\n";									
 						
 						// MANUFACTURER DATA
