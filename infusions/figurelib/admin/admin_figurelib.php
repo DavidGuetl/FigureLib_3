@@ -103,6 +103,7 @@ if (!empty($result)) {
         "figure_amazon_ca" => "",
     );
 
+	
     if ($figure_edit) {
         $result = dbquery("SELECT * FROM ".DB_FIGURE_ITEMS." WHERE figure_id='".intval($_GET['figure_id'])."'");
         if (dbrows($result)) {
@@ -128,7 +129,8 @@ if (!empty($result)) {
 
 			} else {
 	
-    if ((isset($_GET['action']) && $_GET['action'] == "delete") && (isset($_GET['figure_id']) && isnum($_GET['figure_id']))) {
+    /*
+	if ((isset($_GET['action']) && $_GET['action'] == "delete") && (isset($_GET['figure_id']) && isnum($_GET['figure_id']))) {
 
         $result = dbquery("DELETE FROM ".DB_FIGURE_ITEMS." WHERE figure_id='".$_GET['figure_id']."'");
         
@@ -155,6 +157,39 @@ if (!empty($result)) {
 
 
     }
+	*/
+	
+	
+	/**
+	 * $_GET['figure_id'] + $_GET['action'] will execute delete.
+	 */
+	if ((isset($_GET['action']) && $_GET['action'] == "delete") && (isset($_GET['figure_id']) && isnum($_GET['figure_id']))) {
+		// If no count
+		if (!dbcount( "('figure_userfigures_figure_id')", DB_FIGURE_USERFIGURES, "figure_userfigures_figure_id='".intval($_GET['figure_id'])."'")) {
+
+			// Delete figure
+			dbquery("DELETE FROM ".DB_FIGURE_ITEMS." WHERE figure_id='".intval($_GET['figure_id'])."'");
+
+			// Find the figure photo
+			$result = dbquery("SELECT * FROM ".DB_FIGURE_IMAGES." WHERE figure_images_figure_id ='".intval($_GET['figure_id'])."'");
+			if (dbrows($result) > 0) {
+				$photo = dbarray($result);
+				if (!empty($photo['figure_images_image']) && file_exists(IMAGES_FIGURES.$photo['figure_images_image'])) {
+					unlink(IMAGES_FIGURES.$photo['figure_images_image']);
+				}
+				if (!empty($photo['figure_images_thumb']) && file_exists(THUMBS_FIGURES.$photo['figure_images_thumb'])) {
+					unlink(THUMBS_FIGURES.$photo['figure_images_thumb']);
+				}
+			}
+
+			addNotice('success', "Figure deleted");
+		} else {
+			addNotice("danger", "Cannot delete figure because some user still has it");
+		}
+	}
+	
+	
+	
 	}
 	
 
