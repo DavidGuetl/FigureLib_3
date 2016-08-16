@@ -12,7 +12,6 @@ $locale['choose'] = "... please choose ...";
 $locale['sale'] = "Sale figure";
 $locale['mycollection'] = "My Figure Collection";
 
-
 // figurelib/admin/figurelib_cats.php
 $locale['filc_0001'] = "Figure Category cannot be deleted because there are %d figures in this category";
 $locale['filc_0002'] = "Figure Category deleted";
@@ -103,37 +102,38 @@ $locale['film_0003'] = "Figure deleted";
 $locale['film_0004'] = "Delete this Figure?";
 
 // Submissions
-$locale['figs_0001'] = "Figure Submissions";
+$locale['figs_0001'] = "Figure submissions";
 $locale['figs_0002'] = "Currently displaying %d of %d total figure/s entries";
-$locale['figs_0003'] = "Figures Submissions has been published";
-$locale['figs_0004'] = "Figure Submission has been deleted";
+$locale['figs_0003'] = "Figures submissions has been published";
+$locale['figs_0004'] = "Figure submission has been deleted";
 $locale['figs_0005'] = "Posted by ";
-$locale['figs_0006'] = "The above Figure was submitted by ";
+$locale['figs_0006'] = "The above figure was submitted by ";
 $locale['figs_0007'] = "Figure Name:";
-$locale['figs_0008'] = "Update Publication Date";
+$locale['figs_0008'] = "Update publication date";
 $locale['figs_0009'] = "Category:";
 $locale['figs_0010'] = "Visibility:";
-$locale['figs_0011'] = "Publish Figure";
-$locale['figs_0012'] = "Delete Submission";
-$locale['figs_0013'] = "Submission Subject for Review";
-$locale['figs_0014'] = "Submission Author";
-$locale['figs_0015'] = "Submission Time";
-$locale['figs_0016'] = "Submission Id";
-$locale['figs_0017'] = "There are currently no Figure submisisons";
-$locale['figs_0018'] = "Thank you for submitting your Figure";
-$locale['figs_0019'] = "Submit another Figure";
+$locale['figs_0011'] = "Publish figure";
+$locale['figs_0012'] = "Delete submission";
+$locale['figs_0013'] = "Submission subject for review";
+$locale['figs_0014'] = "Submission author";
+$locale['figs_0015'] = "Submission time";
+$locale['figs_0016'] = "Submission ID";
+$locale['figs_0017'] = "There are currently no figure submissions";
+$locale['figs_0018'] = "Thank you for submitting your figure";
+$locale['figs_0019'] = "Submit another figure";
 $locale['figs_0020'] = "Return to [SITENAME]";
 $locale['figs_0021'] = "There are currently %s pending for your review.";
+
 
 // Filters
 $locale['figf_0001'] = "Filter by:";
 $locale['figf_0002'] = "Filter show category by";
-$locale['figf_0003'] = "All Figure Entries";
+$locale['figf_0003'] = "All figure entries";
 
 // Add/Edit Category Form
-$locale['figc_0000'] = "Category Name:";
+$locale['figc_0000'] = "Category name:";
 $locale['figc_0001'] = "Please enter a category name";
-$locale['figc_0002'] = "Category Description:";
+$locale['figc_0002'] = "Category description:";
 $locale['figc_0003'] = "Parent Category";
 $locale['figc_0004'] = "Category Sorting:";
 $locale['figc_0005'] = "Category ID";
@@ -440,25 +440,6 @@ $locale['figure_589'] = "File:";
 $locale['figure_591'] = "Figure published";
 $locale['figure_592'] = "Figure image is required";
 
-/*
-// Submissions.php
-$locale['figure_501'] = "Figure deleted";
-$locale['figure_502'] = "Return to figure submissions menu";
-$locale['figure_503'] = "Return to the infusion admin home";
-$locale['figure_510'] = "Figure submissions";
-$locale['figure_512'] = "Submitted figures: ";
-$locale['figure_515'] = "No figures awaiting verification.";
-$locale['figure_517'] = "View";
-$locale['figure_530'] = "Figure rejected";
-$locale['figure_531'] = "Sorry, the figure you sent has been rejected.";
-$locale['figure_532'] = "Figure published";
-$locale['figure_533'] = "The figure you sent has been published.";
-$locale['figure_581'] = "This figure was submitted by ";
-$locale['figure_583'] = "Publish";
-$locale['figure_588'] = "Image:";
-$locale['figure_589'] = "File:";
-$locale['figure_591'] = "Figure published";
-*/
 // reports.php & report.php
 $locale['figure_600'] = "Broken links";
 $locale['figure_601'] = "Reported by";
@@ -700,6 +681,7 @@ $locale['figure_1705'] = "Articulation Pts. cannot be left empty.";
 $locale['figure_1706'] = "Packaging cannot be left empty.";
 $locale['figure_1707'] = "Limited Edition cannot be left empty.";
 $locale['figure_1708'] = "The selection fields marked with an asterisk (*) is required. Please enter the appropriate information or select from the list provided. If you are unsure, please select 'Unknown'.";
+$locale['figure_1709'] = "Deleting not possible .. one or more user have this figure in thier collection.";
 
 //HELP TEXTS
 $locale['figure_1800'] = "Please Select the Category";
@@ -858,4 +840,46 @@ $locale['admin_figurelib_settings.php_006'] = "Width x Height";
 $locale['admin_figurelib_settings.php_007'] = "Maximum file size (bytes):";	
 $locale['admin_figurelib_settings.php_008'] = "Thumb ratio:";
 
+// LOCALE FÜR MITTELPANELE UND MYCOLLECTION
+$locale['CLFP_000']= "Alien Figures Database";
+$locale['CLFP_001']= "No figures found";
+$locale['CLFP_002']= "Name";
+$locale['CLFP_003']= "Manufacturer";
+$locale['CLFP_004']= "Brand";
+$locale['CLFP_005']= "Scale";
+$locale['CLFP_006']= "Year";
+$locale['CLFP_007']= "Image";
+$locale['CLFP_008']= "No Data";
+$locale['CLFP_009']= "X";
+$locale['CLFP_010']= "Rating";
+$locale['CLFP_011']= "Submitter";
+$locale['CLFP_012']= "Count";
+$locale['CLFP_013']= "Categories";
+$locale['CLFP_014']= "Submit";
+$locale['CLFP_015']= "Most viewed";
+$locale['CLFP_016']= "Admin";
+$locale['CLFP_017']= "MY COLLECTION";
+$locale['CLFP_018']= "IMAGE";
+$locale['yours']= "Your Figures";	
 
+// mycollection
+$locale['mc_0001']= "My Figure Collection";
+$locale['mc_0002']= "Collection Count: ";
+$locale['mc_0003']= "Figures List";
+$locale['mc_0004']= "Submits";
+$locale['mc_0005']= "My newest figure";
+$locale['mc_0006']= "My figures counter";
+$locale['mc_0007']= "Figure Counter: ";
+$locale['mc_0008']= " figures in your collection!";
+$locale['mc_0009']= "Last figure: ";
+$locale['mc_0010']= "You have no figures";
+$locale['mc_0011']= "This feature is only available for registered members. Please Sign up ";
+$locale['mc_0012']= "HERE";	
+
+// ####### USERFIGURES  
+$locale['userfigure_001'] ="Add to collection";
+$locale['userfigure_002'] ="Remove from collection";
+$locale['userfigure_003'] ="The following members have this Figure: ";
+$locale['userfigure_004'] ="No members have this Figure - be the first :)";
+$locale['userfigure_005'] ="FIGURE STATS";
+$locale['userfigure_006'] ="Your Collection";
