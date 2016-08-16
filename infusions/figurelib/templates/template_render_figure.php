@@ -88,46 +88,41 @@ global $settings;
 						//echo "<div class='col-xs-12 col-sm-12 col-md-12 col-lg-12'>\n";
 	// ......................IMAGE
 	
-									$result2 = dbquery("SELECT							   
+									$result2 = dbquery("SELECT	
 											figure_images_image_id, 	
 											figure_images_figure_id, 	
 											figure_images_image, 	
 											figure_images_thumb 	
 										FROM ".DB_FIGURE_IMAGES."
-										WHERE figure_images_figure_id='".$data['figure_id']."' LIMIT 0,1");
+										WHERE figure_images_figure_id='".$data['figure_id']."' 
+										LIMIT 0,1");
 					 
-
-								if(dbrows($result2)){
-						 
-									while($data2 = dbarray($result2)){
-						
-										echo "<center><a href='".$data['figure']['link']."'><img src='".($data2['figure_images_thumb'] ? THUMBS_FIGURES.$data2['figure_images_thumb'] : IMAGES."imagenotfound.jpg")."' alt='".trimlink($data['figure_title'],100)."' title='".trimlink($data['figure_title'],50)."' style='border:0px;max-height:120px;max-width:120px' /><br />";						
-									}	
-									
-								} else { 
-									
-										echo "<center><a href='".$data['figure']['link']."'><img src='".IMAGES."imagenotfound.jpg' alt='".trimlink($data['figure_title'],100)."' title='".trimlink($data['figure_title'],50)."' style='border:0px;max-height:120px;max-width:120px' /><br />";
+								if(dbrows($result2)){						 
+									while($data2 = dbarray($result2)){						
+										echo "<center><a href='".$data['figure']['link']."'><img src='".($data2['figure_images_thumb'] ? THUMBS_FIGURES.$data2['figure_images_thumb'] : IMAGES."imagenotfound.jpg")."' alt='".trimlink($data['figure_title'],100)."' title='".trimlink($data['figure_title'],50)."' style='border:0px;max-height:100px;max-width:100px' /><br />";						
+									}										
+								} else { 									
+										echo "<center><a href='".$data['figure']['link']."'><img src='".IMAGES."imagenotfound.jpg' alt='".trimlink($data['figure_title'],100)."' title='".trimlink($data['figure_title'],50)."' style='border:0px;max-height:100px;max-width:100px' /><br />";
 										}
 
 	// ......................MANUFACTURER & FIGURE TITLE	
-	// ['figure_453'] = "["; //  ['figure_454'] = "] ";
+	// 		['figure_453'] = "["; //  ['figure_454'] = "] ";
 			echo "<strong>".$locale['figure_453']."".trimlink($data['figure']['manufacturer'],15)."".$locale['figure_454']."</strong><br />\n";	
 			echo "<strong>".trimlink($data['figure']['name'],15)."</strong></a><br />\n";
 			
-
 	// ......................DATE	
-			echo "<span class='small'><strong>".$locale['figure_414'].":</strong> ".showdate("shortdate", $data['figure_datestamp'])."</span><br>\n";
+			echo "<span class='small'><i class='glyphicon glyphicon-time' alt='Added on::' title='Added on'></i>  ".showdate("shortdate", $data['figure_datestamp'])."</span><br>\n";
 
 	// ......................VIEWS	
-			echo "<span class='small'><strong>Views: </strong>".$data['figure']['views']."</span><br>\n";
+			echo "<span class='small'><i class='glyphicon glyphicon-eye-open' alt='Views:' title='Views'></i>  ".$data['figure']['views']."</span><br>\n";
 
 	// ......................USERFIGURES COUNT						
 			$count = dbcount("(figure_userfigures_id)", DB_FIGURE_USERFIGURES, "figure_userfigures_figure_id='".$data['figure_id']."'");	
-			echo "<span class='small'><strong>User Count: </strong>".$count."</span><br>";						
+			echo "<span class='small'><i class='glyphicon glyphicon-user' alt='Usercount:' title='Usercount'></i> ".$count."</span><br>";						
 
 	// ......................COMMENTS	
 			$comments = dbcount("(comment_id)", DB_COMMENTS, "comment_type='FI' AND comment_item_id='".$data['figure_id']."'");
-			echo "<span class='small'><strong>Comments: </strong>".$comments."<br/></span>\n";
+			echo "<span class='small'><i class='glyphicon glyphicon-comment' alt='Comments:' title='Comments'></i>  ".$comments."<br/></span>\n";
 
 	// ......................RATING
 			$drating = dbarray(dbquery("
@@ -139,22 +134,21 @@ global $settings;
 						AND  rating_item_id='".$data['figure_id']."'
 				")); 
 			$rating = ($drating['count_votes'] > 0 ? str_repeat("<img src='".INFUSIONS."figurelib/images/starsmall.png'>",ceil($drating['sum_rating']/$drating['count_votes'])) : "-");
-			echo "<span class='small'><strong>Rating: </strong>".$rating."</span>\n";
+			echo "<span class='small'><i class='glyphicon glyphicon-star'></i><i class='glyphicon glyphicon-star'></i><i class='glyphicon glyphicon-star-empty' alt='Rating:' title='Rating'></i>  ".$rating."</span>\n";
 
-// ......................
-//echo "</div>\n";
-//echo "</div>\n";					
-// ......................						
-echo "</div>\n";
-echo "</div>\n";
-echo "</div>\n";
-// ......................
-
+				// ......................
+				//echo "</div>\n";
+				//echo "</div>\n";					
+				// ......................						
+				echo "</div>\n";
+				echo "</div>\n";
+				echo "</div>\n";
+				// ......................
 								$counter++;
 					}
 				}
 						
-echo "</div>\n";
+				echo "</div>\n";
 	
 		} else {
 			
@@ -244,76 +238,99 @@ echo "</div>\n";
 		
 			echo "<div class='container-fluid'>\n";
 			echo "<div class='table-responsive'>\n";
+			
+			
 				
 // ZEILE 1
+	// ..................... BILD			
+				echo "<div class='col-lg-4 col-md-12 col-sm-12 col-xs-12'>\n";
+										$result2 = dbquery("SELECT	
+											figure_images_image_id, 	
+											figure_images_figure_id, 	
+											figure_images_image, 	
+											figure_images_thumb 	
+										FROM ".DB_FIGURE_IMAGES."
+										WHERE figure_images_figure_id='".$data['figure_id']."' 
+										LIMIT 0,1");
+					 
+								if(dbrows($result2)){						 
+									while($data2 = dbarray($result2)){						
+										echo "<center><a href='".$data['figure']['link']."'><img src='".($data2['figure_images_thumb'] ? THUMBS_FIGURES.$data2['figure_images_thumb'] : IMAGES."imagenotfound.jpg")."' alt='".trimlink($data['figure_title'],100)."' title='".trimlink($data['figure_title'],50)."' style='border:0px;max-height:120px;max-width:120px' /></a>";						
+									}										
+								} else { 									
+										echo "<center><a href='".$data['figure']['link']."'><img src='".IMAGES."imagenotfound.jpg' alt='".trimlink($data['figure_title'],100)."' title='".trimlink($data['figure_title'],50)."' style='border:0px;max-height:120px;max-width:120px' /></a>";
+										}
+				echo "</div>\n";
 	// ..................... VARIANT				
-				echo "<div class='col-lg-6 col-md-6 col-sm-12 col-xs-12'>\n";
+				echo "<div class='col-lg-4 col-md-6 col-sm-12 col-xs-12'>\n";
 					if ($data['figure']['variant']) {
-							echo "<span class='small'><strong>Variant: </strong>".$data['figure']['variant']."</span>\n";
+							echo "<span class='small'><strong>Variant: </strong>".trimlink($data['figure']['variant'],10)."</span>\n";
 					} else {
 							echo "<span class='small'><strong>Variant: </strong>... missing data ...</span>";
 						}
 				echo "</div>\n";
 
 	// ..................... SUBMITTER					
-				echo "<div class='col-lg-6 col-md-6 col-sm-12 col-xs-12'>\n";
+				echo "<div class='col-lg-4 col-md-6 col-sm-12 col-xs-12'>\n";
 					echo "<span class='small'><strong>Submitted by: </strong>".profile_link($data['figure']['userid'], $data['figure']['username'], $data['figure']['userstatus'])."<br/></span>\n";
 				echo "</div>\n";
 				
 // ZEILE 2				
-	// ..................... MANUFACTURER				
-				echo "<div class='col-lg-6 col-md-6 col-sm-12 col-xs-12'>\n";
-					echo "<span class='small'><strong>Manufacturer: </strong>".$data['figure']['manufacturer']."<br/></span>\n";
+	// ..................... MANUFACTURER								
+				echo "<div class='col-lg-4 col-md-6 col-sm-12 col-xs-12'>\n";
+					echo "<span class='small'><strong>Manufacturer: </strong>".trimlink($data['figure']['manufacturer'],10)."<br/></span>\n";
 				echo "</div>\n";
 
 	// ..................... SUBMITTED ON				
-				echo "<div class='col-lg-6 col-md-6 col-sm-12 col-xs-12'>\n";
-					echo "<span class='small'><strong>Submitted on: </strong>".timer($data['figure_datestamp'])." - ".showdate("shortdate", $data['figure_datestamp'])."</span>\n";
+				echo "<div class='col-lg-4 col-md-6 col-sm-12 col-xs-12'>\n";
+					//echo "<span class='small'><strong>Submitted on: </strong>".timer($data['figure_datestamp'])." - ".showdate("shortdate", $data['figure_datestamp'])."</span>\n";
+					echo "<span class='small'><strong>Submitted on: </strong>".showdate("shortdate", $data['figure_datestamp'])."</span>\n";
 				echo "</div>\n";
 // ZEILE 3				
 	// ..................... BRAND				
-				echo "<div class='col-lg-6 col-md-6 col-sm-12 col-xs-12'>\n";
-					echo "<span class='small'><strong>Brand: </strong>".$data['figure']['brand']."</span>\n";
+				echo "<div class='col-lg-4 col-md-6 col-sm-12 col-xs-12'>\n";
+					echo "<span class='small'><strong>Brand: </strong>".trimlink($data['figure']['brand'],10)."</span>\n";
 				echo "</div>\n";
 
 	// ..................... VIEWS				
-				echo "<div class='col-lg-6 col-md-6 col-sm-12 col-xs-12'>\n";
+				echo "<div class='col-lg-4 col-md-6 col-sm-12 col-xs-12'>\n";
 					echo "<span class='small'><strong>Views: </strong>".$data['figure']['views']."</span>\n";
 				echo "</div>\n";				
 				
 // ZEILE 4				
 	// ..................... SCALE				
-				echo "<div class='col-lg-6 col-md-6 col-sm-12 col-xs-12'>\n";
+				echo "<div class='col-lg-4 col-md-6 col-sm-12 col-xs-12'>\n";
 					echo "<span class='small'><strong>Scale: </strong>".$data['figure']['scale']."</span>\n";
 				echo "</div>\n";
 
 	// ..................... USER COUNT					
-				echo "<div class='col-lg-6 col-md-6 col-sm-12 col-xs-12'>\n";
-					echo "<span class='small'><strong>User Count: </strong>Variable  hier einbauen</span>\n";
+				echo "<div class='col-lg-4 col-md-6 col-sm-12 col-xs-12'>\n";
+					$count = dbcount("(figure_userfigures_id)", DB_FIGURE_USERFIGURES, "figure_userfigures_figure_id='".$data['figure_id']."'");	
+					echo "<span class='small'><strong>User Count: </strong>".$count."</span>\n";
 				echo "</div>\n";				
 // ZEILE 5				
 	// ..................... RELEASE DATE			
-				echo "<div class='col-lg-6 col-md-6 col-sm-12 col-xs-12'>\n";
+				echo "<div class='col-lg-4 col-md-6 col-sm-12 col-xs-12'>\n";
 					echo "<span class='small'><strong>Release: </strong>".$data['figure']['year']."</span>\n";
 				echo "</div>\n";
 
 	// ..................... COMMENT COUNT					
-				echo "<div class='col-lg-6 col-md-6 col-sm-12 col-xs-12'>\n";
+				echo "<div class='col-lg-4 col-md-6 col-sm-12 col-xs-12'>\n";
 					$comments = dbcount("(comment_id)", DB_COMMENTS, "comment_type='FI' AND comment_item_id='".$data['figure_id']."'");
 					echo "<span class='small'><strong>Comments: </strong>".$comments."<br/></span>\n";
 				echo "</div>\n";								
 // ZEILE 6				
 	// ..................... SERIES			
-				echo "<div class='col-lg-6 col-md-6 col-sm-12 col-xs-12'>\n";
+				echo "<div class='col-lg-4 col-md-6 col-sm-12 col-xs-12'>\n";
 					if ($data['figure']['series']) {
-						echo "<span class='small'><strong>Series: </strong>".$data['figure']['series']."</span>\n";
+						echo "<span class='small'><strong>Series: </strong>".trimlink($data['figure']['series'],10)."</span>\n";
 					} else {
 						echo "<span class='small'><strong>Series: </strong> ... missing data ...</span>";
 					}
 				echo "</div>\n";
 
 	// ..................... RATING					
-				echo "<div class='col-lg-6 col-md-6 col-sm-12 col-xs-12'>\n";
+				echo "<div class='col-lg-4 col-md-6 col-sm-12 col-xs-12'>\n";
 					$drating = dbarray(dbquery("
 					 SELECT 
 						SUM(rating_vote) sum_rating, 
