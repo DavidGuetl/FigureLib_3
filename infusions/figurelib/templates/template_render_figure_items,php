@@ -76,69 +76,69 @@ $result = dbquery(
 
 // IMAGES ####################################################################################	
 
-openside("<div class='well clearfix'><strong></strong>&nbsp;&nbsp;<a href='".INFUSIONS."figurelib/figures.php?figure_id=".$data['figure_id']."'>".trimlink($data['figure_title'], 23)." (".trimlink($data['figure_manufacturer_name'], 23).") [".$data['figure_year']."]</a></div>");
+	openside("<div class='well clearfix'><strong></strong>&nbsp;&nbsp;<a href='".INFUSIONS."figurelib/figures.php?figure_id=".$data['figure_id']."'>".trimlink($data['figure_title'], 23)." (".trimlink($data['figure_manufacturer_name'], 23).") [".$data['figure_year']."]</a></div>");
 
-// Figure ID
-$figure_id = $data['figure_id'];
+	// Figure ID
+	$figure_id = $data['figure_id'];
 
-// Alle Bilder zählen - (image count)
-$image_count = dbcount("(figure_images_image_id)", DB_FIGURE_IMAGES, "figure_images_figure_id='".$figure_id."'");
+	// Alle Bilder zählen - (image count)
+	$image_count = dbcount("(figure_images_image_id)", DB_FIGURE_IMAGES, "figure_images_figure_id='".$figure_id."'");
 
-// Insofern Bilder vorhanden sind, Ausgabe beginnen
-if ($image_count) {
+	// Insofern Bilder vorhanden sind, Ausgabe beginnen
+	if ($image_count) {
+		   
+			   // Standard Variablen  (standard variables)
+			   $indicators = "";
+			   $images     = "";
+			   $i          = 0;
    
-   // Standard Variablen  (standard variables)
-   $indicators = "";
-   $images     = "";
-   $i          = 0;
-   
-   // Bilder auslesen (get image data)
-   $resultimage = dbquery("SELECT * FROM ".DB_FIGURE_IMAGES." WHERE figure_images_figure_id='".$figure_id."'");
-   while ($image_data = dbarray($resultimage)) {
+				// Bilder auslesen (get image data)
+				$resultimage = dbquery("SELECT * FROM ".DB_FIGURE_IMAGES." WHERE figure_images_figure_id='".$figure_id."'");
+		while ($image_data = dbarray($resultimage)) {
 
-      // Indikator einfügen (add indicators)
-      $indicators .= "<li data-target='#myCarousel' data-slide-to='".$i."'".($i == 0 ? " class='active'" : "")."></li>\n";
-   
-      // Bild auslesen (get image)
-      $image_thumb = get_figure_image_path($image_data['figure_images_image'], $image_data['figure_images_thumb']);
-      if (!$image_thumb) {
-         $image_thumb = IMAGES."imagenotfound70.jpg";
-      }
-	  
-	  $image_image = get_figure_image_path($image_data['figure_images_image'], $image_data['figure_images_image']);
-      if (!$image_image) {
-         $image_image = IMAGES."imagenotfound70.jpg";
-      }
-        
-      $images .= "<div class='item".($i == 0 ? " active" : "")."'>\n";
-         $images .= "<center><a href='".$image_image."'  height='100%' width='100%' alt='".$data['figure_title']."'><img src='".$image_thumb."' alt='".$locale['figure_588']."' /></a>\n";
-      $images .= "</div>\n";
+				// Indikator einfügen (add indicators)
+				$indicators .= "<li data-target='#myCarousel' data-slide-to='".$i."'".($i == 0 ? " class='active'" : "")."></li>\n";
+		   
+				// Bild auslesen (get image)
+				$image_thumb = get_figure_image_path($image_data['figure_images_image'], $image_data['figure_images_thumb']);
+			  if (!$image_thumb) {
+				 $image_thumb = IMAGES."imagenotfound70.jpg";
+			  }
+			  
+				$image_image = get_figure_image_path($image_data['figure_images_image'], $image_data['figure_images_image']);
+			  if (!$image_image) {
+				 $image_image = IMAGES."imagenotfound70.jpg";
+			  }
+				
+					$images .= "<div class='item".($i == 0 ? " active" : "")."'>\n";
+					$images .= "<center><a href='".$image_image."'  height='100%' width='100%' alt='".$data['figure_title']."'><img src='".$image_thumb."' alt='".$locale['figure_588']."' /></a>\n";
+					$images .= "</div>\n";
 
-      // Counter erhöhen (counter +1)
-      $i++;
-   }
+				// Counter erhöhen (counter +1)
+				$i++;
+		}
    
-   // Carousel anzeigen (show carousel)
-   echo "<div id='myCarousel' class='carousel slide' data-ride='carousel'>\n";
-      echo "<ol class='carousel-indicators'>\n";
-         echo $indicators;
-      echo "</ol>\n";
-      echo "<div class='carousel-inner' role='listbox'>\n";
-         echo $images;
-      echo "</div>\n";
-      echo "<a class='left carousel-control' href='#myCarousel' role='button' data-slide='prev'>\n";
-         echo "<span class='glyphicon glyphicon-chevron-left' aria-hidden='true'></span>\n";
-         echo "<span class='sr-only'>Previous</span>\n";
-      echo "</a>\n";
-      echo "<a class='right carousel-control' href='#myCarousel' role='button' data-slide='next'>\n";
-         echo "<span class='glyphicon glyphicon-chevron-right' aria-hidden='true'></span>\n";
-         echo "<span class='sr-only'>Next</span>\n";
-      echo "</a>\n";
-   echo "</div>\n";
-   
-   // Variablen löschen (delete variables)
-   unset($indicators, $images, $i);
-}
+			   // Carousel anzeigen (show carousel)
+			   echo "<div id='myCarousel' class='carousel slide' data-ride='carousel'>\n";
+				  echo "<ol class='carousel-indicators'>\n";
+					 echo $indicators;
+				  echo "</ol>\n";
+				  echo "<div class='carousel-inner' role='listbox'>\n";
+					 echo $images;
+				  echo "</div>\n";
+				  echo "<a class='left carousel-control' href='#myCarousel' role='button' data-slide='prev'>\n";
+					 echo "<span class='glyphicon glyphicon-chevron-left' aria-hidden='true'></span>\n";
+					 echo "<span class='sr-only'>Previous</span>\n";
+				  echo "</a>\n";
+				  echo "<a class='right carousel-control' href='#myCarousel' role='button' data-slide='next'>\n";
+					 echo "<span class='glyphicon glyphicon-chevron-right' aria-hidden='true'></span>\n";
+					 echo "<span class='sr-only'>Next</span>\n";
+				  echo "</a>\n";
+			   echo "</div>\n";
+	   
+			// Variablen löschen (delete variables)
+				unset($indicators, $images, $i);
+	}
 //closeside();
 // ############################################################################################	
 
@@ -482,193 +482,6 @@ if ($image_count) {
 	// END OF BOOTSTRAP GRID	
 	echo "</table>\n";
 		
-//closeside();
-
-/*
-openside('');		
-		// Variant	
-			echo "<table class='table table-hover'><tr>\n";	
-				echo "<colgroup><col width='20%'><col width='80%'></colgroup>\n"; 			
-					echo "<td  class='navbar-default'><div class='text-smaller text-uppercase'><strong>".$locale['figure_441'].":</strong></div></td>\n";
-					echo "<td  class=''><small>".$data['figure_variant']."</small></td>\n";	
-			echo "</tr>\n";		
-			
-		// Series
-			echo "<tr>\n";			
-					echo "<td  class='navbar-default'><div class='text-smaller text-uppercase'><strong>".$locale['figure_439'].":</strong></div></td>\n";
-					echo "<td  class=''><small>".$data['figure_series']."</small></td>\n";				
-			echo "</tr>\n";	
-
-		// Manufacturer
-			echo "<tr>\n"; 			
-					echo "<td  class='navbar-default'><div class='text-smaller text-uppercase'><strong>".$locale['figure_417'].":</strong></div></td>\n";
-					echo "<td  class=''><small>".$data['figure_manufacturer_name']."</small></td>\n";
-			echo "</tr>\n";
-			
-		// Release Date
-			echo "<tr>\n";		
-					echo "<td  class='navbar-default'><div class='text-smaller text-uppercase'><strong>".$locale['figure_419'].":</strong></div></td>\n";
-					echo "<td  class=''><small>".$data['figure_year']."</small></td>\n";
-			echo "</tr>\n";
-			
-		// Country
-			echo "<tr>\n"; 			
-					echo "<td  class='navbar-default'><div class='text-smaller text-uppercase'><strong>".$locale['figure_436'].":</strong></div></td>\n";
-					echo "<td  class=''><small>".$data['figure_country']."</small></td>\n";						
-			echo "</tr>\n";
-			
-		// Artists
-			echo "<tr>\n"; 			
-					echo "<td  class='navbar-default'><div class='text-smaller text-uppercase'><strong>".$locale['figure_452'].":</strong></div></td>\n";
-					echo "<td  class=''><small>".$data['figure_artists']."</small></td>\n";						
-						
-		// Space
-			echo "<tr>\n";
-					echo "<td class='active'></td>\n";
-					echo "<td class='active'></td>\n";	
-			echo "</tr>\n";
-			
-		// Scale
-			echo "<tr>\n"; 			
-					echo "<td  class='navbar-default'><div class='text-smaller text-uppercase'><strong>".$locale['figure_442'].":</strong></div></td>\n";
-					echo "<td  class=''><small>".$data['figure_scale_name']."</small></td>\n";	
-			echo "</tr>\n";	
-			
-		// Weight
-			echo "<tr>\n";			
-					echo "<td  class='navbar-default'><div class='text-smaller text-uppercase'><strong>".$locale['figure_443'].":</strong></div></td>\n";
-					echo "<td  class=''><small>".$data['figure_weight']."</small></td>\n";	
-			echo "</tr>\n";			
-						
-		// Height
-			echo "<tr>\n";			
-					echo "<td  class='navbar-default'><div class='text-smaller text-uppercase'><strong>".$locale['figure_444'].":</strong></div></td>\n";
-			
-					$height = dbquery("SELECT fm.figure_measurements_id, fm.figure_measurements_inch, f.figure_height
-						FROM ".DB_FIGURE_MEASUREMENTS." fm
-						INNER JOIN ".DB_FIGURE_ITEMS." f ON f.figure_height = fm.figure_measurements_id
-						WHERE figure_id='".$data['figure_id']."'");
-				   
-					if(dbrows($height)){
-					   while($dataheight = dbarray($height)){	
-			
-					echo "<td  class=''><small>".$dataheight['figure_measurements_inch']."</small></td>\n";
-						}
-					}						
-			echo "</tr>\n";	
-							
-		// Width
-			echo "<tr>\n"; 	
-					echo "<td  class='navbar-default'><div class='text-smaller text-uppercase'><strong>".$locale['figure_445'].":</strong></div></td>\n";
-				
-					$width = dbquery("SELECT fm.figure_measurements_id, fm.figure_measurements_inch, f.figure_width
-						FROM ".DB_FIGURE_MEASUREMENTS." fm
-						INNER JOIN ".DB_FIGURE_ITEMS." f ON f.figure_width = fm.figure_measurements_id
-						WHERE figure_id='".$data['figure_id']."'");
-				   
-					if(dbrows($width)){
-					   while($datawidth = dbarray($width)){	
-			
-				echo "<td  class=''><small>".$datawidth['figure_measurements_inch']."</small></td>\n";	
-						}
-					}				
-			echo "</tr>\n";
-										
-		// Depth
-			echo "<tr>\n"; 			
-					echo "<td  class='navbar-default'><div class='text-smaller text-uppercase'><strong>".$locale['figure_446'].":</strong></div></td>\n";
-						
-						$depth = dbquery("SELECT fm.figure_measurements_id, fm.figure_measurements_inch, f.figure_depth
-						   FROM ".DB_FIGURE_MEASUREMENTS." fm
-						   INNER JOIN ".DB_FIGURE_ITEMS." f ON f.figure_depth = fm.figure_measurements_id
-						   WHERE figure_id='".$data['figure_id']."'");
-						   
-						   if(dbrows($depth)){
-							   while($datadepth = dbarray($depth)){	
-								echo "<td  class=''><small>".$datadepth['figure_measurements_inch']."</small></td>\n";
-								}
-							}	
-			echo "</tr>\n";
-			
-		// Space		
-			echo "<tr>\n";
-					echo "<td class='active'></td>\n";
-					echo "<td class='active'></td>\n";	
-			echo "</tr>\n";
-			
-		// Brand
-			echo "<tr>\n"; 				
-					echo "<td  class='navbar-default'><div class='text-smaller text-uppercase'><strong>".$locale['figure_438'].":</strong></div></td>\n";
-					echo "<td  class=''><small>".$data['figure_brand_name']."</small></td>\n";		
-			echo "</tr>\n";					
-															
-		//  Material
-			echo "<tr>\n"; 				
-					echo "<td  class='navbar-default'><div class='text-smaller text-uppercase'><strong>".$locale['figure_447'].":</strong></div></td>\n";
-					echo "<td  class=''><small>".$data['figure_material_name']."</small></td>\n";
-			echo "</tr>\n";
-					
-		// Articulations Points
-			echo "<tr>\n"; 			
-					echo "<td  class='navbar-default'><div class='text-smaller text-uppercase'><strong>".$locale['figure_455'].":</strong></div></td>\n";
-					echo "<td  class=''><small>".$data['figure_poa_name']."</small></td>\n";				
-			echo "</tr>\n";	
-									
-		// Packaging
-			echo "<tr>\n"; 		
-					echo "<td  class='navbar-default'><div class='text-smaller text-uppercase'><strong>".$locale['figure_448'].":</strong></div></td>\n";
-					echo "<td  class=''><small>".$data['figure_packaging_name']."</small></td>\n";	
-			echo "</tr>\n";
-									
-		//BLANK LINE		
-			echo "<tr>\n";
-					echo "<td class='active'></td>\n";
-					echo "<td class='active'></td>\n";	
-			echo "</tr>\n";
-			
-		// MSRP (Price by Release)
-			echo "<tr>\n"; 				
-					echo "<td  class='navbar-default'><div class='text-smaller text-uppercase'><strong>".$locale['figure_449'].":</strong></div></td>\n";
-					echo "<td  class=''><small>".$data['figure_retailprice']."</small></td>\n";					
-			echo "</tr>\n";
-			
-		// Used Price	
-			echo "<tr>\n"; 				
-					echo "<td  class='navbar-default'><div class='text-smaller text-uppercase'><strong>".$locale['figure_456'].":</strong></div></td>\n";
-					echo "<td  class=''><small>".$data['figure_usedprice']."</small></td>\n";
-			echo "</tr>\n";			
-
-		// Limited Edition YES/NO 
-			echo "<tr>\n"; 
-					echo "<td  class='navbar-default'><div class='text-smaller text-uppercase'><strong>".$locale['figure_450'].":</strong></div></td>\n";
-					echo "<td  class=''><small>".$data['figure_limitation_name']."</small></td>\n";
-			echo "</tr>\n";
-			
-		// Edition Size
-			echo "<tr>\n"; 
-					echo "<td  class='navbar-default'><div class='text-smaller text-uppercase'><strong>".$locale['figure_451'].":</strong></div></td>\n";
-					echo "<td  class=''><small>".$data['figure_editionsize']."</small></td>\n";
-			echo "</tr>\n";
-						
-		// Space		
-			echo "<tr>\n";
-					echo "<td class='active'></td>\n";
-					echo "<td class='active'></td>\n";	
-			echo "</tr>\n";
-
-		// Accessories 	
-			echo "<tr>\n"; 			
-					echo "<td  class='navbar-default'><div class='text-smaller text-uppercase'><strong>".$locale['figure_457'].":</strong></div></td>\n";					
-					echo "<td style='word-break: break-all; word-wrap: break-word;'><small>".($data['figure_accessories'] ? $data['figure_accessories'] : "-")."</small></td>\n";						
-			echo "</tr>\n";
-			
-		// Discreption 
-			echo "<tr>\n";				
-					echo "<td  class='navbar-default'><div class='text-smaller text-uppercase'><strong>".$locale['figure_423'].":</strong></div></td>\n";
-					echo "<td style='word-break: break-all; word-wrap: break-word;'><small>".nl2br(parseubb(parsesmileys($data['figure_description'])))."</small></td>";		
-			echo "</tr></table>\n";	
-
-*/
 closeside();
 
 // ############################################################################################
@@ -798,14 +611,7 @@ closeside();
 // ############################################################################################
 				
 // ####### USERFIGURES  #######################################################################
-		// LOCALE
-		$locale['userfigure_001'] ="Add to collection";
-		$locale['userfigure_002'] ="Delete from collection";
-		$locale['userfigure_003'] ="The following members have this Figure: ";
-		$locale['userfigure_004'] ="No members have this Figure - be the first :)";
-		$locale['userfigure_005'] ="FIGURE STATS";
-		$locale['userfigure_006'] ="Your Collection";			
-	
+			
 	openside("<div class='well clearfix'><strong>".$locale['userfigure_005']."</strong></div>");	
 	
 	if (iMEMBER) {
