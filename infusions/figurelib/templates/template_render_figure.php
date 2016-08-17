@@ -66,11 +66,12 @@ global $settings;
 		if ($info['figure_rows'] != 0) {						
 						$counter = 0;
 						
-						// DIESER WERT IST WICHTIG WENN MEHRERE FIGUREN ENBENEINANDER HABEN WILL
+						// DIESER WERT IST WICHTIG WENN MAN MEHRERE FIGUREN NBENEINANDER HABEN WILL
 						// wert aus settings holen
 						$fil_settings = get_settings("figurelib");
 						// Anzahl der spalten ( 4 max ratsam )						
 						$columns = $fil_settings['figure_per_line'];
+	openside('');	
 						echo "<div class='row m-0'>\n";
 				if (!empty($info['item'])) {
 							
@@ -83,9 +84,12 @@ global $settings;
 						echo "<div class='media'>\n";		
 						//echo "<div class='media-body overflow-hide'>\n";
 					
+				
+					
 						// BOOTSTRAP GIRD BEGIN
 						echo "<div class='row'>";
 						//echo "<div class='col-xs-12 col-sm-12 col-md-12 col-lg-12'>\n";
+						
 	// ......................IMAGE
 	
 									$result2 = dbquery("SELECT	
@@ -178,10 +182,30 @@ global $settings;
 						} else {
 								echo "</div>\n";
 								}
-							
+						
 				}
-		
+			echo "<hr>\n";
 			echo $info['page_nav'] ? "<div class='text-right'>".$info['page_nav']."</div>" : '';
+			echo "<hr>\n";
+					if (iADMIN || iSUPERADMIN) {		
+						global $aidlink;				
+						echo "<div class='row'>\n";	
+						echo "<div class='navbar-default'>";
+						echo "<div class='container-fluid'>\n";
+						echo "<div class='table-responsive'>\n";
+										
+
+												// ['CLFP_016']." = "Admin"
+												echo "<div class='col-lg-12 col-md-12 col-sm-12 col-xs-12'>\n";
+													echo "<div align='center'><a href='".INFUSIONS.'figurelib/admin.php'.$aidlink."'>".$locale['CLFP_016']."</a>				  </div></div>\n";
+						echo "</div>\n";
+						echo "</div>\n";
+						echo "</div>\n";
+						echo "</div>\n";
+						
+						echo "<hr>\n";
+					}
+			closeside();	
 		}
 	}	
 /******************************************************************************************/	
@@ -382,14 +406,32 @@ echo "</div>\n";
 						} else {
 								echo "</div>\n";
 						}
-					
+						
 			
 			}
 				echo $info['page_nav'] ? "<div class='text-right'>".$info['page_nav']."</div>" : '';
+				echo "<hr>\n";
+					if (iADMIN || iSUPERADMIN) {		
+						global $aidlink;				
+							
+						echo "<div class='navbar-default'>";
+						echo "<div class='container-fluid'>\n";
+						echo "<div class='table-responsive'>\n";
+						echo "<div class='row'>\n";				
 
+												// ['CLFP_016']." = "Admin"
+												echo "<div class='col-lg-12 col-md-12 col-sm-12 col-xs-12'>\n";
+													echo "<div align='center'><a href='".INFUSIONS.'figurelib/admin.php'.$aidlink."'>".$locale['CLFP_016']."</a>				  </div></div>\n";
+						echo "</div>\n";
+						echo "</div>\n";
+						echo "</div>\n";
+						echo "</div>\n";
+						
+						echo "<hr>\n";
+				}
 		}
 	}					
 						
-	
+
 }						
 
