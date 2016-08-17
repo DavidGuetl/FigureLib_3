@@ -111,7 +111,7 @@ $result = dbquery(
 			  }
 				
 					$images .= "<div class='item".($i == 0 ? " active" : "")."'>\n";
-					$images .= "<center><a href='".$image_image."'  height='100%' width='100%' alt='".$data['figure_title']."'><img src='".$image_thumb."' alt='".$locale['figure_588']."' /></a>\n";
+					$images .= "<center><a href='".$image_image."'  target='_blank' height='100%' width='100%' alt='".$data['figure_title']."'><img src='".$image_thumb."' alt='".$locale['figure_588']."' /></a>\n";
 					$images .= "</div>\n";
 
 				// Counter erhöhen (counter +1)
@@ -127,18 +127,52 @@ $result = dbquery(
 					 echo $images;
 				  echo "</div>\n";
 				  echo "<a class='left carousel-control' href='#myCarousel' role='button' data-slide='prev'>\n";
-					 echo "<span class='glyphicon glyphicon-chevron-left' aria-hidden='true'></span>\n";
+					 if ($image_count > 1) {		
+						echo "<span class='glyphicon glyphicon-chevron-left' aria-hidden='true'></span>\n";
+					 	} else {
+							
+						}
+	
 					 echo "<span class='sr-only'>Previous</span>\n";
 				  echo "</a>\n";
 				  echo "<a class='right carousel-control' href='#myCarousel' role='button' data-slide='next'>\n";
+				  if ($image_count > 1) {
 					 echo "<span class='glyphicon glyphicon-chevron-right' aria-hidden='true'></span>\n";
+					 	} else {
+							
+						}					 
 					 echo "<span class='sr-only'>Next</span>\n";
 				  echo "</a>\n";
 			   echo "</div>\n";
 	   
 			// Variablen löschen (delete variables)
 				unset($indicators, $images, $i);
-	}
+	} else {
+				
+				// Carousel anzeigen (show carousel)
+			   echo "<div id='myCarousel' class='carousel slide' data-ride='carousel'>\n";
+				  echo "<ol class='carousel-indicators'>\n";
+					 echo $indicators;
+				  echo "</ol>\n";
+				  echo "<div class='carousel-inner' role='listbox'>\n";
+					 echo "<center><img src='".INFUSIONS."figurelib/images/default.png' alt='".$locale['CLFP_002']." : ".$data['figure_title']."' title='".$locale['CLFP_002']." : ".$data['figure_title']."' style='border:0px;max-height:300px;max-width:300px'/><br><br>
+						<div class='alert alert-warning' role='alert'>
+						Photo unavailable. Submit as a registered member. <a href='".BASEDIR."register.php'>Register HERE</a></div>";
+				  echo "</div>\n";
+				  echo "<a class='left carousel-control'  role='button' data-slide='prev'>\n";
+					 //echo "<span class='glyphicon glyphicon-chevron-left' aria-hidden='true'></span>\n";
+					 echo "<span class='sr-only'>Previous</span>\n";
+				  echo "</a>\n";
+				  echo "<a class='right carousel-control'  role='button' data-slide='next'>\n";
+					 //echo "<span class='glyphicon glyphicon-chevron-right' aria-hidden='true'></span>\n";
+					 echo "<span class='sr-only'>Next</span>\n";
+				  echo "</a>\n";
+			   echo "</div>\n";
+			
+					// Variablen löschen (delete variables)
+				unset($indicators, $images, $i);	
+
+   }
 //closeside();
 // ############################################################################################	
 
@@ -755,6 +789,8 @@ closeside();
 						WHERE MATCH (figure_title) AGAINST ('".$data['figure_title']."' IN BOOLEAN MODE) 
 						AND figure_id != ".$data['figure_id']." ".(iSUPERADMIN ? "" : "AND ".groupaccess('figure_visibility'))." 
 						ORDER BY RAND() LIMIT 5");
+						
+
 				
 					
 					if (dbrows($result3)) {
