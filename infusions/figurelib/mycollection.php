@@ -273,15 +273,15 @@ if (!db_exists(DB_FIGURE_ITEMS)) { redirect(BASEDIR."error.php?code=404"); }
 												
 									// COLUMN 1 (image clickable)
 							echo "<div class='col-lg-2 col-md-2 col-sm-2 col-xs-2'>\n";
-									echo "<div class='side-small'><a href='".INFUSIONS."figurelib/figures.php?figure_id=".$data['figure_id']."'>\n<img src='".THUMBS_FIGURES.$data2['figure_images_thumb']."' alt='".$locale['CLFP_002']." : ".$data['figure_title']."' title='".$locale['CLFP_002']." : ".$data['figure_title']."' style='border:0px;max-height:20px;max-width:20px'/></a>";
-									echo "</div></div>\n";					
+									echo "<a href='".INFUSIONS."figurelib/figures.php?figure_id=".$data['figure_id']."'>\n<img src='".THUMBS_FIGURES.$data2['figure_images_thumb']."' alt='".$locale['CLFP_002']." : ".$data['figure_title']."' title='".$locale['CLFP_002']." : ".$data['figure_title']."' style='border:0px;max-height:15px;max-width:15px'/></a>";
+									echo "</div>\n";					
 							}
 						
 						} else { 
 									
 							echo "<div class='col-lg-2 col-md-2 col-sm-2 col-xs-2'>\n";
-									echo "<div class='side-small'><a href='".INFUSIONS."figurelib/figures.php?figure_id=".$data['figure_id']."'>\n<img src='".INFUSIONS.$inf_folder."/images/default.png' alt='".$locale['CLFP_002']." : ".$data['figure_title']."' title='".$locale['CLFP_002']." : ".$data['figure_title']."' style='border:0px;max-height:20px;max-width:20px'/></a>";
-									echo "</div></div>\n";				
+									echo "<a href='".INFUSIONS."figurelib/figures.php?figure_id=".$data['figure_id']."'>\n<img src='".INFUSIONS.$inf_folder."/images/default.png' alt='".$locale['CLFP_002']." : ".$data['figure_title']."' title='".$locale['CLFP_002']." : ".$data['figure_title']."' style='border:0px;max-height:15px;max-width:15px'/></a>";
+									echo "</div>\n";				
 							
 						}	
 
@@ -308,7 +308,7 @@ if (!db_exists(DB_FIGURE_ITEMS)) { redirect(BASEDIR."error.php?code=404"); }
 						// No release date or unknown = "no data" / WENN KEIN WERT ZUM DATUM IN DB DANN ZEIGE HINWEIS "NO DATA"
 						if ($data['figure_pubdate'] == "") {
 							
-									// COLUMN 6 (release date)
+						// COLUMN 6 (release date)
 									echo "<div class='col-lg-1 col-md-2 col-sm-2 col-xs-2'>\n";
 										echo "<div class='side-small' title='".$locale['CLFP_006']." : ".$locale['CLFP_008']."' alt='".$locale['CLFP_006']." : ".$locale['CLFP_008']."'>".trimlink($locale['CLFP_008'],6)."</div>\n";
 									echo "</div>\n";			
