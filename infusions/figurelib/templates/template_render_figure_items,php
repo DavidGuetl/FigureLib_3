@@ -774,21 +774,21 @@ closeside();
 				//echo "<div class='panel panel-default'>\n";
 
 					$result3 = dbquery("
-						SELECT 
-							f.figure_id, 
-							f.figure_title, 
-							f.figure_datestamp, 
-							f.figure_visibility, 
-							fc.figure_cat_id, 
-							fc.figure_cat_name,
-							fm.figure_manufacturer_id,
-							fm.figure_manufacturer_name							
-						FROM ".DB_FIGURE_ITEMS." f 
-						INNER JOIN ".DB_FIGURE_CATS." fc ON f.figure_cat=fc.figure_cat_id
-						INNER JOIN ".DB_FIGURE_MANUFACTURERS." fm ON f.figure_manufacturer=fm.figure_manufacturer_id 						
-						WHERE MATCH (figure_title) AGAINST ('".$data['figure_title']."' IN BOOLEAN MODE) 
-						AND figure_id != ".$data['figure_id']." ".(iSUPERADMIN ? "" : "AND ".groupaccess('figure_visibility'))." 
-						ORDER BY RAND() LIMIT 5");
+                        SELECT 
+                            f.figure_id, 
+                            f.figure_title, 
+                            f.figure_datestamp, 
+                            f.figure_visibility, 
+                            fc.figure_cat_id, 
+                            fc.figure_cat_name,
+                            fm.figure_manufacturer_id,
+                            fm.figure_manufacturer_name                         
+                        FROM ".DB_FIGURE_ITEMS." f 
+                        INNER JOIN ".DB_FIGURE_CATS." fc ON f.figure_cat=fc.figure_cat_id
+                        INNER JOIN ".DB_FIGURE_MANUFACTURERS." fm ON f.figure_manufacturer=fm.figure_manufacturer_id                        
+                        WHERE MATCH (figure_title) AGAINST ('".$data['figure_title']."' IN BOOLEAN MODE) 
+                        AND figure_id != '".$data['figure_id']."' ".(iSUPERADMIN ? "" : "AND ".groupaccess('figure_visibility'))." 
+                        ORDER BY RAND() LIMIT 0,5");
 						
 
 				
