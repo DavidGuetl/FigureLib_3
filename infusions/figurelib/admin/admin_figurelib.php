@@ -118,7 +118,7 @@ if (!empty($result)) {
 								fuf.figure_userfigures_figure_id 	
 						FROM ".DB_FIGURE_ITEMS." f
 						INNER JOIN ".DB_FIGURE_USERFIGURES." fuf ON fuf.figure_userfigures_figure_id=f.figure_id
-						".(multilang_table("FI") ? "WHERE figure_language='".LANGUAGE."' AND" : "WHERE")." ");
+						".(multilang_table("FI") ? "WHERE figure_language='".LANGUAGE."'" : "")." ");
 						
 			if (dbrows($result) != 0) {
 				while($data = dbarray($result)){	
