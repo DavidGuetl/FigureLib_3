@@ -151,9 +151,9 @@ $result = dbquery(
 				
 				// Carousel anzeigen (show carousel)
 			   echo "<div id='myCarousel' class='carousel slide' data-ride='carousel'>\n";
-				  echo "<ol class='carousel-indicators'>\n";
-					 echo $indicators;
-				  echo "</ol>\n";
+				  //echo "<ol class='carousel-indicators'>\n";
+					 //echo $indicators;
+				  //echo "</ol>\n";
 				  echo "<div class='carousel-inner' role='listbox'>\n";
 					 echo "<center><img src='".INFUSIONS."figurelib/images/default.png' alt='".$locale['CLFP_002']." : ".$data['figure_title']."' title='".$locale['CLFP_002']." : ".$data['figure_title']."' style='border:0px;max-height:300px;max-width:300px'/><br><br>
 						<div class='alert alert-warning' role='alert'>
