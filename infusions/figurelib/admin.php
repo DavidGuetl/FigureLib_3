@@ -266,7 +266,8 @@ $result = dbquery("
 				echo "<div class='page-header'>";
 				echo "<div class='clearfix m-b-20'>\n";
 				echo "<div class='table-responsive'>\n";
-				echo "<div class='row'>\n";		
+				echo "<div class='row'>\n";	
+				echo "<div class='strong'>\n";	
 		
 						// COLUMN 1  ['cifg_0000'] = "Figure Name/Title";
 						echo "<div class='col-lg-2 col-md-2 col-sm-2 col-xs-12'>\n";
@@ -306,7 +307,8 @@ $result = dbquery("
 				echo "</div>\n";
 				echo "</div>\n";
 				echo "</div>\n";
-				echo "</div>\n";	
+				echo "</div>\n";
+				echo "</div>\n";				
 
 				
 				echo "<div class='clearfix m-b-20'>\n";
