@@ -57,7 +57,7 @@ global $settings;
 			function render_figure($info) {
 						global $locale;
 						echo render_breadcrumbs();
-											
+				openside('');							
 				if ($info['figure_rows'] != 0) {						
 							$counter = 0;
 							
@@ -68,7 +68,6 @@ global $settings;
 							// Anzahl der spalten ( 4 max ratsam )						
 							$columns = $fil_settings['figure_per_line'];
 							
-							openside('');	
 							echo "<div class='row m-0'>\n";
 							
 					if (!empty($info['item'])) {
@@ -97,10 +96,10 @@ global $settings;
 						 
 									if(dbrows($result2)){						 
 										while($data2 = dbarray($result2)){						
-											echo "<center><a href='".$data['figure']['link']."'><img src='".($data2['figure_images_thumb'] ? THUMBS_FIGURES.$data2['figure_images_thumb'] : IMAGES."imagenotfound.jpg")."' alt='".trimlink($data['figure_title'],100)."' title='".trimlink($data['figure_title'],50)."' style='border:0px;max-height:100px;max-width:100px' /><br />";						
+											echo "<center><a href='".$data['figure']['link']."'><img src='".($data2['figure_images_thumb'] ? THUMBS_FIGURES.$data2['figure_images_thumb'] : INFUSIONS."figurelib/images/default.png")."' alt='".trimlink($data['figure_title'],100)."' title='".trimlink($data['figure_title'],50)."' style='border:0px;max-height:100px;max-width:100px' /><br />";						
 										}										
 									} else { 									
-											echo "<center><a href='".$data['figure']['link']."'><img src='".IMAGES."imagenotfound.jpg' alt='".trimlink($data['figure_title'],100)."' title='".trimlink($data['figure_title'],50)."' style='border:0px;max-height:100px;max-width:100px' /><br />";
+											echo "<center><a href='".$data['figure']['link']."'><img src='".INFUSIONS."figurelib/images/default.png' alt='".trimlink($data['figure_title'],100)."' title='".trimlink($data['figure_title'],50)."' style='border:0px;max-height:100px;max-width:100px' /><br />";
 											}
 
 							// ......................MANUFACTURER & FIGURE TITLE	
