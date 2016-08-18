@@ -356,7 +356,7 @@ $result = dbquery("
 							// ['cifg_0005'] = "Edit";
 										echo "<a class='btn btn-info btn-sm' href='".FUSION_SELF.$aidlink."&amp;section=figurelib_form&amp;action=edit&amp;figure_id=".$data['figure_id']."'>".$locale['cifg_0005']."</a>&nbsp;"; 							
 							// ['cifg_0006'] = "Delete";
-										echo "<a class='btn btn-warning btn-sm'  href='".FUSION_SELF.$aidlink."&amp;section=figurelib_form&amp;action=delete&amp;figure_id=".$data['figure_id']."&amp;figure_id=".$data['figure_id']."' onclick=\"return confirm('".$locale['film_0004']."');\">".$locale['cifg_0006']."</a>\n";						
+										echo "<a class='btn btn-danger btn-sm'  href='".FUSION_SELF.$aidlink."&amp;section=figurelib_form&amp;action=delete&amp;figure_id=".$data['figure_id']."&amp;figure_id=".$data['figure_id']."' onclick=\"return confirm('".$locale['film_0004']."');\">".$locale['cifg_0006']."</a>\n";						
 							echo "</div></div>\n";	
 	
 					}
