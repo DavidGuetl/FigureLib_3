@@ -38,7 +38,7 @@ if (file_exists(LOCALE.LOCALESET."admin/settings.php")) {
     include LOCALE."English/admin/settings.php";
 }
 
-/* war für retailpice und usedprice gedacht
+/* war fÃ¼r retailpice und usedprice gedacht
 function retailprice_check($input) {
             $max_range = 100000;
             return (isnum($input) && $input <= $max_range) ? true : false;
@@ -113,66 +113,30 @@ if (!empty($result)) {
         }
     }
 
-	$result = dbquery(
-						"SELECT f.figure_id,					
-								fuf.figure_userfigures_figure_id 	
-						FROM ".DB_FIGURE_ITEMS." f
-						INNER JOIN ".DB_FIGURE_USERFIGURES." fuf ON fuf.figure_userfigures_figure_id=f.figure_id
-						".(multilang_table("FI") ? "WHERE figure_language='".LANGUAGE."'" : "")." ");
-						
-			if (dbrows($result) != 0) {
-				while($data = dbarray($result)){	
-				
-				addNotice("success", $locale['figure_1709']);
+	// New Counter
+	$newCounterCollection = dbquery("
+		SELECT
+			f.figure_id
+		FROM ".DB_FIGURE_USERFIGURES." AS fu 
+		LEFT JOIN ".DB_FIGURE_ITEMS." AS f ON f.figure_id=fu.figure_userfigures_figure_id
+		WHERE ".(multilang_table("FI") ? "f.figure_language='".LANGUAGE."' AND " : "")." f.figure_id='".intval($_GET['figure_id'])."'
+	");
+	$newCounterCollection = dbrows($newCounterCollection);
 	
-				}
-
-			} else {
+	// If there are Users with this Figure, display Message
+	if ($newCounterCollection) {
+		addNotice("success", $locale['figure_1709']);
+	} else {
 	
-    /*
-	if ((isset($_GET['action']) && $_GET['action'] == "delete") && (isset($_GET['figure_id']) && isnum($_GET['figure_id']))) {
+		/*
+		if ((isset($_GET['action']) && $_GET['action'] == "delete") && (isset($_GET['figure_id']) && isnum($_GET['figure_id']))) {
 
-        $result = dbquery("DELETE FROM ".DB_FIGURE_ITEMS." WHERE figure_id='".$_GET['figure_id']."'");
-        
-		$result = dbquery("SELECT * FROM ".DB_FIGURE_IMAGES." WHERE figure_id='".intval($figure_id)."'");
-		//$result = dbquery("SELECT * FROM ".DB_FIGURE_IMAGES." WHERE figure_id='".intval($_GET['figure_id'])."'");
-       
-	   if (dbrows($result) > 0) {
-            $photo = dbarray($result);
-            if (!empty($photo['figure_images_image']) && file_exists(IMAGES_FIGURES.$photo['figure_images_image'])) {
-                unlink(IMAGES_FIGURES.$photo['figure_images_image']);
-            }
-            if (!empty($photo['figure_images_thumb']) && file_exists(THUMBS_FIGURES.$photo['figure_images_thumb'])) {
-                unlink(THUMBS_FIGURES.$photo['figure_images_thumb']);
-            }
-
-        }
-
-        dbquery("DELETE FROM  ".DB_FIGURE_IMAGES." WHERE figure_id='".intval($figure_id)."'");
-		//dbquery("DELETE FROM  ".DB_FIGURE_IMAGES." WHERE figure_id='".intval($_GET['figure_id'])."'");
-
-        // ['figurelib/admin/figurelib.php_001'] = "Figure deleted";
-        addNotice("success", $locale['figurelib/admin/figurelib.php_001']);
-        redirect(FUSION_SELF.$aidlink);
-
-
-    }
-	*/
-	
-	
-	/**
-	 * $_GET['figure_id'] + $_GET['action'] will execute delete.
-	 */
-	if ((isset($_GET['action']) && $_GET['action'] == "delete") && (isset($_GET['figure_id']) && isnum($_GET['figure_id']))) {
-		// If no count
-		if (!dbcount( "('figure_userfigures_figure_id')", DB_FIGURE_USERFIGURES, "figure_userfigures_figure_id='".intval($_GET['figure_id'])."'")) {
-
-			// Delete figure
-			dbquery("DELETE FROM ".DB_FIGURE_ITEMS." WHERE figure_id='".intval($_GET['figure_id'])."'");
-
-			// Find the figure photo
-			$result = dbquery("SELECT * FROM ".DB_FIGURE_IMAGES." WHERE figure_images_figure_id ='".intval($_GET['figure_id'])."'");
-			if (dbrows($result) > 0) {
+			$result = dbquery("DELETE FROM ".DB_FIGURE_ITEMS." WHERE figure_id='".$_GET['figure_id']."'");
+			
+			$result = dbquery("SELECT * FROM ".DB_FIGURE_IMAGES." WHERE figure_id='".intval($figure_id)."'");
+			//$result = dbquery("SELECT * FROM ".DB_FIGURE_IMAGES." WHERE figure_id='".intval($_GET['figure_id'])."'");
+		   
+		   if (dbrows($result) > 0) {
 				$photo = dbarray($result);
 				if (!empty($photo['figure_images_image']) && file_exists(IMAGES_FIGURES.$photo['figure_images_image'])) {
 					unlink(IMAGES_FIGURES.$photo['figure_images_image']);
@@ -180,13 +144,48 @@ if (!empty($result)) {
 				if (!empty($photo['figure_images_thumb']) && file_exists(THUMBS_FIGURES.$photo['figure_images_thumb'])) {
 					unlink(THUMBS_FIGURES.$photo['figure_images_thumb']);
 				}
+
 			}
 
-			addNotice('success', "Figure deleted");
-		} else {
-			addNotice("danger", "Cannot delete figure because some user still has it");
+			dbquery("DELETE FROM  ".DB_FIGURE_IMAGES." WHERE figure_id='".intval($figure_id)."'");
+			//dbquery("DELETE FROM  ".DB_FIGURE_IMAGES." WHERE figure_id='".intval($_GET['figure_id'])."'");
+
+			// ['figurelib/admin/figurelib.php_001'] = "Figure deleted";
+			addNotice("success", $locale['figurelib/admin/figurelib.php_001']);
+			redirect(FUSION_SELF.$aidlink);
+
+
 		}
-	}
+		*/
+		
+		
+		/**
+		 * $_GET['figure_id'] + $_GET['action'] will execute delete.
+		 */
+		if ((isset($_GET['action']) && $_GET['action'] == "delete") && (isset($_GET['figure_id']) && isnum($_GET['figure_id']))) {
+			// If no count
+			if (!dbcount( "('figure_userfigures_figure_id')", DB_FIGURE_USERFIGURES, "figure_userfigures_figure_id='".intval($_GET['figure_id'])."'")) {
+
+				// Delete figure
+				dbquery("DELETE FROM ".DB_FIGURE_ITEMS." WHERE figure_id='".intval($_GET['figure_id'])."'");
+
+				// Find the figure photo
+				$result = dbquery("SELECT * FROM ".DB_FIGURE_IMAGES." WHERE figure_images_figure_id ='".intval($_GET['figure_id'])."'");
+				if (dbrows($result) > 0) {
+					$photo = dbarray($result);
+					if (!empty($photo['figure_images_image']) && file_exists(IMAGES_FIGURES.$photo['figure_images_image'])) {
+						unlink(IMAGES_FIGURES.$photo['figure_images_image']);
+					}
+					if (!empty($photo['figure_images_thumb']) && file_exists(THUMBS_FIGURES.$photo['figure_images_thumb'])) {
+						unlink(THUMBS_FIGURES.$photo['figure_images_thumb']);
+					}
+				}
+
+				addNotice('success', "Figure deleted");
+			} else {
+				addNotice("danger", "Cannot delete figure because some user still has it");
+			}
+		}
 	
 	
 	
@@ -817,7 +816,7 @@ if (!empty($result)) {
 
 
 // ###################################################################################							
-// ####### AB HIER ZUSÄTZLICHE EINTRÄGE NUR FÜR ADMINS ###############################	
+// ####### AB HIER ZUSÃ„TZLICHE EINTRÃ„GE NUR FÃœR ADMINS ###############################	
 // ###################################################################################	
 
 
@@ -1019,7 +1018,7 @@ if (!empty($result)) {
     openside('');
 
 // ###################################################################################							
-// ####### ENDE ZUSÄTZLICHE EINTRÄGE NUR FÜR ADMINS ##################################	
+// ####### ENDE ZUSÃ„TZLICHE EINTRÃ„GE NUR FÃœR ADMINS ##################################	
 // ###################################################################################	
 //echo "</div>\n</div>\n";								
 
