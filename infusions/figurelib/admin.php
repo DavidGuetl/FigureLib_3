@@ -218,7 +218,7 @@ $result = dbquery("
 	if ($rows > 0) {
 		echo "<div class='clearfix m-b-20'>\n";
 		// ['figs_0002'] = "Currently displaying %d of %d total figure/s entries";
-		echo "<span class='pull-right m-t-10'>".sprintf($locale['figs_0002'], $rows, $total_rows)." / Submissions: ".$submissions."</span>\n";
+		echo "<span class='pull-right m-t-10'>".sprintf($locale['figs_0002'], $rows, $total_rows)." / <a href='".INFUSIONS."figurelib/admin.php".$aidlink."&amp;section=figurelib_submissions'>Submissions: ".$submissions."</span>\n";
 
 		if (!empty($catOpts) > 0 && $total_rows > 0) {
 			echo "<div class='pull-left m-t-10 m-r-10'>".$locale['cifg_0009']."</div>\n"; // ['cifg_0009'] = "Filter by:";
