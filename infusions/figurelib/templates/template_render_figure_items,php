@@ -504,8 +504,8 @@ $result = dbquery(
 						echo "</div></div></div>\n";
 						
 						// Discreption  DATA
-						echo "<div class='col-lg-8 col-md-8 col-sm-12 col-xs-12'>\n";
-								echo "<span class='small' style='word-break: break-all; word-wrap: break-word;'>&nbsp;".nl2br(parseubb(parsesmileys($data['figure_description'])))."</span>\n";
+						echo "<div class='col-lg-8 col-md-8 col-sm-12 col-xs-12'>\n";	
+							echo "<span class='small' style='word-break: break-all; word-wrap: break-word;'>&nbsp;".$data['figure_description']."</span>\n";			
 						echo "</div>\n";
 					
 			echo "</div>\n";
