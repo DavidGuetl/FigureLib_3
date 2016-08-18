@@ -25,6 +25,7 @@ require_once THEMES."templates/admin_header.php";
 require_once INCLUDES."html_buttons_include.php";
 require_once INCLUDES."infusions_include.php";
 include INFUSIONS."figurelib/infusion_db.php";
+global $settings;
 
 // LANGUAGE
 if (file_exists(INFUSIONS."figurelib/locale/".LOCALESET."locale_figurelib.php")) {
@@ -160,6 +161,7 @@ function figurelib_listing() {
 	// do a filter here
 	$limit = 15;
 	$total_rows = dbcount("(figure_id)", DB_FIGURE_ITEMS);
+	$submissions = dbcount("(figure_id)", DB_FIGURE_ITEMS, "figure_freigabe = 0");
 	$rowstart = isset($_GET['rowstart']) && ($_GET['rowstart'] <= $total_rows) ? $_GET['rowstart'] : 0;
 	// add a filter browser
 	$catOpts = array(
@@ -216,7 +218,8 @@ $result = dbquery("
 	if ($rows > 0) {
 		echo "<div class='clearfix m-b-20'>\n";
 		// ['figs_0002'] = "Currently displaying %d of %d total figure/s entries";
-		echo "<span class='pull-right m-t-10'>".sprintf($locale['figs_0002'], $rows, $total_rows)."</span>\n";
+		echo "<span class='pull-right m-t-10'>".sprintf($locale['figs_0002'], $rows, $total_rows)." / Submissions: ".$submissions."</span>\n";
+
 		if (!empty($catOpts) > 0 && $total_rows > 0) {
 			echo "<div class='pull-left m-t-10 m-r-10'>".$locale['cifg_0009']."</div>\n"; // ['cifg_0009'] = "Filter by:";
 			echo "<div class='dropdown pull-left m-t-5 m-r-10' style='position:relative'>\n";
@@ -248,41 +251,119 @@ $result = dbquery("
 									  ), TRUE)."&amp;");
 		}
 		echo "</div>\n";
-
-		echo "<table class='table table-responsive center'>\n<thead>\n";
-		echo "<tr>\n";
-		echo "<th class='col-xs-4'>".$locale['cifg_0000']."</th>\n"; 	// ['cifg_0000'] = "Figure Name/Title";
-		echo "<th>".$locale['cifg_0004']."</th>\n";						// ['cifg_0004'] = "Figure Id";
-		echo "<th>".$locale['cifg_0001']."</th>\n"; 					// ['cifg_0001'] = "Category";
-		echo "<th>".$locale['cifg_0010']."</th>\n"; 					// ['cifg_0010'] = "Manufacturer";
-		echo "<th>".$locale['cifg_0011']."</th>\n"; 					// ['cifg_0011'] = "Scale";
-		echo "<th>".$locale['cifg_0008']."</th>\n"; 					// ['cifg_0008'] = "Figure Actions";
-		echo "</tr>\n</thead>\n<tbody>\n";
 		
-		while ($data = dbarray($result)) {
-			echo "<tr>\n";
-			echo "<td>".$data['figure_title']."</td>\n"; 
-			echo "<td>".$data['figure_id']."</td>\n";
-			echo "<td>".$data['figure_cat_name']."</td>\n";
-			echo "<td>".$data['figure_manufacturer_name']."</td>\n";
-			echo "<td>".$data['figure_scale_name']."</td>\n";
-		 		
-			echo "<td>\n";
-			echo "<div class='btn-group'>\n";
+		/*
+				echo "<div class='col-lg-2 col-md-2 col-sm-2 col-xs-12'>\n"; 	Titel
+				echo "<div class='col-lg-1 col-md-1 col-sm-2 col-xs-12'>\n";	ID							
+				echo "<div class='col-lg-2 col-md-2 col-sm-2 col-xs-12'>\n";	Category
+				echo "<div class='col-lg-2 col-md-2 col-sm-2 col-xs-12'>\n";	Manufacturer
+				echo "<div class='col-lg-1 col-md-1 col-sm-2 col-xs-12'>\n";	Scale
+				echo "<div class='col-lg-2 col-md-2 col-sm-2 col-xs-12'>\n";	Submitter
+				echo "<div class='col-lg-2 col-md-2 col-sm-2 col-xs-12'>\n"; 	Edit/delete
+		*/
 				
-				// ['cifg_0005'] = "Edit";
-			echo "<a class='btn btn-default btn-sm' href='".FUSION_SELF.$aidlink."&amp;section=figurelib_form&amp;action=edit&amp;figure_id=".$data['figure_id']."'>".$locale['cifg_0005']."</a>"; // // 
-			
 				
-				// ['film_0004'] = "Delete this Figure?";
-				// ['cifg_0006'] = "Delete";
-			echo "<a class='btn btn-default btn-sm'  href='".FUSION_SELF.$aidlink."&amp;section=figurelib_form&amp;action=delete&amp;figure_id=".$data['figure_id']."&amp;figure_id=".$data['figure_id']."' onclick=\"return confirm('".$locale['film_0004']."');\">".$locale['cifg_0006']."</a>
-			</div>\n</td>\n"; 
-			echo "</tr>\n";
+				echo "<div class='page-header'>";
+				echo "<div class='clearfix m-b-20'>\n";
+				echo "<div class='table-responsive'>\n";
+				echo "<div class='row'>\n";		
+		
+						// COLUMN 1  ['cifg_0000'] = "Figure Name/Title";
+						echo "<div class='col-lg-2 col-md-2 col-sm-2 col-xs-12'>\n";
+							echo "<div class='text-smaller text-uppercase'>".$locale['cifg_0000']."</div>\n";
+						echo "</div>\n";
+						
+						// COLUMN 2 ['cifg_0004'] = "Figure Id";
+						echo "<div class='col-lg-1 col-md-1 col-sm-2 col-xs-12'>\n";
+							echo "<div class='text-smaller text-uppercase'>".$locale['cifg_0004']."</div>\n";
+						echo "</div>\n";	
+						
+						// COLUMN 3 ['cifg_0001'] = "Category";
+						echo "<div class='col-lg-2 col-md-2 col-sm-2 col-xs-12'>\n";
+							echo "<div class='text-smaller text-uppercase'>".$locale['cifg_0001']."</div>\n";
+						echo "</div>\n";	
+						
+						// COLUMN 4 ['cifg_0010'] = "Manufacturer";
+						echo "<div class='col-lg-2 col-md-2 col-sm-2 col-xs-12'>\n";
+							echo "<div class='text-smaller text-uppercase'>".$locale['cifg_0010']."</div>\n";
+						echo "</div>\n";	
+						
+						// COLUMN 5 ['cifg_0011'] = "Scale";
+						echo "<div class='col-lg-1 col-md-1 col-sm-2 col-xs-12'>\n";
+							echo "<div class='text-smaller text-uppercase'>".$locale['cifg_0011']."</div>\n";
+						echo "</div>\n";
+						
+						// COLUMN 6 $locale['CLFP_011'] Submitter
+						echo "<div class='col-lg-2 col-md-2 col-sm-2 col-xs-12'>\n";
+							echo "<div class='text-smaller text-uppercase'>".$locale['CLFP_011']."</div>\n";
+						echo "</div>\n";
+						
+						// COLUMN 7 ['cifg_0008'] = "Figure Actions";
+						echo "<div class='col-lg-2 col-md-2 col-sm-2 col-xs-12'>\n";
+							echo "<div class='text-smaller text-uppercase'>".$locale['cifg_0008']."</div>\n";
+						echo "</div>\n";
+						
+				echo "</div>\n";
+				echo "</div>\n";
+				echo "</div>\n";
+				echo "</div>\n";	
+
+				
+				echo "<div class='clearfix m-b-20'>\n";
+				echo "<div class='row'>\n";	
+		
+					while ($data = dbarray($result)) {
 			
-			
-		}
-		echo "</tbody>\n</table>\n";
+												
+						// COLUMN 1 Figure Name/Title
+							echo "<div class='col-lg-2 col-md-2 col-sm-2 col-xs-12'>\n";
+									echo "<div class='side-small'><a href='".INFUSIONS."figurelib/figures.php?figure_id=".$data['figure_id']."' title='".$locale['CLFP_002']." : ".$data['figure_title']."' alt='".$locale['CLFP_002']." : ".$data['figure_title']."'>".trimlink($data['figure_title'], 10)."</a>";
+							echo "</div></div>\n";	
+							
+						// COLUMN 2 Figure ID
+							echo "<div class='col-lg-1 col-md-1 col-sm-2 col-xs-12'>\n";
+									echo "<div class='side-small'>".trimlink($data['figure_id'], 5)."</div></div>\n";	
+							
+						// COLUMN 3 Category
+							echo "<div class='col-lg-2 col-md-2 col-sm-2 col-xs-12'>\n";
+									echo "<div class='side-small'>".trimlink($data['figure_cat_name'],10)."</div></div>\n";	
+									
+						// COLUMN 4 Manufacturer
+							echo "<div class='col-lg-2 col-md-2 col-sm-2 col-xs-12'>\n";
+									echo "<div class='side-small'>".trimlink($data['figure_manufacturer_name'],10)."</div></div>\n";	
+
+						// COLUMN 5 Scale
+							echo "<div class='col-lg-1 col-md-1 col-sm-2 col-xs-12'>\n";
+									echo "<div class='side-small'>".trimlink($data['figure_scale_name'],10)."</div></div>\n";
+
+						// COLUMN 6 Submitter
+								$result2 = dbquery("SELECT	fi.figure_id, fi.figure_title, tu.user_id, tu.user_name, tu.user_avatar, tu.user_status
+								FROM ".DB_FIGURE_ITEMS." fi
+								LEFT JOIN ".DB_USERS." tu ON fi.figure_submitter=tu.user_id
+								WHERE figure_id='".$data['figure_id']."'  order by figure_datestamp desc
+									");
+							while ($data2 = dbarray($result2)) {
+								
+								echo "<div class='col-lg-2 col-md-2 col-sm-2 col-xs-12'>\n";
+									echo "<span class='small'>".profile_link($data2['user_id'], $data2['user_name'], $data2['user_status'])."<br/></span>\n";
+								echo "</div>\n";	
+									
+							}				
+																		
+						// COLUMN 7 Action
+							echo "<div class='col-lg-2 col-md-2 col-sm-2 col-xs-12'>\n";
+									echo "<div class='class='btn-group'>\n";				
+							// ['cifg_0005'] = "Edit";
+										echo "<a class='btn btn-info btn-sm' href='".FUSION_SELF.$aidlink."&amp;section=figurelib_form&amp;action=edit&amp;figure_id=".$data['figure_id']."'>".$locale['cifg_0005']."</a>&nbsp;"; 							
+							// ['cifg_0006'] = "Delete";
+										echo "<a class='btn btn-warning btn-sm'  href='".FUSION_SELF.$aidlink."&amp;section=figurelib_form&amp;action=delete&amp;figure_id=".$data['figure_id']."&amp;figure_id=".$data['figure_id']."' onclick=\"return confirm('".$locale['film_0004']."');\">".$locale['cifg_0006']."</a>\n";						
+							echo "</div></div>\n";	
+	
+					}
+				
+				echo "</div>\n";
+				echo "</div>\n";
+				
 	} else {
 		// ['cifg_0007'] = "There are no figures defined";
 		echo "<div class='well m-t-20 text-center'>\n".$locale['cifg_0007']."<br />"; 
