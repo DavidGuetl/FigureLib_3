@@ -41,7 +41,7 @@ $locale['figcm_0005'] = "There are Figure or Sub-Categories linked to this categ
 $locale['figcm_0006'] = "This category already exists.";
 $locale['figcm_0007'] = "Delete this Figure category?";
 
-// Figure Manufactuer messages
+// Figure Manufacturer messages
 $locale['figmm_0001'] = "Figure Manufacturer added";
 $locale['figmm_0002'] = "Figure Manufacturer updated";
 $locale['figmm_0003'] = "Figure Manufacturer deleted";
@@ -80,7 +80,7 @@ $locale['filt_0017'] = "Edit/Publish Figure";
 $locale['filt_0018'] = "Here can you add, delete, edit and publish figures";
 
 // CURRENT FIGURES
-$locale['cifg_0000'] = "Figure Name/Title";
+$locale['cifg_0000'] = "Figure Name / Title";
 $locale['cifg_0001'] = "Category";
 $locale['cifg_0003'] = "URL";
 $locale['cifg_0004'] = "Figure Id";
@@ -203,7 +203,7 @@ $locale['figure_004'] = "Submissions";
 $locale['figure_005'] = "Figures";
 $locale['figure_006'] = "Categories";
 $locale['figure_007'] = "Manufacturers";
-$locale['figure_008'] = "Figure Manufactureres";
+$locale['figure_008'] = "Figure Manufacturer's";
 $locale['figure_009'] = "Brands";
 $locale['figure_010'] = "Figure Brands";
 $locale['figure_011'] = "Materials";
@@ -251,7 +251,7 @@ $locale['figure_032'] = "Amazon CA";
 $locale['figure_032a'] = "Amazon CA";
 $locale['figure_033'] = "No Offers";
 $locale['figure_034'] = "Release (Freigabe)";
-$locale['figure_035'] = "Max. filesize %s / Allowed filetypes GIF, JPEG or PNG.";
+$locale['figure_035'] = "Max. file-size %s / Allowed file-types GIF, JPEG or PNG.";
 $locale['figure_036'] = " / Max. image upload count: ";
 
 // figure_items.php
@@ -262,12 +262,12 @@ $locale['figure_102'] = "Current Figures";
 $locale['figure_110'] = "Figure added";
 $locale['figure_111'] = "Figure updated";
 $locale['figure_112'] = "Figure deleted";
-$locale['figure_113'] = "The following error occured:";
+$locale['figure_113'] = "The following error occurred:";
 $locale['figure_114'] = "Invalid filename.";
 $locale['figure_115'] = "File must be less than %s.";
 $locale['figure_116'] = "File must be one of the following file types: %s.";
 $locale['figure_117'] = "Figure title cannot be left empty.";
-$locale['figure_118'] = "File or url cannot be left empty.";
+$locale['figure_118'] = "File or URL cannot be left empty.";
 
 $locale['figure_122'] = "Upload Image Source";
 $locale['figure_123'] = "Category";
@@ -279,16 +279,16 @@ $locale['figure_129'] = "Update Publication Date";
 $locale['figure_130'] = "Upload:";
 $locale['figure_131'] = "Delete";
 $locale['figure_132'] = "Calculate file size";
-$locale['figure_133'] = "Max. filesize: %s / Allowed filetypes: %s <br>(max width 3840 pixel / max hight = 2160 pixel)";
+$locale['figure_133'] = "Max. file-size: %s / Allowed file-types: %s <br>(max width 3840 pixel / max hight = 2160 pixel)";
 
 $locale['figure_136'] = "Upload Image:";
-$locale['figure_137'] = "Max. filesize: %s / Allowed filetypes: GIF, JPEG or PNG. <br>(max width 3840 pixel / max hight = 2160 pixel)" ;
+$locale['figure_137'] = "Max. file-size: %s / Allowed file-types: GIF, JPEG or PNG. <br>(max width 3840 pixel / max hight = 2160 pixel)" ;
 
 $locale['figure_140'] = "Available Figures [Click to Test]";
 $locale['figure_141'] = "Options";
 $locale['figure_142'] = "Edit";
 
-$locale['figure_150'] = "No Figures have been addded to this Category";
+$locale['figure_150'] = "No Figures have been added to this Category";
 $locale['figure_151'] = "There are no Figure Categories defined";
 $locale['figure_152'] = "You must define at least one category before you can add any Figures";
 $locale['figure_153'] = "Click here";
@@ -301,7 +301,7 @@ $locale['figure_171'] = "Image must be less than %s.";
 $locale['figure_172'] = "Image must be a GIF, JPEG or PNG file.";
 $locale['figure_173'] = "Image must be no bigger than %uw x %uh pixels.";
 
-$locale['figure_180'] = " to go to Figure Manufactureres";
+$locale['figure_180'] = " to go to Figure Manufacturer's";
 $locale['figure_181'] = " to go to Figure Brands";
 $locale['figure_182'] = " to go to Figure Materials";
 $locale['figure_183'] = " to go to Figure Scales";
@@ -367,7 +367,7 @@ $locale['figure_418'] = "Rating";
 $locale['figure_419'] = "Release Date";
 $locale['figure_420'] = "Comments";
 $locale['figure_421'] = "Downloads";
-$locale['figure_422'] = "Filesize";
+$locale['figure_422'] = "File-size";
 $locale['figure_423'] = "Description";
 $locale['figure_424'] = "Download";
 $locale['figure_425'] = "Related Figures";
@@ -410,7 +410,7 @@ $locale['figure_460'] = "Link to Forum";
 // Submit.php
 $locale['figure_501'] = "Figure deleted";
 $locale['figure_502'] = "Return to figure submissions menu";
-$locale['figure_503'] = "Return to the infusion admin home";
+$locale['figure_503'] = "Return to the infusion Admin home";
 $locale['figure_510'] = "Figure submissions";
 $locale['figure_512'] = "Submitted figures: ";
 $locale['figure_515'] = "No figures awaiting verification.";
@@ -419,7 +419,7 @@ $locale['figure_517'] = "View";
 $locale['figure_521'] = "Submit Figure";
 $locale['figure_522'] = "You must specify figure title, upload file or insert URL.";
 $locale['figure_523'] = "";
-$locale['figure_524'] = "Figure submited";
+$locale['figure_524'] = "Figure submitted";
 $locale['figure_525'] = "Submitting figures is not available.";
 $locale['figure_526'] = "";
 $locale['figure_527'] = "Submit / Publish";
@@ -453,7 +453,7 @@ $locale['figure_609'] = "Return to the figure's page.";
 $locale['figure_610'] = "Report deleted";
 $locale['figure_611'] = "Details";
 $locale['figure_612'] = "No reports.";
-$locale['figure_613'] = "Report a breken link";
+$locale['figure_613'] = "Report a broken link";
 $locale['figure_614'] = "Report sent. Thank you.";
 $locale['figure_615'] = "Return to the figure's page";
 $locale['figure_616'] = "Name:";
@@ -461,7 +461,7 @@ $locale['figure_617'] = "Send";
 
 // Update.php
 $locale['figure_701'] = "Update";
-$locale['figure_702'] = "An update is available for the current version of E-figurelib. Please click Update.";
+$locale['figure_702'] = "An update is available for the current version of figurelib. Please click Update.";
 $locale['figure_703'] = "Update";
 $locale['figure_704'] = "There is no update available.";
 $locale['figure_705'] = "Updated successfully.";
@@ -748,7 +748,7 @@ $locale['figurelib-placeholder-108'] = "Select a Material";
 $locale['figurelib-placeholder-109'] = "Select a Articulation Pts";
 $locale['figurelib-placeholder-110'] = "Select a Packaging";
 $locale['figurelib-placeholder-111'] = "Select a Year";
-$locale['figurelib-placeholder-112'] = "Select Limited Editon";
+$locale['figurelib-placeholder-112'] = "Select Limited Edition";
 
 // LOCALE figurelib/admin/figurelib.php
 $locale['figurelib/admin/figurelib.php_001'] = "Figure deleted";	
@@ -778,7 +778,7 @@ $locale['figurelib/admin/figurelib.php_024'] = "Scale";
 $locale['figurelib/admin/figurelib.php_025'] = "Select a Scale";
 $locale['figurelib/admin/figurelib.php_026'] = "You must choose a Scale.";
 $locale['figurelib/admin/figurelib.php_027'] = "Weight";
-$locale['figurelib/admin/figurelib.php_028'] = "Weight of figure in Gramm or Kilogramm.";
+$locale['figurelib/admin/figurelib.php_028'] = "Weight of figure in Gram or Kilogram.";
 $locale['figurelib/admin/figurelib.php_029'] = "Height";
 $locale['figurelib/admin/figurelib.php_030'] = "Select Height";
 $locale['figurelib/admin/figurelib.php_031'] = "You must choose a Height.";
@@ -805,7 +805,7 @@ $locale['figurelib/admin/figurelib.php_051'] = "Retail price in US$ (only numeri
 $locale['figurelib/admin/figurelib.php_052'] = "Used Price ($)";
 $locale['figurelib/admin/figurelib.php_053'] = "Used price in US$ (only numeric input possible)";
 $locale['figurelib/admin/figurelib.php_054'] = "Limited Edition";
-$locale['figurelib/admin/figurelib.php_055'] = "Select Limited Editon";
+$locale['figurelib/admin/figurelib.php_055'] = "Select Limited Edition";
 $locale['figurelib/admin/figurelib.php_056'] = "You must choose a Limited Edition.";
 $locale['figurelib/admin/figurelib.php_057'] = "Edition Size";
 $locale['figurelib/admin/figurelib.php_058'] = "Number of pieces (only numeric input possible)";
