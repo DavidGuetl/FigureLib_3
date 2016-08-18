@@ -207,51 +207,50 @@ $result = dbquery("
 	LEFT JOIN ".DB_FIGURE_CATS." cat on cat.figure_cat_id = f.figure_cat
 	INNER JOIN ".DB_FIGURE_MANUFACTURERS." man on man.figure_manufacturer_id = f.figure_manufacturer
 	INNER JOIN ".DB_FIGURE_SCALES." sca on sca.figure_scale_id = f.figure_scale
-	".$catFilter."
-	WHERE figure_freigabe = 1
+	".($catFilter ? $catFilter." AND " : "WHERE ")." figure_freigabe='1'
 	ORDER by figure_title asc, figure_datestamp desc 
 	LIMIT $rowstart, $limit
 	");
 	
 	$rows = dbrows($result);
 
-	if ($rows > 0) {
-		echo "<div class='clearfix m-b-20'>\n";
-		// ['figs_0002'] = "Currently displaying %d of %d total figure/s entries";
-		echo "<span class='pull-right m-t-10'>".sprintf($locale['figs_0002'], $rows, $total_rows)." / <a href='".INFUSIONS."figurelib/admin.php".$aidlink."&amp;section=figurelib_submissions'>Submissions: ".$submissions."</span>\n";
+	echo "<div class='clearfix m-b-20'>\n";
+	// ['figs_0002'] = "Currently displaying %d of %d total figure/s entries";
+	echo "<span class='pull-right m-t-10'>".sprintf($locale['figs_0002'], $rows, $total_rows)." / <a href='".INFUSIONS."figurelib/admin.php".$aidlink."&amp;section=figurelib_submissions'>Submissions: ".$submissions."</span>\n";
 
-		if (!empty($catOpts) > 0 && $total_rows > 0) {
-			echo "<div class='pull-left m-t-10 m-r-10'>".$locale['cifg_0009']."</div>\n"; // ['cifg_0009'] = "Filter by:";
-			echo "<div class='dropdown pull-left m-t-5 m-r-10' style='position:relative'>\n";
-			echo "<a class='dropdown-toggle btn btn-default btn-sm' style='width: 200px;' data-toggle='dropdown'>\n<strong>\n";
-			if (isset($_GET['filter_cid']) && isset($catOpts[$_GET['filter_cid']])) {
-				echo $catOpts[$_GET['filter_cid']];
-			} else {
-				echo $locale['figf_0002']; // $locale['figf_0002'] = "Filter show category by";
-			}
-			echo " <span class='caret'></span></strong>\n</a>\n";
-			echo "<ul class='dropdown-menu' style='max-height:180px; width:200px; overflow-y: auto'>\n";
-			foreach ($catOpts as $catID => $catName) {
-				$active = isset($_GET['filter_cid']) && $_GET['filter_cid'] == $catID ? TRUE : FALSE;
-				echo "<li".($active ? " class='active'" : "").">\n<a class='text-smaller' href='".clean_request("filter_cid=".$catID, array(
-						"section",
-						"rowstart",
-						"aid"
-					), TRUE)."'>\n";
-				echo $catName;
-				echo "</a>\n</li>\n";
-			}
-			echo "</ul>\n";
-			echo "</div>\n";
+	if (!empty($catOpts) > 0 && $total_rows > 0) {
+		echo "<div class='pull-left m-t-10 m-r-10'>".$locale['cifg_0009']."</div>\n"; // ['cifg_0009'] = "Filter by:";
+		echo "<div class='dropdown pull-left m-t-5 m-r-10' style='position:relative'>\n";
+		echo "<a class='dropdown-toggle btn btn-default btn-sm' style='width: 200px;' data-toggle='dropdown'>\n<strong>\n";
+		if (isset($_GET['filter_cid']) && isset($catOpts[$_GET['filter_cid']])) {
+			echo $catOpts[$_GET['filter_cid']];
+		} else {
+			echo $locale['figf_0002']; // $locale['figf_0002'] = "Filter show category by";
 		}
-		if ($total_rows > $rows) {
-			echo makepagenav($rowstart, $limit, $total_rows, $limit, clean_request("", array(
-										  "aid",
-										  "section"
-									  ), TRUE)."&amp;");
+		echo " <span class='caret'></span></strong>\n</a>\n";
+		echo "<ul class='dropdown-menu' style='max-height:180px; width:200px; overflow-y: auto'>\n";
+		foreach ($catOpts as $catID => $catName) {
+			$active = isset($_GET['filter_cid']) && $_GET['filter_cid'] == $catID ? TRUE : FALSE;
+			echo "<li".($active ? " class='active'" : "").">\n<a class='text-smaller' href='".clean_request("filter_cid=".$catID, array(
+					"section",
+					"rowstart",
+					"aid"
+				), TRUE)."'>\n";
+			echo $catName;
+			echo "</a>\n</li>\n";
 		}
+		echo "</ul>\n";
 		echo "</div>\n";
+	}
+	if ($total_rows > $rows) {
+		echo makepagenav($rowstart, $limit, $total_rows, $limit, clean_request("", array(
+									  "aid",
+									  "section"
+								  ), TRUE)."&amp;");
+	}
+	echo "</div>\n";
 		
+	if ($rows > 0) {	
 		/*
 				echo "<div class='col-lg-2 col-md-2 col-sm-2 col-xs-12'>\n"; 	Titel
 				echo "<div class='col-lg-1 col-md-1 col-sm-2 col-xs-12'>\n";	ID							
