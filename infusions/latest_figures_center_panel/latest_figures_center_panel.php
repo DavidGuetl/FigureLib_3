@@ -261,10 +261,6 @@ require_once INCLUDES."infusions_include.php";
 																	
 													$rows = dbrows($resultuf);
 													
-													
-													echo $data['figure_id'];
-													echo $userdata['user_id'];
-
 												// USER HAVE THE FIGURE
 												if ($rows > 0) { 
 															
