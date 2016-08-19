@@ -240,10 +240,15 @@ if (iMEMBER) {
 
 						}
 					}
-							echo openform('inputform', 'post', FUSION_REQUEST, array("class" => "",));
+							//echo openform('inputform', 'post', FUSION_REQUEST, array("class" => "",));
 								echo "<div align='center'>\n";
 								echo form_button("delete_from_collection", $locale['userfigure_002'], $locale['userfigure_002'], array("class" => "glyphicon glyphicon-minus"));
-								echo "<p>";
+
+								
+								
+								
+								
+;
 								echo "</div>\n";
 							echo closeform();
 							
@@ -273,7 +278,7 @@ if (iMEMBER) {
 								echo "<div align='center'>\n";
 								echo form_button("add_to_collection", $locale['userfigure_001'], $locale['userfigure_001'], array("class" => "glyphicon glyphicon-plus"));
 								echo "</div>\n";
-								echo "<p>";
+
 							echo closeform();															
 					}						
 	}
