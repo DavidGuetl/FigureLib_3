@@ -860,6 +860,7 @@ $locale['CLFP_015']= "Most viewed";
 $locale['CLFP_016']= "Admin";
 $locale['CLFP_017']= "MY COLLECTION";
 $locale['CLFP_018']= "IMAGE";
+$locale['CLFP_019']= "ACTION";
 $locale['yours']= "Your Figures";	
 
 // mycollection
