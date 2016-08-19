@@ -113,21 +113,6 @@ if (!empty($result)) {
         }
     }
 
-	// New Counter
-	$newCounterCollection = dbquery("
-		SELECT
-			f.figure_id
-		FROM ".DB_FIGURE_USERFIGURES." AS fu 
-		LEFT JOIN ".DB_FIGURE_ITEMS." AS f ON f.figure_id=fu.figure_userfigures_figure_id
-		WHERE ".(multilang_table("FI") ? "f.figure_language='".LANGUAGE."' AND " : "")." f.figure_id='".intval($_GET['figure_id'])."'
-	");
-	$newCounterCollection = dbrows($newCounterCollection);
-	
-	// If there are Users with this Figure, display Message
-	if ($newCounterCollection) {
-		addNotice("success", $locale['figure_1709']);
-	} else {
-	
 		/*
 		if ((isset($_GET['action']) && $_GET['action'] == "delete") && (isset($_GET['figure_id']) && isnum($_GET['figure_id']))) {
 
@@ -186,11 +171,6 @@ if (!empty($result)) {
 				addNotice("danger", "Cannot delete figure because some user still has it");
 			}
 		}
-	
-	
-	
-	}
-	
 
     if (isset($_POST['save_figure'])) {
 
