@@ -18,51 +18,60 @@
 if (!defined("IN_FUSION")) { die("Access Denied"); }
 
 include INFUSIONS."figurelib/infusion_db.php";
-include LOCALE.LOCALESET."search/books.php";
+include LOCALE.LOCALESET."search/figurelib.php";
 
 if ($_GET['stype'] == "figurelib" || $_GET['stype'] == "all") {
-	if ($_GET['sort'] == "datestamp") {
+	if ($_POST['sort'] == "datestamp") {
 		$sortby = "figure_datestamp";
-	} else if ($_GET['sort'] == "subject") {
+	} else if ($_POST['sort'] == "subject") {
 		$sortby = "figure_title";
 	} else {
 		$sortby = "figure_datestamp";
 	}
 	$ssubject = search_querylike("figure_title");
 	$smessage = search_querylike("figure_description");
-	if ($_GET['fields'] == 0) {
+	if ($_POST['fields'] == 0) {
 		$fieldsvar = search_fieldsvar($ssubject);
-	} else if ($_GET['fields'] == 1) {
+	} else if ($_POST['fields'] == 1) {
 		$fieldsvar = search_fieldsvar($smessage);
-	} else if ($_GET['fields'] == 2) {
+	} else if ($_POST['fields'] == 2) {
 		$fieldsvar = search_fieldsvar($ssubject, $smessage);
 	} else {
 		$fieldsvar = "";
 	}
 	if ($fieldsvar) {
-		$result = dbquery(
-			"SELECT td.*,tdc.* FROM ".DB_FIGURE_ITEMS." td
-			INNER JOIN ".DB_FIGURE_CATS." tdc ON td.figure_cat=tdc.figure_cat_id
-			WHERE ".$fieldsvar."
-			".($_GET['datelimit'] != 0 ? " AND figure_datestamp>=".(time() - $_GET['datelimit']):"")
+		$result = dbquery("
+			SELECT 
+				figure_id
+			FROM ".DB_FIGURE_ITEMS."
+			WHERE ".$fieldsvar." AND figure_freigabe='1' ".($_POST['datelimit'] != 0 ? " AND figure_datestamp >= '".(time() - $_POST['datelimit'])."'" : "")
 		);
 		$rows = dbrows($result);
 	} else {
 		$rows = 0;
 	}
 	if ($rows != 0) {
-		$items_count .= THEME_BULLET."&nbsp;<a href='".FUSION_SELF."?stype=figurelib&amp;stext=".$_GET['stext']."&amp;".$composevars."'>".$locale['b401'].$rows."</a><br />\n";
-		$result = dbquery(
-			"SELECT td.*,tdc.* FROM ".DB_FIGURE_ITEMS." td
-			INNER JOIN ".DB_FIGURE_CATS." tdc ON td.figure_cat=tdc.figure_cat_id
-			WHERE ".$fieldsvar."
-			".($_GET['datelimit'] != 0 ? " AND figure_datestamp>=".(time() - $_GET['datelimit']):"")."
-			ORDER BY ".$sortby." ".($_GET['order'] == 1 ? "ASC" : "DESC").($_GET['stype'] != "all" ? " LIMIT ".$_GET['rowstart'].",10" : "")
+		$items_count .= THEME_BULLET."&nbsp;<a href='".FUSION_SELF."?stype=figurelib&amp;stext=".$_POST['stext']."&amp;".$composevars."'>".$locale['f401'].$rows."</a><br />\n";
+		$result = dbquery("
+			SELECT 
+				f.figure_id, f.figure_title, f.figure_description, f.figure_datestamp, f.figure_clickcount,
+				fc.figure_cat_name,
+				fm.figure_manufacturer_name,
+				fy.figure_year,
+				fu.user_id, fu.user_name, fu.user_status
+			FROM ".DB_FIGURE_ITEMS." AS f
+			LEFT JOIN ".DB_FIGURE_CATS." AS fc ON fc.figure_cat_id=f.figure_cat
+			LEFT JOIN ".DB_FIGURE_MANUFACTURERS." AS fm ON fm.figure_manufacturer_id=f.figure_manufacturer
+			LEFT JOIN ".DB_FIGURE_YEARS." AS fy ON fy.figure_year_id=f.figure_pubdate
+			LEFT JOIN ".DB_USERS." AS fu ON fu.user_id=f.figure_submitter
+			WHERE ".$fieldsvar." AND f.figure_freigabe='1'
+			".($_POST['datelimit'] != 0 ? " AND figure_datestamp >= '".(time() - $_POST['datelimit'])."'" : "")."
+			ORDER BY ".$sortby." ".($_POST['order'] == 1 ? "ASC" : "DESC").($_GET['stype'] != "all" ? " LIMIT ".$_POST['rowstart'].",10" : "")
 		);
 		while ($data = dbarray($result)) {
 			$search_result = "";
 			if ($data['figure_datestamp']+604800 > time()+($settings['timeoffset']*3600)) {
-				$new = " <span class='small'>".$locale['b403']."</span>";
+				$new = " <span class='small'>".$locale['f403']."</span>";
 			} else {
 				$new = "";
 			}
@@ -72,17 +81,17 @@ if ($_GET['stype'] == "figurelib" || $_GET['stype'] == "all") {
 			$subj_c = search_stringscount($data['figure_title']);
 			$text_c = search_stringscount($data['figure_description']);
 			$text_frag = highlight_words($swords, $text_frag);
-			$search_result .= "[".$data['figure_cat_name']."] <a href='".INFUSIONS.$inf_folder."/figurelib.php?figure_id=".$data['figure_id']."' target='_blank'>".highlight_words($swords, $data['figure_title'])."</a> $new"."<br /><br />\n";
+			$search_result .= "[".$data['figure_cat_name']."] <a href='".INFUSIONS."figurelib/figures.php?figure_id=".$data['figure_id']."' target='_blank'>".highlight_words($swords, $data['figure_title'])."</a> $new"."<br /><br />\n";
 			if ($text_frag != "") $search_result .= "<div class='quote' style='width:auto;height:auto;overflow:auto'>".$text_frag."</div><br />";
-			$search_result .= "<span class='small'><span class='alt'>".$locale['b404']."</span> ".($data['figure_submitter'] ? $data['figure_submitter'] : "");
-			$searchfiguresult .= ($data['figure_manufacturer'] ? " |\n<span class='alt'>".$locale['b405']."</span> ".$data['figure_manufacturer'] : "");
-			$search_result .= ($data['figure_pubdate'] ? " |\n<span class='alt'>".$locale['b406']."</span> ".$data['figure_pubdate'] : "")."<br />\n";
-			$search_result .= "<span class='alt'>".$locale['b407']."</span> ".showdate("%d.%m.%y", $data['figure_datestamp'])." |\n";
-			$search_result .= "<span class='alt'>".$locale['b408']."</span> ".$data['figure_clickcount']."</span><br /><br />\n";
+			$search_result .= "<span class='small'><span class='alt'>".$locale['f404']."</span> ".($data['user_id'] ? profile_link($data['user_id'], $data['user_name'], $data['user_status']) : "");
+			$search_result .= ($data['figure_manufacturer_name'] ? " |\n<span class='alt'>".$locale['f405']."</span> ".$data['figure_manufacturer_name'] : "");
+			$search_result .= ($data['figure_year'] ? " |\n<span class='alt'>".$locale['f406']."</span> ".$data['figure_year'] : "")."<br />\n";
+			$search_result .= "<span class='alt'>".$locale['f407']."</span> ".showdate("%d.%m.%y", $data['figure_datestamp'])." |\n";
+			$search_result .= "<span class='alt'>".$locale['f408']."</span> ".$data['figure_clickcount']."</span><br /><br />\n";
 			search_globalarray($search_result);
 		}
 	} else {
-		$items_count .= THEME_BULLET."&nbsp;".$locale['b402']."<br />\n";
+		$items_count .= THEME_BULLET."&nbsp;".$locale['f402']."<br />\n";
 	}
 	$navigation_result = search_navigation($rows);
 }
