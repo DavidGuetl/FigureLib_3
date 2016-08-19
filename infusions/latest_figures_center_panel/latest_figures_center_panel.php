@@ -52,14 +52,16 @@ require_once INCLUDES."infusions_include.php";
 					echo "<div class='col-lg-2 hidden-md hidden-sm hidden-xs'>\n";	brand
 					echo "<div class='col-lg-1 hidden-md hidden-sm hidden-xs'>\n";	scale
 					echo "<div class='col-lg-1 col-md-2 hidden-sm hidden-xs'>\n";	year
-					echo "<div class='col-lg-2 hidden-md hidden-sm hidden-xs'>\n";	rating
-					echo "<div class='col-lg-1 col-md-2 col-sm-2 col-xs-2'>\n";		edit/add/remove
+					echo "<div class='col-lg-1 hidden-md hidden-sm hidden-xs'>\n";	rating
+					echo "<div class='col-lg-1 col-md-1 col-sm-1 col-xs-1'>\n";		edit
+					echo "<div class='col-lg-1 col-md-1 col-sm-1 col-xs-1'>\n";		add/remove
 				//////////////////////////////////////////////////////////////////////////////*/
 							
 				echo "<div class='navbar-default'>";				
 				echo "<div class='container-fluid'>\n";
 				echo "<div class='table-responsive'>\n";
 				echo "<div class='row'>\n";						
+						
 						// COLUMN 1 (image)
 						echo "<div class='col-lg-1 col-md-2 col-sm-2 col-xs-2'>\n";	
 							echo "<div class='text-smaller text-uppercase'>".$locale['CLFP_018']."</div>\n";
@@ -68,7 +70,7 @@ require_once INCLUDES."infusions_include.php";
 						// COLUMN 2 (name of figure)
 						echo "<div class='col-lg-2 col-md-3 col-sm-4 col-xs-4'>\n";
 							echo "<div class='text-smaller text-uppercase'>".$locale['CLFP_002']."</div>\n";
-						echo "</div>\n";						
+						echo "</div>\n";					
 						
 						// COLUMN 3 (manufacturer)
 						echo "<div class='col-lg-2 col-md-3 col-sm-4 col-xs-4'>\n";	
@@ -91,14 +93,32 @@ require_once INCLUDES."infusions_include.php";
 						echo "</div>\n";
 						
 						// COLUMN 7 (rating)
-						echo "<div class='col-lg-2 hidden-md hidden-sm hidden-xs'>\n";
+						echo "<div class='col-lg-1 hidden-md hidden-sm hidden-xs'>\n";
 							echo "<div class='text-smaller text-uppercase'>".$locale['CLFP_010']."</div>\n";
 						echo "</div>\n";
 						
-						// COLUMN 8 (action)
-						echo "<div class='col-lg-1 col-md-2 col-sm-2 col-xs-2'>\n";	
-							echo "<div class='text-smaller text-uppercase'>".$locale['CLFP_019']."</div>\n";
+						if (iADMIN || iSUPERADMIN) {
+						// COLUMN 8 (rating)
+						echo "<div class='col-lg-1 hidden-md hidden-sm hidden-xs'>\n";
+							echo "<div class='text-smaller text-uppercase'>Edit</div>\n";
 						echo "</div>\n";
+						} else {}
+						
+						
+						// COLUMN 9 Usercount (only for Guests and members - admins will see edit button)if (iADMIN || iSUPERADMIN) {
+							if (iADMIN || iSUPERADMIN) {
+								} else {
+						echo "<div class='col-lg-1 col-md-2 col-sm-2 col-xs-2'>\n";	
+							echo "<div class='text-smaller text-uppercase'>Count</div>\n";
+						echo "</div>\n";
+						}
+						
+						// COLUMN 9 (action)
+						echo "<div class='col-lg-1 col-md-2 col-sm-2 col-xs-2'>\n";	
+							echo "<div class='text-smaller text-uppercase'>Opt.</div>\n";
+						echo "</div>\n";
+						
+
 						
 				echo "</div>\n";
 				echo "</div>\n";
@@ -114,7 +134,7 @@ require_once INCLUDES."infusions_include.php";
 				echo "<div class='table-responsive'>\n";
 				echo "<div class='row'>\n";	
 				
-				// WHILE SCHLEIFE FÜR DAS HOLEN DES BILDES AUS ORDNER / ORDNER MUSS IN infusion.db.php deklariert sein!				
+					// WHILE SCHLEIFE FÜR DAS HOLEN DES BILDES AUS ORDNER / ORDNER MUSS IN infusion.db.php deklariert sein!				
 					$result2 = dbquery("SELECT
 						   figure_images_image_id,
 						   figure_images_image,
@@ -122,29 +142,29 @@ require_once INCLUDES."infusions_include.php";
 						FROM ".DB_FIGURE_IMAGES."
 						WHERE figure_images_figure_id='".$data['figure_id']."' LIMIT 0,1");
  
-			   // Fragen, ob überhaupt ein Ergebnis kommt
-			if(dbrows($result2)){
-     
-				while($data2 = dbarray($result2)){
-									
+						// Fragen, ob überhaupt ein Ergebnis kommt
+						if(dbrows($result2)){
+				 
+							while($data2 = dbarray($result2)){
+												
 						// COLUMN 1 (image clickable)
-						echo "<div class='col-lg-1 col-md-2 col-sm-2 col-xs-2'>\n";	
-							echo "<div class='side-small'><a href='".INFUSIONS."figurelib/figures.php?figure_id=".$data['figure_id']."'>\n<img src='". THUMBS_FIGURES.$data2['figure_images_thumb'] ."' alt='".$locale['CLFP_002']." : ".$data['figure_title']."' title='".$locale['CLFP_002']." : ".$data['figure_title']."' style='border:0px;max-height:40px;max-width:40px'/></a>";
-						echo "</div></div>\n";					
-				}
-			} else { 
+								echo "<div class='col-lg-1 col-md-2 col-sm-2 col-xs-2'>\n";	
+									echo "<div class='side-small'><a href='".INFUSIONS."figurelib/figures.php?figure_id=".$data['figure_id']."'>\n<img src='". THUMBS_FIGURES.$data2['figure_images_thumb'] ."' alt='".$locale['CLFP_002']." : ".$data['figure_title']."' title='".$locale['CLFP_002']." : ".$data['figure_title']."' style='border:0px;max-height:40px;max-width:40px'/></a>";
+								echo "</div></div>\n";					
+							}
+						} else { 
 						
-						echo "<div class='col-lg-1 col-md-2 col-sm-2 col-xs-2'>\n";	
-							echo "<div class='side-small'><a href='".INFUSIONS."figurelib/figures.php?figure_id=".$data['figure_id']."'>\n<img src='".INFUSIONS.$inf_folder."/images/default.png' alt='".$locale['CLFP_002']." : ".$data['figure_title']."' title='".$locale['CLFP_002']." : ".$data['figure_title']."' style='border:0px;max-height:40px;max-width:40px'/></a>";
-						echo "</div></div>\n";				
+								echo "<div class='col-lg-1 col-md-2 col-sm-2 col-xs-2'>\n";	
+									echo "<div class='side-small'><a href='".INFUSIONS."figurelib/figures.php?figure_id=".$data['figure_id']."'>\n<img src='".INFUSIONS.$inf_folder."/images/default.png' alt='".$locale['CLFP_002']." : ".$data['figure_title']."' title='".$locale['CLFP_002']." : ".$data['figure_title']."' style='border:0px;max-height:40px;max-width:40px'/></a>";
+								echo "</div></div>\n";				
 				
-			}	
+						}	
 
 						// COLUMN 2 (name of figure)
 						echo "<div class='col-lg-2 col-md-3 col-sm-4 col-xs-4'>\n";
 							echo "<div class='side-small'><a href='".INFUSIONS."figurelib/figures.php?figure_id=".$data['figure_id']."' title='".$locale['CLFP_002']." : ".$data['figure_title']."' alt='".$locale['CLFP_002']." : ".$data['figure_title']."'>".trimlink($data['figure_title'], 10)."</a>";
-						echo "</div></div>\n";	
-
+							echo "</div></div>\n";	
+		
 						// COLUMN 3 (manufacturer)
 						echo "<div class='col-lg-2 col-md-3 col-sm-4 col-xs-4'>\n";	
 							echo "<div class='side-small' title='".$locale['CLFP_003']." : ".$data['figure_manufacturer_name']."' alt='".$locale['CLFP_003']." : ".$data['figure_manufacturer_name']."'>".trimlink($data['figure_manufacturer_name'],12)."</div>\n";
@@ -160,140 +180,151 @@ require_once INCLUDES."infusions_include.php";
 							echo "<div class='side-small' title='".$locale['CLFP_005']." : ".$data['figure_scale_name']."' alt='".$locale['CLFP_005']." : ".$data['figure_scale_name']."'>".trimlink($data['figure_scale_name'],6)."</div>\n";
 						echo "</div>\n";
 			
-			// No release date or unknown = "no data" / WENN KEIN WERT ZUM DATUM IN DB DANN ZEIGE HINWEIS "NO DATA"
-			if ($data['figure_pubdate'] == "") {
-				
 						// COLUMN 6 (release date)
-						echo "<div class='col-lg-1 col-md-2 hidden-sm hidden-xs'>\n";
-							echo "<div class='side-small' title='".$locale['CLFP_006']." : ".$locale['CLFP_008']."' alt='".$locale['CLFP_006']." : ".$locale['CLFP_008']."'>".trimlink($locale['CLFP_008'],6)."</div>\n";
-						echo "</div>\n";			
-			} else {
-				
-						echo "<div class='col-lg-1 col-md-2 hidden-sm hidden-xs'>\n";
-							echo "<div class='side-small' title='".$locale['CLFP_006']." : ".$data['figure_year']."' alt='".$locale['CLFP_006']." : ".$data['figure_year']."'>".trimlink($data['figure_year'],6)."</div>\n";
-						echo "</div>\n";						
-			} 
-
+						// No release date or unknown = "no data" / WENN KEIN WERT ZUM DATUM IN DB DANN ZEIGE HINWEIS "NO DATA"
+						if ($data['figure_pubdate'] == "") {
+							
+								echo "<div class='col-lg-1 col-md-2 hidden-sm hidden-xs'><div class='side-small' title='".$locale['CLFP_006']." : ".$locale['CLFP_008']."' alt='".$locale['CLFP_006']." : ".$locale['CLFP_008']."'>".trimlink($locale['CLFP_008'],6)."</div></div>\n";
+								} else {
+								echo "<div class='col-lg-1 col-md-2 hidden-sm hidden-xs'><div class='side-small' title='".$locale['CLFP_006']." : ".$data['figure_year']."' alt='".$locale['CLFP_006']." : ".$data['figure_year']."'>".trimlink($data['figure_year'],6)."</div></div>\n";
+								} 
 		
 						// COLUMN 7 (rating)
-						$drating = dbarray(dbquery("
-						   SELECT 
-								SUM(rating_vote) sum_rating, 
-								COUNT(rating_item_id) count_votes 
-								FROM ".DB_RATINGS." 
-								WHERE rating_type='FI' 
-								AND  rating_item_id='".$data['figure_id']."'
-							")); 
+								$drating = dbarray(dbquery("
+								   SELECT 
+										SUM(rating_vote) sum_rating, 
+										COUNT(rating_item_id) count_votes 
+										FROM ".DB_RATINGS." 
+										WHERE rating_type='FI' 
+										AND  rating_item_id='".$data['figure_id']."'
+									")); 
    
-						$rating = ($drating['count_votes'] > 0 ? str_repeat("<img src='".INFUSIONS.$inf_folder."/images/starsmall.png'>",ceil($drating['sum_rating']/$drating['count_votes'])) : "-");
+								$rating = ($drating['count_votes'] > 0 ? str_repeat("<img src='".INFUSIONS.$inf_folder."/images/starsmall.png'>",ceil($drating['sum_rating']/$drating['count_votes'])) : "-");
 						
-						echo "<div class='col-lg-2 hidden-md hidden-sm hidden-xs'>\n";
+						echo "<div class='col-lg-1 hidden-md hidden-sm hidden-xs'>\n";
 							echo "<div class='side-small' title='".$locale['CLFP_010']."' alt='".$locale['CLFP_010']."'>".$rating."</div>\n";
 						echo "</div>\n";
 						
-						// COLUMN 8 (edit/add/remove)
-						echo "<div class='col-lg-1 col-md-2 col-sm-2 col-xs-2'>\n";	
+						// COLUMN 8 (edit) only for admins
+						
+						if (iADMIN || iSUPERADMIN) {
+						echo "<div class='col-lg-1 col-md-1 col-sm-1 col-xs-1'>\n";	
 							
-							if (iADMIN || iSUPERADMIN) {
+							
 							global $aidlink;
 							$settings = fusion_get_settings();
 								// ['cifg_0005'] = "Edit";
 								
-								echo "<a class='' href='".INFUSIONS."figurelib/admin.php".$aidlink."&amp;section=figurelib_form&amp;action=edit&amp;figure_id=".$_GET['figure_id']."'><span class='glyphicon glyphicon-edit' aria-hidden='true'></span></a><p>"; 
-							}
-							
-							
-	
-if (iMEMBER) {
-		global $userdata;
-							
-			$resultuf = dbquery(
-				"SELECT             
-					fu.user_id, 
-					fu.user_name, 
-					fu.user_status, 
-					fu.user_avatar, 
-					fuf.figure_userfigures_figure_id,
-					fuf.figure_userfigures_user_id          
-            FROM ".DB_FIGURE_USERFIGURES." fuf
-            INNER JOIN ".DB_USERS." fu ON fuf.figure_userfigures_user_id=fu.user_id  
-            WHERE fuf.figure_userfigures_figure_id='".$data['figure_id']."'
-            AND fu.user_id='".$userdata['user_id']."' 
-			GROUP BY fu.user_id 
-            ");
+								echo "<a class='' href='".INFUSIONS."figurelib/admin.php".$aidlink."&amp;section=figurelib_form&amp;action=edit&amp;figure_id=".$_GET['figure_id']."'><span class='glyphicon glyphicon-edit' aria-hidden='true'></span></a>"; 
+							echo "</div>\n";
+							} else {
 								
-				$rows = dbrows($resultuf);
-
-			// USER HAVE THE FIGURE
-			if ($rows > 0) { 
+								// SHOW NOTHING - ITS ONLY FOR ADMINS
 						
-					while ($datauf = dbarray($resultuf)) {
-													
-						if (isset($_POST['delete_from_collection'])) {
-									
-									dbquery("
-										DELETE FROM ".DB_FIGURE_USERFIGURES." 
-										WHERE figure_userfigures_figure_id=".$data['figure_id']." 
-										AND figure_userfigures_user_id=".$userdata['user_id']." 
-										");									
-									redirect(clean_request("", array("delete_from_collection"), FALSE));
-
-						}
-					}
-							//echo openform('inputform', 'post', FUSION_REQUEST, array("class" => "",));
-								echo "<div align='center'>\n";
-								echo form_button("delete_from_collection", $locale['userfigure_002'], $locale['userfigure_002'], array("class" => "glyphicon glyphicon-minus"));
-
-								
-								
-								
-								
-;
-								echo "</div>\n";
-							echo closeform();
-							
-
-			// USER DOSEN'T HAVE THE FIGURE					
-			} else { 
-									
-						if (isset($_POST['add_to_collection'])) {
-											
-							// Standard Values for Fields
-							$inputArray = array(
-							"figure_userfigures_figure_id" => $data['figure_id'], 
-							"figure_userfigures_figure_id" => $userdata['user_id'], 
-							);
-
-							// SAVE DATA
-							if (defender::safe()) {
-									$inputArray = array(
-										"figure_userfigures_figure_id" => $data['figure_id'],
-										"figure_userfigures_user_id" => $userdata['user_id'],);
-									dbquery_insert(DB_FIGURE_USERFIGURES, $inputArray, "save", array());	
-									redirect(clean_request("", array("add_to_collection"), FALSE));									
 							}
-						}
-					
-							echo openform('inputform', 'post', FUSION_REQUEST, array("class" => "",));
-								echo "<div align='center'>\n";
-								echo form_button("add_to_collection", $locale['userfigure_001'], $locale['userfigure_001'], array("class" => "glyphicon glyphicon-plus"));
-								echo "</div>\n";
-
-							echo closeform();															
-					}						
-	}
-
-
-
-
+						
+						// COLUMN 8 Usercount
+						if (iADMIN || iSUPERADMIN) {	
+							
+							// nicht zu sehen für admins
+							
+							} else {
+													
+									echo "<div class='col-lg-1 hidden-md hidden-sm hidden-xs'>\n";
+									$count = dbcount("(figure_userfigures_id)", DB_FIGURE_USERFIGURES, "figure_userfigures_figure_id='".$data['figure_id']."'");	
+							
+										echo "<div class='side-small' title='".$locale['CLFP_013']." : ".$count."' alt='".$locale['CLFP_013']." : ".$count."'>".trimlink($count,6)."</div>\n";
+									echo "</div>\n";	
+							}		
+							
+						// COLUMN 9 (add/remove)
+						echo "<div class='col-lg-1 col-md-1 col-sm-1 col-xs-1'>\n";	
 	
+									if (iMEMBER) {
+											global $userdata;
+																
+			
+												$resultuf = dbquery(
+													"SELECT             
+														fu.user_id, 
+														fu.user_name, 
+														fu.user_status, 
+														fu.user_avatar, 
+														fuf.figure_userfigures_figure_id,
+														fuf.figure_userfigures_user_id          
+												FROM ".DB_FIGURE_USERFIGURES." fuf
+												INNER JOIN ".DB_USERS." fu ON fuf.figure_userfigures_user_id=fu.user_id  
+												WHERE fuf.figure_userfigures_figure_id='".$data['figure_id']."'
+												AND fu.user_id='".$userdata['user_id']."' 
+												
+												");
+																	
+													$rows = dbrows($resultuf);
+													
+													
+													echo $data['figure_id'];
+													echo $userdata['user_id'];
 
-							
-							
-							
+												// USER HAVE THE FIGURE
+												if ($rows > 0) { 
+															
+														while ($datauf = dbarray($resultuf)) {
+																						
+															if (isset($_POST['delete_from_collection'])) {
+																		
+																		dbquery("
+																			DELETE FROM ".DB_FIGURE_USERFIGURES." 
+																			WHERE figure_userfigures_figure_id=".$data['figure_id']." 
+																			AND figure_userfigures_user_id=".$userdata['user_id']." 
+																			");									
+																		redirect(clean_request("", array("delete_from_collection"), FALSE));
+
+															}
+														}
+																echo openform('inputform', 'post', FUSION_REQUEST, array("class" => "",));
+																	echo "<div align='center'>\n";
+																	echo form_button("delete_from_collection", $locale['userfigure_002'], $locale['userfigure_002'], array("class" => "btn btn-sm btn-danger"));
+																	echo "</div>\n";
+																echo closeform();
+																
+
+												// USER DOSEN'T HAVE THE FIGURE					
+												} else { 
+																		
+															if (isset($_POST['add_to_collection'])) {
+																				
+																// Standard Values for Fields
+																$inputArray = array(
+																"figure_userfigures_figure_id" => $data['figure_id'], 
+																"figure_userfigures_user_id" => $userdata['user_id'], 
+																);
+
+																// SAVE DATA
+																if (defender::safe()) {
+																		$inputArray = array(
+																			"figure_userfigures_figure_id" => $data['figure_id'],
+																			"figure_userfigures_user_id" => $userdata['user_id'],);
+																		dbquery_insert(DB_FIGURE_USERFIGURES, $inputArray, "save", array());	
+																		redirect(clean_request("", array("add_to_collection"), FALSE));									
+																}
+															}
+														
+																echo openform('inputform', 'post', FUSION_REQUEST, array("class" => "",));
+																	echo "<div align='center'>\n";
+																	echo form_button("add_to_collection", $locale['userfigure_001'], $locale['userfigure_001'], array("class" => "btn btn-sm btn-success"));
+																	echo "</div>\n";
+																echo closeform();															
+														}						
+										} else {
+												// $locale['mc_0011']= "This feature is only available for registered members. Please Sign up ";
+														echo "<span alt='".$locale['userfigure_001']." | ".$locale['mc_0011']."' title='".$locale['userfigure_001']." | ".$locale['mc_0011']."' class='glyphicon glyphicon-eye-close'></span>";
+							}
+		
 						echo "</div>\n";
-  
-				
+						
+						
+
+						
 
 				echo "</div>\n";
 				echo "</div>\n";
