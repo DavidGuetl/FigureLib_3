@@ -17,12 +17,12 @@
 +--------------------------------------------------------*/
 if (!defined("IN_FUSION")) { die("Access Denied"); }
 
-include LOCALE.LOCALESET."search/books.php";
+include LOCALE.LOCALESET."search/figurelib.php";
 
 $form_elements['figurelib']['enabled'] = array("datelimit", "fields1", "fields2", "fields3", "sort", "order1", "order2", "chars");
 $form_elements['figurelib']['disabled'] = array();
 $form_elements['figurelib']['display'] = array();
 $form_elements['figurelib']['nodisplay'] = array();
 
-$radio_button['figurelib'] = "<label><input type='radio' name='stype' value='figurelib'".($_GET['stype'] == "figurelib" ? " checked='checked'" : "")." onclick=\"display(this.value)\" /> ".$locale['b400']."</label>";
+$radio_button['figurelib'] = "<label><input type='radio' name='stype' value='figurelib'".($_GET['stype'] == "figurelib" ? " checked='checked'" : "")." onclick=\"display(this.value)\" /> ".$locale['f400']."</label>";
 ?>
