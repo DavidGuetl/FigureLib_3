@@ -145,7 +145,31 @@ if (iMEMBER && $fil_settings['figure_submit']) {
 									
 				// ['figs_0018'] = "Thank you for submitting your Figure";
 				addNotice("success", $locale['figs_0018']);
+				
+				// Send Notification
+				if ($fil_settings['figure_notification'] != "1") {
+					
+					// Send Message Notification
+					if ($fil_settings['figure_notification'] == "2") {
+						require_once INCLUDES."infusions_include.php";
+						send_pm("-103", $userdata['user_id'], $fil_settings['figure_notification_subject'], $fil_settings['figure_notification_message'], "y", true);
+
+					// Send Mail Notification
+					} elseif ($fil_settings['figure_notification'] == "3") {
+						$resultAdmins = dbquery("SELECT user_name, user_email FROM ".DB_USERS." WHERE user_id != '".$userdata['user_id']."' AND user_level='-103' AND user_status='0'");
+						if (dbrows($resultAdmins)) {
+							require_once INCLUDES."sendmail_include.php";
+							$fil_settings['figure_notification_message'] = nl2br(parseubb(parsesmileys($fil_settings['figure_notification_message'])));
+							while ($dataAdmin = dbarray($resultAdmins)) {
+								sendemail($dataAdmin['user_name'], $dataAdmin['user_email'], $userdata['user_name'], $userdata['user_email'], $fil_settings['figure_notification_subject'], $fil_settings['figure_notification_message'], "html");
+							}
+						}
+					}
+				}
+				
+				// Redirect
 				redirect(clean_request("submitted=f", array("stype"), TRUE));
+				
 			}
 		
 	}	
