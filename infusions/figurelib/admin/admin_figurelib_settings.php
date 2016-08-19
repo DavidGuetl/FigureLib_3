@@ -27,26 +27,64 @@ $locale = fusion_get_locale();
 // SETTINGS HOLEN
 $fil_settings = get_settings("figurelib");
 
-if (isset($_POST['savesettings'])) {
-	$error = 0;
-	$inputArray = array(	
-		"figure_per_page" => form_sanitizer($_POST['figure_per_page'], 0, "figure_per_page"),
-		"figure_per_line" => form_sanitizer($_POST['figure_per_line'], 0, "figure_per_line"),
-		"figure_allow_comments" => isset($_POST['figure_allow_comments']) ? 1 : 0,
-		"figure_allow_ratings" => isset($_POST['figure_allow_ratings']) ? 1 : 0,
-		"figure_display" => isset($_POST['figure_display']) ? 1 : 0,
-		"figure_submit" => isset($_POST['figure_submit']) ? 1 : 0,
-		"figure_related" => isset($_POST['figure_related']) ? 1 : 0,
-		"figure_social_sharing" => isset($_POST['figure_social_sharing']) ? 1 : 0,	
-		"figure_thumb_w" => form_sanitizer($_POST['figure_thumb_w'], 300, 'figure_thumb_w'),
-		"figure_thumb_h" => form_sanitizer($_POST['figure_thumb_h'], 150, 'figure_thumb_h'),
-		"figure_photo_w" => form_sanitizer($_POST['figure_photo_w'], 400, 'figure_photo_w'),
-		"figure_photo_h" => form_sanitizer($_POST['figure_photo_h'], 300, 'figure_photo_h'),
-		"figure_photo_max_w" => form_sanitizer($_POST['figure_photo_max_w'], 1800, 'figure_photo_max_w'),
-		"figure_photo_max_h" => form_sanitizer($_POST['figure_photo_max_h'], 1600, 'figure_photo_max_h'),
-		"figure_photo_max_b" => form_sanitizer($_POST['calc_b'], 150, 'calc_b')*form_sanitizer($_POST['calc_c'], 100000, 'calc_c'),
+// Locale (should be added in the correct Localefile)
+$locale['notification-101'] = "You must specify a Subject if you activate Notifications.";
+$locale['notification-102'] = "You must specify a Message if you activate Notifications.";
+$locale['notification-103'] = "Deactivated";
+$locale['notification-104'] = "Private Message";
+$locale['notification-105'] = "E-Mail";
+$locale['notification-106'] = "Please choose";
+$locale['notification-107'] = "Notification";
+$locale['notification-108'] = "Subject";
+$locale['notification-109'] = "Message";
 
-	);
+global $defender;
+
+// Handle posted Form
+if (isset($_POST['savesettings'])) {
+	$error = false;
+	
+	// Check posted Fields and save to Array
+	$inputArray = [
+		"figure_notification"         => form_sanitizer($_POST['figure_notification'],         1,    "figure_notification"),
+		"figure_notification_subject" => form_sanitizer($_POST['figure_notification_subject'], "",   "figure_notification_subject"),
+		"figure_notification_message" => form_sanitizer($_POST['figure_notification_message'], "",   "figure_notification_message"),
+		"figure_per_page"             => form_sanitizer($_POST['figure_per_page'],             0,    "figure_per_page"),
+		"figure_per_line"             => form_sanitizer($_POST['figure_per_line'],             0,    "figure_per_line"),
+		"figure_thumb_w"              => form_sanitizer($_POST['figure_thumb_w'],              300,  "figure_thumb_w"),
+		"figure_thumb_h"              => form_sanitizer($_POST['figure_thumb_h'],              150,  "figure_thumb_h"),
+		"figure_thumb_ratio"          => form_sanitizer($_POST['figure_thumb_ratio'],          0,    "figure_thumb_ratio"),
+		"figure_photo_w"              => form_sanitizer($_POST['figure_photo_w'],              400,  "figure_photo_w"),
+		"figure_photo_h"              => form_sanitizer($_POST['figure_photo_h'],              300,  "figure_photo_h"),
+		"figure_photo_max_w"          => form_sanitizer($_POST['figure_photo_max_w'],          1800, "figure_photo_max_w"),
+		"figure_photo_max_h"          => form_sanitizer($_POST['figure_photo_max_h'],          1600, "figure_photo_max_h"),
+		"figure_photo_max_b"          => form_sanitizer($_POST['calc_b'], 150, "calc_b") * form_sanitizer($_POST['calc_c'], 100000, "calc_c"),
+		"figure_allow_comments"       => isset($_POST['figure_allow_comments']) ? 1 : 0,
+		"figure_allow_ratings"        => isset($_POST['figure_allow_ratings'])  ? 1 : 0,
+		"figure_display"              => isset($_POST['figure_display'])        ? 1 : 0,
+		"figure_submit"               => isset($_POST['figure_submit'])         ? 1 : 0,
+		"figure_related"              => isset($_POST['figure_related'])        ? 1 : 0,
+		"figure_social_sharing"       => isset($_POST['figure_social_sharing']) ? 1 : 0
+	];
+	
+	// Check Notifications
+	if ($inputArray['figure_notification'] == "2" || $inputArray['figure_notification'] == "3") {
+		if (!$inputArray['figure_notification_subject']) {
+			$defender -> setInputError("figure_notification_subject");
+			$defender -> setErrorText("figure_notification_subject", $locale['notification-101']);
+			$error = true;
+		}
+		if (!$inputArray['figure_notification_message']) {
+			$defender -> setInputError("figure_notification_message");
+			$defender -> setErrorText("figure_notification_message", $locale['notification-102']);
+			$error = true;
+		}
+		if ($error) {
+			defender::stop();
+		}
+	}
+		
+	// If there are no Errors, save it
 	if (defender::safe()) {
 		foreach ($inputArray as $settings_name => $settings_value) {
 			$inputSettings = array(
@@ -56,32 +94,45 @@ if (isset($_POST['savesettings'])) {
 			);
 			dbquery_insert(DB_SETTINGS_INF, $inputSettings, "update", array("primary_key" => "settings_name"));
 		}
+		// Display Message
 		addNotice("success", $locale['900']);
-		redirect(FUSION_REQUEST);
+		
+	// Display Error Message
 	} else {
-		addNotice('danger', $locale['901']);
+		addNotice('danger', $locale['901'], FUSION_SELF, false);
 	}
+	
+	// Get all Form Informations to Settings Array, so we don't lost all Values if Form failed.
+	$fil_settings = $inputArray;
 }
 
+// Open Form
 opentable($locale['figure_settings']);
-
 echo openform('settingsform', 'post', FUSION_REQUEST, array('class' => "m-t-20"));
-echo "<div class='well'>".$locale['filt_0006']."</div>"; // ['filt_0006'] = "Configuration page for Figures";
+
+// Description
+echo "<div class='well'>".$locale['filt_0006']."</div>";
+
+
+
+// Display Left Form
 echo "<div class='row'>\n<div class='col-xs-12 col-sm-8'>\n";
-
 openside("");
-//$locale['admin_figurelib_settings.php_001'] = "Original";
-//$locale['admin_figurelib_settings.php_002'] = "Square";
-$thumb_opts = array(
-'0' => $locale['admin_figurelib_settings.php_001'], 
-'1' => $locale['admin_figurelib_settings.php_002']);
 
-$calc_opts = array(
-'1' => 'Bytes (bytes)', 
-'1000' => 'KB (Kilobytes)', 
-'1000000' => 'MB (Megabytes)');
-$calc_c = calculate_byte($asettings['figure_photo_max_b']);
-$calc_b = $asettings['figure_photo_max_b']/$calc_c;
+	// Set Options for Selectlists
+	$thumb_opts = [
+		'0' => $locale['admin_figurelib_settings.php_001'], 
+		'1' => $locale['admin_figurelib_settings.php_002']
+	];
+	$calc_opts = [
+		'1' => 'Bytes (bytes)', 
+		'1000' => 'KB (Kilobytes)', 
+		'1000000' => 'MB (Megabytes)'
+	];
+
+	// Calculate
+	$calc_c = calculate_byte($asettings['figure_photo_max_b']);
+	$calc_b = $asettings['figure_photo_max_b'] / $calc_c;
 
 	// ['figure_334'] = "Figures per page:";
 	// ['figure_361'] = "Only values 1-500 allowed!";
@@ -107,6 +158,8 @@ $calc_b = $asettings['figure_photo_max_b']/$calc_c;
 		'type' => 'number',
 		'width' => '250px'
 	));	
+	
+
 	
 // $locale['admin_figurelib_settings.php_003'] = "Thumb size:";
 // $locale['admin_figurelib_settings.php_004'] = "Photo size:";
@@ -181,67 +234,109 @@ echo "
 ";
 	
 closeside();
-	
+
+
+// Display Right Form 
 echo "</div>\n";
 echo "<div class='col-xs-12 col-sm-4'>\n";
-
 openside("");
 
 	// ['figure_335'] = "Allow users to submit figures:";
 	// ALS CHECKBOX
-		echo form_checkbox('figure_submit', $locale['figure_335'], $fil_settings['figure_submit']);
-/*	
+	echo form_checkbox("figure_submit", $locale['figure_335'], $fil_settings['figure_submit']);
+	/*	
 	// ALS DROPDOWN 	
 		echo form_select("figure_submit", $locale['figure_335'], $fil_settings['figure_submit'], array(
 			"inline" => TRUE, 
 			"options" => array($locale['disable'], $locale['enable'])
 		));
-*/
+	*/
+	
 	// ['figure_344'] = "Allow Social Sharing:";	
 	// ALS CHECKBOX
-		 echo form_checkbox('figure_social_sharing', $locale['figure_344'], $fil_settings['figure_social_sharing']);
-/*
+	echo form_checkbox('figure_social_sharing', $locale['figure_344'], $fil_settings['figure_social_sharing']);
+	/*
 	// ALS DROPDOWN
 		echo form_select("figure_social_sharing", $locale['figure_344'], $fil_settings['figure_social_sharing'], array(
 			"inline" => TRUE, 
 			"options" => array($locale['disable'], $locale['enable'])
 		));
-*/
+	*/
+	
 	// ['figure_348'] = "Show related figures:";
 	// ALS CHECKBOX
-		 echo form_checkbox('figure_related', $locale['figure_348'], $fil_settings['figure_related']);
-/*	
+	echo form_checkbox('figure_related', $locale['figure_348'], $fil_settings['figure_related']);
+	/*	
 	// ALS DROPDOWN
 	echo form_select("figure_related", $locale['figure_348'], $fil_settings['figure_related'], array(
 			"inline" => TRUE, 
 			"options" => array($locale['disable'], $locale['enable'])
 		));
-*/	
+	*/	
 
 	// ['figure_363'] = "Allow Comments:";
 	// ALS CHECKBOX
-		echo form_checkbox('figure_allow_comments', $locale['figure_363'], $fil_settings['figure_allow_comments']);
+	echo form_checkbox('figure_allow_comments', $locale['figure_363'], $fil_settings['figure_allow_comments']);
 		
 	// ['figure_364'] = "Allow Ratings:";
 	// ALS CHECKBOX
-		echo form_checkbox('figure_allow_ratings', $locale['figure_364'], $fil_settings['figure_allow_ratings']);
-
+	echo form_checkbox('figure_allow_ratings', $locale['figure_364'], $fil_settings['figure_allow_ratings']);
 
 	// ['figure_339'] = "Gallery Mode on";
-		echo form_checkbox('figure_display', $locale['figure_339'], $fil_settings['figure_display']);
-		
-		
+	echo form_checkbox('figure_display', $locale['figure_339'], $fil_settings['figure_display']);
+
 	// ['admin_figurelib_settings.php_008'] = "Thumb ratio:";	
-		echo form_select('figure_thumb_ratio', $locale['admin_figurelib_settings.php_008'], $fil_settings['figure_thumb_ratio'], array("options" => $thumb_opts));
+	echo form_select('figure_thumb_ratio', $locale['admin_figurelib_settings.php_008'], $fil_settings['figure_thumb_ratio'], array("options" => $thumb_opts));
 
 closeside();
-
-
 echo "</div>\n</div>\n";
-// ['figure_345'] = "Save Settings";
-echo form_button('savesettings', $locale['figure_345'], $locale['figure_345'], array('class' => 'btn-success'));
+
+
+// Display Notification Settings START
+echo "<div class='row'><div class='col-lg-12 col-md-12 col-sm-12 col-xs-12'>\n";
+	openside();
+	$notificationOptions = [
+		"1" => $locale['notification-103'],
+		"2" => $locale['notification-104'],
+		"3" => $locale['notification-105']
+	];
+	
+	// Notification
+	echo form_select("figure_notification", $locale['notification-107'], $fil_settings['figure_notification'], [
+		"options" => $notificationOptions,
+		"placeholder" => $locale['notification-106'],
+		"class" => "pull-left",
+		"width" => "180px",
+		"required" => true
+	]); 
+
+	// Notification Subject
+	echo form_text("figure_notification_subject", $locale['notification-108'], $fil_settings['figure_notification_subject'], [
+		"required" => false,
+		"width"    => "50%"
+	]);
+	
+	// Notification Message
+	echo form_textarea("figure_notification_message", $locale['notification-109'], $fil_settings['figure_notification_message'], [
+		"required"  => false,
+		"type"      => "bbcode",
+		"form_name" => "settingsform",
+		"width"     => "80%",
+		"height"    => "140px"
+	]);
+	
+// Display Notification Settings END
+	closeside();
+echo "</div></div>\n";
+
+// Save Settings Button
+echo form_button("savesettings", $locale['figure_345'], $locale['figure_345'], ["class" => "btn-success"]);
+
+// Closeform
 echo closeform();
 closetable();
+
+// Calculate
 function calculate_byte($total_bit) {
 	$calc_opts = array(1 => 'Bytes (bytes)', 1000 => 'KB (Kilobytes)', 1000000 => 'MB (Megabytes)');
 	foreach ($calc_opts as $byte => $val) {
@@ -251,3 +346,5 @@ function calculate_byte($total_bit) {
 	}
 	return 1000000;
 }
+
+?>
