@@ -11,7 +11,8 @@
  *   (at your option) any later version.                                   *
  ***************************************************************************/
 if (!defined("IN_FUSION")) { die("Access Denied"); }
-global $aidlink;
+global $aidlink, $userdata;
+
 include INFUSIONS."figurelib/infusion_db.php";
 require_once INCLUDES."infusions_include.php";
 
