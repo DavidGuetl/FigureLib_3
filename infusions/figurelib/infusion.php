@@ -250,6 +250,9 @@ $inf_insertdbrow[] = DB_SETTINGS_INF." (settings_name, settings_value, settings_
 $inf_insertdbrow[] = DB_SETTINGS_INF." (settings_name, settings_value, settings_inf) VALUES('figure_photo_max_w', '1800', 'figurelib')";
 $inf_insertdbrow[] = DB_SETTINGS_INF." (settings_name, settings_value, settings_inf) VALUES('figure_photo_max_h', '1600', 'figurelib')";
 $inf_insertdbrow[] = DB_SETTINGS_INF." (settings_name, settings_value, settings_inf) VALUES('figure_photo_max_b', '500000', 'figurelib')";
+$inf_insertdbrow[] = DB_SETTINGS_INF." (settings_name, settings_value, settings_inf) VALUES('figure_notification', '1', 'figurelib')";
+$inf_insertdbrow[] = DB_SETTINGS_INF." (settings_name, settings_value, settings_inf) VALUES('figure_notification_subject', '', 'figurelib')";
+$inf_insertdbrow[] = DB_SETTINGS_INF." (settings_name, settings_value, settings_inf) VALUES('figure_notification_message', '', 'figurelib')";
 /////////////////////////////////////////////////////////////////////////////////
 //befüllen von Brand
 $inf_insertdbrow[] = DB_FIGURE_BRANDS." (figure_brand_id, figure_brand_name, figure_brand_description, figure_brand_sorting) VALUES
