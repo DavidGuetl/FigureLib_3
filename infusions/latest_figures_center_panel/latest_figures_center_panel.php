@@ -33,7 +33,7 @@ require_once INCLUDES."infusions_include.php";
 			INNER JOIN ".DB_FIGURE_SCALES." tbs ON tbs.figure_scale_id = tb.figure_scale
 			INNER JOIN ".DB_FIGURE_YEARS." tby ON tby.figure_year_id = tb.figure_pubdate
 			".(multilang_table("FI") ? "WHERE figure_language='".LANGUAGE."' AND" : "WHERE")." tb.figure_freigabe='1' 
-			ORDER BY figure_datestamp DESC LIMIT 0,10");
+			ORDER BY figure_datestamp DESC LIMIT 0,5");
 			
 		// PANEL ÖFFNEN / ANFANG		
  
@@ -209,13 +209,12 @@ require_once INCLUDES."infusions_include.php";
 						
 						if (iADMIN || iSUPERADMIN) {
 						echo "<div class='col-lg-1 col-md-1 col-sm-1 col-xs-1'>\n";	
-							
-							
+													
 							global $aidlink;
 							$settings = fusion_get_settings();
 								// ['cifg_0005'] = "Edit";
 								
-								echo "<a class='' href='".INFUSIONS."figurelib/admin.php".$aidlink."&amp;section=figurelib_form&amp;action=edit&amp;figure_id=".$_GET['figure_id']."'><span class='glyphicon glyphicon-edit' aria-hidden='true'></span></a>"; 
+								echo "<a class='' href='".INFUSIONS."figurelib/admin.php".$aidlink."&amp;section=figurelib_form&amp;action=edit&amp;figure_id=".$data['figure_id']."'><span class='glyphicon glyphicon-edit' aria-hidden='true'></span></a>"; 
 							echo "</div>\n";
 							} else {
 								
@@ -233,7 +232,7 @@ require_once INCLUDES."infusions_include.php";
 									echo "<div class='col-lg-1 hidden-md hidden-sm hidden-xs'>\n";
 									$count = dbcount("(figure_userfigures_id)", DB_FIGURE_USERFIGURES, "figure_userfigures_figure_id='".$data['figure_id']."'");	
 							
-										echo "<div class='side-small' title='".$locale['CLFP_013']." : ".$count."' alt='".$locale['CLFP_013']." : ".$count."'>".trimlink($count,6)."</div>\n";
+										echo "<div class='side-small' title='".$locale['CLFP_020']." : ".$count."' alt='".$locale['CLFP_020']." : ".$count."'>".trimlink($count,6)."</div>\n";
 									echo "</div>\n";	
 							}		
 							
@@ -254,17 +253,26 @@ require_once INCLUDES."infusions_include.php";
 														fuf.figure_userfigures_user_id          
 												FROM ".DB_FIGURE_USERFIGURES." fuf
 												INNER JOIN ".DB_USERS." fu ON fuf.figure_userfigures_user_id=fu.user_id  
-												WHERE fuf.figure_userfigures_figure_id='".$data['figure_id']."'
-												AND fu.user_id='".$userdata['user_id']."' 
+												WHERE figure_userfigures_figure_id='".$data['figure_id']."'
+												AND user_id='".$userdata['user_id']."' 
 												
 												");
+												
+												
 																	
 													$rows = dbrows($resultuf);
 													
 												// USER HAVE THE FIGURE
-												if ($rows > 0) { 
+												if ($data['figure_id'] = $datauf['figure_userfigures_user_id']) { 
+												
+												//if ($rows > 0) { 
 															
 														while ($datauf = dbarray($resultuf)) {
+															
+															echo $datauf['figure_userfigures_user_id'];
+															echo "|";
+															echo $userdata['user_id'];
+															
 																						
 															if (isset($_POST['delete_from_collection'])) {
 																		
@@ -279,7 +287,9 @@ require_once INCLUDES."infusions_include.php";
 														}
 																echo openform('inputform', 'post', FUSION_REQUEST, array("class" => "",));
 																	echo "<div align='center'>\n";
-																	echo form_button("delete_from_collection", $locale['userfigure_002'], $locale['userfigure_002'], array("class" => "btn btn-sm btn-danger"));
+																	//echo form_button("delete_from_collection", $locale['userfigure_002'], $locale['userfigure_002'], array("class" => "btn btn-sm btn-danger"));
+																	echo form_button("delete_from_collection", $locale[''], $locale[''], 
+																	array("class" => "btn btn-success btn-xs btn-round glyphicon glyphicon-ok"));
 																	echo "</div>\n";
 																echo closeform();
 																
@@ -307,7 +317,9 @@ require_once INCLUDES."infusions_include.php";
 														
 																echo openform('inputform', 'post', FUSION_REQUEST, array("class" => "",));
 																	echo "<div align='center'>\n";
-																	echo form_button("add_to_collection", $locale['userfigure_001'], $locale['userfigure_001'], array("class" => "btn btn-sm btn-success"));
+																	//echo form_button("add_to_collection", $locale['userfigure_001'], $locale['userfigure_001'], array("class" => "btn btn-sm btn-success"));
+																	echo form_button("add_to_collection", $locale[''], $locale[''], 
+																	array("class" => "btn btn-danger btn-xs btn-round glyphicon glyphicon-plus"));
 																	echo "</div>\n";
 																echo closeform();															
 														}						
